@@ -18,9 +18,9 @@ const Squeeze = () => {
       min-[400px]:h-[127vh]
       min-[500px]:h-[100vh]
       min-[500px]:bg-transparent
-      min-[600px]:h-[80vh]
-      min-[800px]:h-[104vh] 
-      md:h-[90vh]
+      min-w-[600px]:h-[860px]
+      sm:h-[900px]
+      md:h-[985px]
       md:bg-transparent
       lg:bg-term-back
       md:pb-[202px]
