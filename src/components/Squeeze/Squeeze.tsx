@@ -13,12 +13,14 @@ const Squeeze = () => {
         className="pt-[40px] bg-no-repeat bg-center bg-cover 
       min-[325px]:pt-[46px] 
       min-[325px]:bg-mob-transparent 
-      min-[325px]:h-[816px]
+      min-[325px]:h-[858px]
       min-[325px]:pb-[100px]
-      
-      md:h-[79vh]
+      min-[400px]:h-[102vh]
+      min-[500px]:h-[100vh]
+      min-[500px]:bg-transparent
+      min-[600px]:h-[73vh]
+      md:h-[100vh]
       md:bg-transparent
-      lg:h-[90vh] 
       lg:bg-term-back
       md:pb-[202px]
       min-[1600px]:h-[88vh] 
@@ -136,11 +138,13 @@ const Squeeze = () => {
               min-[325px]:px-[112.5px]
               min-[325px]:py-[17.5px]
               min-[325px]:mb-[16px]
+              min-[325px]:min-w-full
               md:mb-[0px]
               md:px-[36px]
               md:right-[6px]
               md:bottom-[6p]
               md:absolute
+              md:min-w-[0px]
               ">
                 <span
                   className="font-semibold font-poppins text-[16px] leading-[21px] text-list-title
