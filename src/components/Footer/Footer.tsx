@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
           <div className="flex gap-[40px] flex-col flex-1 min-w-max ">
             <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
-              Capabilities
+              Legal
             </span>
             <ul className="flex flex-col gap-[12px]">
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
