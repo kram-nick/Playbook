@@ -13,9 +13,9 @@ const Squeeze = () => {
         className="pt-[40px] bg-no-repeat bg-center bg-cover 
       min-[325px]:pt-[46px] 
       min-[325px]:bg-mob-transparent 
-      min-[325px]:h-[875px]
+      min-[325px]:h-[895px]
       min-[325px]:pb-[100px]
-      min-[400px]:h-[123vh]
+      min-[400px]:h-[127vh]
       min-[500px]:h-[100vh]
       min-[500px]:bg-transparent
       min-[600px]:h-[80vh]
