@@ -9,8 +9,7 @@ const Squeeze = () => {
   return (
     <main className="pb-[32px]">
       <Mobile />
-      <div
-        className="pt-[40px] bg-no-repeat bg-center bg-cover 
+      {/* 
       min-[325px]:pt-[46px] 
       min-[325px]:bg-mob-transparent 
       min-[325px]:h-[895px]
@@ -30,8 +29,8 @@ const Squeeze = () => {
       min-[2060px]:h-[100vh]
       min-[2260px]:h-[108vh]
       min-[2460px]:h-[116vh]
-      
-       flex flex-col items-center gap-[5.7vw]">
+      */}
+      <div className="pt-[40px] bg-no-repeat bg-center bg-cover bg-term-back  flex flex-col items-center gap-[5.7vw] h-[905px] 2xl-[2000px]:h-[960px]">
         <img className="hidden lg:block" src={logo} alt="playbook-logo" />
         <div
           className="flex flex-col items-center w-full 
@@ -130,7 +129,7 @@ const Squeeze = () => {
                 className="absolute bottom-[24px] left-[13vw] 
                 min-[325px]:bottom-[115px]
                 min-[325px]:left-[16px]
-                md:bottom-[23px]
+                md:bottom-[24px]
                 max-lg:left-[6px]
                 max-[1084px]:left-[12vw]"
                 src={email_icon}
