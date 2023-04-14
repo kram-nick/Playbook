@@ -13,19 +13,23 @@ const Squeeze = () => {
         className="pt-[40px] bg-no-repeat bg-center bg-cover 
       min-[325px]:pt-[46px] 
       min-[325px]:bg-mob-transparent 
-      min-[325px]:h-[858px]
+      min-[325px]:h-[875px]
       min-[325px]:pb-[100px]
-      min-[400px]:h-[102vh]
+      min-[400px]:h-[123vh]
       min-[500px]:h-[100vh]
       min-[500px]:bg-transparent
-      min-[600px]:h-[73vh]
-      md:h-[100vh]
+      min-[600px]:h-[80vh]
+      min-[800px]:h-[104vh] 
+      md:h-[90vh]
       md:bg-transparent
       lg:bg-term-back
       md:pb-[202px]
       min-[1600px]:h-[88vh] 
       min-[1700px]:h-[88vh] 
-      min-[1900px]:h-[78vh] 
+      min-[1900px]:h-[88vh] 
+      min-[2060px]:h-[100vh]
+      min-[2260px]:h-[108vh]
+      min-[2460px]:h-[116vh]
       
        flex flex-col items-center gap-[5.7vw]">
         <img className="hidden lg:block" src={logo} alt="playbook-logo" />
