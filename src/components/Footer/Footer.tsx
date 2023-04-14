@@ -3,6 +3,7 @@ import mail_icon from "../../assets/photos/footer/mail-icon.svg";
 import facebook from "../../assets/photos/footer/facebook.svg";
 import youtube from "../../assets/photos/footer/youtube.svg";
 import twitter from "../../assets/photos/footer/twitter.svg";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -65,14 +66,13 @@ const Footer = () => {
             </span>
             <ul className="flex flex-col gap-[12px]">
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                Personalized Handbook
+                Privacy Policy
               </li>
-              <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                Policy Communication
-              </li>
-              <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                Manager Participation
-              </li>
+              <Link
+                to="/term-of-use"
+                className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+                Terms of Use
+              </Link>
             </ul>
           </div>
           <div className="flex gap-[40px] flex-col flex-2 max-w-[375px]">
@@ -94,20 +94,19 @@ const Footer = () => {
                 type="text"
                 className="bg-footer-placeholder py-[15px] px-[48px] rounded-[8px]
                 text-copyrights-main leading-[18px] font-normal font-poppins text-[12px] tracking-[-0.01px] min-w-[25vw] xl:min-w-full
-                max-[1024px]:px-[36px]
-                "
+                max-[1024px]:px-[36px] outline-none"
               />
               <button className="absolute bg-button-submit-footer py-[7px] px-[26px] rounded-[4px]  bottom-[60px] right-[6px] ">
                 <span className="text-list-title">Submit</span>
               </button>
               <ul className="flex flex-row gap-[24px] items-center">
                 <li>
-                  <a>
+                  <a href="#">
                     <img src={facebook} alt="facebook" />
                   </a>
                 </li>
                 <li>
-                  <a>
+                  <a href="#">
                     <img src={youtube} alt="youtube" />
                   </a>
                 </li>

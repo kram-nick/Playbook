@@ -1,0 +1,23 @@
+<svg width="768" height="860" viewBox="0 0 768 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0H768L767.733 688.626C490.276 853.949 207.221 810.69 0.127767 688.626L0 0Z" fill="#3666E4"/>
+<mask id="mask0_789_19210" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="13" y="562" width="711" height="298">
+<rect x="624.415" y="562" width="102.88" height="125.398" transform="rotate(15 624.415 562)" fill="white" fill-opacity="0.1"/>
+<rect x="633.184" y="589.269" width="48.9168" height="14.7527" transform="rotate(15 633.184 589.269)" fill="white" fill-opacity="0.2"/>
+<rect x="618.112" y="645.519" width="30.2818" height="12.0874" transform="rotate(15 618.112 645.519)" fill="white" fill-opacity="0.25"/>
+<rect x="626.954" y="612.519" width="62.1165" height="10.0939" transform="rotate(15 626.954 612.519)" fill="white" fill-opacity="0.16"/>
+<rect x="623.136" y="626.769" width="70.2693" height="10.0939" transform="rotate(15 623.136 626.769)" fill="white" fill-opacity="0.16"/>
+<rect x="13" y="583.012" width="68.6908" height="83.7249" transform="rotate(-11.5196 13 583.012)" fill="white" fill-opacity="0.1"/>
+<rect x="26.3687" y="596.688" width="32.6605" height="9.84999" transform="rotate(-11.5196 26.3687 596.688)" fill="white" fill-opacity="0.2"/>
+<rect x="34.134" y="634.787" width="20.2184" height="7.71775" transform="rotate(-11.5196 34.134 634.787)" fill="white" fill-opacity="0.25"/>
+<rect x="29.5786" y="612.436" width="41.4737" height="6.73947" transform="rotate(-11.5196 29.5786 612.436)" fill="white" fill-opacity="0.16"/>
+<rect x="31.5452" y="622.087" width="46.9171" height="6.73947" transform="rotate(-11.5196 31.5452 622.087)" fill="white" fill-opacity="0.16"/>
+<rect x="273.143" y="724.525" width="132.346" height="161.313" transform="rotate(-33.462 273.143 724.525)" fill="white" fill-opacity="0.06"/>
+<rect x="306.882" y="739.342" width="62.9269" height="18.978" transform="rotate(-33.462 306.882 739.342)" fill="white" fill-opacity="0.12"/>
+<rect x="348.188" y="801.838" width="38.9548" height="18.978" transform="rotate(-33.462 348.188 801.838)" fill="white" fill-opacity="0.15"/>
+<rect x="323.953" y="765.174" width="79.9072" height="12.9849" transform="rotate(-33.462 323.953 765.174)" fill="white" fill-opacity="0.1"/>
+<rect x="334.419" y="781.006" width="90.3951" height="12.9849" transform="rotate(-33.462 334.419 781.006)" fill="white" fill-opacity="0.1"/>
+</mask>
+<g mask="url(#mask0_789_19210)">
+<rect x="-15.2522" y="366.883" width="767.606" height="434.443" fill="#D9D9D9"/>
+</g>
+</svg>

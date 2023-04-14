@@ -32,6 +32,10 @@ module.exports = {
         "review-main": "#F8F8F8",
         "review-name": "#1F2228",
         "term-of-use-head": "#3666E4",
+        "input-squeeze": '#F0F1F2',
+        'inp-squeez-placeholder': '#9A9EA6',
+        "header-bottom": "#E5E5E5",
+        'squeeze-footer': "#6B6B6B",
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
@@ -40,11 +44,14 @@ module.exports = {
       boxShadow: {
         "review-card": "0px 13px 60px rgba(53, 52, 116, 0.08);",
         "3xl": "0px 13px 60px rgba(53, 52, 116, 0.08)",
+        "inp-squeeze": "0px 1px 2px rgba(16, 24, 40, 0.04);",
+        "free-trial": " 0px 1px 2px rgba(16, 24, 40, 0.04);"
       },
       backgroundImage: {
         "banner-back": "url('./assets/photos/home/banner-bg.svg')",
-        "squeeze-transparent": "url('./assets/photos/squeeze/squeeze-bg.svg')",
         "term-back": "url('./assets/photos/terms/top-bg.svg')",
+        "transparent": "url('./assets/photos/squeeze/transparent-tablet.svg')",
+        "mob-transparent": "url('./assets/photos/squeeze/transparent-mobile.svg')",
       },
     },
   },
