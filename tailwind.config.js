@@ -50,9 +50,12 @@ module.exports = {
       backgroundImage: {
         "banner-back": "url('./assets/photos/home/banner-bg.svg')",
         "term-back": "url('./assets/photos/terms/top-bg.svg')",
-        "transparent": "url('./assets/photos/squeeze/transparent-tablet.svg')",
+        "tablet-transparent": "url('./assets/photos/squeeze/transparent-tablet.svg')",
         "mob-transparent": "url('./assets/photos/squeeze/transparent-mobile.svg')",
       },
+      screens: {
+        mobile: "480px"
+      }
     },
   },
   plugins: [],

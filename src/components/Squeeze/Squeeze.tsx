@@ -30,7 +30,15 @@ const Squeeze = () => {
       min-[2260px]:h-[108vh]
       min-[2460px]:h-[116vh]
       */}
-      <div className="pt-[40px] bg-no-repeat bg-center bg-cover bg-term-back  flex flex-col items-center gap-[5.7vw] h-[905px] 2xl-[2000px]:h-[960px]">
+      <div
+        className="pt-[40px] bg-no-repeat bg-center bg-cover bg-term-back  flex flex-col items-center gap-[5.7vw] h-[905px] 2xl-[2000px]:h-[960px]
+        
+        max-[410px]:h-[905px]
+        max-[490px]:bg-mob-transparent
+        max-[490px]:h-[1065px]
+        max-[824px]:bg-tablet-transparent
+        
+      ">
         <img className="hidden lg:block" src={logo} alt="playbook-logo" />
         <div
           className="flex flex-col items-center w-full 
