@@ -31,12 +31,12 @@ const Squeeze = () => {
       min-[2460px]:h-[116vh]
       */}
       <div
-        className="pt-[40px] bg-no-repeat bg-center bg-cover   flex flex-col items-center gap-[5.7vw] h-[102vh] 2xl-[2000px]:h-[960px]
+        className="pt-[40px] bg-no-repeat bg-center bg-cover   flex flex-col items-center gap-[5.7vw] min-h-[950px] 2xl-[2000px]:h-[960px]
         max-[415px]:h-[900px]
         max-[415px]:bg-mob-transparent
-        max-[940px]:h-[102vh]
+        max-[910px]:min-h-[910px]
         max-lg:bg-tablet-transparent
-        max-lg:h-[109vh]
+        max-lg:min-h-[980px]
         lg:bg-term-back
       ">
         <img

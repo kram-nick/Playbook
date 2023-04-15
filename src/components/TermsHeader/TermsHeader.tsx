@@ -5,7 +5,7 @@ import arrowDown from "../../assets/photos/terms/arrow-down.svg";
 
 const TermsHeader = () => {
   return (
-    <div className="lg:flex bg-term-of-use-head justify-between items-center px-[7vw] pt-[30px]">
+    <div className="hidden lg:flex bg-term-of-use-head justify-between items-center px-[7vw] pt-[30px]">
       <div>
         <div className="flex align-middle gap-[64px]">
           <Link to="/home">

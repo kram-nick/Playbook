@@ -1,9 +1,13 @@
+import { Link } from "react-router-dom";
+
 import logo from "../../assets/photos/common/logo-footer.svg";
 import mail_icon from "../../assets/photos/footer/mail-icon.svg";
 import facebook from "../../assets/photos/footer/facebook.svg";
 import youtube from "../../assets/photos/footer/youtube.svg";
 import twitter from "../../assets/photos/footer/twitter.svg";
-import { Link } from "react-router-dom";
+import facebook_tab from "../../assets/photos/footer/facebook-tab.svg";
+import youtube_tab from "../../assets/photos/footer/youtube-tab.svg";
+import twitter_tab from "../../assets/photos/footer/twitter-tab.svg";
 
 const Footer = () => {
   return (
@@ -11,12 +15,20 @@ const Footer = () => {
       <div className="flex gap-[96px] items-center w-full flex-col  px-[7vw]">
         <img src={logo} alt="logo" />
 
-        <div className="flex justify-between w-full gap-[30px] flex-row">
+        <div
+          className="flex justify-between w-full gap-[30px] flex-row
+          max-sm:flex-col
+          max-sm:gap-[80px]
+          max-lg:flex-wrap
+        ">
           <div className="flex gap-[40px] flex-col flex-1 min-w-max ">
             <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
               Solutions
             </span>
-            <ul className="flex flex-col gap-[12px]">
+            <ul
+              className="flex flex-col gap-[12px]
+            max-sm:gap-[8px]
+            ">
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 Online Employee Handbook
               </li>
@@ -39,7 +51,10 @@ const Footer = () => {
             <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
               Resources
             </span>
-            <ul className="flex flex-col gap-[12px]">
+            <ul
+              className="flex flex-col gap-[12px]
+            max-sm:gap-[8px]
+            ">
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 Blog
               </li>
@@ -64,7 +79,10 @@ const Footer = () => {
             <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
               Legal
             </span>
-            <ul className="flex flex-col gap-[12px]">
+            <ul
+              className="flex flex-col gap-[12px]
+            max-sm:gap-[8px]
+            ">
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 Privacy Policy
               </li>
@@ -87,7 +105,9 @@ const Footer = () => {
               <img
                 src={mail_icon}
                 alt="mail_icon"
-                className=" absolute bottom-[71px] left-[24px] max-[1024px]:left-[12px]"
+                className=" absolute bottom-[71px] left-[24px] max-[1024px]:left-[12px]
+                max-lg:bottom-[92px]
+                "
               />
               <input
                 placeholder="Enter your email"
@@ -96,23 +116,53 @@ const Footer = () => {
                 text-copyrights-main leading-[18px] font-normal font-poppins text-[12px] tracking-[-0.01px] min-w-[25vw] xl:min-w-full
                 max-[1024px]:px-[36px] outline-none"
               />
-              <button className="absolute bg-button-submit-footer py-[7px] px-[26px] rounded-[4px]  bottom-[60px] right-[6px] ">
+              <button
+                className="absolute bg-button-submit-footer py-[7px] px-[26px] rounded-[4px]  bottom-[60px] right-[6px] 
+              max-lg:bottom-[80px]
+              ">
                 <span className="text-list-title">Submit</span>
               </button>
               <ul className="flex flex-row gap-[24px] items-center">
                 <li>
                   <a href="#">
-                    <img src={facebook} alt="facebook" />
+                    <img
+                      src={facebook}
+                      alt="facebook"
+                      className="lg:block hidden"
+                    />
+                    <img
+                      src={youtube_tab}
+                      alt="yotube"
+                      className="max-lg:block hidden"
+                    />
                   </a>
                 </li>
                 <li>
                   <a href="#">
-                    <img src={youtube} alt="youtube" />
+                    <img
+                      src={youtube}
+                      alt="youtube"
+                      className="lg:block hidden"
+                    />
+                    <img
+                      src={facebook_tab}
+                      alt="facebook"
+                      className="max-lg:block hidden"
+                    />
                   </a>
                 </li>
                 <li>
                   <a href="https://twitter.com/playbookwork" target="blank">
-                    <img src={twitter} alt="twitter" />
+                    <img
+                      src={twitter}
+                      alt="twitter"
+                      className="lg:block hidden"
+                    />
+                    <img
+                      src={twitter_tab}
+                      alt="twitter"
+                      className="max-lg:block hidden"
+                    />
                   </a>
                 </li>
               </ul>
