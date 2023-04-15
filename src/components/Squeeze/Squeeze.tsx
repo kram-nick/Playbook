@@ -1,7 +1,7 @@
 import email_icon from "../../assets/photos/squeeze/email.svg";
-import logo from "../../assets/photos/terms/playbook-logo.svg";
-import avatar from "../../assets/photos/squeeze/person.svg";
 
+import avatar from "../../assets/photos/squeeze/person.svg";
+import playbookLogo from "../../assets/photos/terms/playbook-logo.svg";
 import ToolsBlock from "../ToolsBlock/ToolsBlock";
 import Mobile from "../Header/Mobile";
 
@@ -31,15 +31,19 @@ const Squeeze = () => {
       min-[2460px]:h-[116vh]
       */}
       <div
-        className="pt-[40px] bg-no-repeat bg-center bg-cover bg-term-back  flex flex-col items-center gap-[5.7vw] h-[905px] 2xl-[2000px]:h-[960px]
-        
-        max-[410px]:h-[905px]
-        max-[490px]:bg-mob-transparent
-        max-[490px]:h-[1065px]
-        max-[824px]:bg-tablet-transparent
-        
+        className="pt-[40px] bg-no-repeat bg-center bg-cover   flex flex-col items-center gap-[5.7vw] h-[102vh] 2xl-[2000px]:h-[960px]
+        max-[415px]:h-[900px]
+        max-[415px]:bg-mob-transparent
+        max-[940px]:h-[102vh]
+        max-lg:bg-tablet-transparent
+        max-lg:h-[109vh]
+        lg:bg-term-back
       ">
-        <img className="hidden lg:block" src={logo} alt="playbook-logo" />
+        <img
+          className="hidden lg:block"
+          src={playbookLogo}
+          alt="playbook-logo"
+        />
         <div
           className="flex flex-col items-center w-full 
         min-[325px]:px-[16px] 

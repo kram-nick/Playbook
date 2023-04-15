@@ -16,11 +16,13 @@ import ToolsBlock from "../ToolsBlock/ToolsBlock";
 import Banner from "../Banner/Banner";
 import TopFeatures from "../TopFeatures/TopFeatures";
 import Review from "../Review/Review";
+import Mobile from "../Header/Mobile/Mobile";
 
 const HomePage = () => {
   return (
     <>
       <Header />
+      <Mobile />
       <div className="flex mx-auto max-w-[1880px] justify-between gap-[40px] my-[58px] pl-[7vw] pr-[50px]">
         <div className="mt-[46px]">
           <h1 className="max-w-[511px] font-poppins  text-[56px] leading-[60px] font-bold text-home-title">
@@ -76,8 +78,7 @@ const HomePage = () => {
             <a
               href="https://twitter.com/playbookwork"
               target="blank"
-              className="flex items-center gap-[12px]"
-            >
+              className="flex items-center gap-[12px]">
               <img src={twitter} alt="twitter" />
               <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
                 Twitter
