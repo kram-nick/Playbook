@@ -3,7 +3,7 @@ import arrowDown from "../../assets/photos/home/arrow-down.svg";
 
 const Header = () => {
   return (
-    <div className="min-[325px]:hidden lg:flex justify-between align-middle px-[7vw] pt-[30px]">
+    <div className="min-[325px]:hidden lg:flex justify-between align-middle px-[7vw] pt-[30px] pb-[20px]">
       <div>
         <div className="flex align-middle gap-[64px]">
           <img src={playbookLogo} alt="playbook" />

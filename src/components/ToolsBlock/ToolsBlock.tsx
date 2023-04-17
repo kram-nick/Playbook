@@ -23,13 +23,14 @@ const ToolsBlock = () => {
 
   return (
     <div
-      className="flex gap-[36px] mx-auto max-w-[1880px] px-[7vw]
+      className="flex gap-[36px] mx-auto max-w-[1880px] 
     min-[325px]:flex-col
     min-[325px]:pr-[18px]
     min-[325px]:pl-[17px]
     min-[325px]:gap-[24px]
     md:px-[32px]
     lg:flex-row
+    lg:px-[7vw]
     ">
       {block.map((item: any) => (
         <div
@@ -43,7 +44,7 @@ const ToolsBlock = () => {
         min-[325px]:py-[40px]
         min-[325px]:items-start
         md:py-[28px]
-        md:flex-col
+        md:flex-row
         lg:pr-[78.33px]
         lg:py-[60px]
         lg:flex-col
