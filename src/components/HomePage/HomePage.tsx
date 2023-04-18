@@ -123,7 +123,7 @@ const HomePage = () => {
         <div>
           <img
             className="object-cover
-            max-sm:h-[484px]
+            max-sm:h-[485px]
             max-lg:h-[465px]
             max-lg:w-[380px]
           "
