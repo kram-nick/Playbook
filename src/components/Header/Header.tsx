@@ -3,19 +3,21 @@ import arrowDown from "../../assets/photos/home/arrow-down.svg";
 
 const Header = () => {
   return (
-    <div className="min-[325px]:hidden lg:flex justify-between align-middle px-[7vw] pt-[30px] pb-[20px]">
+    <div className="min-[325px]:hidden lg:flex justify-between items-center px-[7vw] pt-[30px] pb-[20px]">
       <div>
-        <div className="flex align-middle gap-[64px]">
+        <div className="flex items-center gap-[64px]">
           <img src={playbookLogo} alt="playbook" />
-          <div className="flex align-middle gap-[32px]">
+          <div className="flex align-middle gap-[32px] items-center">
             <div>
-              <a className="font-poppins font-medium text-header-links">
+              <a className="font-poppins font-medium text-header-links text-[15px]">
                 Pricing
               </a>
             </div>
             <div>
-              <a className="font-poppins font-medium flex align-middle gap-3 text-header-links">
-                <span>Resources</span>{" "}
+              <a className="font-poppins flex items-center gap-3 text-header-links">
+                <span className="font-poppins font-medium text-[15px]">
+                  Resources
+                </span>
                 <img
                   className="cursor-pointer"
                   src={arrowDown}

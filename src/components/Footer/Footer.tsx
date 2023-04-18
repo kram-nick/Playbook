@@ -171,7 +171,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="w-full border-t-[1px] border-border-copyrights">
-        <span className=" flex justify-center items-center py-[20px] text-copyrights-main border-none  ">
+        <span className=" flex justify-center items-center py-[20px] text-copyrights-main border-none  font-poppins">
           ©Playbook 2023, All Rights Reserved
         </span>
       </div>

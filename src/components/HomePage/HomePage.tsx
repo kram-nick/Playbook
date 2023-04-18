@@ -1,7 +1,7 @@
 import Footer from "../Footer";
 import Header from "../Header/Header";
 
-import groupOne from "../../assets/photos/home/group1.svg";
+import groupOne from "../../assets/photos/home/illustration.svg";
 import groupOneMob from "../../assets/photos/home/groupTwo.svg";
 import groupThreeMob from "../../assets/photos/home/groupThree.svg";
 import navArrows from "../../assets/photos/home/arrows-right.svg";
@@ -122,13 +122,15 @@ const HomePage = () => {
         </div>
         <div>
           <img
-            className=" object-cover block
-             max-lg:hidden
-            "
+            className="object-cover
+            max-sm:h-[485px]
+            max-lg:h-[465px]
+            max-lg:w-[380px]
+          "
             src={groupOne}
             alt="group"
           />
-          <img
+          {/* <img
             src={groupOneMob}
             alt="groupOneMob"
             className="hidden
@@ -140,7 +142,7 @@ const HomePage = () => {
             src={groupThreeMob}
             alt="groupOneMob"
             className="hidden max-sm:block"
-          />
+          /> */}
         </div>
       </div>
       <div
