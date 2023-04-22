@@ -1,11 +1,42 @@
-import React, { FC } from "react";
-import { IRoute, UIRoutes } from "../router";
-import HomePage from "../../components/HomePage/HomePage";
+import { FC } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+
+import { IRoute, PrivateUIRoutes, UIRoutes } from "../router";
 import { ScrollTop } from "../../ScrollToTop";
-import { AppLayout } from "../../components/Layout/AppLayout";
-import Squeeze from "../../components/Squeeze";
-import TermsOfUse from "../../components/TermsOfUse/TermsOfUse";
+
+import Squeeze from "../../pages/Squeeze";
+import TermsOfUse from "../../pages/TermsOfUse/TermsOfUse";
+import HomePage from "../../pages/HomePage/HomePage";
+import SignIn from "../../components/SignIn/SignIn";
+import AppLayout from "../../components/AppLayout/AppLayout";
+import SqueezeLayout from "../../components/AppLayout/SqueezeLayout/SqueezeLayout";
+import DraftContainer from "../../pages/DraftContainer/DraftContainer";
+
+export const privateRoutes: IRoute[] = [
+  {
+    path: PrivateUIRoutes.Create,
+    element: <DraftContainer />,
+  },
+];
+
+export const squeezeRoutes: IRoute[] = [
+  {
+    path: UIRoutes.SQUEEZE_SALES,
+    element: <Squeeze />,
+  },
+  {
+    path: UIRoutes.SQUEEZE_PRODUCT,
+    element: <Squeeze />,
+  },
+  {
+    path: UIRoutes.SQUEEZE_ENGINEERING,
+    element: <Squeeze />,
+  },
+  {
+    path: UIRoutes.SQUEEZE_ENTREPRENEUR,
+    element: <Squeeze />,
+  },
+];
 
 export const publicRoutes: IRoute[] = [
   {
@@ -14,8 +45,8 @@ export const publicRoutes: IRoute[] = [
   },
   { path: UIRoutes.TERM_OF_USE, element: <TermsOfUse /> },
   {
-    path: UIRoutes.SQUEEZE,
-    element: <Squeeze />,
+    path: UIRoutes.SIGN_IN,
+    element: <SignIn />,
   },
 ];
 
@@ -25,6 +56,24 @@ const AppRouter: FC = () => {
       <Routes>
         <Route path="/*" element={<AppLayout />}>
           {publicRoutes.map((route, index) => (
+            <Route key={`${route.path}${index}`} {...route} />
+          ))}
+          <Route
+            path="*"
+            element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
+          />
+        </Route>
+        <Route path="/*" element={<SqueezeLayout />}>
+          {squeezeRoutes.map((route, index) => (
+            <Route key={`${route.path}${index}`} {...route} />
+          ))}
+          <Route
+            path="*"
+            element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
+          />
+        </Route>
+        <Route path="/*" element={<SqueezeLayout />}>
+          {privateRoutes.map((route, index) => (
             <Route key={`${route.path}${index}`} {...route} />
           ))}
           <Route

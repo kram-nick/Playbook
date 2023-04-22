@@ -13,19 +13,19 @@ const TermsHeader = () => {
           </Link>
           <div className="flex items-center gap-[32px]">
             <div>
-              <a className="font-poppins font-medium text-buttons-color">
+              <button className="font-poppins font-medium text-buttons-color">
                 Pricing
-              </a>
+              </button>
             </div>
             <div>
-              <a className="font-poppins flex items-center font-medium gap-3 text-buttons-color">
+              <button className="font-poppins flex items-center font-medium gap-3 text-buttons-color">
                 <span>Resources</span>{" "}
                 <img
                   className="cursor-pointer"
                   src={arrowDown}
                   alt="arrow down"
                 />
-              </a>
+              </button>
             </div>
           </div>
         </div>

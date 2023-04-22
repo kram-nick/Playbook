@@ -1,8 +1,13 @@
+import { useTranslation } from "react-i18next";
+
 import figures from "../../assets/photos/top-playbook/figures.svg";
 import arrow_to_side from "../../assets/photos/top-playbook/arrow-to-side.svg";
 import illustraion_tab from "../../assets/photos/top-playbook/illustration-tab.svg";
 import illustraion_mob from "../../assets/photos/top-playbook/illustration-mob.svg";
+
 const TopFeatures = () => {
+  const { t } = useTranslation();
+
   return (
     <section
       className="px-[7vw] flex flex-col gap-[80px] mb-[140px] mx-auto max-w-[1880px]
@@ -15,11 +20,10 @@ const TopFeatures = () => {
           className=" text-top-playbook-title font-inter font-bold leading-[52px] text-center text-[40px]
         max-lg:text-[28px]
         ">
-          Top 3 playbooks
+          {t<string>("HOME.TOOLS_TITLE")}
         </h2>
         <p className="text-top-subtitle-playbook font-poppins font-normal text-center leading-[26px] text-[16px] max-w-[534px]">
-          Using these proven design tools, we make sure our clients receive the
-          result they expect within the set timeframe.
+          {t<string>("HOME.TOOLS_SUBTITLE")}
         </p>
       </div>
       <div
@@ -35,47 +39,44 @@ const TopFeatures = () => {
         ">
           <div className="flex-1 max-w-[344px]">
             <span className="mb-1 py-[8px] px-[16px] text-[12px] font-poppins text-top-sub-accent capitalize text-center leading-[19px] tracking-[0.03em] font-semibold rounded-[100px] bg-top-engineering">
-              Engineering Management
+              {t<string>("HOME.MANAGEMENT")}
             </span>
             <div
               className="text-top-playbook-title text-[24px] font-semibold normal-case leading-[36px] mb-[8px] mt-[16px] 
             max-lg:text-[24px]
             ">
-              <a href="">How to Hire 10x Engineers</a>
+              <button>{t<string>("HOME.HIRE")}</button>
             </div>
             <p className="font-poppins text-[16px] leading-[26px] text-top-sub-secondary font-normal not-italic">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-              eiusmod tempor
+              {t<string>("HOME.TOP_DESC")}
             </p>
           </div>
           <div className="flex-1 max-w-[344px]">
             <span className="mb-1 py-[8px] px-[16px] text-[12px] font-poppins text-top-sub-accent capitalize text-center leading-[19px] tracking-[0.03em] font-semibold rounded-[100px] bg-top-entrepreneur">
-              Entrepreneur
+              {t<string>("HOME.ENTREPRENEUR")}
             </span>
             <div
               className="text-top-playbook-title text-[24px] font-semibold normal-case leading-[36px] mb-[8px] mt-[16px] 
             max-lg:text-[24px]
             ">
-              <a href="">The Startup Playbook</a>
+              <button>{t<string>("HOME.STARTUP")}</button>
             </div>
             <p className="font-poppins text-[16px] leading-[26px] text-top-sub-secondary font-normal not-italic">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-              eiusmod tempor
+              {t<string>("HOME.TOP_DESC")}
             </p>
           </div>
           <div className="flex-1 max-w-[344px]">
             <span className="mb-1 py-[8px] px-[16px] text-[12px] font-poppins text-top-sub-accent capitalize text-center leading-[19px] tracking-[0.03em] font-semibold rounded-[100px] bg-top-ceo">
-              CEO & Founders
+              {t<string>("HOME.CEO")}
             </span>
             <div
               className="text-top-playbook-title text-[24px] font-semibold normal-case leading-[36px] mb-[8px] mt-[16px] 
             max-lg:text-[24px]
             ">
-              <a href="">The Culture Playbook</a>
+              <button>{t<string>("HOME.CULTURE")}</button>
             </div>
             <p className="font-poppins text-[16px] leading-[26px] text-top-sub-secondary font-normal not-italic">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-              eiusmod tempor
+              {t<string>("HOME.TOP_DESC")}
             </p>
           </div>
         </ul>

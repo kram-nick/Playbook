@@ -1,22 +1,25 @@
 import design from "../../assets/photos/common/design.svg";
 import build from "../../assets/photos/common/build.svg";
 import execute from "../../assets/photos/common/execute.svg";
+import { useTranslation } from "react-i18next";
 
 const ToolsBlock = () => {
+  const { t } = useTranslation();
+
   const block = [
     {
-      title: "Design",
-      desc: "Create a unique mobile app or a polished website that will work like a charm across all platforms and keep the users coming back.",
+      title: "DESIGN_TITLE",
+      desc: "TOP_BLOCK_DESC",
       img: design,
     },
     {
-      title: "Build",
-      desc: "Create a unique mobile app or a polished website that will work like a charm across all platforms and keep the users coming back.",
+      title: "BUILD",
+      desc: "TOP_BLOCK_DESC",
       img: build,
     },
     {
-      title: "Execute",
-      desc: "Create a unique mobile app or a polished website that will work like a charm across all platforms and keep the users coming back.",
+      title: "EXECUTE",
+      desc: "TOP_BLOCK_DESC",
       img: execute,
     },
   ];
@@ -62,13 +65,13 @@ const ToolsBlock = () => {
             lg:hidden
             ">
               <p className="font-poppins font-semibold text-home-title text-[24px] leading-[36px]">
-                {item.title}
+                {t<string>(`HOME.${item.title}`)}
               </p>
               <span
                 className="font-poppins font-normal text-[16px] leading-[26px] text-simple-text tracking-[-0.1px]
               min-[325px]:font-light
               ">
-                {item.desc}
+                {t<string>(`HOME.${item.desc}`)}
               </span>
             </div>
             <p
@@ -76,14 +79,14 @@ const ToolsBlock = () => {
             min-[325px]:hidden
             lg:block
             ">
-              {item.title}
+              {t<string>(`HOME.${item.title}`)}
             </p>
             <span
               className="font-poppins mt-[12px] text-[16px] leading-[26px] text-simple-text tracking-[-0.1px]
             min-[325px]:hidden           
             lg:block
             ">
-              {item.desc}
+              {t<string>(`HOME.${item.desc}`)}
             </span>
           </div>
         </div>

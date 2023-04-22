@@ -36,10 +36,15 @@ module.exports = {
         'inp-squeez-placeholder': '#9A9EA6',
         "header-bottom": "#E5E5E5",
         'squeeze-footer': "#6B6B6B",
+        "bg-squeeze-engineering": "#00B8B8",
+        "create-bg-main": "#F9F9F9",
+        "nav-txt-private": "#737373",
+        "active-playbook": "rgba(43, 113, 247, 0.12);"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
         inter: ["Inter , sans-serif"],
+        manrope: ["Manrope, sans-serif"],
       },
       boxShadow: {
         "review-card": "0px 13px 60px rgba(53, 52, 116, 0.08);",
@@ -52,6 +57,10 @@ module.exports = {
         "term-back": "url('./assets/photos/terms/top-bg.svg')",
         "tablet-transparent": "url('./assets/photos/squeeze/transparent-tablet.svg')",
         "mob-transparent": "url('./assets/photos/squeeze/transparent-mobile.svg')",
+        "sales-bckg": "url('./assets/photos/squeeze/sales-bckg.svg')",
+        "product-bckg": "url('./assets/photos/squeeze/product-bckg.svg')",
+        "engineering-bckg": "url('./assets/photos/squeeze/engineering-bckg.svg')",
+        "entrepreneur-bckg": "url('./assets/photos/squeeze/entrepreneur-bckg.svg')",
       },
       screens: {
         mobile: "480px"
