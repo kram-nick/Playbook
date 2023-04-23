@@ -17,6 +17,8 @@ import ActionsPlugin from "../../core/plugins/ActionsPlugin";
 import CodeHighlightPlugin from "../../core/plugins/CodeHighlightPlugin";
 import prepopulatedText from "../../core/plugins/SampleText";
 import exampleTheme from "../../core/constants/lexicalTheme";
+import ImagePlugin from "../../core/plugins/ImagePlugin";
+import { ImageNode } from "../../core/nodes/ImageNode";
 
 function Placeholder() {
   return (
@@ -56,13 +58,14 @@ const editorConfig = {
     TableRowNode,
     AutoLinkNode,
     LinkNode,
+    ImageNode
   ],
 };
 
 const Editor = () => {
   return (
     <LexicalComposer initialConfig={editorConfig}>
-      <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between">
+      <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
         <ToolbarPlugin />
         <div>
           <RichTextPlugin
@@ -71,6 +74,7 @@ const Editor = () => {
             ErrorBoundary={() => null}
           />
           <AutoFocusPlugin />
+          <ImagePlugin />
           <ListPlugin />
           <LinkPlugin />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />

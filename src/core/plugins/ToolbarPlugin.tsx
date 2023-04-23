@@ -7,6 +7,7 @@ import {
   $isRangeSelection,
   $createParagraphNode,
   $getNodeByKey,
+  FORMAT_ELEMENT_COMMAND,
 } from "lexical";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $wrapNodes, $isAtNodeEnd } from "@lexical/selection";
@@ -29,7 +30,23 @@ import {
   $isCodeNode,
   getDefaultCodeLanguage,
   getCodeLanguages,
-} from "@lexical/code";
+} from "@lexical/code"; 
+
+import icon_bold from "../../assets/photos/editor/bold.svg";
+import icon_italic from "../../assets/photos/editor/italic.svg";
+import icon_underline from "../../assets/photos/editor/underline.svg";
+import icon_case from "../../assets/photos/editor/lower-case.svg";
+import icon_left from "../../assets/photos/editor/left.svg";
+import icon_center from "../../assets/photos/editor/center.svg";
+import icon_layout from "../../assets/photos/editor/layout.svg";
+import icon_paragrph from "../../assets/photos/editor/paragrph.svg";
+import icon_link from "../../assets/photos/editor/link.svg";
+import icon_image from "../../assets/photos/editor/photo.svg";
+import icon_smile from "../../assets/photos/editor/happy.svg";
+import icon_add from "../../assets/photos/editor/plus.svg";
+import icon_delete from "../../assets/photos/editor/delete.svg";
+import ImageToolbar from "./ImageToolbar";
+
 
 const LowPriority = 1;
 
@@ -506,11 +523,25 @@ export default function ToolbarPlugin() {
     }
   }, [editor, isLink]);
 
+
+  const formatParagraph = () => {
+    if (blockType !== "paragraph") {
+      editor.update(() => {
+        const selection = $getSelection();
+
+        if ($isRangeSelection(selection)) {
+          $wrapNodes(selection, () => $createParagraphNode());
+        }
+      });
+    }
+    setShowBlockOptionsDropDown(false);
+  };
+
   return (
     <div
-      className="toolbar flex flex-row border-1 px-[16px] py-[21px]"
+      className="toolbar flex items-center flex-row border-b border-header-bottom px-[12px] py-[17px]"
       ref={toolbarRef}>
-      {supportedBlockTypes.has(blockType) && (
+      {/* {supportedBlockTypes.has(blockType) && (
         <>
           <button
             className="toolbar-item block-controls font-bold"
@@ -534,7 +565,7 @@ export default function ToolbarPlugin() {
             )}
           <Divider />
         </>
-      )}
+      )} */}
       {blockType === "code" ? (
         <>
           <Select
@@ -552,30 +583,69 @@ export default function ToolbarPlugin() {
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
             }}
-            className={"toolbar-item spaced " + (isBold ? "active" : "")}
-            aria-label="Format Bold">
-            <i className="format bold" />
-            Format Bold
+            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isBold ? "active" : "")}
+            aria-label="Format Bold"> 
+            <img src={icon_bold} alt="Format Bold" />
           </button>
           <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
             }}
-            className={"toolbar-item spaced " + (isItalic ? "active" : "")}
-            aria-label="Format Italics">
-            <i className="format italic" />
-            Format Italics
+            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isItalic ? "active" : "")}
+            aria-label="Format Italics"> 
+            <img src={icon_italic} alt="Format italic" />
           </button>
           <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
             }}
-            className={"toolbar-item spaced " + (isUnderline ? "active" : "")}
-            aria-label="Format Underline">
-            <i className="format underline" />
-            Format Underline
+            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isUnderline ? "active" : "")}
+            aria-label="Format Underline"> 
+            <img src={icon_underline} alt="Format underline" />
+          </button>
+
+          <button
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+            }}
+            className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] "
+            aria-label="Left Align"
+          >
+            <img src={icon_left} alt="Format left" /> 
           </button>
           <button
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
+            }}
+            className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] "
+            aria-label="Center Align"
+          >
+            <img src={icon_center} alt="Format center" /> 
+          </button>
+          {/* <button
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
+            }}
+            className="toolbar-item spaced"
+            aria-label="Right Align"
+          >
+            <i className="format right-align" />
+          </button> */}
+          <button
+            onClick={() => {
+              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
+            }}
+            className="toolbar-item w-[28px] h-[28px] mr-[14px] "
+            aria-label="Justify Align"
+          >
+            <img src={icon_layout} alt="Format center" /> 
+          </button>{" "}    
+          <button className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] " onClick={formatParagraph}>
+          
+            <img src={icon_paragrph} alt="Format paragraph" />
+            {blockType === "paragraph" && <span className="active" />}
+          </button>                
+          {/* <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
             }}
@@ -583,8 +653,8 @@ export default function ToolbarPlugin() {
             aria-label="Format Strikethrough">
             <i className="format strikethrough" />
             Format Strikethrough
-          </button>
-          <button
+          </button> */}
+          {/* <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
             }}
@@ -592,18 +662,28 @@ export default function ToolbarPlugin() {
             aria-label="Insert Code">
             <i className="format code" />
             Insert Code
-          </button>
+          </button> */}
           <button
             onClick={insertLink}
-            className={"toolbar-item spaced " + (isLink ? "active" : "")}
+            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isLink ? "active" : "")}
             aria-label="Insert Link">
             <i className="format link" />
-            Insert Link
+            <img src={icon_link} alt="Format link" />
           </button>
           {isLink &&
             createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
         </>
       )}
+      <button
+        className="flex items-center action-button py-[8px] px-[15px] bg-white rounded-[5px] text-simple-text
+        text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] ml-auto"
+        title="Convert From Markdown"
+        aria-label="Convert from markdown">
+          <img src={icon_delete} alt="Delete" className="mr-[6px]" />
+          Delete
+        {/* <i className="markdown" /> */}
+      </button>
+      {/* <ImageToolbar/> */}
     </div>
   );
 }
