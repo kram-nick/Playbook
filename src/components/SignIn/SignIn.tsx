@@ -42,8 +42,7 @@ const SignIn = () => {
               type="text"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
               border-solid border-[1px] shadow-free-trial min-w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] 
-              max-[1024px]:px-[36px] outline-none"
+              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none"
             />
           </div>
 
@@ -56,8 +55,7 @@ const SignIn = () => {
               type="text"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
               border-solid border-[1px] shadow-free-trial min-w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] 
-              max-[1024px]:px-[36px] outline-none"
+              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none"
             />
           </div>     
 
