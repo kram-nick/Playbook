@@ -10,7 +10,7 @@ const SignIn = () => {
     <div className="flex mx-auto  min-h-[calc(100vh-102px)] font-poppins max-lg:min-h-[calc(100vh-61px)]">
       <div className="flex bg-cover bg-no-repeat bg-left-bottom justify-center  w-[46%] max-lg:bg-sign max-lg:w-[100%] 
         py-[50px] px-[100px] max-sm:px-[16px] max-sm:py-[24px]">
-        <form className="self-center w-full max-w[425px] max-lg:bg-white 
+        <form className="self-center w-full max-w-[425px] max-lg:bg-white 
           max-lg:px-[48px] max-lg:py-[60px] max-sm:px-[16px] max-sm:py-[24px] max-sm:rounded-[8px]">
           <h1
               className="text-[24px] text-home-title text-center leading-normal mb-[32px] font-semibold">
