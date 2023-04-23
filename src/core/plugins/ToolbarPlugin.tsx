@@ -1,24 +1,15 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  CAN_REDO_COMMAND,
-  CAN_UNDO_COMMAND,
-  REDO_COMMAND,
-  UNDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
   FORMAT_TEXT_COMMAND,
-  FORMAT_ELEMENT_COMMAND,
   $getSelection,
   $isRangeSelection,
   $createParagraphNode,
   $getNodeByKey,
 } from "lexical";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
-import {
-  $isParentElementRTL,
-  $wrapNodes,
-  $isAtNodeEnd,
-} from "@lexical/selection";
+import { $wrapNodes, $isAtNodeEnd } from "@lexical/selection";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
 import {
   INSERT_ORDERED_LIST_COMMAND,
@@ -418,22 +409,17 @@ function BlockOptionsDropdownList({
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);
-  const [canUndo, setCanUndo] = useState(false);
-  const [canRedo, setCanRedo] = useState(false);
-  const [blockType, setBlockType] = useState("paragraph");
+  const [blockType, setBlockType] = useState<string>("paragraph");
   const [selectedElementKey, setSelectedElementKey] = useState(null);
   const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
     useState(false);
   const [codeLanguage, setCodeLanguage] = useState("");
-  const [isRTL, setIsRTL] = useState(false);
   const [isLink, setIsLink] = useState(false);
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
-
-  const payload: void = undefined;
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -467,7 +453,6 @@ export default function ToolbarPlugin() {
       setIsUnderline(selection.hasFormat("underline"));
       setIsStrikethrough(selection.hasFormat("strikethrough"));
       setIsCode(selection.hasFormat("code"));
-      setIsRTL($isParentElementRTL(selection));
 
       // Update links
       const node = getSelectedNode(selection);
@@ -491,22 +476,6 @@ export default function ToolbarPlugin() {
         SELECTION_CHANGE_COMMAND,
         (_payload, newEditor) => {
           updateToolbar();
-          return false;
-        },
-        LowPriority
-      ),
-      editor.registerCommand(
-        CAN_UNDO_COMMAND,
-        (payload) => {
-          setCanUndo(payload);
-          return false;
-        },
-        LowPriority
-      ),
-      editor.registerCommand(
-        CAN_REDO_COMMAND,
-        (payload) => {
-          setCanRedo(payload);
           return false;
         },
         LowPriority
@@ -538,36 +507,19 @@ export default function ToolbarPlugin() {
   }, [editor, isLink]);
 
   return (
-    <div className="toolbar" ref={toolbarRef}>
-      <button
-        disabled={!canUndo}
-        onClick={() => {
-          editor.dispatchCommand(UNDO_COMMAND, payload);
-        }}
-        className="toolbar-item spaced"
-        aria-label="Undo">
-        <i className="format undo" />
-      </button>
-      <button
-        disabled={!canRedo}
-        onClick={() => {
-          editor.dispatchCommand(REDO_COMMAND, payload);
-        }}
-        className="toolbar-item"
-        aria-label="Redo">
-        <i className="format redo" />
-      </button>
-      <Divider />
+    <div
+      className="toolbar flex flex-row border-1 px-[16px] py-[21px]"
+      ref={toolbarRef}>
       {supportedBlockTypes.has(blockType) && (
         <>
           <button
-            className="toolbar-item block-controls"
+            className="toolbar-item block-controls font-bold"
             onClick={() =>
               setShowBlockOptionsDropDown(!showBlockOptionsDropDown)
             }
             aria-label="Formatting Options">
-            <span className={"icon block-type " + blockType} />
-            <span className="text">{blockTypeToBlockName[blockType]}</span>
+            <span className="block" />
+            <span className="text">{blockTypeToBlockName[blockType]} 2222</span>
             <i className="chevron-down" />
           </button>
           {showBlockOptionsDropDown &&
@@ -586,11 +538,12 @@ export default function ToolbarPlugin() {
       {blockType === "code" ? (
         <>
           <Select
-            className="toolbar-item code-language"
+            className="block h-1 w-2"
             onChange={onCodeLanguageSelect}
             options={codeLanguges}
             value={codeLanguage}
           />
+          H1
           <i className="chevron-down inside" />
         </>
       ) : (
@@ -602,6 +555,7 @@ export default function ToolbarPlugin() {
             className={"toolbar-item spaced " + (isBold ? "active" : "")}
             aria-label="Format Bold">
             <i className="format bold" />
+            Format Bold
           </button>
           <button
             onClick={() => {
@@ -610,6 +564,7 @@ export default function ToolbarPlugin() {
             className={"toolbar-item spaced " + (isItalic ? "active" : "")}
             aria-label="Format Italics">
             <i className="format italic" />
+            Format Italics
           </button>
           <button
             onClick={() => {
@@ -618,16 +573,16 @@ export default function ToolbarPlugin() {
             className={"toolbar-item spaced " + (isUnderline ? "active" : "")}
             aria-label="Format Underline">
             <i className="format underline" />
+            Format Underline
           </button>
           <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
             }}
-            className={
-              "toolbar-item spaced " + (isStrikethrough ? "active" : "")
-            }
+            className={`toolbar-item spaced ${isStrikethrough ? "active" : ""}`}
             aria-label="Format Strikethrough">
             <i className="format strikethrough" />
+            Format Strikethrough
           </button>
           <button
             onClick={() => {
@@ -636,48 +591,17 @@ export default function ToolbarPlugin() {
             className={"toolbar-item spaced " + (isCode ? "active" : "")}
             aria-label="Insert Code">
             <i className="format code" />
+            Insert Code
           </button>
           <button
             onClick={insertLink}
             className={"toolbar-item spaced " + (isLink ? "active" : "")}
             aria-label="Insert Link">
             <i className="format link" />
+            Insert Link
           </button>
           {isLink &&
             createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
-          <Divider />
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
-            }}
-            className="toolbar-item spaced"
-            aria-label="Left Align">
-            <i className="format left-align" />
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
-            }}
-            className="toolbar-item spaced"
-            aria-label="Center Align">
-            <i className="format center-align" />
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-            }}
-            className="toolbar-item spaced"
-            aria-label="Right Align">
-            <i className="format right-align" />
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
-            }}
-            className="toolbar-item"
-            aria-label="Justify Align">
-            <i className="format justify-align" />
-          </button>{" "}
         </>
       )}
     </div>

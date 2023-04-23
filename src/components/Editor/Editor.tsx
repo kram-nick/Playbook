@@ -1,7 +1,8 @@
-import { $getRoot, $getSelection } from "lexical";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-
+import ToolbarPlugin from "../../core/plugins/ToolbarPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { ListItemNode, ListNode } from "@lexical/list";
@@ -12,29 +13,37 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
 
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-
-import exampleTheme from "../../core/constants/lexicalTheme";
-import ToolbarPlugin from "../../core/plugins/ToolbarPlugin";
-import TreeViewPlugin from "../../core/plugins/TreeViewPlugin";
+import ActionsPlugin from "../../core/plugins/ActionsPlugin";
 import CodeHighlightPlugin from "../../core/plugins/CodeHighlightPlugin";
-import PlaygroundAutoLinkPlugin from "../../core/plugins/AutoLinkPlugin";
-import ListMaxIndentLevelPlugin from "../../core/plugins/ListMaxIndentLevelPlugin.js";
+import prepopulatedText from "../../core/plugins/SampleText";
+import exampleTheme from "../../core/constants/lexicalTheme";
 
 function Placeholder() {
-  return <div className="editor-placeholder">Enter some rich text...</div>;
+  return (
+    <div className="editor-placeholder">
+      Play around with the Markdown plugin...
+    </div>
+  );
 }
 
 const editorConfig = {
-  theme: exampleTheme,
+  editorState: prepopulatedText,
+  theme: {
+    root: "p-4 border-slate-500 focus:outline-none focus-visible:border-black",
+    link: "cursor-pointer",
+    text: {
+      bold: "font-semibold",
+      underline: "underline decoration-wavy",
+      italic: "italic",
+      strikethrough: "line-through",
+      underlineStrikethrough: "underlined-line-through",
+    },
+  },
   namespace: "editor",
+
   onError(error: any) {
     throw error;
   },
-
   nodes: [
     HeadingNode,
     ListNode,
@@ -51,35 +60,23 @@ const editorConfig = {
 };
 
 const Editor = () => {
-  function onChange(editorState: any) {
-    editorState.read(() => {
-      const root = $getRoot();
-      const selection = $getSelection();
-
-      console.log(root, selection);
-    });
-  }
-
   return (
     <LexicalComposer initialConfig={editorConfig}>
-      <div className="editor-container">
+      <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between">
         <ToolbarPlugin />
-        <div className="editor-inner">
+        <div>
           <RichTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}
             placeholder={<Placeholder />}
-            ErrorBoundary={LexicalErrorBoundary}
+            ErrorBoundary={() => null}
           />
-          <HistoryPlugin />
-          <TreeViewPlugin />
           <AutoFocusPlugin />
-          <CodeHighlightPlugin />
           <ListPlugin />
           <LinkPlugin />
-          <PlaygroundAutoLinkPlugin />
-          <ListMaxIndentLevelPlugin maxDepth={7} />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          <CodeHighlightPlugin />
         </div>
+        <ActionsPlugin />
       </div>
     </LexicalComposer>
   );

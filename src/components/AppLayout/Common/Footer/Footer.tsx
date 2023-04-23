@@ -100,33 +100,33 @@ const Footer = () => {
             <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
               {t<string>("COMMON.SUBSCRIBE")}
             </span>
-            <div className="flex gap-[40px] flex-col relative">
+            <div className="flex gap-[40px] flex-col ">
               <span className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px]">
                 {t<string>("COMMON.DISCOUNTS")}
               </span>
-              <img
-                src={mail_icon}
-                alt="mail_icon"
-                className=" absolute bottom-[71px] left-[24px] max-[1024px]:left-[12px]
-                max-lg:bottom-[92px]
+              <div className="relative">
+                <img
+                  src={mail_icon}
+                  alt="mail_icon"
+                  className=" absolute bottom-[16px] left-[24px] max-[1024px]:left-[12px]
                 "
-              />
-              <input
-                placeholder={t<string>("COMMON.EMAI_PLACEHOLDER")}
-                type="text"
-                className="bg-footer-placeholder py-[15px] px-[48px] rounded-[8px]
+                />
+                <input
+                  placeholder={t<string>("COMMON.EMAI_PLACEHOLDER")}
+                  type="text"
+                  className="w-full bg-footer-placeholder py-[15px] px-[48px] rounded-[8px]
                 text-copyrights-main leading-[18px] font-normal font-poppins text-[12px] tracking-[-0.01px] min-w-[25vw] xl:min-w-full
                 max-[1024px]:px-[36px] outline-none"
-              />
-              <button
-                className="absolute bg-button-submit-footer py-[7px] px-[26px] rounded-[4px]  bottom-[60px] right-[6px] 
-              max-lg:bottom-[80px]
+                />
+                <button
+                  className="absolute bg-button-submit-footer py-[7px] px-[26px] rounded-[4px]  bottom-[6px] right-[6px] 
               ">
-                <span className="text-list-title">
-                  {t<string>("COMMON.SUBMIT")}
-                </span>
-              </button>
-              <ul className="flex flex-row gap-[24px] items-center">
+                  <span className="text-list-title">
+                    {t<string>("COMMON.SUBMIT")}
+                  </span>
+                </button>
+              </div>
+              <ul className="flex flex-row gap-[24px] lg:items-center">
                 <li>
                   <button>
                     <img
