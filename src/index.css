@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap");
 @tailwind base;
 @tailwind components;
@@ -12,5 +12,13 @@
 
   h2 {
     font-size: 24px;
+  }
+
+  input:checked + div {
+    @apply border-blue-500;
+    @apply bg-checkbox-bg;
+  }
+  input:checked + div svg {
+    @apply block;
   }
 }

@@ -11,6 +11,7 @@ import SignIn from "../../components/SignIn/SignIn";
 import AppLayout from "../../components/AppLayout/AppLayout";
 import SqueezeLayout from "../../components/AppLayout/SqueezeLayout/SqueezeLayout";
 import DraftContainer from "../../pages/DraftContainer/DraftContainer";
+import SignUp from "../../components/SignUp";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -48,6 +49,10 @@ export const publicRoutes: IRoute[] = [
     path: UIRoutes.SIGN_IN,
     element: <SignIn />,
   },
+  {
+    path: UIRoutes.SIGN_UP,
+    element: <SignUp />,
+  }  
 ];
 
 const AppRouter: FC = () => {

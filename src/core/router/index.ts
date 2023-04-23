@@ -11,6 +11,7 @@ export enum UIRoutes {
   SQUEEZE_ENTREPRENEUR = "squeeze-entrepreneur",
   TERM_OF_USE = "term-of-use",
   SIGN_IN = "sign-in",
+  SIGN_UP = "sign-up",
 }
 
 export enum PrivateUIRoutes {

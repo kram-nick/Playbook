@@ -17,7 +17,10 @@ const AppLayout = () => {
       )}
       <Mobile />
       <Outlet />
-      <Footer />
+
+      {location.pathname.slice(1) !== "sign-in" && location.pathname.slice(1) !== "sign-up" ? (
+        <Footer />
+      ) : ('')}     
     </>
   );
 };

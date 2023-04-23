@@ -110,5 +110,27 @@
                 "TRY_PLAYBOOOK": "Try Playbook free for 3 days, no credit card required. By entering your email, you agree to receive marketing emails from Shopify.",
                 "MAXIMIZE_TITLE": "Build playbooks to maximize efficiency",
                 "MAXIMIZE_DESC": "Using these proven design tools, we mae sure our clients receive the result they expect within the set timeframe."
-        }
+        },
+        "SIGN": {
+                "IN":"Sign In",
+                "UP":"Join Us!",
+                "UP_BTN":"Sign Up",
+                "GOOGLE":"Sign up with Google",
+                "WELCOME":"Welcome to",
+                "GET_STARTED":"Get started — it's free. No credit card needed.",
+                "HAVE":"Already have an account?",
+                "DONT_HAVE":"Don’t have an account?",
+                "NAME":"Full Name",
+                "EMAIL":"Email Address",
+                "EMAIL_PLACEHOLDER":"Insert your email",
+                "PASSWORD":"Password",
+                "PASSWORD_PLACEHOLDER":"Insert your password",
+                "KEEP_ME":"Keep me logged in",
+                "FORGOT":"Forgot password?",
+                "REGISTER":"Register",
+                "LOGIN":"Log In",
+                "OR":"Or, sign in with your email",
+                "OR_UP":"Or, sign up with your email",
+                "AGREE":"Agree to terms & conditions"
+        }        
 }

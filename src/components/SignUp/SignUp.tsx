@@ -14,7 +14,7 @@ const SignIn = () => {
           max-lg:px-[48px] max-lg:py-[60px] max-sm:px-[16px] max-sm:py-[24px] max-sm:rounded-[8px]">
           <h1
               className="text-[24px] text-home-title text-center leading-normal mb-[32px] font-semibold">
-              {t<string>("SIGN.IN")}
+              {t<string>("SIGN.UP")}
           </h1>     
 
           <button
@@ -30,9 +30,22 @@ const SignIn = () => {
 
           <div className="text-center mb-[32px] flex justify-center items-center">
             <div className="flex-[1] bg-header-bottom h-[1px]"></div>
-            <span className="text-[14px] leading-[20px] px-[12px] bg-white">{t<string>("SIGN.OR")}</span>
+            <span className="text-[14px] leading-[20px] px-[12px] bg-white">{t<string>("SIGN.OR_UP")}</span>
             <div className="flex-[1] bg-header-bottom h-[1px]"></div>
           </div>        
+
+          <div className="form-group mb-[24px]">
+            <label htmlFor="name" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.NAME")}</label>
+            <input
+              placeholder={t<string>("SIGN.NAME")}
+              id="name"
+              type="text"
+              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+              border-solid border-[1px] shadow-free-trial min-w-[100%]
+              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] 
+              max-[1024px]:px-[36px] outline-none"
+            />
+          </div>
 
           <div className="form-group mb-[24px]">
             <label htmlFor="email" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.EMAIL")}</label>
@@ -74,12 +87,8 @@ const SignIn = () => {
                   </g>  
                 </svg>  
               </div>                
-              <label htmlFor="remember-me" className="text-[16px] leading-[20px] tracking-[-0.1px] cursor-pointer">{t<string>("SIGN.KEEP_ME")}</label>
+              <label htmlFor="remember-me" className="text-[16px] leading-[20px] tracking-[-0.1px] cursor-pointer">{t<string>("SIGN.AGREE")}</label>
             </div>    
-
-            <Link  to="/sign-in" className="text-[14px] leading-[18px] text-buttons-bg font-medium"> 
-              {t<string>("SIGN.FORGOT")}
-            </Link> 
           </div>     
  
           <button
@@ -87,13 +96,13 @@ const SignIn = () => {
            w-full mb-[24px]
           ">
             <span className="text-list-title">
-              {t<string>("SIGN.IN")}
+              {t<string>("SIGN.UP_BTN")}
             </span>
           </button>
           <p className="">
-            <span className="text-[16px] leading-[26px] text-simple-text tracking-[-0.1px] mr-[12px]">{t<string>("SIGN.DONT_HAVE")}</span>
-            <Link  to="/sign-up" className="text-[14px] leading-[18px] text-buttons-bg font-medium"> 
-              {t<string>("SIGN.REGISTER")}
+            <span className="text-[16px] leading-[26px] text-simple-text tracking-[-0.1px] mr-[12px]">{t<string>("SIGN.HAVE")}</span>
+            <Link  to="/sign-in" className="text-[14px] leading-[18px] text-buttons-bg font-medium"> 
+              {t<string>("SIGN.LOGIN")}
             </Link> 
           </p>
         </form>

@@ -1,5 +1,6 @@
 import playbookLogo from "../../../../assets/photos/squeeze/mob-logo.svg";
 import arrowDown from "../../../../assets/photos/home/arrow-down.svg";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const Header = () => {
@@ -32,11 +33,16 @@ const Header = () => {
         </div>
       </div>
       <div className="flex gap-[42px]">
-        <button className="text-buttons-bg">
+        {/* <button className="text-buttons-bg">
           <span className="font-semibold font-poppins leading-[22px]">
             {t<string>("COMMON.SIGN_IN")}
           </span>
-        </button>
+        </button> */}
+        <Link  to="/sign-in" className="flex text-buttons-bg">
+          <span className="self-center font-semibold font-poppins leading-[22px]">
+            {t<string>("COMMON.SIGN_IN")}
+          </span>
+        </Link>        
         <button className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color">
           <span className="font-semibold font-poppins leading-[22px]">
             {t<string>("COMMON.GET_STARTED")}

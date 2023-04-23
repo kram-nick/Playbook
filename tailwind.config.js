@@ -39,7 +39,11 @@ module.exports = {
         "bg-squeeze-engineering": "#00B8B8",
         "create-bg-main": "#F9F9F9",
         "nav-txt-private": "#737373",
-        "active-playbook": "rgba(43, 113, 247, 0.12);"
+        "active-playbook": "rgba(43, 113, 247, 0.12);",
+        "border-input":"#D4D4D4",
+        "border-btn":"#DAE0E6",
+        "input-paceholder":"#A3A3A3",
+        "checkbox-bg":"#437EF7"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
@@ -53,6 +57,7 @@ module.exports = {
         "free-trial": " 0px 1px 2px rgba(16, 24, 40, 0.04);"
       },
       backgroundImage: {
+        "sign": "url('./assets/photos/sign/bg-sign.svg')",
         "banner-back": "url('./assets/photos/home/banner-bg.svg')",
         "term-back": "url('./assets/photos/terms/top-bg.svg')",
         "tablet-transparent": "url('./assets/photos/squeeze/transparent-tablet.svg')",
