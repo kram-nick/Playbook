@@ -22,8 +22,9 @@ import { ImageNode } from "../../core/nodes/ImageNode";
 
 function Placeholder() {
   return (
-    <div className="editor-placeholder">
-      Play around with the Markdown plugin...
+    <div className="editor-placeholder text-[20px]">
+      <p className="mb-2">Section Name</p>
+      <p>Description</p>
     </div>
   );
 }
@@ -67,7 +68,7 @@ const Editor = () => {
     <LexicalComposer initialConfig={editorConfig}>
       <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
         <ToolbarPlugin />
-        <div>
+        <div className="relative min-h-[250px]">
           <RichTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}
             placeholder={<Placeholder />}

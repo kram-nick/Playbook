@@ -603,7 +603,14 @@ export default function ToolbarPlugin() {
             aria-label="Format Underline"> 
             <img src={icon_underline} alt="Format underline" />
           </button>
-
+          <button
+            // onClick={() => {
+            //   editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+            // }}
+            className={"toolbar-item spaced w-[28px] h-[28px] mr-[24px] " }
+            aria-label="Format Uppercase"> 
+            <img src={icon_case} alt="Format Uppercase" />
+          </button>
           <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
@@ -640,7 +647,7 @@ export default function ToolbarPlugin() {
           >
             <img src={icon_layout} alt="Format center" /> 
           </button>{" "}    
-          <button className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] " onClick={formatParagraph}>
+          <button className="toolbar-item spaced w-[28px] h-[28px] mr-[24px] " onClick={formatParagraph}>
           
             <img src={icon_paragrph} alt="Format paragraph" />
             {blockType === "paragraph" && <span className="active" />}
@@ -672,6 +679,20 @@ export default function ToolbarPlugin() {
           </button>
           {isLink &&
             createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
+          <button 
+            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " }
+            aria-label="Insert photo"> 
+            <img src={icon_image} alt="Insert Images" />
+          </button> 
+          <button 
+            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " }
+            aria-label="Insert emoji"> 
+            <img src={icon_smile} alt="Insert emoji" />
+          </button>    
+          <button 
+            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " } > 
+            <img src={icon_add} alt="Plus" />
+          </button>                             
         </>
       )}
       <button

@@ -303,17 +303,6 @@ pre::-webkit-scrollbar-thumb {
   cursor: not-allowed;
 }
 
-/* .toolbar button.toolbar-item i.format {
-  background-size: contain;
-  display: inline-block;
-  height: 18px;
-  width: 18px;
-  margin-top: 2px;
-  vertical-align: -0.25em;
-  display: flex;
-  opacity: 0.6;
-} */
-
 .toolbar button.toolbar-item:disabled i.format {
   opacity: 0.2;
 }
@@ -680,3 +669,14 @@ i.center-align {
 /* i.justify-align {
   background-image: url(images/icons/justify.svg);
 } */
+.editor-placeholder {
+  color: #999;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 15px;
+  left: 15px;
+  user-select: none;
+  display: inline-block;
+  pointer-events: none;
+}
