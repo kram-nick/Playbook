@@ -10,10 +10,15 @@ import playbookLogo from "../../assets/photos/squeeze/mob-logo.svg";
 import to_arrow from "../../assets/photos/create/to-arrow.svg";
 import active_arrow from "../../assets/photos/create/open-arrow.svg";
 import plus from "../../assets/photos/create/plus.svg";
+import plus_blue from "../../assets/photos/main/plus-blue.svg";
+import arrow_blue from "../../assets/photos/main/arrow-down-blue.svg";
 import red_saas from "../../assets/photos/create/red-saas.svg";
 import blue_saas from "../../assets/photos/create/blue-saas.svg";
+import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
+  const location = useLocation();
+
   const [showPlaybooks, setShowPlaybooks] = useState(false);
   const [showFavourites, setShowFavourites] = useState(false);
 
@@ -34,18 +39,38 @@ const Sidebar = () => {
   return (
     <div className="bg-list-title min-w-[280px] px-[12px] border-solid border-r-[1px]  border-r-header-bottom gap-[21.4px] ">
       <img className="py-[16px]" src={playbookLogo} alt="playbookLogo" />
-      <nav className="flex flex-col  gap-[24px]">
-        <button
-          onClick={handlePlaybooks}
-          className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] ">
-          <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
-            <img src={showPlaybooks ? active_arrow : to_arrow} alt="arrow" />
-            {t<string>("COMMON.PLAYBOOKS")}
-          </span>
-          <img src={plus} alt="plus" />
-        </button>
+      <nav className="flex flex-col ">
+        {location.pathname.slice(1) === "Main" ? (
+          <button onClick={handlePlaybooks} 
+            className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] 
+              bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]">  
+
+            <span className="flex flex-row items-center gap-[8px] font-manrope 
+              text-[16px] font-semibold leading-[21.86px] text-buttons-bg "> 
+              <img src={arrow_blue} alt="arrow" className={classNames({"rotate-[90deg]":
+                  showPlaybooks,
+                })} />
+              {t<string>("COMMON.PLAYBOOKS")}
+            </span>
+            <img src={location.pathname.slice(1) === "Main" ? plus_blue : plus} alt="plus" />
+          </button>
+        ) : (
+
+          <button
+            onClick={handlePlaybooks}
+            className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] ">
+            <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
+              <img src={showPlaybooks ? active_arrow : to_arrow} alt="arrow" />
+              {t<string>("COMMON.PLAYBOOKS")}
+            </span>
+            <img src={plus} alt="plus" />
+          </button>          
+           
+        )}
+     
+        {/* playbooks.length !== 0 */}
         {showPlaybooks && (
-          <ul className="flex flex-col gap-[4px] mt-[8px] w-full">
+          <ul className="flex flex-col gap-[4px]  w-full">
             {playbooks.map((playbook: any, index: number) => (
               <button
                 key={playbook.id}
@@ -77,10 +102,10 @@ const Sidebar = () => {
             ))}
           </ul>
         )}
-        <hr />
+        <hr className="my-[24px]" />
         <button
           onClick={handleFavourites}
-          className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] ">
+          className="flex flex-row items-center justify-between  px-[8px] py-[11px] ">
           <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
             <img src={showFavourites ? active_arrow : to_arrow} alt="arrow" />
             {t<string>("COMMON.FAVOURITES")}
@@ -88,7 +113,7 @@ const Sidebar = () => {
           <img src={plus} alt="plus" />
         </button>
         {showFavourites && (
-          <ul className="flex flex-col gap-[4px] pt-[8px]">
+          <ul className="flex flex-col gap-[4px] ">
             {favourites.map((playbook: any, index: number) => (
               <button
                 key={playbook.id}

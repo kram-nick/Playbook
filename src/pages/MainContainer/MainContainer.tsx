@@ -1,13 +1,13 @@
-import NewDraft from "../../components/NewDraft/NewDraft";
+import MainContent from "../../components/MainContent"; 
 import Sidebar from "../../components/Sidebar/Sidebar";
 
-const DraftContainer = () => {
+const MainContainer = () => {
   return (
     <div className="bg-create-bg-main flex flex-row min-h-[100vh]">
       <Sidebar />
-      <NewDraft />
+      <MainContent />
     </div>
   );
 };
 
-export default DraftContainer;
+export default MainContainer;

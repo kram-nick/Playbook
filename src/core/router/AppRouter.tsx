@@ -12,12 +12,17 @@ import AppLayout from "../../components/AppLayout/AppLayout";
 import SqueezeLayout from "../../components/AppLayout/SqueezeLayout/SqueezeLayout";
 import DraftContainer from "../../pages/DraftContainer/DraftContainer";
 import SignUp from "../../components/SignUp";
+import MainContainer from "../../pages/MainContainer";
 
 export const privateRoutes: IRoute[] = [
   {
     path: PrivateUIRoutes.Create,
     element: <DraftContainer />,
   },
+  {
+    path: PrivateUIRoutes.Main,
+    element: <MainContainer />,
+  },  
 ];
 
 export const squeezeRoutes: IRoute[] = [

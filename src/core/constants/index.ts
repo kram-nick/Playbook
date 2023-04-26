@@ -6,3 +6,9 @@ export const Documents = [
   "Copyright Repeat Infringer Policy",
   "CCPA Policy",
 ];
+
+export const User = {
+  name: "Erik Brown",
+  email:"ebrown@mail.com",
+  photo:''
+}

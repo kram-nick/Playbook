@@ -43,7 +43,9 @@ module.exports = {
         "border-input":"#D4D4D4",
         "border-btn":"#DAE0E6",
         "input-paceholder":"#A3A3A3",
-        "checkbox-bg":"#437EF7"
+        "checkbox-bg":"#437EF7",
+        "search-input":"#F5F5F5",
+        "card-border":"#EDEDED"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
@@ -66,6 +68,7 @@ module.exports = {
         "product-bckg": "url('./assets/photos/squeeze/product-bckg.svg')",
         "engineering-bckg": "url('./assets/photos/squeeze/engineering-bckg.svg')",
         "entrepreneur-bckg": "url('./assets/photos/squeeze/entrepreneur-bckg.svg')",
+        "without-photo": "url('./assets/photos/main/user.svg')",
       },
       screens: {
         mobile: "480px"

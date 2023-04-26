@@ -132,5 +132,15 @@
                 "OR":"Or, sign in with your email",
                 "OR_UP":"Or, sign up with your email",
                 "AGREE":"Agree to terms & conditions"
-        }        
+        },
+        "MAIN":{
+               "SEARCH_PLACEHOLDER":"Search playbooks",
+               "TITLE":"Playbooks",
+               "ADD_BTN":"New Playbook",
+               "CREATE_BTN":"Create New Playbook",
+               "EMPTY_TITLE":"Your peace of mind is priceless",
+               "EMPTY_TEXT":"Well done Chris! All your Playbooks are organized in the right place.",
+               "FILTER_TITLE":"Filter",
+               "SORT_TITLE":"Sort"
+        }    
 }
