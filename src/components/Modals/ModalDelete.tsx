@@ -14,7 +14,7 @@ export default function ModalDelete(props: ModalType) {
   return (
     <>
       {props.isOpen && (
-        <div className="modal-overlay" onClick={props.toggle}>
+        <div className="modal-overlay bg-overlay" onClick={props.toggle}>
           <div onClick={(e) => e.stopPropagation()} 
             className="modal-box relative w-[100%] max-w-[400px] px-[24px] py-[24px] shadow-free-trial 
               border-[1px] border-solid border-border-btn bg-white font-poppins">

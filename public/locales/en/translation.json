@@ -146,5 +146,14 @@
                "DELETE":"Delete",
                "PREVIEW":"Preview",
                "SHARE":"Share"
+        },
+        "FIELDS": {
+                "NAME":"Name",
+                "DESCRIPTION":"Description",
+                "COLOR":"Color",
+                "ADD_COVER":"Add Cover",
+                "ADD_ICON":"Add Icon",
+                "ADD_TO_F":"Add to favorites",
+                "PRIVATE":"Private"
         }
 }

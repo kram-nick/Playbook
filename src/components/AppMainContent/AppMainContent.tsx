@@ -15,14 +15,18 @@ import AppMainCard from "../AppMainCard";
  
 import ModalDelete from "../Modals/ModalDelete";
 import useModal from "../../core/hooks/useModal"; 
+import ModalPlaybookDetail from "../Modals/ModalPlaybookDetail";
+import useModalDetail from "../../core/hooks/useModalDetail";
  
  
 const AppMainContent = () => {
   const { t } = useTranslation();  
   const [listType, handleViewType] = useState(true); 
   let { isOpenModal, toggle } = useModal();
+  let { isOpenDetailModal, toggleDetail } = useModalDetail(); 
+
   let [items, setPlaybooks] = useState(playbooks);
-  let [selectedItem, setItem] = useState({ id: 0 });
+  let [selectedItem, setItem] = useState(null);
  
   const handleView = (type:any) => {
     handleViewType(type);
@@ -38,13 +42,30 @@ const AppMainContent = () => {
     toggle(); 
   };
 
-  const deleteItem = (id?: number) => {
-    if(id){
-      setPlaybooks((prevPlaybooks) => prevPlaybooks.filter((playbook) => playbook.id !== id));
+  const deleteItem = (item?: any) => {
+    if(item && item.id){
+      setPlaybooks((prevPlaybooks) => prevPlaybooks.filter((playbook) => playbook.id !== item.id));
     }
+    setItem(null);
     isOpenModal = false;
     toggle();    
   }
+
+  const openDetailModal = (item?: any) => {
+    if(item){ 
+      setItem(item);
+    } else {
+      setItem(null);
+    }
+    isOpenDetailModal = true;
+    toggleDetail();    
+  }  
+
+  const openEditModal = (item?: any) => {
+    openDetailModal(item);
+  }  
+
+   
  
 
   return (
@@ -53,8 +74,8 @@ const AppMainContent = () => {
           <h1 className="text-[24px] font-semibold text-home-title leading-normal">Playbooks</h1>
           <button
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
-            shadow-free-trial h-[40px] gap-[6px]
-          ">
+            shadow-free-trial h-[40px] gap-[6px]"
+            onClick={() => {setItem(null);openDetailModal()}}>
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.ADD_BTN")}
             </span>
@@ -133,7 +154,7 @@ const AppMainContent = () => {
 
                   {items.map((playbook: any, index: number) => (
                     <AppMainCard key={playbook.id} items={items} item={playbook} index={index} typeCard={listType}
-                    onChangeList={openDeleteModal} />
+                    onChangeList={openDeleteModal} onEditItem={openEditModal} />
                   ))}
  
                 </div>
@@ -152,14 +173,32 @@ const AppMainContent = () => {
             </button>
             <button
               className="h-[46px] flex items-center justify-center  
-                py-[8px] px-[15px] bg-buttons-bg rounded-[5px] text-buttons-color 
+                py-[8px] px-[15px] bg-danger rounded-[5px] text-buttons-color 
                 text-[16px] font-medium leading-[20px] shadow-free-trial "
-              onClick={() => {deleteItem(selectedItem?.id)}} 
+              onClick={() => {deleteItem(selectedItem)}} 
               title="Delete" >
                 Yes, delete 
             </button>
           </div>
-        </ModalDelete>        
+        </ModalDelete>     
+        <ModalPlaybookDetail isOpen={isOpenDetailModal} toggle={toggleDetail} item={selectedItem}>
+          <div className="grid grid-cols-2 font-poppins gap-[16px]">
+              <button
+                className="h-[46px] flex items-center justify-center 
+                  py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
+                  text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
+                  title="Cancel"
+                  onClick={toggleDetail} >
+                Cancel 
+              </button>
+              <button
+                className="h-[46px] flex items-center justify-center  
+                  py-[8px] px-[15px] bg-buttons-bg rounded-[5px] text-buttons-color 
+                  text-[16px] font-medium leading-[20px] shadow-free-trial " >
+                  {selectedItem ? 'Save': 'Continue'}
+              </button>
+            </div>          
+        </ModalPlaybookDetail>             
      </div>
     
   );

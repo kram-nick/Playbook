@@ -23,6 +23,22 @@
   }
 }
 
+/* scroll styles */
+html:not(.touch-screen)::-webkit-scrollbar,
+html:not(.touch-screen) *::-webkit-scrollbar {
+  width: 5px;
+  height: 4px;
+}
+html:not(.touch-screen)::-webkit-scrollbar-track,
+html:not(.touch-screen) *::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+html:not(.touch-screen)::-webkit-scrollbar-thumb,
+html:not(.touch-screen) *::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 5px;
+}
+
 .modal-overlay {
   z-index: 9999;
   width: 100vw;
@@ -30,10 +46,37 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* switch styles */
+.switch {
+  position: relative;
+}
+.switch-check:after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px -1px rgba(16, 24, 40, 0.1), 0px 1px 3px rgba(16, 24, 40, 0.1);
+  border-radius: 15px;
+  transition: all 0.2s ease-in;
+}
+input:checked + .switch-check {
+  background: #2b71f7;
+}
+input:checked + .switch-check:after {
+  left: 15px;
+}
+
+/* form select style */
+.css-1u9des2-indicatorSeparator {
+  display: none;
 }
 
 h1 {

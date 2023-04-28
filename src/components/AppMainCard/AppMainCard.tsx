@@ -21,10 +21,11 @@ type CardProps = {
   item: Playbook,
   index: number,
   typeCard: boolean,
-  onChangeList: (id: number) => void;
+  onChangeList: (id: number) => void,
+  onEditItem: (item: Playbook) => void;
 }
 
-const AppMainCard = ({items, item, index, typeCard, onChangeList}: CardProps) => { 
+const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem}: CardProps) => { 
   const { t } = useTranslation(); 
   const {ref, isShow, setIsShow} = useOutside(false);
    
@@ -39,6 +40,10 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList}: CardProps) =>
   const handleDeleteClick = (item: Playbook) => { 
     handleChange(item);
   };
+
+  const handleEditClick = (item: Playbook) => { 
+    onEditItem(item);
+  };  
 
   const handleChange = (item: any) => {
     onChangeList(item); 
@@ -119,7 +124,8 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList}: CardProps) =>
                 <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
                 <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.SHARE")}</span>
               </li>   
-              <li className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border"> 
+              <li onClick={() => handleEditClick(item)} 
+                className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border"> 
                 <img src={icon_settings} alt="" className="w-[24px] h-[24px]" />
                 <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.SETTINGS")}</span>
               </li>                           

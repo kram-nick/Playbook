@@ -45,7 +45,10 @@ module.exports = {
         "input-paceholder":"#A3A3A3",
         "checkbox-bg":"#437EF7",
         "search-input":"#F5F5F5",
-        "card-border":"#EDEDED"
+        "card-border":"#EDEDED",
+        "overlay":"rgba(138, 138, 138, 0.6)",
+        "danger":"#FF3B30",
+        "gray-btn":"#EDEDED"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
