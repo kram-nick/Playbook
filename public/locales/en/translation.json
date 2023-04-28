@@ -141,6 +141,10 @@
                "EMPTY_TITLE":"Your peace of mind is priceless",
                "EMPTY_TEXT":"Well done Chris! All your Playbooks are organized in the right place.",
                "FILTER_TITLE":"Filter",
-               "SORT_TITLE":"Sort"
-        }    
+               "SORT_TITLE":"Sort",
+               "SETTINGS":"Settings",
+               "DELETE":"Delete",
+               "PREVIEW":"Preview",
+               "SHARE":"Share"
+        }
 }

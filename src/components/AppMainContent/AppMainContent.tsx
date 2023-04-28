@@ -9,37 +9,43 @@ import icon_grid from "../../assets/photos/main/icon-grid.svg";
 import icon_grid_default from "../../assets/photos/main/icon-grid-default.svg";
 import icon_row from "../../assets/photos/main/row-vertical.svg";
 import icon_row_default from "../../assets/photos/main/row-vertical-default.svg";
-import poster from "../../assets/photos/main/image-poster.svg";
-import red_saas from "../../assets/photos/create/red-saas.svg";
-import blue_saas from "../../assets/photos/create/blue-saas.svg";
-import dots from "../../assets/photos/main/dots.svg";
-import star from "../../assets/photos/main/star.svg";
-import star_active from "../../assets/photos/main/star-active.svg";
 
 import { playbooks } from "../../core/constants/sidebar";
+import AppMainCard from "../AppMainCard";
+ 
+import ModalDelete from "../Modals/ModalDelete";
+import useModal from "../../core/hooks/useModal"; 
  
  
-
 const AppMainContent = () => {
   const { t } = useTranslation();  
-  const [listType, handleViewType] = useState(true);
+  const [listType, handleViewType] = useState(true); 
+  let { isOpenModal, toggle } = useModal();
+  let [items, setPlaybooks] = useState(playbooks);
+  let [selectedItem, setItem] = useState({ id: 0 });
  
-  const [items, setPlaybooks] = useState(playbooks);
   const handleView = (type:any) => {
     handleViewType(type);
   };
 
-  const handlePriorityClick = (id: number) => {
-    setPlaybooks((prevPlaybooks) =>
-      prevPlaybooks.map((playbook) =>
-        playbook.id === id ? { ...playbook, priority: !playbook.priority } : playbook
-      )
-    );
+  const setSelectedItem = (item:any) => {
+    setItem(item);
+  };  
+
+  const openDeleteModal = (item: any) => {
+    setSelectedItem(item);
+    isOpenModal = true;
+    toggle(); 
   };
 
-  const handleDeleteClick = (id: number) => {
-    setPlaybooks((prevPlaybooks) => prevPlaybooks.filter((playbook) => playbook.id !== id));
-  };
+  const deleteItem = (id?: number) => {
+    if(id){
+      setPlaybooks((prevPlaybooks) => prevPlaybooks.filter((playbook) => playbook.id !== id));
+    }
+    isOpenModal = false;
+    toggle();    
+  }
+ 
 
   return (
      <div className="px-[24px] py-[24px]">
@@ -113,7 +119,8 @@ const AppMainContent = () => {
                         className="flex items-center justify-center bg-white w-[40px] h-[40px] rounded-[5px]
                           border-solid border-[1px] shadow-free-trial border-header-bottom">
                         <img src={listType ?  icon_row_default : icon_row} alt="Type list" />
-                      </button>                     
+                      </button>   
+                                        
                     </div>            
                   </div>
                 </div>
@@ -125,68 +132,34 @@ const AppMainContent = () => {
                   })}>
 
                   {items.map((playbook: any, index: number) => (
-                    <div className={classNames({
-                      "w-[calc(25%-15px)] ":listType,
-                      "pl-[56px] pr-[12px] py-[12px]":!listType,
-                      "flex flex-wrap bg-white rounded-[8px] border-[1px] border-solid card-border relative" : true
-                    })}>
-                      <div className={classNames({
-                        "w-[100%] h-[180px] rounded-t-[8px]":listType,
-                        "w-[40px] h-[40px] rounded-[4px] bg-card-border" : !listType,
-                        "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden" : true
-                      })}>
-                        {playbook.image && (
-                          <img src={poster} alt="" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />
-                        )}
-                         
-                      </div>
-
-                      <div className={classNames({
-                        "pl-[8px] pr-[70px] py-[12px] relative":listType,
-                        "w-[calc(100%-40px)]":!listType,
-                        "item-content flex flex-wrap items-start font-poppins w-[100%]" : true
-                      })} >
-                        {listType && (
-                          <div className="icon w-[28px] h-[28px] flex">
-                            <img src={index > 2 ? red_saas : blue_saas} alt="saas" className="w-[28px] h-[28px]" />                          
-                          </div>
-                        )}
-
-                        <div className={classNames({
-                          "w-[calc(100%-28px)]":listType, 
-                          "text pl-[12px]" : true
-                        })} >
-                          <p className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title">{playbook.title}</p>
-                          <p className="text-[12px] leading-normal text-input-paceholder">{playbook.status} • {playbook.edited}</p>
-                        </div>    
-
-                        <button onClick={() => handlePriorityClick(playbook.id)}
-                          className={classNames({
-                            "top-[12px] right-[34px] w-[20px] h-[20px]":listType,
-                            "top-[50%] left-[16px] mt-[-12px] w-[24px] h-[24px]":!listType,
-                            "absolute" : true
-                          })}>
-                          <img src={playbook.priority ? star_active : star} alt="" className="w-[100%]" />
-                        </button>
-
-                        <button onClick={() => handleDeleteClick(playbook.id)}
-                          className={classNames({
-                            "top-[12px] right-[8px]":listType,
-                            "top-[50%] right-[12px] mt-[-10px]":!listType,
-                            "absolute w-[20px] h-[20px]" : true
-                          })}>
-                          <img src={dots} alt="" />
-                        </button>
-                      </div>
-                    </div>
+                    <AppMainCard key={playbook.id} items={items} item={playbook} index={index} typeCard={listType}
+                    onChangeList={openDeleteModal} />
                   ))}
-
+ 
                 </div>
-              
-
               </div>
             )}            
-        </div>
+        </div> 
+        <ModalDelete isOpen={isOpenModal} toggle={toggle} item={selectedItem}>
+          <div className="grid grid-cols-2 font-poppins gap-[16px]">
+            <button
+              className="h-[46px] flex items-center justify-center 
+                py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
+                text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
+                title="Cancel"
+                onClick={() => {toggle()}} >
+              Cancel 
+            </button>
+            <button
+              className="h-[46px] flex items-center justify-center  
+                py-[8px] px-[15px] bg-buttons-bg rounded-[5px] text-buttons-color 
+                text-[16px] font-medium leading-[20px] shadow-free-trial "
+              onClick={() => {deleteItem(selectedItem?.id)}} 
+              title="Delete" >
+                Yes, delete 
+            </button>
+          </div>
+        </ModalDelete>        
      </div>
     
   );

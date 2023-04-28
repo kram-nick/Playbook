@@ -23,6 +23,19 @@
   }
 }
 
+.modal-overlay {
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 h1 {
   font-size: 24px;
   color: #333;
@@ -416,30 +429,6 @@ i.chevron-down {
   background-image: url(./assets/photos/editor/paragrph.svg);
 }
 
-/* #block-controls span.block-type.h1 {
-  background-image: url(images/icons/type-h1.svg);
-}
-
-#block-controls span.block-type.h2 {
-  background-image: url(images/icons/type-h2.svg);
-}
-
-#block-controls span.block-type.quote {
-  background-image: url(images/icons/chat-square-quote.svg);
-}
-
-#block-controls span.block-type.ul {
-  background-image: url(images/icons/list-ul.svg);
-}
-
-#block-controls span.block-type.ol {
-  background-image: url(images/icons/list-ol.svg);
-}
-
-#block-controls span.block-type.code {
-  background-image: url(images/icons/code.svg);
-} */
-
 .dropdown {
   z-index: 5;
   display: block;
@@ -590,45 +579,9 @@ i.chevron-down {
   vertical-align: -0.25em;
 }
 
-/* i.undo {
-  background-image: url(images/icons/arrow-counterclockwise.svg);
-}
-
-i.redo {
-  background-image: url(images/icons/arrow-clockwise.svg);
-} */
-
 .icon.paragraph {
   background-image: url(./assets/photos/editor/paragrph.svg);
 }
-
-/* .icon.large-heading,
-.icon.h1 {
-  background-image: url(images/icons/type-h1.svg);
-}
-
-.icon.small-heading,
-.icon.h2 {
-  background-image: url(images/icons/type-h2.svg);
-}
-
-.icon.bullet-list,
-.icon.ul {
-  background-image: url(images/icons/list-ul.svg);
-}
-
-.icon.numbered-list,
-.icon.ol {
-  background-image: url(images/icons/list-ol.svg);
-}
-
-.icon.quote {
-  background-image: url(images/icons/chat-square-quote.svg);
-}
-
-.icon.code {
-  background-image: url(images/icons/code.svg);
-} */
 
 i.bold {
   background-image: url(./assets/photos/editor/bold.svg);
@@ -642,14 +595,6 @@ i.underline {
   background-image: url(./assets/photos/editor/underline.svg);
 }
 
-/* i.strikethrough {
-  background-image: url(images/icons/type-strikethrough.svg);
-}
-
-i.code {
-  background-image: url(images/icons/code.svg);
-} */
-
 i.link {
   background-image: url(./assets/photos/editor/link.svg);
 }
@@ -662,13 +607,6 @@ i.center-align {
   background-image: url(./assets/photos/editor/center.svg);
 }
 
-/* i.right-align {
-  background-image: url(./assets/photos/editor/ri.svg);
-} */
-
-/* i.justify-align {
-  background-image: url(images/icons/justify.svg);
-} */
 .editor-placeholder {
   color: #999;
   overflow: hidden;

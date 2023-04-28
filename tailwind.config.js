@@ -56,7 +56,8 @@ module.exports = {
         "review-card": "0px 13px 60px rgba(53, 52, 116, 0.08);",
         "3xl": "0px 13px 60px rgba(53, 52, 116, 0.08)",
         "inp-squeeze": "0px 1px 2px rgba(16, 24, 40, 0.04);",
-        "free-trial": " 0px 1px 2px rgba(16, 24, 40, 0.04);"
+        "free-trial": " 0px 1px 2px rgba(16, 24, 40, 0.04);",
+        "dropmenu":"0px 1px 2px -1px rgba(16, 24, 40, 0.1), 0px 1px 3px rgba(16, 24, 40, 0.1);"
       },
       backgroundImage: {
         "sign": "url('./assets/photos/sign/bg-sign.svg')",
