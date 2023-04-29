@@ -13,10 +13,11 @@ import icon_row_default from "../../assets/photos/main/row-vertical-default.svg"
 import { playbooks } from "../../core/constants/sidebar";
 import AppMainCard from "../AppMainCard";
  
-import ModalDelete from "../Modals/ModalDelete";
-import useModal from "../../core/hooks/useModal"; 
+import ModalDelete from "../Modals/ModalDelete"; 
 import ModalPlaybookDetail from "../Modals/ModalPlaybookDetail";
-import useModalDetail from "../../core/hooks/useModalDetail";
+import {useModal,useModalDetail, useModalShare, useModalSocial} from "../../core/hooks/useModal";
+import ModalShare from "../Modals/ModalShare";
+import ModalShareSocial from "../Modals/ModalShareSocial";
  
  
 const AppMainContent = () => {
@@ -24,6 +25,8 @@ const AppMainContent = () => {
   const [listType, handleViewType] = useState(true); 
   let { isOpenModal, toggle } = useModal();
   let { isOpenDetailModal, toggleDetail } = useModalDetail(); 
+  let { isOpenShareModal, toggleShare } = useModalShare(); 
+  let { isOpenSocialModal, toggleSocial } = useModalSocial(); 
 
   let [items, setPlaybooks] = useState(playbooks);
   let [selectedItem, setItem] = useState(null);
@@ -64,7 +67,24 @@ const AppMainContent = () => {
   const openEditModal = (item?: any) => {
     openDetailModal(item);
   }  
-
+  const openShareModal = (item?: any) => {
+    if(item){ 
+      setItem(item);
+    } else {
+      setItem(null);
+    }
+    isOpenShareModal = true;
+    toggleShare();   
+  }   
+  const openSocialModal = (item?: any) => {
+    if(item){ 
+      setItem(item);
+    } else {
+      setItem(null);
+    }
+    isOpenSocialModal = true;
+    toggleSocial();   
+  }  
    
  
 
@@ -154,7 +174,7 @@ const AppMainContent = () => {
 
                   {items.map((playbook: any, index: number) => (
                     <AppMainCard key={playbook.id} items={items} item={playbook} index={index} typeCard={listType}
-                    onChangeList={openDeleteModal} onEditItem={openEditModal} />
+                    onChangeList={openDeleteModal} onEditItem={openEditModal} onShareItem={openShareModal} onSocialModal={openSocialModal} />
                   ))}
  
                 </div>
@@ -198,7 +218,9 @@ const AppMainContent = () => {
                   {selectedItem ? 'Save': 'Continue'}
               </button>
             </div>          
-        </ModalPlaybookDetail>             
+        </ModalPlaybookDetail>
+        <ModalShare  isOpen={isOpenShareModal} toggle={toggleShare} item={selectedItem}></ModalShare>          
+        <ModalShareSocial  isOpen={isOpenSocialModal} toggle={toggleSocial} item={selectedItem}></ModalShareSocial>          
      </div>
     
   );

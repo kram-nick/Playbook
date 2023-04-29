@@ -149,11 +149,17 @@
         },
         "FIELDS": {
                 "NAME":"Name",
+                "EMAIL":"Email",
                 "DESCRIPTION":"Description",
                 "COLOR":"Color",
                 "ADD_COVER":"Add Cover",
                 "ADD_ICON":"Add Icon",
                 "ADD_TO_F":"Add to favorites",
-                "PRIVATE":"Private"
+                "PRIVATE":"Private",
+                "INVITE":"Invite",
+                "PUBLIC_LINK":"Public Link",
+                "PRIVATE_LINK":"Private Link",
+                "COPY_LINK":"Copy Link",
+                "EXPORT":"Export"
         }
 }

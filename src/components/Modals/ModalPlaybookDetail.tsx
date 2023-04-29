@@ -37,12 +37,8 @@ export const colourOptions: readonly ColourOption[] = [
 ];
 
 export default function ModalPlaybookDetail(props: ModalType) {
-  const { t } = useTranslation();  
-  const [items, setItems] = useState();
-
-  console.log(items);
-
- 
+  const { t } = useTranslation();   
+  const [name, setName] = useState(""); 
 
   const dot = (color = 'transparent') => ({
     alignItems: 'center',
@@ -96,6 +92,8 @@ export default function ModalPlaybookDetail(props: ModalType) {
     singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
   };
 
+
+  
   return (
     <>
       {props.isOpen && (
@@ -104,7 +102,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
             className="modal-box relative w-[100%] max-w-[530px] px-[24px] py-[24px] shadow-free-trial 
               border-[1px] border-solid border-border-btn bg-white font-poppins">
             <div className="flex items-center justify-between mb-[24px]">
-              <p className="text-[20px] text-home-title leading-[26px] tracking-[-0.1px]">
+              <p className="text-[20px] font-medium text-home-title leading-[26px] tracking-[-0.1px]">
                 {props.item ? 'Edit Details' : 'Add a Playbook'}</p>
               <button className="absolute top-[16px] right-[16px]">
                 <img src={icon_close} alt="" onClick={props.toggle} />
@@ -118,6 +116,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
                   className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-border-input
                   border-solid border-[1px] shadow-free-trial min-w-[100%]
                   leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+                  onChange={e => setName(e.target.value)}
                   value={props.item ? props.item.title : ''}
                 />                
               </div>
@@ -134,7 +133,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
                 <label htmlFor="" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("FIELDS.COLOR")}</label>
          
                 <Select
-                  defaultValue={colourOptions[2]}
+                  defaultValue={colourOptions[1]}
                   options={colourOptions}
                   styles={colourStyles}
                 />

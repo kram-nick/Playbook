@@ -23,9 +23,11 @@ type CardProps = {
   typeCard: boolean,
   onChangeList: (id: number) => void,
   onEditItem: (item: Playbook) => void;
+  onShareItem: (item: Playbook) => void;
+  onSocialModal: (item: Playbook) => void;
 }
 
-const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem}: CardProps) => { 
+const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, onShareItem, onSocialModal}: CardProps) => { 
   const { t } = useTranslation(); 
   const {ref, isShow, setIsShow} = useOutside(false);
    
@@ -37,6 +39,14 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem}: C
     setPriority(!priority); 
   };
 
+  const handleChange = (item: any) => {
+    onChangeList(item); 
+  };
+ 
+  const handleOpen = () => {
+    setIsShow(!isShow);
+  };  
+
   const handleDeleteClick = (item: Playbook) => { 
     handleChange(item);
   };
@@ -44,15 +54,12 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem}: C
   const handleEditClick = (item: Playbook) => { 
     onEditItem(item);
   };  
-
-  const handleChange = (item: any) => {
-    onChangeList(item); 
-  };
- 
-
-  const handleOpen = () => {
-    setIsShow(!isShow);
-  };  
+  const handleShareClick = (item: Playbook) => { 
+    onShareItem(item);
+  };      
+  const handleSocialClick = (item: Playbook) => { 
+    onSocialModal(item);
+  };    
 
   return(
     <div className={classNames({
@@ -116,11 +123,13 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem}: C
             <ul className="menu absolute right-[0] top-[calc(100%+9px)] bg-white py-[8px]
               rounded-[5px] border-[1px] border-solid border-header-bottom shadow-dropmenu
               font-poppins min-w-[150px] z-10" ref={ref}>
-              <li className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border">
+              <li onClick={() => handleSocialClick(item)}
+               className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border">
                 <img src={icon_preview} alt=""  className="w-[24px] h-[24px]" />
                 <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.PREVIEW")}</span>
               </li>
-              <li className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border"> 
+              <li onClick={() => handleShareClick(item)} 
+                className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border"> 
                 <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
                 <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.SHARE")}</span>
               </li>   

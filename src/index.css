@@ -78,7 +78,33 @@ input:checked + .switch-check:after {
 .css-1u9des2-indicatorSeparator {
   display: none;
 }
-
+.custom-invite .select-custom {
+  position: absolute;
+  right: 70px;
+  top: 0;
+}
+.custom-invite .css-t3ipsp-control,
+.custom-invite .css-13cymwt-control {
+  border: 0 !important;
+  height: 38px;
+  border-radius: 0 !important;
+  background-color: transparent;
+  box-shadow: 0 0 0 !important;
+  padding: 0 16px 0 8px;
+  min-width: 120px;
+  max-width: 140px;
+}
+.custom-invite .select-custom .css-15lsz6c-indicatorContainer,
+.custom-invite .select-custom .css-1xc3v61-indicatorContainer {
+  color: #606266;
+  padding: 0;
+  margin-left: 4px;
+}
+.custom-invite .select-custom .css-qbdosj-Input {
+  height: 40px;
+  padding: 0;
+  margin: 0;
+}
 h1 {
   font-size: 24px;
   color: #333;
