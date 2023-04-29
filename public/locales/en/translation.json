@@ -160,6 +160,13 @@
                 "PUBLIC_LINK":"Public Link",
                 "PRIVATE_LINK":"Private Link",
                 "COPY_LINK":"Copy Link",
-                "EXPORT":"Export"
+                "EXPORT":"Export",
+                "CLICK_UPLOAD":"Click to upload",
+                "DROP":"or drag and drop",
+                "B_FILES":"Browse Files",
+                "Y_COMPUTER":"from your Computer"
+        },
+        "BTNS":{
+                "REMOVE":"Remove"
         }
 }

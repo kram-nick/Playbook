@@ -86,7 +86,7 @@ input:checked + .switch-check:after {
 .custom-invite .css-t3ipsp-control,
 .custom-invite .css-13cymwt-control {
   border: 0 !important;
-  height: 38px;
+  height: 40px;
   border-radius: 0 !important;
   background-color: transparent;
   box-shadow: 0 0 0 !important;
@@ -110,6 +110,38 @@ input:checked + .switch-check:after {
   padding: 0;
 }
 
+/* EmojiPickerReact  */
+.customEmojiPicker .EmojiPickerReact.epr-main {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+.customEmojiPicker .EmojiPickerReact .epr-header-overlay {
+  padding: 0 !important;
+  margin-bottom: 24px;
+}
+.customEmojiPicker .epr-emoji-variation-picker,
+.customEmojiPicker .EmojiPickerReact .epr-emoji-category-label,
+.customEmojiPicker .EmojiPickerReact .epr-category-nav {
+  display: none !important;
+}
+.customEmojiPicker .EmojiPickerReact .epr-emoji-category-content {
+  margin: 0 !important;
+}
+.customEmojiPicker .EmojiPickerReact .epr-search-container input.epr-search {
+  background-color: #fff !important;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding-left: 34px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.1px;
+  color: #606266;
+}
+/* EDITOR */
 h1 {
   font-size: 24px;
   color: #333;
