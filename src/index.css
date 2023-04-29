@@ -105,6 +105,11 @@ input:checked + .switch-check:after {
   padding: 0;
   margin: 0;
 }
+.custom-invite .css-13cymwt-control div:nth-child(1),
+.custom-invite .css-t3ipsp-control div:nth-child(1) {
+  padding: 0;
+}
+
 h1 {
   font-size: 24px;
   color: #333;
