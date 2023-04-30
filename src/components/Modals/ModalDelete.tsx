@@ -28,7 +28,6 @@ export default function ModalDelete(props: ModalType) {
               <div className="title text-[20px] font-medium mb-[8px] text-home-title leading-normal tracking-[-0.1px]">Delete</div>
               <p className="text-[16px] leading-normal text-simple-text tracking-[-0.1px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tincidunt sit senectus.</p>
             </div>
- 
             {props.children}
           </div>
         </div>
