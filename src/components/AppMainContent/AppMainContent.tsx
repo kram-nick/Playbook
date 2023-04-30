@@ -18,7 +18,9 @@ import ModalPlaybookDetail from "../Modals/ModalPlaybookDetail";
 import {useModal,useModalDetail, useModalShare, useModalSocial} from "../../core/hooks/useModal";
 import ModalShare from "../Modals/ModalShare";
 import ModalShareSocial from "../Modals/ModalShareSocial";
+import { Filters } from "../../core/constants";
  
+
  
 const AppMainContent = () => {
   const { t } = useTranslation();  
@@ -27,6 +29,7 @@ const AppMainContent = () => {
   let { isOpenDetailModal, toggleDetail } = useModalDetail(); 
   let { isOpenShareModal, toggleShare } = useModalShare(); 
   let { isOpenSocialModal, toggleSocial } = useModalSocial(); 
+  const [activeTab, setActiveTab] = useState(Filters[1]);
 
   let [items, setPlaybooks] = useState(playbooks);
   let [selectedItem, setItem] = useState(null);
@@ -46,9 +49,12 @@ const AppMainContent = () => {
   };
 
   const deleteItem = (item?: any) => {
+     
     if(item && item.id){
-      setPlaybooks((prevPlaybooks) => prevPlaybooks.filter((playbook) => playbook.id !== item.id));
+      setPlaybooks(items.filter((playbook) => playbook.id !== item.id));
     }
+    console.log(item)
+    console.log(items);
     setItem(null);
     isOpenModal = false;
     toggle();    
@@ -86,11 +92,10 @@ const AppMainContent = () => {
     toggleSocial();   
   }  
    
- 
 
   return (
-     <div className="px-[24px] py-[24px]">
-        <div className="flex items-center justify-between font-poppins w-[100%] pb-[20px]">
+     <div className="px-[24px] py-[24px] max-lg:px-[32px] max-[690px]:px-[16px] max-[690px]:py-[12px]">
+        <div className="flex items-center justify-between font-poppins w-[100%] pb-[20px] max-lg:pb-[16px] max-[690px]:hidden">
           <h1 className="text-[24px] font-semibold text-home-title leading-normal">Playbooks</h1>
           <button
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
@@ -131,20 +136,33 @@ const AppMainContent = () => {
 
             {items.length !== 0 && (
               <div>
-                <div className="flex items-center justify-between font-poppins w-[100%] pb-[20px]">
-                  <div className="flex items-center">
-                    <span className="mr-[13px] text-[16px] leading-[26px] tracking-[-0.1px] 
-                      text-input-paceholder">{t<string>("MAIN.FILTER_TITLE")}</span>
-                    <div className="flex items-center">
-                       <span className="text-[16px] leading-[20px] font-medium text-simple-text mr-[6px]">All files</span>
-                      <img src={icon_down_gray} alt="arrow filter" />
-                    </div>
+                <div className="flex items-start flex-wrap justify-between font-poppins w-[100%] pb-[24px] max-lg:pb-[32px]
+                  max-[690px]:flex-col-reverse max-[690px]:pb-[16px]">
+                  <div className="flex items-end gap-[24px] border-b-[1px] border-solid border-header-bottom 
+                    max-[690px]:overflow-x-auto max-[690px]:whitespace-nowrap max-[690px]:ml-[-16px] max-[690px]:mr-[-16px]
+                    max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px]">
+                      {Filters.map((item: any, index: number) => (
+                        <div key={index}  onClick={() => setActiveTab(item)}
+                          className={classNames({
+                            "text-buttons-bg": activeTab.id === index + 1,
+                            "text-nav-txt-private": activeTab.id !== index + 1,
+                            "tracking-[-0.1px] relative transition duration-150 ease-in text-[16px] leading-[24px] cursor-pointer pt-[7px] pb-[11px]" : true
+                          })}>
+                          {item.title}
+                          <div  className={classNames({
+                              "w-[100%]": activeTab.id === index + 1,
+                              "w-[0%]": activeTab.id !== index + 1,
+                              "absolute bottom-[-1px] left-[-1px] h-[2px] transition duration-300 ease-in bg-buttons-bg" : true
+                            })}>
+                          </div>
+                        </div>
+                      ))}                    
                   </div>
 
-                  <div className="options flex items-center">
+                  <div className="options flex items-center max-[690px]:w-[100%] max-[690px]:justify-between max-[690px]:pb-[16px]">
                     <div className="flex items-center">
                       <span className="mr-[13px] text-[16px] leading-[26px] tracking-[-0.1px] 
-                        text-simple-text">{t<string>("MAIN.SORT_TITLE")}</span>
+                        text-simple-text max-md:hidden">{t<string>("MAIN.SORT_TITLE")}</span>
                       <div className="flex items-center">
                         <span className="text-[16px] leading-[20px] font-medium text-simple-text mr-[6px]">Last viewed</span>
                         <img src={icon_down_gray} alt="arrow filter" />
@@ -152,13 +170,19 @@ const AppMainContent = () => {
                     </div>   
                     <div className="flex items-center gap-[12px] ml-[32px]">
                       <button onClick={() => {handleView(true)}} 
-                        className="flex items-center justify-center bg-white w-[40px] h-[40px] rounded-[5px]
-                          border-solid border-[1px] shadow-free-trial border-header-bottom">
+                        className={classNames({
+                          "bg-white max-[690px]:hidden":listType,
+                          "flex items-center justify-center w-[40px] h-[40px]":true, 
+                          "rounded-[5px] border-solid border-[1px] shadow-free-trial border-header-bottom": true
+                        })}>
                         <img src={listType ?  icon_grid : icon_grid_default} alt="Type cards" />
                       </button>
                       <button onClick={() => {handleView(false)}} 
-                        className="flex items-center justify-center bg-white w-[40px] h-[40px] rounded-[5px]
-                          border-solid border-[1px] shadow-free-trial border-header-bottom">
+                        className={classNames({
+                          "bg-white max-[690px]:hidden":!listType,
+                          "flex items-center justify-center w-[40px] h-[40px] ":true, 
+                          "rounded-[5px] border-solid border-[1px] shadow-free-trial border-header-bottom": true
+                        })}>
                         <img src={listType ?  icon_row_default : icon_row} alt="Type list" />
                       </button>   
                                         
@@ -168,7 +192,7 @@ const AppMainContent = () => {
 
                 <div className={
                   classNames({
-                   "flex gap-[20px] flex-wrap":listType,
+                   "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":listType,
                    "grid gap-y-[12px]":!listType,
                   })}>
 
@@ -202,7 +226,8 @@ const AppMainContent = () => {
           </div>
         </ModalDelete>     
         <ModalPlaybookDetail isOpen={isOpenDetailModal} toggle={toggleDetail} item={selectedItem}>
-          <div className="grid grid-cols-2 font-poppins gap-[16px]">
+          <div className="grid grid-cols-2 font-poppins gap-[16px] max-sm:absolute max-sm:bottom-[24px] 
+            max-sm:left-[16px] max-sm:right-[16px]">
               <button
                 className="h-[46px] flex items-center justify-center 
                   py-[8px] px-[15px] bg-white rounded-[5px] text-home-title

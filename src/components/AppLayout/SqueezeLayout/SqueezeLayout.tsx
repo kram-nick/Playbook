@@ -1,10 +1,13 @@
-import { Outlet } from "react-router-dom";
-import Mobile from "../Common/Header/Mobile/Mobile";
+import { Outlet, useLocation } from "react-router-dom"; 
 
-const SqueezeLayout = () => {
+const SqueezeLayout = () => { 
   return (
     <>
-      <Mobile />
+
+      {/* {location.pathname.slice(1) !== "main" && location.pathname.slice(1) !== "create" ? (
+        <Mobile />
+      ) : ('')}         */}
+       
       <Outlet />
     </>
   );

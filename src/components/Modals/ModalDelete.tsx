@@ -16,8 +16,8 @@ export default function ModalDelete(props: ModalType) {
       {props.isOpen && (
         <div className="modal-overlay bg-overlay" onClick={props.toggle}>
           <div onClick={(e) => e.stopPropagation()} 
-            className="modal-box relative w-[100%] max-w-[400px] px-[24px] py-[24px] shadow-free-trial 
-              border-[1px] border-solid border-border-btn bg-white font-poppins">
+            className="modal-box relative w-[100%] max-w-[400px] px-[24px] py-[24px] shadow-free-trial rounded-[5px]
+              border-[1px] border-solid border-border-btn bg-white font-poppins max-[690px]:w-[calc(100%-32px)]">
             <div className="flex items-center justify-between mb-[24px]">
                 <img src={icon_delete} alt=""  />
               <button className="absolute top-[16px] right-[16px]">

@@ -14,8 +14,9 @@ const AppLayout = () => {
         <TermsHeader />
       ) : (
         <Header />
-      )}
+      )} 
       <Mobile />
+            
       <Outlet />
 
       {location.pathname.slice(1) !== "sign-in" && location.pathname.slice(1) !== "sign-up" ? (

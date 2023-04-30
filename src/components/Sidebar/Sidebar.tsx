@@ -21,6 +21,7 @@ const Sidebar = () => {
 
   const [showPlaybooks, setShowPlaybooks] = useState(false);
   const [showFavourites, setShowFavourites] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
 
   const { data } = useAppSelector((state) => state.app);
 
@@ -36,117 +37,135 @@ const Sidebar = () => {
     setShowFavourites(!showFavourites);
   };
 
+  const handleSideBar = () => { 
+    setShowSidebar(!showSidebar);
+  };
+
   return (
-    <div className="bg-list-title min-w-[280px] px-[12px] border-solid border-r-[1px]  border-r-header-bottom gap-[21.4px] ">
-      <img className="py-[16px]" src={playbookLogo} alt="playbookLogo" />
-      <nav className="flex flex-col ">
-        {location.pathname.slice(1) === "Main" ? (
-          <button onClick={handlePlaybooks} 
-            className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] 
-              bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]">  
+    <div>
+      <div  
+      className={classNames({
+        "bg-list-title min-w-[280px] px-[12px] border-solid border-r-[1px]  border-r-header-bottom gap-[21.4px] max-lg:left-[-350px] ":true,
+        "max-lg:fixed max-lg:top-[0] min-h-[100vh] max-lg:z-[100] transition duration-500 ease-in":true,
+        "max-lg:left-[0px!important]": showSidebar,
+      })}
+      >
+        <img className="py-[16px]" src={playbookLogo} alt="playbookLogo" />
+        <nav className="flex flex-col ">
+          {location.pathname.slice(1) === "Main" ? (
+            <button onClick={handlePlaybooks} 
+              className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] 
+                bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]">  
 
-            <span className="flex flex-row items-center gap-[8px] font-manrope 
-              text-[16px] font-semibold leading-[21.86px] text-buttons-bg "> 
-              <img src={arrow_blue} alt="arrow" className={classNames({"rotate-[90deg]":
-                  showPlaybooks,
-                })} />
-              {t<string>("COMMON.PLAYBOOKS")}
-            </span>
-            <img src={location.pathname.slice(1) === "Main" ? plus_blue : plus} alt="plus" />
-          </button>
-        ) : (
+              <span className="flex flex-row items-center gap-[8px] font-manrope 
+                text-[16px] font-semibold leading-[21.86px] text-buttons-bg "> 
+                <img src={arrow_blue} alt="arrow" className={classNames({"rotate-[90deg]":
+                    showPlaybooks,
+                  })} />
+                {t<string>("COMMON.PLAYBOOKS")}
+              </span>
+              <img src={location.pathname.slice(1) === "Main" ? plus_blue : plus} alt="plus" />
+            </button>
+          ) : (
 
+            <button
+              onClick={handlePlaybooks}
+              className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] ">
+              <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
+                <img src={showPlaybooks ? active_arrow : to_arrow} alt="arrow" />
+                {t<string>("COMMON.PLAYBOOKS")}
+              </span>
+              <img src={plus} alt="plus" />
+            </button>          
+            
+          )}
+      
+          {/* playbooks.length !== 0 */}
+          {showPlaybooks && (
+            <ul className="flex flex-col gap-[4px]  w-full">
+              {playbooks.map((playbook: any, index: number) => (
+                <button
+                  key={playbook.id}
+                  onClick={() =>
+                    dispatch(
+                      setSelectedData({
+                        id: playbook.id,
+                        selected: true,
+                        title: playbook.title,
+                      })
+                    )
+                  }
+                  className={classNames({
+                    "flex flex-row px-[8px] py-[6px] gap-[8px] items-center":
+                      true,
+                    "bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]":
+                      playbook.id === data.id,
+                  })}>
+                  <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
+                  <span
+                    className={classNames({
+                      "font-poppins font-normal text-top-sub-secondary text-[16px] leading-[26px] tracking-[-0.1px]":
+                        true,
+                      "text-top-engineering": playbook.id === data.id,
+                    })}>
+                    {playbook.title}
+                  </span>
+                </button>
+              ))}
+            </ul>
+          )}
+          <hr className="my-[24px]" />
           <button
-            onClick={handlePlaybooks}
-            className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] ">
+            onClick={handleFavourites}
+            className="flex flex-row items-center justify-between  px-[8px] py-[11px] ">
             <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
-              <img src={showPlaybooks ? active_arrow : to_arrow} alt="arrow" />
-              {t<string>("COMMON.PLAYBOOKS")}
+              <img src={showFavourites ? active_arrow : to_arrow} alt="arrow" />
+              {t<string>("COMMON.FAVOURITES")}
             </span>
             <img src={plus} alt="plus" />
-          </button>          
-           
-        )}
-     
-        {/* playbooks.length !== 0 */}
-        {showPlaybooks && (
-          <ul className="flex flex-col gap-[4px]  w-full">
-            {playbooks.map((playbook: any, index: number) => (
-              <button
-                key={playbook.id}
-                onClick={() =>
-                  dispatch(
-                    setSelectedData({
-                      id: index,
-                      selected: true,
-                      title: playbook.title,
-                    })
-                  )
-                }
-                className={classNames({
-                  "flex flex-row px-[8px] py-[6px] gap-[8px] items-center":
-                    true,
-                  "bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]":
-                    playbook.id === data.id,
-                })}>
-                <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
-                <span
+          </button>
+          {showFavourites && (
+            <ul className="flex flex-col gap-[4px] ">
+              {favourites.map((playbook: any, index: number) => (
+                <button
+                  key={playbook.id}
+                  onClick={() =>
+                    dispatch(
+                      setSelectedData({
+                        id: playbook.id,
+                        selected: true,
+                        title: playbook.title,
+                      })
+                    )
+                  }
                   className={classNames({
-                    "font-poppins font-normal text-top-sub-secondary text-[16px] leading-[26px] tracking-[-0.1px]":
+                    "flex flex-row px-[8px] py-[6px] gap-[8px] items-center":
                       true,
-                    "text-top-engineering": playbook.id === data.id,
+                    "bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]":
+                      playbook.id === data.id,
                   })}>
-                  {playbook.title}
-                </span>
-              </button>
-            ))}
-          </ul>
-        )}
-        <hr className="my-[24px]" />
-        <button
-          onClick={handleFavourites}
-          className="flex flex-row items-center justify-between  px-[8px] py-[11px] ">
-          <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
-            <img src={showFavourites ? active_arrow : to_arrow} alt="arrow" />
-            {t<string>("COMMON.FAVOURITES")}
-          </span>
-          <img src={plus} alt="plus" />
-        </button>
-        {showFavourites && (
-          <ul className="flex flex-col gap-[4px] ">
-            {favourites.map((playbook: any, index: number) => (
-              <button
-                key={playbook.id}
-                onClick={() =>
-                  dispatch(
-                    setSelectedData({
-                      id: playbook.id,
-                      selected: true,
-                      title: playbook.title,
-                    })
-                  )
-                }
-                className={classNames({
-                  "flex flex-row px-[8px] py-[6px] gap-[8px] items-center":
-                    true,
-                  "bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]":
-                    playbook.id === data.id,
-                })}>
-                <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
-                <span
-                  className={classNames({
-                    "font-poppins font-normal text-top-sub-secondary text-[16px] leading-[26px] tracking-[-0.1px]":
-                      true,
-                    "text-top-engineering": playbook.id === data.id,
-                  })}>
-                  {playbook.title}
-                </span>
-              </button>
-            ))}
-          </ul>
-        )}
-      </nav>
+                  <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
+                  <span
+                    className={classNames({
+                      "font-poppins font-normal text-top-sub-secondary text-[16px] leading-[26px] tracking-[-0.1px]":
+                        true,
+                      "text-top-engineering": playbook.id === data.id,
+                    })}>
+                    {playbook.title}
+                  </span>
+                </button>
+              ))}
+            </ul>
+          )}
+        </nav>
+      </div>
+
+      {showSidebar && (
+        <div onClick={handleSideBar} 
+          className="side-overlay fixed left-[0px] top-[0px] w-[100%] h-[100vh] bg-side-overlay z-[99] min-[1024px]:hidden"></div>
+      )}
     </div>
+ 
   );
 };
 

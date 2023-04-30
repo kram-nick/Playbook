@@ -39,16 +39,16 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
     setPriority(!priority); 
   };
 
-  const handleChange = (item: any) => {
-    onChangeList(item); 
-  };
+  // const handleChange = (item: any) => {
+  //   onChangeList(item); 
+  // };
  
   const handleOpen = () => {
     setIsShow(!isShow);
   };  
 
-  const handleDeleteClick = (item: Playbook) => { 
-    handleChange(item);
+  const handleDeleteClick = (item: any) => { 
+    onChangeList(item);
   };
 
   const handleEditClick = (item: Playbook) => { 
@@ -63,14 +63,14 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
 
   return(
     <div className={classNames({
-      "w-[calc(25%-15px)] ":typeCard,
+      "w-[calc(25%-15px)] max-xl:w-[calc(33.33%-16px)] max-[690px]:w-[100%]":typeCard,
       "pl-[56px] pr-[12px] py-[12px]":!typeCard,
       "flex flex-wrap bg-white rounded-[8px] border-[1px] border-solid card-border relative" : true
     })}>
       <div className={classNames({
         "w-[100%] h-[180px] rounded-t-[8px]":typeCard,
-        "w-[40px] h-[40px] rounded-[4px] bg-card-border" : !typeCard,
-        "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden" : true
+        "w-[40px] h-[40px] rounded-[4px]" : !typeCard,
+        "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border" : true
       })}>
         {playbook.image && (
           <img src={poster} alt="" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />
@@ -79,7 +79,7 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
       </div>
 
       <div className={classNames({
-        "pl-[8px] pr-[70px] py-[12px] relative":typeCard,
+        "pl-[8px] pr-[70px] py-[12px] relative max-lg:pr-[25px]":typeCard,
         "w-[calc(100%-40px)]":!typeCard,
         "item-content flex flex-wrap items-start font-poppins w-[100%]" : true
       })} >
@@ -99,7 +99,7 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
 
         <button onClick={() => handlePriorityClick()}
           className={classNames({
-            "top-[12px] right-[34px] w-[20px] h-[20px]":typeCard,
+            "top-[12px] right-[34px] w-[20px] h-[20px] max-lg:hidden":typeCard,
             "top-[50%] left-[16px] mt-[-12px] w-[24px] h-[24px]":!typeCard,
             "absolute" : true
           })}>

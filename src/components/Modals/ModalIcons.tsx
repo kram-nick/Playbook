@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
 import icon_add from "../../assets/photos/main/plus-upload.svg"; 
+import { tabsIcons } from "../../core/constants";
  
 
 interface ModalType {
@@ -14,26 +15,11 @@ interface ModalType {
   item?: any;
   toggle: () => void;
 }
-
-const tabs = [
-  {
-    id: 1,
-    title: 'Emojis'
-  },
-  {
-    id: 2,
-    title: 'Icons'
-  },
-  {
-    id: 3,
-    title: 'Custom'
-  }
-]
-
+ 
  
 export default function ModalIcons(props: ModalType) { 
   const { t } = useTranslation();   
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [activeTab, setActiveTab] = useState(tabsIcons[0]);
   return (
     <>
       {props.isOpen && (
@@ -46,7 +32,7 @@ export default function ModalIcons(props: ModalType) {
                 <div className="flex items-center w-[100%] justify-between border-b-[1px] border-solid 
                   pt-[7px] pb-[15px]">
                   <div className="flex items-end gap-[24px]">
-                    {tabs.map((item: any, index: number) => (
+                    {tabsIcons.map((item: any, index: number) => (
                       <div key={index}  onClick={() => setActiveTab(item)}
                         className={classNames({
                           "font-semibold text-buttons-bg": activeTab.id === index + 1,

@@ -1,6 +1,6 @@
 export const playbooks = [
   {
-    id: 0,
+    id: 1,
     title: "Product Playbook",
     status:"Draft",
     edited:"Edited 2 days ago",
@@ -8,7 +8,7 @@ export const playbooks = [
     image: true
   },
   {
-    id: 1,
+    id: 2,
     title: "Saas Playbook",
     status:"Draft",
     edited:"Edited 4 days ago",
@@ -16,7 +16,7 @@ export const playbooks = [
     image: true
   },
   {
-    id: 2,
+    id: 3,
     title: "Product Playbook 1",
     status:"Draft",
     edited:"Edited 3 days ago",
@@ -24,7 +24,7 @@ export const playbooks = [
     image:false
   },
   {
-    id: 3,
+    id: 4,
     title: "Product Playbook",
     status:"Draft",
     edited:"Edited 6 days ago",
@@ -32,7 +32,7 @@ export const playbooks = [
     image:false
   },
   {
-    id: 4,
+    id: 5,
     title: "Product Playbook",
     status:"Draft",
     edited:"Edited 2 days ago",
