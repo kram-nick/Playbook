@@ -13,12 +13,17 @@ import SqueezeLayout from "../../components/AppLayout/SqueezeLayout/SqueezeLayou
 import DraftContainer from "../../pages/DraftContainer/DraftContainer";
 import SignUp from "../../components/SignUp";
 import MainContainer from "../../pages/MainContainer";
+import Chapters from "../../pages/Chapters";
 
 export const privateRoutes: IRoute[] = [
   {
     path: PrivateUIRoutes.Create,
     element: <DraftContainer />,
   },
+  {
+    path: PrivateUIRoutes.Chapters,
+    element: <Chapters />,
+  },  
   {
     path: PrivateUIRoutes.Main,
     element: <MainContainer />,

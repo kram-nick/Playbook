@@ -49,7 +49,8 @@ module.exports = {
         "overlay":"rgba(138, 138, 138, 0.6)",
         "side-overlay":"rgba(92, 92, 92, 0.5);",
         "danger":"#FF3B30",
-        "gray-btn":"#EDEDED"
+        "gray-btn":"#EDEDED",
+        "chapter-color":"#F6F6F6"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],

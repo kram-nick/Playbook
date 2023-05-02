@@ -167,6 +167,14 @@
                 "Y_COMPUTER":"from your Computer"
         },
         "BTNS":{
-                "REMOVE":"Remove"
+                "REMOVE":"Remove",
+                "EDIT":"Edit",
+                "DELETE":"Delete",
+                "CHANGE_COVER":"Change Cover",
+                "ADD_COVER":"Add cover",
+                "ADD_SECTION":"Add Section"
+        },
+        "CREATE":{
+                "UNTITLED":"Untitled"
         }
 }

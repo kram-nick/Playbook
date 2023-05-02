@@ -42,11 +42,14 @@ const Sidebar = () => {
   };
 
   return (
-    <div>
+    <div  className={classNames({ 
+      "min-w-[280px]  min-h-[100%]":true,
+      " ": showSidebar,
+    })}>
       <div  
       className={classNames({
-        "bg-list-title min-w-[280px] px-[12px] border-solid border-r-[1px]  border-r-header-bottom gap-[21.4px] max-lg:left-[-350px] ":true,
-        "max-lg:fixed max-lg:top-[0] min-h-[100vh] max-lg:z-[100] transition duration-500 ease-in":true,
+        "bg-list-title min-w-[280px] h-[100%] px-[12px] border-solid border-r-[1px] left-[0px] border-r-header-bottom gap-[21.4px] max-lg:left-[-350px] ":true,
+        "fixed top-[0] min-h-[100%] max-lg:z-[100] transition duration-500 ease-in overflow-y-auto":true,
         "max-lg:left-[0px!important]": showSidebar,
       })}
       >
