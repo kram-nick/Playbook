@@ -5,9 +5,10 @@ import {
   FORMAT_TEXT_COMMAND,
   $getSelection,
   $isRangeSelection,
-  $createParagraphNode,
+  $createParagraphNode, 
   $getNodeByKey,
   FORMAT_ELEMENT_COMMAND,
+  LexicalEditor,
 } from "lexical";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $wrapNodes, $isAtNodeEnd } from "@lexical/selection";
@@ -31,11 +32,15 @@ import {
   getDefaultCodeLanguage,
   getCodeLanguages,
 } from "@lexical/code"; 
-
+import {
+  $getSelectionStyleValueForProperty,
+  $isParentElementRTL,
+  $patchStyleText,
+  $setBlocksType,
+} from '@lexical/selection';
 import icon_bold from "../../assets/photos/editor/bold.svg";
 import icon_italic from "../../assets/photos/editor/italic.svg";
 import icon_underline from "../../assets/photos/editor/underline.svg";
-import icon_case from "../../assets/photos/editor/lower-case.svg";
 import icon_left from "../../assets/photos/editor/left.svg";
 import icon_center from "../../assets/photos/editor/center.svg";
 import icon_layout from "../../assets/photos/editor/layout.svg";
@@ -46,8 +51,17 @@ import icon_smile from "../../assets/photos/editor/happy.svg";
 import icon_add from "../../assets/photos/editor/plus.svg";
 import icon_delete from "../../assets/photos/editor/delete.svg";
 import ImageToolbar from "./ImageToolbar";
+import { InsertImageDialog } from "./ImagesPlugin";
+import { ImagePayload } from "../editor/nodes/ImageNode";
+import FileInput from "../editor/ui/FileInput";
+import TextInput from "../editor/ui/TextInput";
+import Button from "../editor/ui/Button";
+import { DialogActions } from "../editor/ui/Dialog";
+import { useModal } from "../hooks/useModal";
+import DropDown, { DropDownItem } from "../editor/ui/DropDown";
+import './../editor/ui/default.css';
 
-
+export type InsertImagePayload = Readonly<ImagePayload>;
 const LowPriority = 1;
 
 const supportedBlockTypes = new Set([
@@ -59,6 +73,15 @@ const supportedBlockTypes = new Set([
   "ul",
   "ol",
 ]);
+
+const FONT_FAMILY_OPTIONS: [string, string][] = [
+  ['Arial', 'Arial'],
+  ['Courier New', 'Courier New'],
+  ['Georgia', 'Georgia'],
+  ['Times New Roman', 'Times New Roman'],
+  ['Trebuchet MS', 'Trebuchet MS'],
+  ['Verdana', 'Verdana'],
+];
 
 const blockTypeToBlockName: any = {
   code: "Code Block",
@@ -75,6 +98,69 @@ const blockTypeToBlockName: any = {
 
 function Divider() {
   return <div className="divider" />;
+}
+
+function dropDownActiveClass(active: boolean) {
+  if (active) return 'active dropdown-item-active';
+  else return '';
+}
+
+function FontDropDown({
+  editor,
+  value,
+  style,
+  disabled = false,
+  type
+}: {
+  editor: LexicalEditor;
+  value: string;
+  style: string;
+  disabled?: boolean;
+  type?: string;
+}): JSX.Element {
+  const handleClick = useCallback(
+    (option: string) => {
+      editor.update(() => {
+        const selection = $getSelection();
+        console.log(selection)
+        if ($isRangeSelection(selection)) {
+          $patchStyleText(selection, {
+            [style]: option,
+          });
+        }
+      });
+    },
+    [editor, style],
+  );
+
+  const buttonAriaLabel =
+    style === 'font-family'
+      ? 'Formatting options for font family'
+      : 'Formatting options for font size';
+
+  return (
+    <DropDown
+      disabled={disabled}
+      buttonClassName={'font-toolbar-item ' + style}
+      buttonLabel={value}
+      typeMenu={type}
+      buttonIconClassName={
+        style === 'font-family' ? 'icon block-type font-family' : ''
+      }
+      buttonAriaLabel={buttonAriaLabel}>
+      {FONT_FAMILY_OPTIONS.map(
+        ([option, text]) => (
+         
+          <DropDownItem
+            className={`item ${dropDownActiveClass(value === option)}`}
+            onClick={() => handleClick(option)}
+            key={option}>
+            <span className="text">{text}</span>
+          </DropDownItem>
+        ),
+      )}
+    </DropDown>
+  );
 }
 
 function positionEditorElement(editor: any, rect: any) {
@@ -97,7 +183,7 @@ function FloatingLinkEditor({ editor }: any) {
   const mouseDownRef = useRef(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [isEditMode, setEditMode] = useState(false);
-  const [lastSelection, setLastSelection] = useState(null);
+  const [lastSelection, setLastSelection] = useState(null); 
 
   const updateLinkEditor = useCallback(() => {
     const selection: any = $getSelection();
@@ -382,21 +468,23 @@ function BlockOptionsDropdownList({
     setShowBlockOptionsDropDown(false);
   };
 
+ 
+
   return (
     <div className="dropdown" ref={dropDownRef}>
-      <button className="item" onClick={formatParagraph}>
+      {/* <button className="item" onClick={formatParagraph}>
         <span className="icon paragraph" />
         <span className="text">Normal</span>
         {blockType === "paragraph" && <span className="active" />}
-      </button>
+      </button> */}
       <button className="item" onClick={formatLargeHeading}>
-        <span className="icon large-heading" />
-        <span className="text">Large Heading</span>
+        <span className="icon h1" />
+        <span className="text">Heading H1</span>
         {blockType === "h1" && <span className="active" />}
       </button>
       <button className="item" onClick={formatSmallHeading}>
-        <span className="icon small-heading" />
-        <span className="text">Small Heading</span>
+        <span className="icon h2" />
+        <span className="text">Heading H2 </span>
         {blockType === "h2" && <span className="active" />}
       </button>
       <button className="item" onClick={formatBulletList}>
@@ -423,10 +511,63 @@ function BlockOptionsDropdownList({
   );
 }
 
+// const [modal, showModal] = useModal();
+
+function InsertImageUploadedDialogBody({
+  onClick,
+}: {
+  onClick: (payload: InsertImagePayload) => void;
+}) {
+  const [src, setSrc] = useState('');
+  const [altText, setAltText] = useState('');
+
+  const isDisabled = src === '';
+
+  const loadImage = (files: FileList | null) => {
+    const reader = new FileReader();
+    reader.onload = function () {
+      if (typeof reader.result === 'string') {
+        setSrc(reader.result);
+      }
+      return '';
+    };
+    if (files !== null) {
+      reader.readAsDataURL(files[0]);
+    }
+  };
+
+  return (
+    <>
+      <FileInput
+        label="Image Upload"
+        onChange={loadImage}
+        accept="image/*"
+        data-test-id="image-modal-file-upload"
+      />
+      <TextInput
+        label="Alt Text"
+        placeholder="Descriptive alternative text"
+        onChange={setAltText}
+        value={altText}
+        data-test-id="image-modal-alt-text-input"
+      />
+      <DialogActions>
+        <Button
+          data-test-id="image-modal-file-upload-btn"
+          disabled={isDisabled}
+          onClick={() => onClick({altText, src})}>
+          Confirm
+        </Button>
+      </DialogActions>
+    </>
+  );
+}
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);
   const [blockType, setBlockType] = useState<string>("paragraph");
+  const [fontFamily, setFontFamily] = useState<string>('Arial');
+  const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [selectedElementKey, setSelectedElementKey] = useState(null);
   const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
     useState(false);
@@ -537,48 +678,16 @@ export default function ToolbarPlugin() {
     setShowBlockOptionsDropDown(false);
   };
 
+
+
+  
+
+ 
   return (
     <div
       className="toolbar flex items-center flex-row border-b border-header-bottom px-[12px] py-[17px]"
-      ref={toolbarRef}>
-      {/* {supportedBlockTypes.has(blockType) && (
-        <>
-          <button
-            className="toolbar-item block-controls font-bold"
-            onClick={() =>
-              setShowBlockOptionsDropDown(!showBlockOptionsDropDown)
-            }
-            aria-label="Formatting Options">
-            <span className="block" />
-            <span className="text">{blockTypeToBlockName[blockType]} 2222</span>
-            <i className="chevron-down" />
-          </button>
-          {showBlockOptionsDropDown &&
-            createPortal(
-              <BlockOptionsDropdownList
-                editor={editor}
-                blockType={blockType}
-                toolbarRef={toolbarRef}
-                setShowBlockOptionsDropDown={setShowBlockOptionsDropDown}
-              />,
-              document.body
-            )}
-          <Divider />
-        </>
-      )} */}
-      {blockType === "code" ? (
-        <>
-          <Select
-            className="block h-1 w-2"
-            onChange={onCodeLanguageSelect}
-            options={codeLanguges}
-            value={codeLanguage}
-          />
-          H1
-          <i className="chevron-down inside" />
-        </>
-      ) : (
-        <>
+       >
+ 
           <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
@@ -603,14 +712,13 @@ export default function ToolbarPlugin() {
             aria-label="Format Underline"> 
             <img src={icon_underline} alt="Format underline" />
           </button>
-          <button
-            // onClick={() => {
-            //   editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-            // }}
-            className={"toolbar-item spaced w-[28px] h-[28px] mr-[24px] " }
-            aria-label="Format Uppercase"> 
-            <img src={icon_case} alt="Format Uppercase" />
-          </button>
+          <FontDropDown
+            disabled={!isEditable}
+            style={'font-family'}
+            value={fontFamily}
+            editor={editor}
+            type={'fonts'}
+          /> 
           <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
@@ -628,16 +736,7 @@ export default function ToolbarPlugin() {
             aria-label="Center Align"
           >
             <img src={icon_center} alt="Format center" /> 
-          </button>
-          {/* <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-            }}
-            className="toolbar-item spaced"
-            aria-label="Right Align"
-          >
-            <i className="format right-align" />
-          </button> */}
+          </button> 
           <button
             onClick={() => {
               editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
@@ -652,24 +751,7 @@ export default function ToolbarPlugin() {
             <img src={icon_paragrph} alt="Format paragraph" />
             {blockType === "paragraph" && <span className="active" />}
           </button>                
-          {/* <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
-            }}
-            className={`toolbar-item spaced ${isStrikethrough ? "active" : ""}`}
-            aria-label="Format Strikethrough">
-            <i className="format strikethrough" />
-            Format Strikethrough
-          </button> */}
-          {/* <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
-            }}
-            className={"toolbar-item spaced " + (isCode ? "active" : "")}
-            aria-label="Insert Code">
-            <i className="format code" />
-            Insert Code
-          </button> */}
+ 
           <button
             onClick={insertLink}
             className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isLink ? "active" : "")}
@@ -679,31 +761,137 @@ export default function ToolbarPlugin() {
           </button>
           {isLink &&
             createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
-          <button 
+           <button 
             className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " }
-            aria-label="Insert photo"> 
+            aria-label="Insert photo"  
+              // onClick={() => {
+              //   showModal('Insert Image', (onClose) => (
+              //     <InsertImageDialog
+              //       activeEditor={activeEditor}
+              //       onClose={onClose}
+              //     />
+              //   ));
+              // }} 
+              >          
             <img src={icon_image} alt="Insert Images" />
-          </button> 
+          </button>  
           <button 
             className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " }
             aria-label="Insert emoji"> 
             <img src={icon_smile} alt="Insert emoji" />
           </button>    
-          <button 
+          <button onClick={() =>
+              setShowBlockOptionsDropDown(!showBlockOptionsDropDown)
+            }
+            ref={toolbarRef}
             className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " } > 
             <img src={icon_add} alt="Plus" />
-          </button>                             
-        </>
-      )}
-      <button
+          </button>    
+
+          {showBlockOptionsDropDown &&
+            createPortal(
+              <BlockOptionsDropdownList
+                editor={editor}
+                blockType={blockType}
+                toolbarRef={toolbarRef}
+                setShowBlockOptionsDropDown={setShowBlockOptionsDropDown}
+              />,
+              document.body
+            )}             
+          {/* <DropDown
+            disabled={!isEditable}
+            buttonClassName="toolbar-item spaced"
+            buttonLabel="Insert"
+            buttonAriaLabel="Insert specialized editor node"
+            buttonIconClassName="icon plus">
+            <DropDownItem
+              onClick={() => {
+                activeEditor.dispatchCommand(
+                  INSERT_HORIZONTAL_RULE_COMMAND,
+                  undefined,
+                );
+              }}
+              className="item">
+              <i className="icon horizontal-rule" />
+              <span className="text">Horizontal Rule</span>
+            </DropDownItem>
+            <DropDownItem
+              onClick={() => {
+                showModal('Insert Image', (onClose) => (
+                  <InsertImageDialog
+                    activeEditor={activeEditor}
+                    onClose={onClose}
+                  />
+                ));
+              }}
+              className="item">
+              <i className="icon image" />
+              <span className="text">Image</span>
+            </DropDownItem>
+            <DropDownItem
+              onClick={() =>
+                insertGifOnClick({
+                  altText: 'Cat typing on a laptop',
+                  src: catTypingGif,
+                })
+              }
+              className="item">
+              <i className="icon gif" />
+              <span className="text">GIF</span>
+            </DropDownItem>
+ 
+            <DropDownItem
+              onClick={() => {
+                showModal('Insert Table', (onClose) => (
+                  <InsertTableDialog
+                    activeEditor={activeEditor}
+                    onClose={onClose}
+                  />
+                ));
+              }}
+              className="item">
+              <i className="icon table" />
+              <span className="text">Table</span>
+            </DropDownItem>
+            <DropDownItem
+              onClick={() => {
+                showModal('Insert Table', (onClose) => (
+                  <InsertNewTableDialog
+                    activeEditor={activeEditor}
+                    onClose={onClose}
+                  />
+                ));
+              }}
+              className="item">
+              <i className="icon table" />
+              <span className="text">Table (Experimental)</span>
+            </DropDownItem>
+            <DropDownItem
+              onClick={() => {
+                showModal('Insert Poll', (onClose) => (
+                  <InsertPollDialog
+                    activeEditor={activeEditor}
+                    onClose={onClose}
+                  />
+                ));
+              }}
+              className="item">
+              <i className="icon poll" />
+              <span className="text">Poll</span>
+            </DropDownItem>
+
+ 
+ 
+          </DropDown>                                 */}
+ 
+      {/* <button
         className="flex items-center action-button py-[8px] px-[15px] bg-white rounded-[5px] text-simple-text
         text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] ml-auto"
         title="Convert From Markdown"
         aria-label="Convert from markdown">
           <img src={icon_delete} alt="Delete" className="mr-[6px]" />
-          Delete
-        {/* <i className="markdown" /> */}
-      </button>
+          Delete 
+      </button> */}
       {/* <ImageToolbar/> */}
     </div>
   );

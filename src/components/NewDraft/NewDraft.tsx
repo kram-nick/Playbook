@@ -10,7 +10,7 @@ const NewDraft = () => {
     <div className="w-full">
       <Header />
       <div className="p-[24px] flex flex-col gap-[32px]">
-        <div className="w-full flex flex-row justify-start items-center gap-[4px]">
+        {/* <div className="w-full flex flex-row justify-start items-center gap-[4px]">
           <div className="flex flex-row items-center gap-[4px]">
             <img src={home} alt="home" />
             <img src={to_arrow} alt="to_arrow" />
@@ -24,7 +24,7 @@ const NewDraft = () => {
           <span className="font-poppins text-[14px] leading-[20px] tracking-[-0.1px] font-normal text-nav-txt-private ">
             New Chapter
           </span>
-        </div>
+        </div> */}
         <Editor />
       </div>
     </div>
