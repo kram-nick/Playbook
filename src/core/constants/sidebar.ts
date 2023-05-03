@@ -11,17 +11,17 @@ export const playbooks = [
         id: 1,
         title: "#1 Hire the best people through smart hiring", 
         open: false,
-        text: `Feel free to use any or all of these policies, and to modify them in whatever way makes sense for your company. 
-        We hope that by publishing them, other companies can benefit from our research and make their own policies more inclusive. 
-        All feedback and suggestions are appreciated. We’ve gotten several different perspectives to help arrive at these policies, 
-        but we are certainly missing many more and making mistakes as a result. This is a work in progress that we hope will get better 
-        with more time and more contributors. If these policies sound like a place where you want to work, please do look through our open 
-        career listings. The Obvious Employee Handbook is a derivative of the Tidepool Employee Handbook, 
-        which is itself derived from the Clef Employee Handbook. `,
+        text: `At Playbook, we’re working to build an inclusive company with a value-driven culture. 
+        That’s an easy thing to want and say, but it’s difficult to practice because exclusion is often the default in our industries 
+        (both technology and consulting). It takes active effort to find the hidden biases in our companies and remove them. 
+        One of our primary aims is to be "public by default". This playbook therefore contains nearly all of the 
+        policies and practices that we use at Obvious. It represents many hours of research, lots of thoughtful debates, 
+        and some serious introspection. 
+        It’s certainly not perfect, but we think it’s a great place to start.`,
       },
       {
         id: 2,
-        title: "#3 Sales", 
+        title: "#2 Sales", 
         open: false,
         text: `Feel free to use any or all of these policies, and to modify them in whatever way makes sense for your company. 
         We hope that by publishing them, other companies can benefit from our research and make their own policies more inclusive. 
@@ -35,7 +35,7 @@ export const playbooks = [
       },
       {
         id: 3,
-        title: "#4 Customer Discovery", 
+        title: "#3 Customer Discovery", 
         open: true,
         text: `Feel free to use any or all of these policies, and to modify them in whatever way makes sense for your company. 
         We hope that by publishing them, other companies can benefit from our research and make their own policies more inclusive. 
@@ -49,7 +49,7 @@ export const playbooks = [
       },
       {
         id: 4,
-        title: "#5 Hire the best people through smart hiring", 
+        title: "#4 Hire the best people through smart hiring", 
         open: false,
         text: `Feel free to use any or all of these policies, and to modify them in whatever way makes sense for your company. 
         We hope that by publishing them, other companies can benefit from our research and make their own policies more inclusive. 

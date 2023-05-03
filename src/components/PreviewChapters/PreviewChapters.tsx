@@ -1,22 +1,36 @@
-import Header from "../AppLayout/PrivateLayout/Header"; 
-import plus from "../../assets/photos/chapter/icon-plus.svg"; 
+import Header from "../AppLayout/PrivateLayout/Header";  
 import arrow from "../../assets/photos/main/arrow-right.svg"; 
  
-import { useAppSelector } from "../../core/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import BookBanner from "../BookBanner";
 import { useTranslation } from "react-i18next";
-import classNames from "classnames";
-import BookChapters from "../BookChapters";
+import classNames from "classnames"; 
 import { Link } from "react-router-dom";
+import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
 
 const PreviewChapters = () => {
   const { t } = useTranslation();
   const { data } = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();
+
+  const  openChapter = (data:any, chapter: any) => {
+    dispatch(
+      setSelectedData({
+        id: data.id,
+        selected: true,
+        title: data.title,
+        chapters: data.chapters,
+        chapter_title: chapter.title,
+        chapter_id: chapter.id
+      })
+    )   
+  }
 
   return (
     <div className="w-full">
       <Header previewState={true} />
       <div className="p-[24px] gap-[32px]">
+ 
         <div className="rounded-[8px] bg-white">
           <BookBanner preview={true} />
 
@@ -34,7 +48,7 @@ const PreviewChapters = () => {
             {data && data.chapters?.length ? (
               <>
                 {data.chapters.map((chapter: any, index: number) => ( 
-                  <Link key={index} to="/preview" 
+                  <Link key={index} onClick={() => openChapter(data, chapter)} to="/preview-chapter" 
                     className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
                       border-[1px] border-solid border-card-border gap-[30px]">
                     <span className="font-poppins text-[20px] text-home-title  font-medium leading-[28px]">

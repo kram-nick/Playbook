@@ -16,7 +16,7 @@ type HeaderProps = {
 
 const Header = ({previewState}: HeaderProps) => {
   const { t } = useTranslation();
-  const { title } = useAppSelector((state) => state.app.data);
+  const { data } = useAppSelector((state) => state.app);
 
   return (
     <header className="py-[12px] bg-white flex items-center border-b-[1px]  ">
@@ -25,12 +25,22 @@ const Header = ({previewState}: HeaderProps) => {
           <span className="font-poppins font-medium text-[14px] leading-[20px] text-nav-txt-private">
             Home
           </span>
-          {title && (
-            <span className="font-poppins flex items-center font-medium text-[14px] leading-[20px] text-home-title gap-[4px]">
+          {data && data.title && (
+            <span className={classNames({
+              "font-poppins flex items-center font-medium text-[14px] leading-[20px] gap-[4px]":true,
+              "text-home-title":data.chapter_title,
+              "text-nav-txt-private":data.chapter_title,
+            })}>
               <img src={divider} alt="" />
-              {title}
+              {data.title}
             </span>
           )}
+          {data && data.chapter_title && (
+            <span className="font-poppins flex items-center font-medium text-[14px] leading-[20px] text-home-title gap-[4px]">
+              <img src={divider} alt="" />
+              <span className="truncate max-w-[100px]">{data.chapter_title}</span>
+            </span>
+          )}          
  
           {/* <span className="font-poppins font-normal text-simple-text leading-[20px] tracking-[-0.1px]">
             ({t<string>("COMMON.DRAFT")})

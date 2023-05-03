@@ -14,7 +14,7 @@ import plus_blue from "../../assets/photos/main/plus-blue.svg";
 import arrow_blue from "../../assets/photos/main/arrow-down-blue.svg";
 import red_saas from "../../assets/photos/create/red-saas.svg";
 import blue_saas from "../../assets/photos/create/blue-saas.svg";
-import { useLocation, useNavigation } from "react-router-dom"; 
+import { useLocation } from "react-router-dom"; 
  
 
 
@@ -32,6 +32,16 @@ const Sidebar = () => {
 
   const handlePlaybooks = () => {
     setShowPlaybooks(!showPlaybooks);
+    dispatch(
+      setSelectedData({
+        id: 0,
+        selected: false,
+        title: '',
+        chapters: [],
+        chapter_title:'',
+        chapter_id: 0
+      })
+    )      
   };
 
   const handleFavourites = () => {
@@ -95,6 +105,8 @@ const Sidebar = () => {
                           selected: true,
                           title: playbook.title,
                           chapters: playbook.chapters,
+                          chapter_title:'',
+                          chapter_id:0
                         })
                       )                   
                     }
@@ -132,6 +144,7 @@ const Sidebar = () => {
                                 chapter_title: chapter.title,
                                 chapter_id: chapter.id,
                                 chapters: playbook.chapters,
+                                chapter_text:chapter.text
                               })
                             )
                           }

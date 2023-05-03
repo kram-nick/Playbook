@@ -7,6 +7,7 @@ const initialState: AppDataTypes = {
     selected: false,
     id: null,
     title: "",
+    chapter_title: "",
     chapters: []
   },
 };
@@ -19,6 +20,7 @@ const appSlice = createSlice({
       state.language = action.payload;
     },
     setSelectedData(state, action: PayloadAction<any>) {
+      console.log(action.payload);
       state.data = action.payload;
     },
   },
