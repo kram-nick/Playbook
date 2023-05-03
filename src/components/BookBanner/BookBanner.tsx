@@ -3,10 +3,13 @@ import { useTranslation } from "react-i18next";
 import icon from "../../assets/photos/chapter/icon-banner.svg";
 import add_banner from "../../assets/photos/chapter/add-banner.svg";
 import banner from "../../assets/photos/chapter/banner.svg";
+type BookBannerProps = { 
+  preview: boolean,
+}
 
-const BookBanner = () => {
+const BookBanner = ({preview}: BookBannerProps) => {
   const { t } = useTranslation();
-  const [isBanner, setIsBanner] = useState(false);
+  const [isBanner, setIsBanner] = useState(true);
 
   const handleBanner = () => {
     setIsBanner(!isBanner);
@@ -23,7 +26,8 @@ const BookBanner = () => {
         </div>
       )}
 
-      {isBanner ? (
+ 
+      {isBanner && !preview && (
         <div className="absolute border-solid border-[1px] rounded-[5px] flex items-center right-[8px] bottom-[8px] z-[10] bg-white">
           <div className="rounded-l-[5px] h-[38px] border-solid border-r-[1px] flex items-center border-header-bottom
             px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-home-title 
@@ -32,7 +36,8 @@ const BookBanner = () => {
             px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-home-title
             hover:bg-people-bg transition duration-300 linear">{t<string>("BTNS.REMOVE")}</div>
         </div>
-      ) : (
+      ) } 
+      {!isBanner && !preview &&(
         <button onClick={handleBanner} 
           className="absolute border-solid border-[1px] border-header-bottom rounded-[5px] right-[8px] bottom-[12px] z-[10] bg-white
           px-[12px] h-[40px] flex items-center gap-[6px] hover:bg-people-bg transition duration-300 linear

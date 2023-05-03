@@ -12,9 +12,9 @@ const ContentChapters = () => {
 
   return (
     <div className="w-full">
-      <Header />
+      <Header  />
       <div className="p-[24px] gap-[32px]">
-        <BookBanner />
+        <BookBanner preview={false} />
         <h1 className={classNames({
             "opacity-50":!title, 
             "text-[32px] font-poppins font-bold text-home-title mb-[24px]" : true

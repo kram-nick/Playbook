@@ -3,10 +3,18 @@ import { useTranslation } from "react-i18next";
 import next from "../../../assets/photos/create/right-arrow-inactive.svg";
 import divider from "../../../assets/photos/create/divider.svg";
 import preview from "../../../assets/photos/create/preview.svg";
+import play_active from "../../../assets/photos/main/play-active.svg";
 import add_user from "../../../assets/photos/create/add-user.svg";
 import { useAppSelector } from "../../../core/hooks/useRedux";
+import classNames from "classnames";
+import { Link } from "react-router-dom";
 
-const Header = () => {
+type HeaderProps = { 
+  previewState?: boolean,
+}
+ 
+
+const Header = ({previewState}: HeaderProps) => {
   const { t } = useTranslation();
   const { title } = useAppSelector((state) => state.app.data);
 
@@ -29,12 +37,24 @@ const Header = () => {
           </span> */}
         </div>
         <div className="flex flex-row gap-[28px] rounded-[5px] items-center">
-          <button className="flex flex-row gap-[4px] items-center cursor-pointer">
-            <span className="font-poppins text-[16px] text-nav-txt-private font-medium leading-[20.8px]">
+        <Link  to="/preview" className="flex flex-row gap-[4px] items-center cursor-pointer">
+          <span className={classNames({
+            "font-poppins text-[16px]   font-medium leading-[20.8px]":true,
+            "text-buttons-bg":previewState,
+            "text-nav-txt-private":!previewState,
+          })}>
+            {t<string>("COMMON.PREVIEW")}
+          </span>
+          <img src={previewState ? play_active: preview} alt="preview" />
+        </Link>            
+          {/* <button className="flex flex-row gap-[4px] items-center cursor-pointer">
+            <span className={classNames({
+              "font-poppins text-[16px] text-nav-txt-private font-medium leading-[20.8px]":true
+            })}>
               {t<string>("COMMON.PREVIEW")}
             </span>
             <img src={preview} alt="preview" />
-          </button>
+          </button> */}
           <button className="flex flex-row gap-[4px] items-center cursor-pointer">
             <span className="font-poppins text-[16px] text-nav-txt-private font-medium leading-[20.8px]">
               {t<string>("COMMON.SHARE")}

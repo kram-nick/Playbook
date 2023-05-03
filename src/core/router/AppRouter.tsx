@@ -14,6 +14,7 @@ import DraftContainer from "../../pages/DraftContainer/DraftContainer";
 import SignUp from "../../components/SignUp";
 import MainContainer from "../../pages/MainContainer";
 import Chapters from "../../pages/Chapters";
+import Preview from "../../pages/Preview";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -27,6 +28,10 @@ export const privateRoutes: IRoute[] = [
   {
     path: PrivateUIRoutes.Main,
     element: <MainContainer />,
+  },  
+  {
+    path: PrivateUIRoutes.Preview,
+    element: <Preview />,
   },  
 ];
 

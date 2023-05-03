@@ -7,6 +7,7 @@ const initialState: AppDataTypes = {
     selected: false,
     id: null,
     title: "",
+    chapters: []
   },
 };
 

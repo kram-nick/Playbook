@@ -4,5 +4,7 @@ export type AppDataTypes = {
     selected: boolean;
     id: null | number;
     title: string;
+    chapters?: Array<any>;
+    chapter_id?:  null | number;
   };
 };
