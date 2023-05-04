@@ -29,12 +29,14 @@ const PreviewChapters = () => {
   return (
     <div className="w-full">
       <Header previewState={true} />
-      <div className="p-[24px] gap-[32px]">
+      <div className="p-[24px] gap-[32px] max-[1024px]:pt-[12px] max-[1024px]:px-[32px] max-[690px]:py-[0]
+        max-[690px]:px-[0]">
  
-        <div className="rounded-[8px] bg-white">
+        <div className="rounded-[8px] bg-white max-[1024px]:rounded-t-[0] shadow-free-trial 
+        border-[1px] border-solid border-header-bottom">
           <BookBanner preview={true} />
 
-          <div className="grid p-[24px] gap-y-[16px] mt-[-50px]">
+          <div className="grid p-[24px] gap-y-[16px] mt-[-50px] max-[1024px]:px-[32px] max-[690px]:px-[16px]">
             <h1 className={classNames({
                 "opacity-50":!data.title, 
                 "text-[32px] font-poppins font-bold text-home-title" : true
@@ -50,7 +52,7 @@ const PreviewChapters = () => {
                 {data.chapters.map((chapter: any, index: number) => ( 
                   <Link key={index} onClick={() => openChapter(data, chapter)} to="/preview-chapter" 
                     className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
-                      border-[1px] border-solid border-card-border gap-[30px]">
+                      border-[1px] border-solid border-card-border gap-[30px] max-[690px]:p-[12px]">
                     <span className="font-poppins text-[20px] text-home-title  font-medium leading-[28px]">
                       {chapter.title}
                     </span>

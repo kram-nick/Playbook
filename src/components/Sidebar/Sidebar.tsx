@@ -55,7 +55,7 @@ const Sidebar = () => {
   return (
     
     <div  className={classNames({ 
-      "min-w-[280px]  min-h-[100%]":true,
+      "min-w-[280px]  min-h-[100%] max-lg:min-w-[0%]":true,
       " ": showSidebar,
     })}>
       <div  

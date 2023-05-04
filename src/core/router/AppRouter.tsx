@@ -16,6 +16,7 @@ import MainContainer from "../../pages/MainContainer";
 import Chapters from "../../pages/Chapters";
 import Preview from "../../pages/Preview";
 import PreviewDetail from "../../pages/PreviewDetail";
+import Profile from "../../pages/Profile";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -37,6 +38,10 @@ export const privateRoutes: IRoute[] = [
   {
     path: PrivateUIRoutes.PreviewChapter,
     element: <PreviewDetail />,
+  },   
+  {
+    path: PrivateUIRoutes.Profile,
+    element: <Profile />,
   },   
 ];
 

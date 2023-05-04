@@ -43,11 +43,11 @@ const Header = () => {
             {t<string>("COMMON.SIGN_IN")}
           </span>
         </Link>        
-        <button className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color">
+        <Link  to="/sign-up" className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color">
           <span className="font-semibold font-poppins leading-[22px]">
             {t<string>("COMMON.GET_STARTED")}
           </span>
-        </button>
+        </Link>
       </div>
     </div>
   );

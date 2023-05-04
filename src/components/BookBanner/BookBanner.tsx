@@ -16,12 +16,13 @@ const BookBanner = ({preview}: BookBannerProps) => {
   };  
 
   return (
-    <div className="relative rounded-t-[8px] bg-header-bottom h-[218px] mb-[52px] font-poppins">
+    <div className="relative rounded-t-[8px] bg-header-bottom h-[218px] mb-[52px] font-poppins max-[1024px]:rounded-t-[0px]">
       <div className="absolute w-[73px] h-[73px] left-[50px] bottom-[-24px] z-[10]">
         <img src={icon} alt="" />
       </div>
       {isBanner && (
-        <div className="absolute rounded-t-[8px] overflow-hidden w-[100%] h-[100%] left-[0px] top-[0px] z-[1]">
+        <div className="absolute rounded-t-[8px] overflow-hidden w-[100%] h-[100%] left-[0px] top-[0px] z-[1]
+        max-[1024px]:rounded-t-[0]">
           <img className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" src={banner} alt="" />
         </div>
       )}
