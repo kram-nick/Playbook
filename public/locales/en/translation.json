@@ -176,5 +176,9 @@
         },
         "CREATE":{
                 "UNTITLED":"Untitled"
-        }
+        },
+        "PROFILE":{
+                "EMPTY":"This author has no playbooks yet",
+                "VIEW_OTHER":"View profiles of other authors"
+        }        
 }
