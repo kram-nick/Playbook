@@ -48,6 +48,8 @@ module.exports = {
         "card-border":"#EDEDED",
         "overlay":"rgba(138, 138, 138, 0.6)",
         "side-overlay":"rgba(92, 92, 92, 0.5);",
+        "btn-free":"rgba(43, 113, 247, 0.04)",
+        "blue-light":"#F3F7FF",
         "danger":"#FF3B30",
         "gray-btn":"#EDEDED",
         "chapter-color":"#F6F6F6"

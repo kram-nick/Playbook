@@ -74,7 +74,8 @@ export const playbooks = [
       {
         id: 1,
         title: "#1 Hire the best people through smart hiring", 
-        open: false
+        open: false,
+        
       },
       {
         id: 2,
@@ -208,7 +209,7 @@ export const Chapters = [
     which is itself derived from the Clef Employee Handbook. These are/were available to all via a Creative Commons license, 
     and for that we are very thankful. 
     We hope that many more people will suggest ways for us to improve these policies.`,
-    open: false
+    open: true
   },
   {
     id: 2,
@@ -236,7 +237,7 @@ export const Chapters = [
     which is itself derived from the Clef Employee Handbook. These are/were available to all via a Creative Commons license, 
     and for that we are very thankful. 
     We hope that many more people will suggest ways for us to improve these policies.`,
-    open: true
+    open: false
   },
   {
     id: 4,

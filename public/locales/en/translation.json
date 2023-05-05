@@ -172,13 +172,15 @@
                 "DELETE":"Delete",
                 "CHANGE_COVER":"Change Cover",
                 "ADD_COVER":"Add cover",
-                "ADD_SECTION":"Add Section"
+                "ADD_SECTION":"Add Section",
+                "BACK":"Go back"
         },
         "CREATE":{
                 "UNTITLED":"Untitled"
         },
         "PROFILE":{
                 "EMPTY":"This author has no playbooks yet",
-                "VIEW_OTHER":"View profiles of other authors"
+                "VIEW_OTHER":"View profiles of other authors",
+                "GET_FREE":"Get for free" 
         }        
 }

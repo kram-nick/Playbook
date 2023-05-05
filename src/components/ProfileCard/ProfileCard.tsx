@@ -1,23 +1,74 @@
+import classNames from "classnames";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import avatar from "../../assets/photos/profile/avatar.svg";
 
-const ProfileCard = () => {
-  const { t } = useTranslation();
+import poster from "../../assets/photos/main/image-poster.svg"; 
+import star from "../../assets/photos/profile/star.svg";
+import star_active from "../../assets/photos/main/star-active.svg"; 
+import useOutside from "../../core/hooks/useOutside"; 
+import Playbook from "../../core/interface/playbook";
 
-  return (
-    <div
-      className="flex items-start bg-white rounded-[8px] p-[24px] gap-[16px] border-[1px] 
-        border-solid border-header-bottom">
-      <div className="w-[120px] h-[120px] rounded-[50%] overflow-hidden relative">
-        <img className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" src={avatar} alt="" />
+ 
+type CardProps = {
+  items:Array<Playbook>,
+  item: Playbook,
+  index: number,
+  typeCard: boolean,
+}
+
+const ProfileCard = ({items, item, index, typeCard}: CardProps) => { 
+  const { t } = useTranslation(); 
+  const {ref, isShow, setIsShow} = useOutside(false);
+   
+  const  [playbook, setPlaybook]  = useState(item);
+  let  [priority, setPriority]  = useState(item.priority);
+ 
+
+  const handlePriorityClick = () => { 
+    setPriority(!priority); 
+  };
+
+  // const handleChange = (item: any) => {
+  //   onChangeList(item); 
+  // };
+ 
+  const handleOpen = () => {
+    setIsShow(!isShow);
+  };  
+
+ 
+
+  return(
+    <div className={classNames({
+      "w-[calc(50%-10px)] max-[690px]:w-[100%]":typeCard, 
+      "grid bg-white rounded-[8px] border-[1px] border-solid card-border relative p-[18px] gap-y-[16px]" : true
+    })}>
+
+      <div className="header">
+        <div className="text-[24px] font-bold text-home-title leading-normal mb-[4px]">{playbook.title}</div>
+        <p className="text-[16px] text-input-paceholder leading-[26px]">Viewed 1235 times</p>
       </div>
-      <div className="text font-poppins">
-        <h2 className="text-[24px] mb-[6px] font-bold text-home-title leading-normal">Christopher Ragobeer</h2>
-        <p className="text-[20px] mb-[16px] font-medium text-simple-text leading-[28px] tracking-[-0.1px]">@mrragobeer</p>
-        <p className="text-[20px] text-home-title leading-[32px] tracking-[-0.1px]">Stay humble. Work hard. Be kind.</p>
+ 
+      <div className="photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border 
+        w-[100%] h-[240px] rounded-[8px]" >
+        {playbook.image && (
+          <img src={poster} alt="" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />
+        )}
+         
       </div>
-    </div>
-  );
+
+      <div className="flex items-center gap-[8px]">
+        <button  className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] border-solid shadow-free-trial
+            bg-blue-light text-buttons-bg text-[16px] font-medium"  >
+           {t<string>("PROFILE.GET_FREE")}
+        </button>
+        <button onClick={() => handlePriorityClick()}
+          className="w-[46px] h-[46px] p-[12px] rounded-[6px] border-header-bottom border-[1px] border-solid"  >
+          <img src={priority ? star_active : star} alt="" className="w-[100%]" />
+        </button>         
+      </div>
+    </div>    
+  )
 };
 
 export default ProfileCard;

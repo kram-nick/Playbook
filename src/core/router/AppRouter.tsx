@@ -17,6 +17,7 @@ import Chapters from "../../pages/Chapters";
 import Preview from "../../pages/Preview";
 import PreviewDetail from "../../pages/PreviewDetail";
 import Profile from "../../pages/Profile";
+import PlaybookDetail from "../../pages/PlaybookDetail";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -42,7 +43,11 @@ export const privateRoutes: IRoute[] = [
   {
     path: PrivateUIRoutes.Profile,
     element: <Profile />,
-  },   
+  },  
+  {
+    path: PrivateUIRoutes.CardDetail,
+    element: <PlaybookDetail />,
+  },     
 ];
 
 export const squeezeRoutes: IRoute[] = [

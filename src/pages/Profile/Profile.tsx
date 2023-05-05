@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import AppHeader from "../../components/AppHeader"; 
 
-import arrow_bread from "../../assets/photos/profile/right.svg";
-import ProfileCard from "../../components/ProfileCard";
+import arrow_bread from "../../assets/photos/profile/right.svg"; 
 import ProfileEmpty from "../../components/ProfileEmpty";
+import ProfileCardsList from "../../components/ProfileCardsList"; 
+import ProfileTop from "../../components/ProfileTop";
+import { playbooks } from "../../core/constants/sidebar";
 
 const Profile = () => {
   return (
@@ -25,8 +27,14 @@ const Profile = () => {
         <div className="title text-[32px] mb-[32px] font-bold text-home-title leading-[1.3]">Chris’ Playbooks</div>
 
         <div className="max-w-[790px] mx-[auto]">
-          <ProfileCard />
-          <ProfileEmpty />
+          <ProfileTop />
+
+          {playbooks.length === 0 ? (
+            <ProfileEmpty />
+          ) :(
+            <ProfileCardsList />
+          )}
+           
         </div>
       </div>
     </div>
