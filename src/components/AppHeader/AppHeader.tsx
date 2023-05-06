@@ -37,8 +37,9 @@ const AppHeader = ({profile}: HeaderProps) => {
         )}
  
         <div className={classNames({
-            "max-w-[350px] w-[100%] relative max-lg:ml-[48px]":true,
-            "max-lg:ml-[0px]": profile
+            "max-w-[350px] w-[100%] relative":true,
+            "max-[690px]:ml-[0px]": profile,
+            "max-lg:ml-[48px]": !profile
           })}> 
           <img src={search} alt="" className="absolute left-[12px] top-[11px] w-[24px]" />
           <input
