@@ -24,7 +24,7 @@ const Profile = () => {
             Chris’ Playbooks
           </li>
         </ul>
-        <div className="title text-[32px] mb-[32px] font-bold text-home-title leading-[1.3]">Chris’ Playbooks</div>
+        <div className="title text-[32px] mb-[32px] font-bold text-home-title leading-[1.3] max-[690px]:text-[26px]">Chris’ Playbooks</div>
 
         <div className="max-w-[790px] mx-[auto]">
           <ProfileTop />

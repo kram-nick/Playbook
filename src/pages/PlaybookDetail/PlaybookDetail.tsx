@@ -56,11 +56,12 @@ const PlaybookDetail = () => {
               <BookBanner preview={true} />
 
               <div className="grid p-[24px] gap-y-[16px] mt-[-50px] max-[1024px]:px-[32px] max-[690px]:px-[16px]">
-                <h1 className="text-[32px] font-poppins font-bold text-home-title" >
+                <h1 className="text-[32px] font-poppins font-bold text-home-title max-[690px]:text-[26px] max-[690px]:leading-[32px]" >
                   {playbook.title}
                 </h1>             
                 {chapters?.length ? (
-                  <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]">
+                  <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px] 
+                    max-[690px]:text-[16px] max-[690px]:leading-[26px]">
                   {chapters.length ? chapters[0].text : ''}</p>
                 ) : ('')}
                 {chapters?.length ? (
@@ -70,7 +71,8 @@ const PlaybookDetail = () => {
                         onClick={() => handleViewDetail(chapter.open)}  
                         className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
                           border-[1px] border-solid border-card-border gap-[30px] max-[690px]:p-[12px]">
-                        <span className="font-poppins text-[20px] text-home-title  font-medium leading-[28px] text-left">
+                        <span className="font-poppins text-[20px] text-home-title  font-medium leading-[28px] text-left 
+                          max-[690px]:text-[16px] max-[690px]:leading-[24px]">
                           {chapter.title}
                         </span>
                         <img src={chapter.open ? arrow : lock} alt="show" />
@@ -80,25 +82,27 @@ const PlaybookDetail = () => {
                 ) : ('')}
 
                 {chapters?.length ? (
-                  <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]">
+                  <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px] 
+                    max-[690px]:text-[16px] max-[690px]:leading-[26px]">
                   {chapters.length ? chapters[0].text : ''}</p>
                 ) : ('')}         
               </div>
             </div>
           ) :( 
             <div className="grid p-[24px] gap-y-[16px] rounded-[8px] bg-white shadow-free-trial border-[1px] 
-              border-solid border-header-bottom font-poppins">
+              border-solid border-header-bottom font-poppins max-[690px]:px-[16px]">
                 <button onClick={handleViewDetail}  
                   className="flex items-center text-[16px] leading-[20px] font-medium text-buttons-bg gap-[4px]">
                   <img src={back} alt="" /> {t<string>("BTNS.BACK")}
                 </button>
                 <h1 className={classNames({ 
-                    "text-[24px] leading-normal font-semibold text-home-title" : true
+                    "text-[24px] leading-normal font-semibold text-home-title max-[690px]:text-[20px]" : true
                   })}>
                   {chapters[0].title}
                 </h1>             
     
-                <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]">
+                <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px] 
+                  max-[690px]:text-[16px] max-[690px]:leading-[26px]">
                   {chapters[0].text}
                 </p>                  
           

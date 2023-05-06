@@ -24,17 +24,22 @@ const AppHeader = ({profile}: HeaderProps) => {
         "max-w-[1200px]": profile
       })}>
 
-      <div className="flex items-center">
-        {profile && (
-          <Link  to="/main" className="mr-[32px] min-w-[160px] block">
+      <div className="flex items-center max-[690px]:w-[calc(100%-60px)]">
+        {profile ? (
+          <Link  to="/main" className="mr-[32px] min-w-[160px] block max-[690px]:hidden">
             <img   src={playbookLogo} alt="playbookLogo" />
           </Link>
+        ): (
+          <div className="absolute flex items-center justify-center w-[32px] h-[32px] 
+            top-[14px] left-[28px] min-[1024px]:hidden cursor-pointer max-sm:left-[12px]">
+            <img src={icon_burger} alt="" />
+          </div>
         )}
-        <div className="absolute flex items-center justify-center w-[32px] h-[32px] 
-          top-[14px] left-[28px] min-[1024px]:hidden cursor-pointer max-sm:left-[12px]">
-          <img src={icon_burger} alt="" />
-        </div>
-        <div className="max-w-[350px] w-[100%] relative max-lg:ml-[48px] max-sm:max-w-[calc(100%-88px)]"> 
+ 
+        <div className={classNames({
+            "max-w-[350px] w-[100%] relative max-lg:ml-[48px]":true,
+            "max-lg:ml-[0px]": profile
+          })}> 
           <img src={search} alt="" className="absolute left-[12px] top-[11px] w-[24px]" />
           <input
             placeholder={t<string>("MAIN.SEARCH_PLACEHOLDER")}
