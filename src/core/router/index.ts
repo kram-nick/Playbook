@@ -12,6 +12,8 @@ export enum UIRoutes {
   TERM_OF_USE = "term-of-use",
   SIGN_IN = "sign-in",
   SIGN_UP = "sign-up",
+  NEW_PASSWORD = "create-password",
+  RESET_PASSWORD = "reset-password",
 }
 
 export enum PrivateUIRoutes {

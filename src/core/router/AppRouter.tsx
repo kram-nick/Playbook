@@ -19,6 +19,9 @@ import PreviewDetail from "../../pages/PreviewDetail";
 import Profile from "../../pages/Profile";
 import PlaybookDetail from "../../pages/PlaybookDetail";
 import Settings from "../../pages/Settings";
+import NewPassword from "../../components/NewPassword";
+import ResetPassword from "../../components/ResetPassword";
+import SignLayout from "../../components/AppLayout/SignLayout";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -80,6 +83,9 @@ export const publicRoutes: IRoute[] = [
     element: <HomePage />,
   },
   { path: UIRoutes.TERM_OF_USE, element: <TermsOfUse /> },
+];
+
+export const singRoutes: IRoute[] = [
   {
     path: UIRoutes.SIGN_IN,
     element: <SignIn />,
@@ -87,6 +93,14 @@ export const publicRoutes: IRoute[] = [
   {
     path: UIRoutes.SIGN_UP,
     element: <SignUp />,
+  },
+  {
+    path: UIRoutes.NEW_PASSWORD,
+    element: <NewPassword />,
+  },
+  {
+    path: UIRoutes.RESET_PASSWORD,
+    element: <ResetPassword />,
   }  
 ];
 
@@ -121,6 +135,15 @@ const AppRouter: FC = () => {
             element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
           />
         </Route>
+        <Route path="/*" element={<SignLayout />}>
+          {singRoutes.map((route, index) => (
+            <Route key={`${route.path}${index}`} {...route} />
+          ))}
+          <Route
+            path="*"
+            element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
+          />
+        </Route>        
       </Routes>
     </ScrollTop>
   );

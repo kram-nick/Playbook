@@ -131,7 +131,23 @@
                 "LOGIN":"Log In",
                 "OR":"Or, sign in with your email",
                 "OR_UP":"Or, sign up with your email",
-                "AGREE":"Agree to terms & conditions"
+                "AGREE":"Agree to terms & conditions",
+                "CREATE_PASSWORD":"Create a new password",
+                "CREATE_PASSTEXT":"Create a new password that will be different from the previous one",
+                "NEW_PASSWORD":"New Password",
+                "REPEAT_PASSWORD":"Confirm Password",
+                "CONTINUE":"Continue",
+                "RESET_TITLE":"Reset password",
+                "RESET_PASSTEXT":"Enter your email to reset your password",
+                "BACK":"Go back to the previous step",
+                "CHECK_EMAIL":"Check your email",
+                "CHECK_TEXT_BEFORE":"We’ll send an email to",
+                "CHECK_TEXT_AFTER":"if it’s associated with your account.",
+                "CHECK_VALID":"Bear in mind it will be valid inly 30 minutes only!",
+                "DIDNT_RECEIVE":"Didn’t receive our email?",
+                "SUPPORT":"Contact Support",
+                "TAKE_BACK":"Take me back to"
+
         },
         "MAIN":{
                "SEARCH_PLACEHOLDER":"Search playbooks",

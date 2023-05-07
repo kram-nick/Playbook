@@ -41,7 +41,7 @@ const SignIn = () => {
               id="email"
               type="text"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial min-w-[100%]
+              border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
             />
           </div>
@@ -54,7 +54,7 @@ const SignIn = () => {
               id="password"
               type="text"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial min-w-[100%]
+              border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
             />
           </div>     
@@ -65,8 +65,8 @@ const SignIn = () => {
               <div className="bg-white border-[1px] border-input w-[20px] h-[20px] mr-[8px] rounded-[5px] cursor-pointer flex 
                 flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">  
                 <svg className="fill-current hidden w-[20px] h-[20px] p-[4px] rounded-[5px] pointer-events-none" version="1.1" viewBox="0 0 17 12" xmlns="http://www.w3.org/2000/svg">  
-                  <g fill="none" fill-rule="evenodd">  
-                    <g transform="translate(-9 -11)" fill="#fff" fill-rule="nonzero">  
+                  <g fill="none"  >  
+                    <g transform="translate(-9 -11)" fill="#fff" >  
                       <path d="m25.576 11.414c0.56558 0.55188 0.56558 1.4439 0 1.9961l-9.404 9.176c-0.28213 0.27529-0.65247 0.41385-1.0228 0.41385-0.37034 0-0.74068-0.13855-1.0228-0.41385l-4.7019-4.588c-0.56584-0.55188-0.56584-1.4442 0-1.9961 0.56558-0.55214 1.4798-0.55214 2.0456 0l3.679 3.5899 8.3812-8.1779c0.56558-0.55214 1.4798-0.55214 2.0456 0z" />  
                     </g>  
                   </g>  
@@ -75,7 +75,7 @@ const SignIn = () => {
               <label htmlFor="remember-me" className="text-[16px] leading-[20px] tracking-[-0.1px] cursor-pointer">{t<string>("SIGN.KEEP_ME")}</label>
             </div>    
 
-            <Link  to="/sign-in" className="text-[14px] leading-[18px] text-buttons-bg font-medium"> 
+            <Link  to="/reset-password" className="text-[14px] leading-[18px] text-buttons-bg font-medium"> 
               {t<string>("SIGN.FORGOT")}
             </Link> 
           </div>     

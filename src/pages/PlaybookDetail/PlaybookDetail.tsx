@@ -22,10 +22,8 @@ const PlaybookDetail = () => {
     if(open){
       handleView(!showDetail);
     }
-     
   }
  
-  
   return (
     <div className="bg-create-bg-main min-h-[100vh]">
       <AppHeader profile={true} /> 

@@ -1,9 +1,7 @@
 import { useTranslation } from "react-i18next";
-import logo from "../../assets/photos/sign/logo.svg";
-import icon_google from "../../assets/photos/sign/g_logo.svg";
-import { Link } from "react-router-dom";
+import logo from "../../assets/photos/sign/logo.svg"; 
 
-const SignIn = () => {
+const NewPassword = () => {
   const { t } = useTranslation();
 
   return (
@@ -11,65 +9,39 @@ const SignIn = () => {
       <div className="flex bg-cover bg-no-repeat bg-left-bottom justify-center  w-[46%] max-lg:bg-sign max-lg:w-[100%] 
         py-[50px] px-[100px] max-sm:px-[16px] max-sm:py-[24px]">
         <form className="self-center w-full max-w-[425px] max-lg:bg-white 
-          max-lg:px-[48px] max-lg:py-[60px] max-sm:px-[16px] max-sm:py-[24px] max-sm:rounded-[8px]">
+          max-lg:px-[48px] max-lg:py-[60px] max-[690px]:px-[16px] max-[690px]:py-[32px] max-[690px]:rounded-[8px]
+          max-[690px]:min-h-[calc(100vh-140px)]">
           <h1
-              className="text-[24px] text-home-title text-center leading-normal mb-[32px] font-semibold">
-              {t<string>("SIGN.UP")}
+            className="text-[24px] text-home-title text-center leading-normal mb-[8px] font-semibold">
+              {t<string>("SIGN.CREATE_PASSWORD")}
           </h1>     
-
-          <button
-            className="flex justify-center w-full mb-[32px] py-[10px] px-[26px] 
-            rounded-[5px] shadow-free-trial
-            border-solid border-[1px]  border-r-header-bottom
-          ">
-            <img src={icon_google} alt="" className="mr-[8px]" />
-            <span className="text-[16px] text-home-title font-medium">
-              {t<string>("SIGN.GOOGLE")}
-            </span>
-          </button>  
-
-          <div className="text-center mb-[32px] flex justify-center items-center">
-            <div className="flex-[1] bg-header-bottom h-[1px]"></div>
-            <span className="text-[14px] leading-[20px] px-[12px] bg-white">{t<string>("SIGN.OR_UP")}</span>
-            <div className="flex-[1] bg-header-bottom h-[1px]"></div>
-          </div>        
-
-          <div className="form-group mb-[24px]">
-            <label htmlFor="name" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.NAME")}</label>
-            <input
-              placeholder={t<string>("SIGN.NAME")}
-              id="name"
-              type="text"
-              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
-            />
-          </div>
-
-          <div className="form-group mb-[24px]">
-            <label htmlFor="email" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.EMAIL")}</label>
-            <input
-              placeholder={t<string>("SIGN.EMAIL_PLACEHOLDER")}
-              id="email"
-              type="text"
-              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
-            />
-          </div>
-
+ 
+          <p className="text-[16px] leading-[26px] text-center text-simple-text mb-[32px] max-[690px]:mb-[10vh]">{t<string>("SIGN.CREATE_PASSTEXT")}</p> 
+               
           <div className="form-group mb-[24px]">
             <label htmlFor="password" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
-              {t<string>("SIGN.PASSWORD")}</label>
+              {t<string>("SIGN.NEW_PASSWORD")}</label>
             <input
               placeholder={t<string>("SIGN.PASSWORD_PLACEHOLDER")}
               id="password"
               type="text"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial w-[100%]
+              border-solid border-[1px] shadow-free-trial min-w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
             />
           </div>     
+          <div className="form-group mb-[24px]">
+            <label htmlFor="password" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+              {t<string>("SIGN.REPEAT_PASSWORD")}</label>
+            <input
+              placeholder={t<string>("SIGN.PASSWORD_PLACEHOLDER")}
+              id="password"
+              type="text"
+              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+              border-solid border-[1px] shadow-free-trial min-w-[100%]
+              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+            />
+          </div>            
 
           <div className="flex justify-between items-center mb-[32px]">
             <div className="flex">
@@ -93,15 +65,10 @@ const SignIn = () => {
            w-full mb-[24px]
           ">
             <span className="text-list-title">
-              {t<string>("SIGN.UP_BTN")}
+              {t<string>("SIGN.CONTINUE")}
             </span>
           </button>
-          <p className="">
-            <span className="text-[16px] leading-[26px] text-simple-text tracking-[-0.1px] mr-[12px]">{t<string>("SIGN.HAVE")}</span>
-            <Link  to="/sign-in" className="text-[14px] leading-[18px] text-buttons-bg font-medium"> 
-              {t<string>("SIGN.LOGIN")}
-            </Link> 
-          </p>
+ 
         </form>
       </div>
       <div className="flex bg-no-repeat bg-left-bottom bg-cover justify-center  bg-sign w-[54%] max-lg:hidden">
@@ -120,4 +87,4 @@ const SignIn = () => {
   )
 };
 
-export default SignIn;
+export default NewPassword;
