@@ -22,7 +22,7 @@ const Sidebar = () => {
   const location = useLocation(); 
   const [showPlaybooks, setShowPlaybooks] = useState(false);
   const [showFavourites, setShowFavourites] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const { data } = useAppSelector((state) => state.app);
 
