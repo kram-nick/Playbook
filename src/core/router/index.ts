@@ -22,4 +22,5 @@ export enum PrivateUIRoutes {
   PreviewChapter = 'preview-chapter',
   Profile = 'profile',
   CardDetail = 'playbook',
+  Settings = 'settings',
 }

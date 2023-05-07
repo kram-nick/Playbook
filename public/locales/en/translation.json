@@ -173,7 +173,9 @@
                 "CHANGE_COVER":"Change Cover",
                 "ADD_COVER":"Add cover",
                 "ADD_SECTION":"Add Section",
-                "BACK":"Go back"
+                "BACK":"Go back",
+                "CANCEL":"Cancel",
+                "SAVE":"Save"
         },
         "CREATE":{
                 "UNTITLED":"Untitled"
@@ -182,5 +184,23 @@
                 "EMPTY":"This author has no playbooks yet",
                 "VIEW_OTHER":"View profiles of other authors",
                 "GET_FREE":"Get for free" 
-        }        
+        },
+        "SETTINGS": {
+                "TITLE":"Settings",
+                "PERSONAL_DATA":"Personal info",
+                "TAB_1_TEXT":"Update your photo and personal details here.",
+                "NAME":"Name",
+                "EMAIL":"Email address",
+                "PHOTO":"Your photo",
+                "PHOTO_TEXT":"This will be displayed on your profile.",
+                "ROLE":"Role",
+                "COUNTRY":"Country",
+                "TZONE":"Timezone",
+                "BIO":"Bio",
+                "BIO_TEXT":"Write a short introduction.",
+                "FIRST_NAME":"First name",
+                "LAST_NAME":"Last name",
+                "PHOTO_SIZE":"SVG, PNG, JPG or GIF (max. 800x400px)",
+                "UPLOAD":"Upload file"
+        }  
 }

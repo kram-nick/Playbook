@@ -4,10 +4,10 @@ import icon_add from "../../assets/photos/main/icon-smiley.svg";
 import icon_close from "../../assets/photos/main/modal-close.svg";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
-import { useState } from "react";
-import { StylesConfig } from "react-select/dist/declarations/src";
+import { useState } from "react"; 
 import ModalIcons from "./ModalIcons";
 import { useModal } from "../../core/hooks/useModal";
+import { colourStyles } from "../../core/constants";
 
 interface ModalType {
   children?: ReactNode;
@@ -42,58 +42,6 @@ export default function ModalPlaybookDetail(props: ModalType) {
   const { t } = useTranslation();
   const [name, setName] = useState("");
   let { isOpenModal, toggle } = useModal();
-
-  const dot = (color = "transparent") => ({
-    alignItems: "center",
-    display: "flex",
-
-    ":before": {
-      backgroundColor: color,
-      borderRadius: 2,
-      content: '" "',
-      display: "block",
-      marginRight: 8,
-      height: 20,
-      width: 20,
-    },
-  });
-
-  const colourStyles: StylesConfig<ColourOption> = {
-    control: (styles) => ({ ...styles, backgroundColor: "white" }),
-    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-      const color = data.color;
-      return {
-        ...styles,
-        backgroundColor: isDisabled
-          ? undefined
-          : isSelected
-          ? data.color
-          : isFocused
-          ? "#ccc"
-          : undefined,
-        color: isDisabled
-          ? "#ccc"
-          : isSelected
-          ? "#ccc"
-            ? "white"
-            : "black"
-          : data.color,
-        cursor: isDisabled ? "not-allowed" : "default",
-
-        ":active": {
-          ...styles[":active"],
-          backgroundColor: !isDisabled
-            ? isSelected
-              ? data.color
-              : "#ccc"
-            : undefined,
-        },
-      };
-    },
-    input: (styles) => ({ ...styles, ...dot() }),
-    placeholder: (styles) => ({ ...styles, ...dot("#ccc") }),
-    singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
-  };
 
   const handleIconsModal = () => {
     isOpenModal = true;
@@ -165,7 +113,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
                     {t<string>("FIELDS.COLOR")}
                   </label>
 
-                  <Select
+                  <Select className="select-custom h-[40px]"
                     defaultValue={colourOptions[1]}
                     options={colourOptions}
                     styles={colourStyles}

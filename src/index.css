@@ -110,6 +110,21 @@ input:checked + .switch-check:after {
   padding: 0;
 }
 
+.select-custom > div > div:nth-child(2) > div {
+  color: #242428;
+}
+.select-custom > div:nth-child(3) > div:nth-child(1) {
+  padding-left: 16px !important;
+}
+.select-custom input {
+  color: #242428 !important;
+}
+.select-custom #react-select-3-listbox > div:nth-child(1) > * {
+  padding-left: 16px !important;
+}
+.select-custom > div {
+  min-height: 100%;
+}
 /* EmojiPickerReact  */
 .customEmojiPicker .EmojiPickerReact.epr-main {
   padding: 0;
