@@ -26,7 +26,7 @@ const NewPassword = () => {
               id="password"
               type="text"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial min-w-[100%]
+              border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
             />
           </div>     
@@ -38,7 +38,7 @@ const NewPassword = () => {
               id="password"
               type="text"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial min-w-[100%]
+              border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
             />
           </div>            
