@@ -52,7 +52,8 @@ module.exports = {
         "blue-light":"#F3F7FF",
         "danger":"#FF3B30",
         "gray-btn":"#EDEDED",
-        "chapter-color":"#F6F6F6"
+        "chapter-color":"#F6F6F6",
+        "option-btn":"#E3E3E3"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],

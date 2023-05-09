@@ -14,24 +14,52 @@ import plus_blue from "../../assets/photos/main/plus-blue.svg";
 import arrow_blue from "../../assets/photos/main/arrow-down-blue.svg";
 import red_saas from "../../assets/photos/create/red-saas.svg";
 import blue_saas from "../../assets/photos/create/blue-saas.svg";
+import plus_gray from "../../assets/photos/sidebar/plus-gray.svg";
+import star_active from "../../assets/photos/sidebar/star.svg";
+import star from "../../assets/photos/sidebar/favorite.svg";
 import { useLocation } from "react-router-dom"; 
+import { setPriority } from "os";
  
 
-
-const Sidebar = () => {
-  const location = useLocation(); 
-  const [showPlaybooks, setShowPlaybooks] = useState(false);
-  const [showFavourites, setShowFavourites] = useState(false);
+const Sidebar = () => {  
+  const [playbookItem, selectedPlaybooks] = useState({open: false,selected: false});
+  const [favoriteItem, selectedFavorite] = useState({open: false,selected: false});
   const [showSidebar, setShowSidebar] = useState(false);
-
+  let [items, setPlaybooks] = useState(playbooks);
+  let [itemsFavorites, setToFavotire] = useState(favourites);
   const { data } = useAppSelector((state) => state.app);
-
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
+  const selectedTopItem = (item:any, type:string, itemType: string) => {
+    handlePlaybooks();  
+    selectedPlaybooks(
+      {
+        open: type === 'toggle' ? item.open === true ? false : true : item.open,
+        selected: type === 'selected' ? !item.selected : item.selected,
+      }
+    ); 
+    if(itemType === 'my'){
+      selectedFavorite({open: favoriteItem.open, selected: false}); 
+    }
+
+  }
+  const selectedFavoriteItem = (item:any, type:string, itemType: string) => {
+    handlePlaybooks(); 
+    selectedFavorite(
+      {
+        open: type === 'toggle' ? item.open === true ? false : true : item.open,
+        selected: type === 'selected' ? !item.selected : item.selected,
+      }
+    ); 
+    if(itemType === 'favorite'){
+      selectedPlaybooks({open: playbookItem.open, selected: false}); 
+    }    
+  }  
+ 
   const handlePlaybooks = () => {
-    setShowPlaybooks(!showPlaybooks);
+    // setShowPlaybooks(!showPlaybooks);
     dispatch(
       setSelectedData({
         id: 0,
@@ -45,12 +73,57 @@ const Sidebar = () => {
   };
 
   const handleFavourites = () => {
-    setShowFavourites(!showFavourites);
+    // setShowFavourites(!showFavourites);
   };
 
   const handleSideBar = () => { 
     setShowSidebar(!showSidebar);
   }; 
+
+ const openSubMenu = (item?: any) => {
+     
+    if(item && item.id){
+      item.open = !item.open
+    }  
+  }
+  const selectedItemMenu = (item?: any, type?: string) => {
+    dispatch(
+      setSelectedData({
+        id: item.id,
+        selected: true,
+        title: item.title,
+        chapters: item.chapters,
+        chapter_title:'',
+        chapter_id:0
+      })
+    )  
+    const data = {open: true,selected: false}; 
+    if(type === 'my'){
+      selectedPlaybooks(data);   
+    } else if(type === 'favorite'){  
+      selectedFavorite(data); 
+    } 
+  }
+
+  const setPriorityItem = (e:any, item:any) =>{
+    e.stopPropagation();
+    item.priority = true;
+    itemsFavorites.push(item);
+
+    if(item && item.id){
+      setPlaybooks(items.filter((playbook) => playbook.id !== item.id));
+    }
+  }
+  const removeFromFavorite = (e:any, item:any) =>{
+    e.stopPropagation();
+    item.priority = false;
+    items.push(item);
+
+    if(item && item.id){
+      setToFavotire(itemsFavorites.filter((playbook) => playbook.id !== item.id));
+    }
+  }  
+
 
   return (
     
@@ -66,71 +139,78 @@ const Sidebar = () => {
       })}
       >
         <img className="py-[16px]" src={playbookLogo} alt="playbookLogo" />
-        <nav className="flex flex-col ">
-          {location.pathname.slice(1) === "Main" ? (
-            <button onClick={handlePlaybooks} 
-              className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] 
-                bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]">  
-              <span className="flex flex-row items-center gap-[8px] font-manrope 
-                text-[16px] font-semibold leading-[21.86px] text-buttons-bg "> 
-                <img src={arrow_blue} alt="arrow" className={classNames({"rotate-[90deg]":
-                    showPlaybooks,
-                  })} />
-                {t<string>("COMMON.PLAYBOOKS")}
-              </span>
-              <img src={location.pathname.slice(1) === "Main" ? plus_blue : plus} alt="plus" />
-            </button>
-          ) : (
-            <button
-              onClick={handlePlaybooks}
-              className="flex flex-row items-center justify-between my-[4px] px-[8px] py-[11px] ">
-              <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
-                <img src={showPlaybooks ? active_arrow : to_arrow} alt="arrow" />
-                {t<string>("COMMON.PLAYBOOKS")}
-              </span>
-              <img src={plus} alt="plus" />
-            </button>          
-          )}
-      
-          {/* playbooks.length !== 0 */}
-          {showPlaybooks && (
+        <nav className="flex flex-col "> 
+          <button  
+            className={classNames({"bg-active-playbook  border-top-engineering rounded-[4px] ": playbookItem.selected,
+            "border-transparent": !playbookItem.selected,
+            "flex flex-row items-center justify-between my-[4px] relative border-l-[2px] transition duration-200 ease": true,
+              
+            })}>  
+            <span onClick={() => selectedTopItem(playbookItem, 'toggle', 'my')}  
+              className="w-[24px] h-[24px] absolute left-[5px] top-[50%] mt-[-12px] p-[4px]">
+              <img src={playbookItem.selected ? arrow_blue : to_arrow} alt="arrow" 
+                className={classNames({"rotate-[90deg]": playbookItem.open, "transition duration-200 ease":true })} />    
+            </span>
+          
+            <span  onClick={() => selectedTopItem(playbookItem,'selected', 'my')}  
+              className={classNames({"text-buttons-bg": playbookItem.selected,
+              "flex flex-row items-center gap-[8px] w-[100%] font-manrope text-[16px] font-semibold leading-[21.86px] px-[8px] py-[11px] pl-[32px] ":true,
+              "transition duration-200 ease":true
+            })} > 
+              {t<string>("COMMON.PLAYBOOKS")}
+            </span>
+            <img src={playbookItem.selected ? plus_blue : plus} alt="plus" className="w-[16px] h-[16px] absolute right-[8px] top-[50%] mt-[-8px]" />
+          </button>
+ 
+          {playbookItem.open && (
             <ul className="flex flex-col gap-[4px]  w-full">
-              {playbooks.map((playbook: any, index: number) => (
+              {items.map((playbook: any, index: number) => (
                 <li key={playbook.id} className="w-[100%]"> 
-                  <button
-                    onClick={() => 
-                      dispatch(
-                        setSelectedData({
-                          id: playbook.id,
-                          selected: true,
-                          title: playbook.title,
-                          chapters: playbook.chapters,
-                          chapter_title:'',
-                          chapter_id:0
-                        })
-                      )                   
-                    }
-                    
+                  <button 
+                    onClick={() => selectedItemMenu(playbook, 'my')}
                     className={classNames({
-                      "flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%]":
+                      "sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
                         true,
-                      "bg-active-playbook border-l-[2px]   border-top-engineering rounded-[4px] pl-[6px]":
-                        playbook.id === data.id,
+                      "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px]":
+                        playbook.id === data.id
                     })}>
-                    <img src={playbook.id === data.id ? arrow_blue : to_arrow} alt="arrow" className={classNames({"rotate-[90deg]": playbook.id === data.id})} />
+                    <img 
+                      onClick={() => openSubMenu(playbook)} 
+                      src={playbook.id === data.id ? arrow_blue : to_arrow} alt="arrow" 
+                      className={classNames({"rotate-[90deg]": playbook.open,
+                        "transition duration-200 ease":true})} />
                     <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
                     <span
                       className={classNames({
                         "text-buttons-bg": playbook.id === data.id,
                         "text-top-sub-secondary": playbook.id !== data.id,
-                        "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px]":
+                        "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                           true
                       })}>
                       {playbook.title}
                     </span>
+                    <div className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
+                      transition duration-200 ease invisible opacity-0">
+                      <span onClick={(e) => setPriorityItem(e, playbook)}
+                        className={classNames({
+                          "hover:bg-active-playbook": playbook.id === data.id,
+                          "hover:bg-option-btn": playbook.id !== data.id,
+                          "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer": true
+                        })}>
+                        <img src={playbook.priority ? star_active : star} alt="add to favorite" />
+                      </span>                      
+                      <span onClick={(e) => e.stopPropagation()} 
+                        className={classNames({
+                          "hover:bg-active-playbook": playbook.id === data.id,
+                          "hover:bg-option-btn": playbook.id !== data.id,
+                          "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer": true
+                        })}>
+                        <img src={playbook.id === data.id ? plus_blue : plus_gray} alt="add" />
+                      </span>
+                    </div>
                   </button>
-                  
-                  {playbook.chapters.length && playbook.id === data.id && (
+                    
+                  {playbook.chapters.length && playbook.open && (
                     <>
                       {playbook.chapters.map((chapter: any, indexChapter: number) => (
                           <button
@@ -160,12 +240,12 @@ const Sidebar = () => {
                       ))}
                     </>
                   )}
-               </li>
+                </li>
               ))}
             </ul>
           )}
           <hr className="my-[24px]" />
-          <button
+          {/* <button
             onClick={handleFavourites}
             className="flex flex-row items-center justify-between  px-[8px] py-[11px] ">
             <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
@@ -173,37 +253,107 @@ const Sidebar = () => {
               {t<string>("COMMON.FAVOURITES")}
             </span>
             <img src={plus} alt="plus" />
-          </button>
-          {showFavourites && (
+          </button> */}
+          <button  
+            className={classNames({"bg-active-playbook  border-top-engineering rounded-[4px] ": favoriteItem.selected,
+            "border-transparent": !favoriteItem.selected,
+            "flex flex-row items-center justify-between my-[4px] relative border-l-[2px]  transition duration-200 ease": true,
+              
+            })}>  
+            <span onClick={() => selectedFavoriteItem(favoriteItem,'toggle','favorite')}  
+              className="w-[24px] h-[24px] absolute left-[5px] top-[50%] mt-[-12px] p-[4px]">
+              <img src={favoriteItem.selected ? arrow_blue : to_arrow} alt="arrow" 
+                className={classNames({"rotate-[90deg]": favoriteItem.open, "transition duration-200 ease": true})} />    
+            </span>
+          
+            <span  onClick={() => selectedFavoriteItem(favoriteItem,'selected','favorite')}  
+              className={classNames({"text-buttons-bg": favoriteItem.selected,
+              "transition duration-200 ease":true,
+              "flex flex-row items-center gap-[8px] w-[100%] font-manrope text-[16px] font-semibold leading-[21.86px] px-[8px] py-[11px] pl-[32px]":true
+            })} > 
+              {t<string>("COMMON.FAVOURITES")}
+            </span>
+            <img src={favoriteItem.selected ? plus_blue : plus} alt="plus" className="w-[16px] h-[16px] absolute right-[8px] top-[50%] mt-[-8px]" />
+          </button>          
+          {favoriteItem.open && (
             <ul className="flex flex-col gap-[4px] ">
-              {favourites.map((playbook: any, index: number) => (
-                <button
-                  key={playbook.id}
-                  onClick={() =>
-                    dispatch(
-                      setSelectedData({
-                        id: playbook.id,
-                        selected: true,
-                        title: playbook.title,
-                      })
-                    )
-                  }
-                  className={classNames({
-                    "flex flex-row px-[8px] py-[6px] gap-[8px] items-center":
-                      true,
-                    "bg-active-playbook border-l-[2px] border-top-engineering rounded-[4px] pl-[6px]":
-                      playbook.id === data.id,
-                  })}>
-                  <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
-                  <span
+              {itemsFavorites.map((playbook: any, index: number) => (
+ 
+                <li key={playbook.id} className="w-[100%]"> 
+                  <button 
+                    onClick={() => selectedItemMenu(playbook, 'favorite')}
                     className={classNames({
-                      "font-poppins font-normal text-top-sub-secondary text-[16px] leading-[26px] tracking-[-0.1px]":
+                      "sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
                         true,
-                      "text-top-engineering": playbook.id === data.id,
+                      "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px]":
+                        playbook.id === data.id
                     })}>
-                    {playbook.title}
-                  </span>
-                </button>
+                    <img 
+                      onClick={() => openSubMenu(playbook)} 
+                      src={playbook.id === data.id ? arrow_blue : to_arrow} alt="arrow" 
+                      className={classNames({"rotate-[90deg]": playbook.open,
+                        "transition duration-200 ease":true})} />
+                    <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
+                    <span
+                      className={classNames({
+                        "text-buttons-bg": playbook.id === data.id,
+                        "text-top-sub-secondary": playbook.id !== data.id,
+                        "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
+                          true
+                      })}>
+                      {playbook.title}
+                    </span>
+                    <div className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
+                      transition duration-200 ease invisible opacity-0">
+                      <span onClick={(e) => removeFromFavorite(e, playbook)}
+                        className={classNames({
+                          "hover:bg-active-playbook": playbook.id === data.id,
+                          "hover:bg-option-btn": playbook.id !== data.id,
+                          "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]": true
+                        })}>
+                        <img src={playbook.priority ? star_active : star} alt="add to favorite" />
+                      </span>                      
+                      <span onClick={(e) => e.stopPropagation()} 
+                        className={classNames({
+                          "hover:bg-active-playbook": playbook.id === data.id,
+                          "hover:bg-option-btn": playbook.id !== data.id,
+                          "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]": true
+                        })}>
+                        <img src={playbook.id === data.id ? plus_blue : plus_gray} alt="add" />
+                      </span>
+                    </div>
+                  </button>
+                  {playbook.chapters  && playbook.open && (
+                      <>
+                        {playbook.chapters.map((chapter: any, indexChapter: number) => (
+                            <button
+                            key={chapter.id}
+                            onClick={() =>
+                              dispatch(
+                                setSelectedData({
+                                  id: playbook.id,
+                                  selected: true,
+                                  title: playbook.title,
+                                  chapter_title: chapter.title,
+                                  chapter_id: chapter.id,
+                                  chapters: playbook.chapters,
+                                  chapter_text:chapter.text
+                                })
+                              )
+                            }
+                            className={classNames({
+                              "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
+                                true,                             
+                              "text-top-sub-secondary": chapter.id !== data.chapter_id,  
+                              "text-buttons-bg":
+                              playbook.id === data.id && chapter.id === data.chapter_id,
+                            })}>
+                              <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">{chapter.title}</p>
+                          </button>
+                        ))}
+                      </>
+                    )}
+                </li>
               ))}
             </ul>
           )}

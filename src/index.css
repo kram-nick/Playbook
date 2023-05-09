@@ -156,3 +156,9 @@ input:checked + .switch-check:after {
   letter-spacing: -0.1px;
   color: #606266;
 }
+
+/* sidebar */
+.sidebar-item:hover .options {
+  opacity: 1;
+  visibility: visible;
+}

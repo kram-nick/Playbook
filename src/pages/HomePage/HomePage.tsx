@@ -15,6 +15,7 @@ import ToolsBlock from "../../components/ToolsBlock/ToolsBlock";
 import Banner from "../../components/Banner/Banner";
 import TopFeatures from "../../components/TopFeatures/TopFeatures";
 import Review from "../../components/Review/Review";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const { t } = useTranslation();
@@ -58,9 +59,9 @@ const HomePage = () => {
           max-sm:gap-[16px]
           max-sm:mt-[36px]
           ">
-            <button className="text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial">
+            <Link to="/sign-up" className="text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial">
               {t<string>("HOME.FREE_START")}
-            </button>
+            </Link>
             <div className="flex items-center">
               <p className="text-buttons-bg text-[16px] font-semibold leading-[21px] min-w-[90px]">
                 {t<string>("HOME.LEARN")}

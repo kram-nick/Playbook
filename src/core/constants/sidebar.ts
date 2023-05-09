@@ -4,7 +4,7 @@ export const playbooks = [
     title: "Product Playbook",
     status:"Draft",
     edited:"Edited 2 days ago",
-    priority: true,
+    priority: false,
     image: true,
     chapters:  [
       {
@@ -68,22 +68,22 @@ export const playbooks = [
     title: "Saas Playbook",
     status:"Draft",
     edited:"Edited 4 days ago",
-    priority: true,
+    priority: false,
     image: true,
     chapters:  [
       {
-        id: 1,
+        id: 11,
         title: "#1 Hire the best people through smart hiring", 
         open: false,
         
       },
       {
-        id: 2,
+        id: 21,
         title: "#3 Sales", 
         open: false
       },
       {
-        id: 3,
+        id: 31,
         title: "#4 Customer Discovery", 
         open: true
       } 
@@ -94,26 +94,26 @@ export const playbooks = [
     title: "Product Playbook 1",
     status:"Draft",
     edited:"Edited 3 days ago",
-    priority: true,
+    priority: false,
     image:false,
     chapters:  [
       {
-        id: 1,
+        id: 12,
         title: "#1 Hire the best people through smart hiring", 
         open: false
       },
       {
-        id: 2,
+        id: 22,
         title: "#3 Sales", 
         open: false
       },
       {
-        id: 3,
+        id: 32,
         title: "#4 Customer Discovery", 
         open: true
       },
       {
-        id: 4,
+        id: 42,
         title: "#5 Hire the best people through smart hiring", 
         open: false
       }
@@ -128,22 +128,22 @@ export const playbooks = [
     image:false,
     chapters:  [
       {
-        id: 1,
+        id: 13,
         title: "#1 Hire the best people through smart hiring", 
         open: false
       },
       {
-        id: 2,
+        id: 23,
         title: "#3 Sales", 
         open: false
       },
       {
-        id: 3,
+        id: 33,
         title: "#4 Customer Discovery", 
         open: true
       },
       {
-        id: 4,
+        id: 43,
         title: "#5 Hire the best people through smart hiring", 
         open: false
       }
@@ -158,22 +158,22 @@ export const playbooks = [
     image:false,
     chapters:  [
       {
-        id: 1,
+        id: 14,
         title: "#1 Hire the best people through smart hiring", 
         open: false
       },
       {
-        id: 2,
+        id: 24,
         title: "#3 Sales", 
         open: false
       },
       {
-        id: 3,
+        id: 34,
         title: "#4 Customer Discovery", 
         open: true
       },
       {
-        id: 4,
+        id: 44,
         title: "#5 Hire the best people through smart hiring", 
         open: false
       }
@@ -183,16 +183,90 @@ export const playbooks = [
 
 export const favourites = [
   {
-    id: 6235,
-    title: "Product Playbook",
+    id: 12,
+    title: "Product Playbook", 
+    status:"Draft",
+    edited:"Edited 2 days ago",
+    priority: true,
+    image:false,
+    chapters:  [
+      {
+        id: 14,
+        title: "#1 Hire the best people through smart hiring", 
+        open: false
+      },
+      {
+        id: 24,
+        title: "#3 Sales", 
+        open: false
+      },
+      {
+        id: 34,
+        title: "#4 Customer Discovery", 
+        open: true
+      },
+      {
+        id: 44,
+        title: "#5 Hire the best people through smart hiring", 
+        open: false
+      }
+    ]        
   },
   {
-    id: 12323,
+    id: 13,
     title: "Saas Playbook",
+    status:"Draft",
+    edited:"Edited 2 days ago",
+    priority: true,       chapters:  [
+      {
+        id: 14,
+        title: "#1 Hire the best people through smart hiring", 
+        open: false
+      },
+      {
+        id: 24,
+        title: "#3 Sales", 
+        open: false
+      },
+      {
+        id: 34,
+        title: "#4 Customer Discovery", 
+        open: true
+      },
+      {
+        id: 44,
+        title: "#5 Hire the best people through smart hiring", 
+        open: false
+      }
+    ]   
   },
   {
-    id: 123123,
+    id: 14,
     title: "Product Playbook 1",
+    status:"Draft",
+    edited:"Edited 2 days ago",
+    priority: true,        chapters:  [
+      {
+        id: 14,
+        title: "#1 Hire the best people through smart hiring", 
+        open: false
+      },
+      {
+        id: 24,
+        title: "#3 Sales", 
+        open: false
+      },
+      {
+        id: 34,
+        title: "#4 Customer Discovery", 
+        open: true
+      },
+      {
+        id: 44,
+        title: "#5 Hire the best people through smart hiring", 
+        open: false
+      }
+    ]  
   },
 ];
 
