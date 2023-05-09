@@ -1,5 +1,6 @@
 export type AppDataTypes = {
   language: string;
+  sideOpen: boolean;
   data: {
     selected: boolean;
     id: null | number;

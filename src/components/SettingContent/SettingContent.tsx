@@ -12,7 +12,7 @@ const MainContent = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="w-full">
+    <div className="w-full flex-1">
       <div className="max-[1024px]:hidden">
         <AppHeader /> 
       </div>

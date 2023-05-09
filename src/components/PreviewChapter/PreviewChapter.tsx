@@ -6,7 +6,7 @@ const PreviewChapter = () => {
   const { data } = useAppSelector((state) => state.app);
 
   return (
-    <div className="w-full">
+    <div className="w-full flex-1">
       <Header previewState={true} />
       <div className="p-[24px] gap-[32px] max-[1024px]:pt-[12px] max-[1024px]:px-[32px] max-[690px]:p-[0]">
  

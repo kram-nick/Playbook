@@ -4,7 +4,7 @@ import AppMainContent from "../AppMainContent";
 
 const MainContent = () => {  
   return (
-    <div className="w-full">
+    <div className="w-full flex-1">
       <AppHeader />
       <AppMainContent />
 

@@ -162,3 +162,8 @@ input:checked + .switch-check:after {
   opacity: 1;
   visibility: visible;
 }
+
+.sidebar:hover .sideToggle {
+  opacity: 1;
+  visibility: visible;
+}

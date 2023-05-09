@@ -3,6 +3,7 @@ import { AppDataTypes } from "./appDataTypes";
 
 const initialState: AppDataTypes = {
   language: "en",
+  sideOpen: true,
   data: {
     selected: false,
     id: null,
@@ -16,6 +17,9 @@ const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    setToggleSidebar(state, action: PayloadAction<boolean>) {
+      state.sideOpen = action.payload;
+    },    
     setLanguage(state, action: PayloadAction<string>) {
       state.language = action.payload;
     },
@@ -27,4 +31,4 @@ const appSlice = createSlice({
 });
 
 export default appSlice.reducer;
-export const { setLanguage, setSelectedData } = appSlice.actions;
+export const {setToggleSidebar, setLanguage, setSelectedData } = appSlice.actions;

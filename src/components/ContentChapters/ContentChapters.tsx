@@ -11,7 +11,7 @@ const ContentChapters = () => {
   const { title } = useAppSelector((state) => state.app.data);
 
   return (
-    <div className="w-full">
+    <div className="w-full flex-1">
       <Header  />
       <div className="p-[24px] gap-[32px]">
         <BookBanner preview={false} />

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { favourites, playbooks } from "../../core/constants/sidebar";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
+import { setSelectedData, setToggleSidebar } from "../../core/store/reducers/app/appDataSlice";
 
 import playbookLogo from "../../assets/photos/squeeze/mob-logo.svg";
 import to_arrow from "../../assets/photos/create/to-arrow.svg"; 
@@ -21,12 +21,11 @@ import star from "../../assets/photos/sidebar/favorite.svg";
 const Sidebar = () => {
   const [playbookItem, selectedPlaybooks] = useState({ open: false, selected: false });
   const [favoriteItem, selectedFavorite] = useState({ open: false, selected: false });
-  const [showSidebar, setShowSidebar] = useState(false);
+ 
   let [items, setPlaybooks] = useState(playbooks);
   let [itemsFavorites, setToFavotire] = useState(favourites);
-  const { data } = useAppSelector((state) => state.app);
+  const { data, sideOpen } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
-
   const { t } = useTranslation();
 
   const selectedTopItem = (item: any, type: string, itemType: string) => {
@@ -69,9 +68,7 @@ const Sidebar = () => {
     )
   };
  
-  const handleSideBar = () => {
-    setShowSidebar(!showSidebar);
-  };
+ 
 
   const openSubMenu = (item?: any) => {
 
@@ -88,7 +85,7 @@ const Sidebar = () => {
         chapters: item.chapters,
         chapter_title: '',
         chapter_id: 0
-      })
+      }) 
     )
     const data = { open: true, selected: false };
     if (type === 'my') {
@@ -117,22 +114,43 @@ const Sidebar = () => {
     }
   }
 
-
+ 
   return (
 
     <div className={classNames({
-      "min-w-[280px]  min-h-[100%] max-lg:min-w-[0%]": true,
-      " ": showSidebar,
+      "sidebar w-[280px]  min-h-[100%] max-lg:min-w-[0%] relative transition-[width] duration-[200ms] ease-in max-[1024px]:w-[0px]": true,
+      "min-[1024px]:w-[25px]":!sideOpen,
     })}>
+
+      <button onClick={() => dispatch(setToggleSidebar(!sideOpen))} 
+        className={classNames({
+          "sideToggle rounded-[50%] w-[30px] h-[30px] absolute top-[10%] right-[-15px] border-[1px] bg-white": true,
+          "z-[20] flex items-center justify-center transition-all duration-[300ms] linear max-[1024px]:hidden": true,
+          // "":sideState,
+          "invisible opacity-0":sideOpen,
+      })}>
+          <img src={arrow_blue} alt="arrow"
+            className={classNames({ "scale-[-1]": sideOpen, "transition-all duration-200 ease": true })} />
+      </button>      
       <div
         className={classNames({
           "bg-list-title w-[280px] h-[100%] px-[12px] border-solid border-r-[1px] left-[0px] border-r-header-bottom gap-[21.4px] max-lg:left-[-350px] ": true,
-          "fixed top-[0] min-h-[100%] max-lg:z-[100] transition duration-500 ease-in overflow-y-auto": true,
-          "max-lg:left-[0px!important]": showSidebar,
+          "fixed top-[0] min-h-[100%] max-lg:z-[100] transition-all duration-[200ms] ease-in  overflow-y-auto box-border": true,
+          "max-lg:left-[0px!important]": !sideOpen,
+          "min-[1024px]:w-[25px]":!sideOpen,
         })}
       >
-        <img className="py-[16px]" src={playbookLogo} alt="playbookLogo" />
-        <nav className="flex flex-col ">
+ 
+        <img className={classNames({
+          "py-[16px] w-[160px] max-w-[160px] transition-[opacity] duration-[150ms] ease-in":true, 
+          "min-[1024px]:opacity-0 delay-150":!sideOpen
+        })} 
+          src={playbookLogo} alt="playbookLogo" />
+          
+        <nav className={classNames({
+          "flex flex-col w-[255px] transition-[opacity] duration-[150ms] ease-in": true,
+          "  delay-[100ms] min-[1024px]:opacity-0 ":!sideOpen,
+          })}>
           <button
             className={classNames({
               "bg-active-playbook  border-top-engineering rounded-[4px] ": playbookItem.selected,
@@ -352,10 +370,14 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {showSidebar && (
-        <div onClick={handleSideBar}
-          className="side-overlay fixed left-[0px] top-[0px] w-[100%] h-[100vh] bg-side-overlay z-[99] min-[1024px]:hidden"></div>
-      )}
+    
+      <div onClick={() => dispatch(setToggleSidebar(!sideOpen))}
+        className={classNames({
+          "side-overlay fixed left-[0px] top-[0px] w-[100%] h-[100vh] bg-side-overlay z-[99] min-[1024px]:hidden transition-all duration-[300ms] ease-in":true,
+          "opacity-0 invisible z-0":sideOpen
+        })}>
+      </div>
+     
     </div>
 
   );

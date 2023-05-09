@@ -7,6 +7,8 @@ import search from "../../assets/photos/main/search.svg";
 import arrow_down from "../../assets/photos/main/arrow-down.svg";
 import icon_burger from "../../assets/photos/common/burger.svg";  
 import playbookLogo from "../../assets/photos/squeeze/mob-logo.svg";
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
+import { setToggleSidebar } from "../../core/store/reducers/app/appDataSlice";
 
 type HeaderProps = { 
   profile?: boolean,
@@ -14,7 +16,8 @@ type HeaderProps = {
 
 const AppHeader = ({profile}: HeaderProps) => {
   const { t } = useTranslation(); 
- 
+  const { sideOpen } = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();
 
   return (
     <header className="py-[14px] px-[24px]   border-b-[1px] bg-tools-block  
@@ -30,7 +33,7 @@ const AppHeader = ({profile}: HeaderProps) => {
             <img   src={playbookLogo} alt="playbookLogo" />
           </Link>
         ): (
-          <div className="absolute flex items-center justify-center w-[32px] h-[32px] 
+          <div onClick={() => dispatch(setToggleSidebar(!sideOpen))}  className="absolute flex items-center justify-center w-[32px] h-[32px] 
             top-[14px] left-[28px] min-[1024px]:hidden cursor-pointer max-sm:left-[12px]">
             <img src={icon_burger} alt="" />
           </div>

@@ -7,7 +7,7 @@ const NewDraft = () => {
   const { title } = useAppSelector((state) => state.app.data);
 
   return (
-    <div className="w-full">
+    <div className="w-full flex-1">
       <Header />
       <div className="p-[24px] flex flex-col gap-[32px]">
         {/* <div className="w-full flex flex-row justify-start items-center gap-[4px]">
