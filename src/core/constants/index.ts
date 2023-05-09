@@ -34,7 +34,6 @@ export const selectStyles: StylesConfig<any, true> = {
 const dot = (color = "transparent") => ({
   alignItems: "center",
   display: "flex",
-
   ":before": {
     backgroundColor: color,
     borderRadius: 2,
