@@ -68,11 +68,7 @@ const Sidebar = () => {
       })
     )
   };
-
-  const handleFavourites = () => {
-    // setShowFavourites(!showFavourites);
-  };
-
+ 
   const handleSideBar = () => {
     setShowSidebar(!showSidebar);
   };
@@ -246,15 +242,6 @@ const Sidebar = () => {
             </ul>
           )}
           <hr className="my-[24px]" />
-          {/* <button
-            onClick={handleFavourites}
-            className="flex flex-row items-center justify-between  px-[8px] py-[11px] ">
-            <span className="flex flex-row items-center gap-[8px] font-manrope text-[16px] font-semibold leading-[21.86px] text-home-title ">
-              <img src={showFavourites ? active_arrow : to_arrow} alt="arrow" />
-              {t<string>("COMMON.FAVOURITES")}
-            </span>
-            <img src={plus} alt="plus" />
-          </button> */}
           <button
             className={classNames({
               "bg-active-playbook  border-top-engineering rounded-[4px] ": favoriteItem.selected,
