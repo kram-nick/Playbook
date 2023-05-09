@@ -7,8 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
 
 import playbookLogo from "../../assets/photos/squeeze/mob-logo.svg";
-import to_arrow from "../../assets/photos/create/to-arrow.svg";
-import active_arrow from "../../assets/photos/create/open-arrow.svg";
+import to_arrow from "../../assets/photos/create/to-arrow.svg"; 
 import plus from "../../assets/photos/create/plus.svg";
 import plus_blue from "../../assets/photos/main/plus-blue.svg";
 import arrow_blue from "../../assets/photos/main/arrow-down-blue.svg";
@@ -16,8 +15,7 @@ import red_saas from "../../assets/photos/create/red-saas.svg";
 import blue_saas from "../../assets/photos/create/blue-saas.svg";
 import plus_gray from "../../assets/photos/sidebar/plus-gray.svg";
 import star_active from "../../assets/photos/sidebar/star.svg";
-import star from "../../assets/photos/sidebar/favorite.svg";
-import { useLocation } from "react-router-dom";
+import star from "../../assets/photos/sidebar/favorite.svg"; 
 
 
 const Sidebar = () => {
