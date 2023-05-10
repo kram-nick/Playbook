@@ -7,6 +7,7 @@ import red_saas from "../../assets/photos/create/red-saas.svg";
 import blue_saas from "../../assets/photos/create/blue-saas.svg";
 import dots from "../../assets/photos/main/dots.svg";
 import star from "../../assets/photos/main/star.svg";
+import star_mobile from "../../assets/photos/main/star-mobile.svg";
 import star_active from "../../assets/photos/main/star-active.svg";
 import icon_preview from "../../assets/photos/main/icon-play.svg";  
 import icon_share from "../../assets/photos/main/icon-share.svg";  
@@ -113,38 +114,60 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
             })}>
           <button onClick={handleOpen}
             className={classNames({
-              "bg-card-border":isShow, 
+              "min-[1024px]:bg-card-border":isShow, 
               "w-[20px] h-[20px] rounded-[2px]" : true
             })}>
             <img src={dots} alt="" />
           </button>   
                      
-          {isShow ? (
-            <ul className="menu absolute right-[0] top-[calc(100%+9px)] bg-white py-[8px]
-              rounded-[5px] border-[1px] border-solid border-header-bottom shadow-dropmenu
-              font-poppins min-w-[150px] z-10" ref={ref}>
-              <li onClick={() => handleSocialClick(item)}
-               className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border">
-                <img src={icon_preview} alt=""  className="w-[24px] h-[24px]" />
-                <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.PREVIEW")}</span>
-              </li>
-              <li onClick={() => handleShareClick(item)} 
-                className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border"> 
-                <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
-                <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.SHARE")}</span>
-              </li>   
-              <li onClick={() => handleEditClick(item)} 
-                className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border"> 
-                <img src={icon_settings} alt="" className="w-[24px] h-[24px]" />
-                <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.SETTINGS")}</span>
-              </li>                           
-              <li onClick={() => handleDeleteClick(item)} 
-                className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-card-border"> 
-                <img src={icon_delete} alt="" className="w-[24px] h-[24px]" />
-                <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.DELETE")}</span>
-              </li>
-            </ul>
-          ) : null}
+          {isShow && (
+            <div className="menu absolute right-[0] min-[1024px]:top-[calc(100%+9px)] bg-white py-[8px]
+              min-[1024px]:rounded-[5px] border-[1px] border-solid border-header-bottom shadow-dropmenu
+              font-poppins min-w-[150px] z-10 transition-all duration-[300ms] ease-in max-[1024px]:z-[999]
+              max-[1024px]:fixed max-[1024px]:left-[0] max-[1024px]:right-[0px] max-[1024px]:bottom-[0px] max-[1024px]:p-[16px]
+              max-[1024px]:pb-[32px]" ref={ref}>
+
+              <div className="title min-[1024px]:hidden border-b-[1px] border-solid border-header-bottom mb-[4px] pb-[12px]
+                text-[16px] font-medium leading-[20px] text-home-title">{item.title}</div>
+              
+              <ul>
+                <li onClick={() => handleSocialClick(item)}
+                className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                  <img src={icon_preview} alt=""  className="w-[24px] h-[24px]" />
+                  <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.PREVIEW")}</span>
+                </li>
+                <li onClick={() => handleShareClick(item)} 
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"> 
+                  <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
+                  <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.SHARE")}</span>
+                </li>   
+                <li onClick={() => handlePriorityClick()}
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border min-[1024px]:hidden 
+                  max-[1024px]:px-[0px]"> 
+                  <img src={priority ? star_active : star_mobile} alt="" className="w-[24px] h-[24px]" />
+                  <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.FAVORITE")}</span>
+                </li>              
+                <li onClick={() => handleEditClick(item)} 
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"> 
+                  <img src={icon_settings} alt="" className="w-[24px] h-[24px]" />
+                  <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.SETTINGS")}</span>
+                </li>                           
+                <li onClick={() => handleDeleteClick(item)} 
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"> 
+                  <img src={icon_delete} alt="" className="w-[24px] h-[24px]" />
+                  <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.DELETE")}</span>
+                </li>
+              </ul>              
+            </div>
+          )}
+
+          {isShow && (
+          <div  className={classNames({
+              "side-overlay fixed left-[0px] top-[0px] w-[100%] h-[100vh] bg-side-overlay z-[99] min-[1024px]:hidden transition-all duration-[300ms] ease-in":true,
+              "opacity-0 invisible z-0":!isShow
+            })}>
+          </div>
+          )}
         </div>                        
       </div>
     </div>    

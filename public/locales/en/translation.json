@@ -161,7 +161,8 @@
                "SETTINGS":"Settings",
                "DELETE":"Delete",
                "PREVIEW":"Preview",
-               "SHARE":"Share"
+               "SHARE":"Share",
+               "FAVORITE":"Favorite"
         },
         "FIELDS": {
                 "NAME":"Name",
