@@ -53,7 +53,8 @@ module.exports = {
         "danger":"#FF3B30",
         "gray-btn":"#EDEDED",
         "chapter-color":"#F6F6F6",
-        "option-btn":"#E3E3E3"
+        "option-btn":"#E3E3E3",
+        "chart-color":"#47B5FF"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
@@ -65,7 +66,10 @@ module.exports = {
         "3xl": "0px 13px 60px rgba(53, 52, 116, 0.08)",
         "inp-squeeze": "0px 1px 2px rgba(16, 24, 40, 0.04);",
         "free-trial": " 0px 1px 2px rgba(16, 24, 40, 0.04);",
-        "dropmenu":"0px 1px 2px -1px rgba(16, 24, 40, 0.1), 0px 1px 3px rgba(16, 24, 40, 0.1);"
+        "dropmenu":"0px 1px 2px -1px rgba(16, 24, 40, 0.1), 0px 1px 3px rgba(16, 24, 40, 0.1);",
+        "chart":"-9px 4px 222px rgba(135, 135, 135, 0.25), 0px 0px 0px 9px rgba(71, 181, 255, 0.1);",
+        "chart-mobile":"-3.87497px 1.72221px 95.5825px rgba(135, 135, 135, 0.25), 0px 0px 0px 3.87497px rgba(71, 181, 255, 0.1);",
+        "chart-grow":"-10px 6px 34px rgba(50, 50, 61, 0.04)"
       },
       backgroundImage: {
         "sign": "url('./assets/photos/sign/bg-sign.svg')",

@@ -9,7 +9,7 @@ const Banner = () => {
       max-sm:px-[16px]
     max-lg:px-[32px]
     ">
-      <div className="mx-auto max-w-[1880px] bg-banner-back bg-no-repeat bg-cover my-[100px] rounded-[20px]">
+      <div className="mx-auto max-w-[1880px] bg-banner-back bg-no-repeat bg-cover my-[100px] rounded-[20px] max-[650px]:py-[80px]">
         <div
           className=" flex flex-col items-center py-[66px] 
         max-sm:px-[24px]
