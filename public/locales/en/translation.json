@@ -94,7 +94,13 @@
                 "PRICE_OL_4":"Exclusive premium widgets",               
                 "PRICE_BTN":"Get Started",             
                 "APP_TITLE":"Build your collection of playbooks",             
-                "APP_DESC":"Using these proven design tools, we make sure our clients receive the result they expect within the set timeframe."             
+                "APP_DESC":"Using these proven design tools, we make sure our clients receive the result they expect within the set timeframe.",
+                "APP_POS_1":"Engineering Management",             
+                "APP_POS_2":"Entrepreneur",             
+                "APP_POS_3":"CEO & Founders",             
+                "APP_TITLE_1":"How to Hire 10x Engineers",             
+                "APP_TITLE_2":"The Startup Playbook",             
+                "APP_TITLE_3":"The Culture Playbook"       
         },
         "TERM": {
                 "DOCUMENTS": "Documents",

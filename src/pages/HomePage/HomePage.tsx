@@ -19,6 +19,13 @@ import chart1 from "../../assets/photos/home/chart-1.svg";
 import chart2 from "../../assets/photos/home/chart-2.svg";
 import chart3 from "../../assets/photos/home/chart-3.svg";
 import chart_arrow from "../../assets/photos/home/chart-arrow.svg";
+import playbook_lg from "../../assets/photos/collection/pb-lg.svg";
+import playbook_md from "../../assets/photos/collection/pb-md.svg";
+import playbook_sm from "../../assets/photos/collection/pb-xs.svg";
+import icon_left from "../../assets/photos/collection/icon_left.svg";
+import icon_right from "../../assets/photos/collection/icon_right.svg";
+import highlight from "../../assets/photos/collection/highlight.svg";
+
 import Testimonials from "../../components/Testimonials";
 import Pricing from "../../components/Pricing";
 
@@ -404,7 +411,7 @@ const HomePage = () => {
       </div>
 
       <div className="bg-white  min-[1024px]:pt-[140px] min-[1024px]:pb-[150px] max-[1024px]:pt-[110px] max-[1024px]:pb-[110px]
-        max-[650px]:pt-[70px] max-[650px]:pb-[80px]">
+        max-[650px]:pt-[70px] max-[650px]:pb-[95px]">
 
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2 className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px]
@@ -429,7 +436,7 @@ const HomePage = () => {
       </div>      
 
       <div className="bg-tools-bg  min-[1024px]:pt-[120px] min-[1024px]:pb-[150px] max-[1024px]:pt-[110px] max-[1024px]:pb-[110px]
-        max-[650px]:pt-[70px] max-[650px]:pb-[80px]">
+        max-[650px]:pt-[70px] max-[650px]:pb-[95px]">
 
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2 className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px] max-w-[670px] mx-[auto]
@@ -461,7 +468,77 @@ const HomePage = () => {
             {t<string>("HOME.APP_DESC")}
           </p>
 
+
+          <div className="rounded-[20px] bg-white shadow-review-card pt-[28px] min-[1024px]:pl-[50px] min-[1024px]:pt-[50px] 
+            max-[1024px]:pl-[40px] max-[1024px]:pt-[50px] max-[650px]:px-[16px]  overflow-hidden max-[650px]:pt-[20px]">
  
+
+            <div className="flex justify-between items-end max-[650px]:flex-wrap max-[650px]:flex-col-reverse">
+              <div className="max-w-[344px] gap-[60px] grid pb-[43px] max-[1024px]:max-w-[50%] max-[650px]:max-w-[100%]
+                max-[650px]:gap-[40px]">
+                  <div className="">
+                    <span className="table text-[12px] leading-[1] bg-chart-color text-white rounded-[100px] px-[12px] py-[6px]
+                      mb-[16px]">
+                      {t<string>("HOME.APP_POS_1")}
+                    </span>
+                    <h3 className="font-semibold text-[24px] leading-normal text-home-title mb-[8px]">
+                        {t<string>("HOME.APP_TITLE_1")}
+                    </h3>
+                    <p className="text-[16px] leading-[26px] text-simple-text">
+                      Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor 
+                    </p>   
+                  </div>
+                  <div className="">
+                    <span className="table text-[12px] leading-[1] bg-top-entrepreneur text-white rounded-[100px] px-[12px] py-[6px]
+                      mb-[16px]">
+                      {t<string>("HOME.APP_POS_2")}
+                    </span>
+                    <h3 className="font-semibold text-[24px] leading-normal text-home-title mb-[8px]">
+                        {t<string>("HOME.APP_TITLE_2")}
+                    </h3>
+                    <p className="text-[16px] leading-[26px] text-simple-text">
+                      Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor 
+                    </p>   
+                  </div>
+                  <div className="">
+                    <span className="table text-[12px] leading-[1] bg-top-ceo text-white rounded-[100px] px-[12px] py-[6px]
+                      mb-[16px]">
+                      {t<string>("HOME.APP_POS_3")}
+                    </span>
+                    <h3 className="font-semibold text-[24px] leading-normal text-home-title mb-[8px]">
+                        {t<string>("HOME.APP_TITLE_3")}
+                    </h3>
+                    <p className="text-[16px] leading-[26px] text-simple-text">
+                      Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor 
+                    </p>   
+                  </div>                                    
+             
+              </div>
+              <div className="min-[1024px]:max-w-[56%] relative max-[1024px]:w-[100%] max-[650px]:max-w-[450px] max-[650px]:mx-[auto]
+                max-[650px]:mb-[40px]">
+                <div className="image px-[110px] z-[5] relative max-[1024px]:pr-[0] max-[1024px]:pl-[60px]
+                  max-[650px]:px-[60px]">
+                    <img src={playbook_lg} alt="" className="w-[395px]  max-[1024px]:hidden 
+                    border-[8px] border-b-[0px]  border-create-bg-main rounded-t-[32px]" />
+                    <img src={playbook_md} alt="" className="w-[100%] min-[1024px]:hidden  max-[650px]:hidden 
+                      rounded-tl-[35px] shadow-playbook-md" />     
+                    <img src={playbook_sm} alt="" className="w-[100%] min-[650px]:hidden " />                                        
+                </div>                
+                <img src={icon_left} alt="" className="absolute top-[8px] right-[79%] max-w-[30%] max-[1024px]:max-w-[42%] 
+                  max-[1024px]:z-[6] max-[1024px]:right-[70%] max-[1024px]:top-[-30px] 
+                  max-[650px]:right-[82%] max-[650px]:top-[-2px] max-[650px]:max-w-[26%]" />
+
+                <img src={icon_right} alt="" className="absolute bottom-[25%] right-[-25px]  
+                  max-[650px]:right-[-8%] max-[650px]:max-w-[28%]" />    
+
+                <img src={highlight} alt="" className="absolute bottom-[6%] right-[57%] max-w-[54%] max-[1024px]:max-w-[70%]
+                  max-[1024px]:rotate-[-30deg] max-[1024px]:right-[52%] max-[650px]:rotate-[0deg] max-[650px]:max-w-[55%]
+                  max-[650px]:right-[63%]" />                
+              </div>
+ 
+            </div>
+          </div>
+
         </div>       
       </div>  
       <Pricing />
