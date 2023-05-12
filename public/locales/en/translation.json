@@ -79,7 +79,22 @@
                 "CHART_TITLE":"Minimize the cost of delayed success",
                 "CHART_TEXT":"Using these proven design tools, we make sure our clients receive the result they expect within the set timeframe.",
                 "CHART2_TITLE": "Playbook has a place for you at all stages of your company",
-                "CHART2_TEXT": "Using these proven design tools, we mae sure our clients receive the result they expect within the set timeframe."                
+                "CHART2_TEXT": "Using these proven design tools, we mae sure our clients receive the result they expect within the set timeframe.",
+                "WHAT_SAY_TITLE":"What People are Saying",          
+                "WHAT_SAY_TEXT":"Using these proven design tools, we mae sure our clients receive the result they expect within the set timeframe.",
+                "PRICE_TITLE":"Pricing",               
+                "MONTH":"month",               
+                "PRICE_FREE":"Free",               
+                "PRICE_ADV":"Advanced",               
+                "PRICE_PRO":"Pro",               
+                "PRICE_DESC":"Demonstrate empathy maps and finally improve outcomes.",               
+                "PRICE_OL_1":"24/7 support",               
+                "PRICE_OL_2":"watchlist included",               
+                "PRICE_OL_3":"Access to all features",               
+                "PRICE_OL_4":"Exclusive premium widgets",               
+                "PRICE_BTN":"Get Started",             
+                "APP_TITLE":"Build your collection of playbooks",             
+                "APP_DESC":"Using these proven design tools, we make sure our clients receive the result they expect within the set timeframe."             
         },
         "TERM": {
                 "DOCUMENTS": "Documents",

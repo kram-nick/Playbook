@@ -5,17 +5,11 @@ import navArrows from "../../assets/photos/home/arrows-right.svg";
 import facebook from "../../assets/photos/home/facebook.svg";
 import youtube from "../../assets/photos/home/youtube.svg";
 import twitter from "../../assets/photos/home/twitter.svg";
-import people from "../../assets/photos/home/people.svg";
-import sales from "../../assets/photos/home/sales.svg";
-import product from "../../assets/photos/home/products.svg";
-import engineering from "../../assets/photos/home/engineering.svg";
-import culture from "../../assets/photos/home/culture.svg";
+import people from "../../assets/photos/home/people.svg"; 
 import why_image from "../../assets/photos/home/why-image.svg";
 import why_arrow_top from "../../assets/photos/home/why-arrow-top.svg";
-import why_arrow_bottom from "../../assets/photos/home/why-arrow-bottom.svg";
-import ToolsBlock from "../../components/ToolsBlock/ToolsBlock";
-import Banner from "../../components/Banner/Banner";
-import TopFeatures from "../../components/TopFeatures/TopFeatures";
+import why_arrow_bottom from "../../assets/photos/home/why-arrow-bottom.svg"; 
+import Banner from "../../components/Banner/Banner"; 
 import Review from "../../components/Review/Review";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -25,6 +19,8 @@ import chart1 from "../../assets/photos/home/chart-1.svg";
 import chart2 from "../../assets/photos/home/chart-2.svg";
 import chart3 from "../../assets/photos/home/chart-3.svg";
 import chart_arrow from "../../assets/photos/home/chart-arrow.svg";
+import Testimonials from "../../components/Testimonials";
+import Pricing from "../../components/Pricing";
 
 const HomePage = () => {
   const { t } = useTranslation();
@@ -452,13 +448,25 @@ const HomePage = () => {
         </div>       
       </div>          
 
-      {/* <div
-        className="relative top-[-130px]
-      max-lg:top-[-67px]
-      ">
-        <ToolsBlock />
-      </div> */}
-      <TopFeatures />
+      <div className="bg-tools-bg  min-[1024px]:pb-[150px]  max-[1024px]:pb-[110px]
+         max-[650px]:pb-[80px]">
+
+        <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
+          <h2 className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px] max-w-[770px] mx-[auto]
+              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]">
+              {t<string>("HOME.APP_TITLE")}
+          </h2>
+          <p className="text-center text-[16px] leading-[26px] text-simple-text max-w-[534px] mx-[auto] mb-[90px] 
+            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
+            {t<string>("HOME.APP_DESC")}
+          </p>
+
+ 
+        </div>       
+      </div>  
+      <Pricing />
+      <Testimonials />
+      {/* <TopFeatures /> */}
       <Review />
       <Banner />
     </>

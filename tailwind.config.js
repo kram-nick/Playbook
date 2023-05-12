@@ -69,7 +69,9 @@ module.exports = {
         "dropmenu":"0px 1px 2px -1px rgba(16, 24, 40, 0.1), 0px 1px 3px rgba(16, 24, 40, 0.1);",
         "chart":"-9px 4px 222px rgba(135, 135, 135, 0.25), 0px 0px 0px 9px rgba(71, 181, 255, 0.1);",
         "chart-mobile":"-3.87497px 1.72221px 95.5825px rgba(135, 135, 135, 0.25), 0px 0px 0px 3.87497px rgba(71, 181, 255, 0.1);",
-        "chart-grow":"-10px 6px 34px rgba(50, 50, 61, 0.04)"
+        "chart-grow":"-10px 6px 34px rgba(50, 50, 61, 0.04)",
+        "review":"-4px -4px 27px rgba(38, 37, 47, 0.05)",
+        "pricing":"0 0 0 8px rgba(71, 181, 255, 0.12)"
       },
       backgroundImage: {
         "sign": "url('./assets/photos/sign/bg-sign.svg')",
