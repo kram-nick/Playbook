@@ -76,7 +76,7 @@
                 "WHY_TAB_5": "Experts",
                 "WHY_TITLE_1":"Track your progress over time.",
                 "WHY_DESC_1":"Define the big milestones that matter to you, and figure out how to live life on your terms, whether you're chasing financial independence, time off for travel, home ownership, or other goals.",
-                "CHART_TITLE":"Minimize the cost of delayed success",
+                "CHART_TITLE":"Achieve tangible results faster and cheaper with Playbook",
                 "CHART_TEXT":"Using these proven design tools, we make sure our clients receive the result they expect within the set timeframe.",
                 "CHART2_TITLE": "Playbook has a place for you at all stages of your company",
                 "CHART2_TEXT": "Using these proven design tools, we mae sure our clients receive the result they expect within the set timeframe.",
@@ -100,7 +100,8 @@
                 "APP_POS_3":"CEO & Founders",             
                 "APP_TITLE_1":"How to Hire 10x Engineers",             
                 "APP_TITLE_2":"The Startup Playbook",             
-                "APP_TITLE_3":"The Culture Playbook"       
+                "APP_TITLE_3":"The Culture Playbook",    
+                "JOB_TITLE":"Everyone has many jobs to be done"    
         },
         "TERM": {
                 "DOCUMENTS": "Documents",

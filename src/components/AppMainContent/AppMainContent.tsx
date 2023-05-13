@@ -19,6 +19,7 @@ import {useModal,useModalDetail, useModalShare, useModalSocial} from "../../core
 import ModalShare from "../Modals/ModalShare";
 import ModalShareSocial from "../Modals/ModalShareSocial";
 import { Filters } from "../../core/constants";
+import { useAppSelector } from "../../core/hooks/useRedux";
  
 
  
@@ -30,7 +31,7 @@ const AppMainContent = () => {
   let { isOpenShareModal, toggleShare } = useModalShare(); 
   let { isOpenSocialModal, toggleSocial } = useModalSocial(); 
   const [activeTab, setActiveTab] = useState(Filters[1]);
-
+  const {search} = useAppSelector((state) => state.app);
   let [items, setPlaybooks] = useState(playbooks);
   let [selectedItem, setItem] = useState(null);
  
@@ -95,8 +96,19 @@ const AppMainContent = () => {
 
   return (
      <div className="px-[24px] py-[24px] max-lg:px-[32px] max-[690px]:px-[16px] max-[690px]:py-[12px]">
+ 
         <div className="flex items-center justify-between font-poppins w-[100%] pb-[20px] max-lg:pb-[16px] max-[690px]:hidden">
+        {search && (
+          <div>
+            <h1 className="text-[24px] font-semibold text-home-title leading-normal">Search Results</h1>
+            <p className="text-[16px] leading-[20px] font-medium mt-[5px]">
+              You searched for "{search}". 20 Reuslts returned
+            </p>          
+          </div>
+        )}
+        {!search && (
           <h1 className="text-[24px] font-semibold text-home-title leading-normal">Playbooks</h1>
+        )}        
           <button
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
             shadow-free-trial h-[40px] gap-[6px]"

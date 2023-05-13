@@ -25,7 +25,7 @@ import playbook_sm from "../../assets/photos/collection/pb-xs.svg";
 import icon_left from "../../assets/photos/collection/icon_left.svg";
 import icon_right from "../../assets/photos/collection/icon_right.svg";
 import highlight from "../../assets/photos/collection/highlight.svg";
-
+import chart0 from "../../assets/photos/home/many_job.svg";
 import Testimonials from "../../components/Testimonials";
 import Pricing from "../../components/Pricing";
 
@@ -311,7 +311,7 @@ const HomePage = () => {
         </div>
       </div> */}
 
-      <div className="bg-tools-bg  min-[1024px]:pt-[90px] pb-[100px] max-[1024px]:pt-[80px]">
+      <div className="bg-tools-bg  min-[1024px]:pt-[90px] pb-[100px] max-[1024px]:pt-[80px] max-[650px]:pb-[50px]">
 
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2 className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px]
@@ -409,6 +409,24 @@ const HomePage = () => {
         
         </div>
       </div>
+
+      <div className="bg-tools-bg  min-[1024px]:pb-[140px] max-[1024px]:pt-[20px] max-[1024px]:pb-[100px]
+        max-[650px]:pt-[40px] max-[650px]:pb-[80px]">
+
+        <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
+          <h2 className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px] max-w-[770px] mx-[auto]
+              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]">
+              {t<string>("HOME.JOB_TITLE")}
+          </h2>
+          <p className="text-center text-[16px] leading-[26px] text-simple-text max-w-[534px] mx-[auto] mb-[80px] 
+            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
+            {t<string>("HOME.CHART2_TEXT")}
+          </p>
+ 
+          <img src={chart0} alt="" className="w-[100%] shadow-chart-grow" /> 
+       
+        </div>       
+      </div>         
 
       <div className="bg-white  min-[1024px]:pt-[140px] min-[1024px]:pb-[150px] max-[1024px]:pt-[110px] max-[1024px]:pb-[110px]
         max-[650px]:pt-[70px] max-[650px]:pb-[95px]">

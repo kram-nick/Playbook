@@ -3,12 +3,12 @@ import { User } from "../../core/constants";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 
-import search from "../../assets/photos/main/search.svg";
+import search_icon from "../../assets/photos/main/search.svg";
 import arrow_down from "../../assets/photos/main/arrow-down.svg";
 import icon_burger from "../../assets/photos/common/burger.svg";  
 import playbookLogo from "../../assets/photos/squeeze/mob-logo.svg";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import { setToggleSidebar } from "../../core/store/reducers/app/appDataSlice";
+import { setSearch, setToggleSidebar } from "../../core/store/reducers/app/appDataSlice";
 
 type HeaderProps = { 
   profile?: boolean,
@@ -16,9 +16,26 @@ type HeaderProps = {
 
 const AppHeader = ({profile}: HeaderProps) => {
   const { t } = useTranslation(); 
-  const { sideOpen } = useAppSelector((state) => state.app);
+  const {search, sideOpen } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
 
+  const onSubmit = (event: any) => {
+    event.preventDefault(); 
+    const target = event.target;
+    const data = { 
+        search: target.search.value, 
+    };
+ 
+    dispatch(setSearch(data.search))
+ 
+    // if(data.email){
+    //   setEmail(data.email);
+    // } else {
+    //   setEmail('chrisragobeer@gmail.com');
+    // } 
+  };
+
+ 
   return (
     <header className="py-[14px] px-[24px]   border-b-[1px] bg-tools-block  
       max-lg:py-[8px] max-lg:px-[32px]  max-sm:px-[16px] max-sm:gap-[12px]"> 
@@ -29,7 +46,7 @@ const AppHeader = ({profile}: HeaderProps) => {
 
       <div className="flex items-center max-[690px]:w-[calc(100%-60px)]">
         {profile ? (
-          <Link  to="/main" className="mr-[32px] min-w-[160px] block max-[690px]:hidden">
+          <Link  to="/home" className="mr-[32px] min-w-[160px] block max-[690px]:hidden">
             <img   src={playbookLogo} alt="playbookLogo" />
           </Link>
         ): (
@@ -39,20 +56,24 @@ const AppHeader = ({profile}: HeaderProps) => {
           </div>
         )}
  
-        <div className={classNames({
+        <form onSubmit={onSubmit} className={classNames({
             "max-w-[350px] w-[100%] relative":true,
             "max-[690px]:ml-[0px]": profile,
             "max-lg:ml-[48px]": !profile
           })}> 
-          <img src={search} alt="" className="absolute left-[12px] top-[11px] w-[24px]" />
+          <button type="submit" className="absolute left-[12px] top-[11px] w-[24px]">
+            <img src={search_icon}  alt=""   />
+          </button>
+           
           <input
             placeholder={t<string>("MAIN.SEARCH_PLACEHOLDER")}
             type="text"
+            id="search"
             className="py-[10px] pl-[48px] pr-[12px] h-[46px] rounded-[8px]  placeholder:text-simple-text
             border-solid border-[1px] w-[100%] bg-search-input
             leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border max-lg:h-[44px]"
           />
-        </div> 
+        </form> 
       </div>
  
 

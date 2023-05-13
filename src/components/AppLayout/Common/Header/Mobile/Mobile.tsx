@@ -1,5 +1,6 @@
 import logo from "../../../../../assets/photos/squeeze/mob-logo.svg";
 import burger from "../../../../../assets/photos/common/burger.svg";
+import { Link } from "react-router-dom";
 
 const Mobile = () => {
   return (
@@ -10,7 +11,8 @@ const Mobile = () => {
       md:px-[32px]
       lg:hidden
     ">
-      <img src={logo} alt="logo" />
+      <Link to="/home"><img src={logo} alt="logo" /></Link>
+       
       <img src={burger} alt="burger" />
     </header>
   );

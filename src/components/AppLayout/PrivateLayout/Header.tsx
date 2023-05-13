@@ -22,7 +22,7 @@ const Header = ({previewState}: HeaderProps) => {
     <header className="h-[74px] bg-white flex items-center border-b-[1px] max-lg:h-[60px]">
       <nav className="w-full flex flex-row  justify-between pl-[24px] pr-[32px] items-center py-[10px] max-lg:px-[16px]">
         <div className="flex flex-row items-center gap-[8px] max-[690px]:max-w-[calc(100%-100px)]">
-          <Link  to="/main"
+          <Link  to="/home"
             className={classNames({
               "font-poppins font-medium text-[14px] leading-[20px] text-nav-txt-private":true,
               "max-lg:hidden":data.title,

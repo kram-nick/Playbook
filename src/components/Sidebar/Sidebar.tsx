@@ -16,6 +16,7 @@ import blue_saas from "../../assets/photos/create/blue-saas.svg";
 import plus_gray from "../../assets/photos/sidebar/plus-gray.svg";
 import star_active from "../../assets/photos/sidebar/star.svg";
 import star from "../../assets/photos/sidebar/favorite.svg"; 
+import { Link } from "react-router-dom";
 
 
 const Sidebar = () => {
@@ -140,12 +141,13 @@ const Sidebar = () => {
           "min-[1024px]:w-[25px]":!sideOpen,
         })}
       >
+        <Link  to="/home" className={classNames({
+              "py-[16px] w-[160px] max-w-[160px] transition-[opacity] duration-[150ms] ease-in table":true, 
+              "min-[1024px]:opacity-0 delay-150":!sideOpen
+            })}>
+          <img src={playbookLogo} alt="playbookLogo" />
+        </Link>
  
-        <img className={classNames({
-          "py-[16px] w-[160px] max-w-[160px] transition-[opacity] duration-[150ms] ease-in":true, 
-          "min-[1024px]:opacity-0 delay-150":!sideOpen
-        })} 
-          src={playbookLogo} alt="playbookLogo" />
           
         <nav className={classNames({
           "flex flex-col w-[255px] transition-[opacity] duration-[150ms] ease-in": true,

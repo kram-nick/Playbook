@@ -10,7 +10,10 @@ const Header = () => {
     <div className="min-[325px]:hidden lg:flex justify-between items-center px-[7vw] pt-[30px] pb-[20px]">
       <div>
         <div className="flex items-center gap-[64px]">
-          <img src={playbookLogo} alt="playbook" />
+          <Link to="/home">
+            <img src={playbookLogo} alt="playbook" />
+          </Link>
+           
           <div className="flex align-middle gap-[32px] items-center">
             <div>
               <button className="font-poppins font-medium text-header-links text-[15px]">
