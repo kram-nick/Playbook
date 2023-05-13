@@ -51,6 +51,7 @@ export const colourStyles: StylesConfig<any> = {
  
     return {
       ...styles,
+      ...dot(data.color),
       backgroundColor: isDisabled
         ? undefined
         : isSelected
@@ -75,7 +76,7 @@ export const colourStyles: StylesConfig<any> = {
   },
   input: (styles) => ({ ...styles, ...dot() }),
   placeholder: (styles) => ({ ...styles, ...dot("#ccc") }),
-  singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+  singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }) 
 };
 
 

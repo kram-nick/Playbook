@@ -41,7 +41,7 @@ const Testimonials = () => {
           onSlideChange={() => console.log('slide change')}
         >
           {[1,2,3,4].map((index: number) => (
-          <SwiperSlide 
+          <SwiperSlide key={index}
             className="bg-tools-bg p-[50px] min-[1024px]:w-[520px!important] rounded-[20px] border-[1px] border-header-bottom
             max-[1024px]:w-[414px!important] max-[1024px]:p-[30px] max-[650px]:px-[20px] max-[650px]:py-[30px] 
             max-[650px]:w-[calc(100vw-32px)!important]">
