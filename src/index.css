@@ -26,7 +26,7 @@
 /* scroll styles */
 html:not(.touch-screen)::-webkit-scrollbar,
 html:not(.touch-screen) *::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
   height: 4px;
 }
 html:not(.touch-screen)::-webkit-scrollbar-track,
