@@ -33,6 +33,14 @@ const HomePage = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(1);
 
+  const handleClickScroll = () => {
+    const element = document.getElementById('section-why');
+    if (element) {
+      // 👇 Will scroll smoothly to the top of the next section
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <div
@@ -76,9 +84,9 @@ const HomePage = () => {
               {t<string>("HOME.FREE_START")}
             </Link>
             <div className="flex items-center">
-              <p className="text-buttons-bg text-[16px] font-semibold leading-[21px] min-w-[90px]">
+              <button onClick={handleClickScroll} className="text-buttons-bg text-[16px] font-semibold leading-[21px] min-w-[90px]">
                 {t<string>("HOME.LEARN")}
-              </p>
+              </button>
               <img
                 className="max-w-[32px]
                 "
@@ -311,7 +319,7 @@ const HomePage = () => {
         </div>
       </div> */}
 
-      <div className="bg-tools-bg  min-[1024px]:pt-[90px] pb-[100px] max-[1024px]:pt-[80px] max-[650px]:pb-[50px]">
+      <div className="bg-tools-bg  min-[1024px]:pt-[90px] pb-[100px] max-[1024px]:pt-[80px] max-[650px]:pb-[50px]" id="section-why">
 
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2 className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px]
