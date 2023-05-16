@@ -158,6 +158,8 @@
                 "HAVE":"Already have an account?",
                 "DONT_HAVE":"Don’t have an account?",
                 "NAME":"Full Name",
+                "FIRST_NAME":"First name",
+                "LAST_NAME":"Last name",
                 "EMAIL":"Email Address",
                 "EMAIL_PLACEHOLDER":"Insert your email",
                 "PASSWORD":"Password",
@@ -183,7 +185,9 @@
                 "CHECK_VALID":"Bear in mind it will be valid inly 30 minutes only!",
                 "DIDNT_RECEIVE":"Didn’t receive our email?",
                 "SUPPORT":"Contact Support",
-                "TAKE_BACK":"Take me back to"
+                "TAKE_BACK":"Take me back to",
+                "CREATE_SUCCESS":"The user has been successfully registered",
+                "LOGIN_SUCCESS":"You are successfully logged in"
 
         },
         "MAIN":{

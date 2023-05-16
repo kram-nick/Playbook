@@ -14,5 +14,22 @@ export default class AuthService {
     }; 
     return RequestsService.postMethod<any>(APIRoutes.AUTH_LOGIN, formData);
   }
+
+  static async create(
+    first_name: string,
+    last_name: string,
+    email: string,
+    password: string
+  ): Promise<AxiosResponse<any>> {
+    const formData = {
+      user: {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        password: password
+      }
+    }; 
+    return RequestsService.postMethod<any>(APIRoutes.AUTH_CREATE, formData);
+  }  
  
 }

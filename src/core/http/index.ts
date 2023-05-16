@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const APIRoutes = {
-  AUTH_LOGIN:'/api/users/login'
+  AUTH_LOGIN:'/api/users/login',
+  AUTH_CREATE:'/api/users/create'
 };
 
 const $api = axios.create({

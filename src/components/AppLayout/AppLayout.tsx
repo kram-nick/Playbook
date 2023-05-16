@@ -4,6 +4,7 @@ import Header from "./Common/Header/Header";
 import Mobile from "./Common/Header/Mobile/Mobile";
 import Footer from "./Common/Footer/Footer";
 import TermsHeader from "../TermsHeader/TermsHeader";
+import { ToastContainer } from "react-toastify";
 
 const AppLayout = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const AppLayout = () => {
             
       <Outlet />
       <Footer />
+      <ToastContainer />
     </>
   );
 };

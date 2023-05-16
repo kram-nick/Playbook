@@ -54,7 +54,8 @@ module.exports = {
         "gray-btn":"#EDEDED",
         "chapter-color":"#F6F6F6",
         "option-btn":"#E3E3E3",
-        "chart-color":"#47B5FF"
+        "chart-color":"#47B5FF",
+        "error-color":"#de0f0f"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],

@@ -1,27 +1,33 @@
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/photos/sign/logo.svg";
 import icon_google from "../../assets/photos/sign/g_logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useFormik } from "formik";
+import * as Yup from 'yup';
 import AuthService from "../../core/services/auth.service";
+import classNames from "classnames";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { PrivateUIRoutes } from "../../core/router";
 
 const SignIn = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // localStorage.setItem(
   //   process.env.REACT_APP_TOKEN_KEY,
   //   response.data.payload.token
   // );
 
-  console.log(process.env.REACT_APP_TOKEN_KEY);
-  // const valueFormValidationSchema = Yup.object().shape({
-  //   email_phone: Yup.string().required("Fill in your email or phone"),
-  //   password: Yup.string()
-  //     .min(8, "Minimum 8 symbols")
-  //     .required("Password is required"),
-  // });
+  // console.log(process.env.REACT_APP_TOKEN_KEY);
+  const valueFormValidationSchema = Yup.object().shape({
+    email: Yup.string().required("Email is required"),
+    password: Yup.string()
+      .min(8, "Minimum 8 symbols")
+      .required("Password is required"),
+  });
 
   const formikForm = useFormik<{
     email: string;
@@ -31,9 +37,8 @@ const SignIn = () => {
       email: "",
       password: "",
     },
-    // validationSchema: valueFormValidationSchema,
+    validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      console.log(values)
       handleSubmitForm(values);
     },
   });
@@ -66,25 +71,38 @@ const SignIn = () => {
   // };
 
   const handleSubmitForm = async (values: any) => {
-    setLoading(true);
-
+    setLoading(true); 
     try {
       const response = await AuthService.login(
         values.email,
         values.password
       );
+       
+      localStorage.setItem(
+        process.env.REACT_APP_TOKEN_KEY,
+        response.data.data.token
+      );
 
-      console.log(response)
-      // localStorage.setItem(
-      //   process.env.REACT_APP_TOKEN_KEY,
-      //   response.data.payload.token
-      // );
+      const user = {
+        email: response.data.data.email
+      }
+      localStorage.setItem(
+        'user', JSON.stringify(user)
+      );       
 
       // dispatch(setIsAuth(true));
-      setLoading(false);
+       
       // document.body.style.overflowY = "scroll";
       // dispatch(setModal(false));
-      // if (
+      // toast.success(t<string>("SIGN.LOGIN_SUCCESS")); 
+      if (response.data.data.token){
+        setTimeout(() => {
+          setLoading(false);
+          navigate('/' + PrivateUIRoutes.Main);
+        }, 300);
+         
+      }
+      // if(
       //   response?.data?.payload.role === "admin" ||
       //   response?.data?.payload.role === "super_admin"
       // ) {
@@ -104,9 +122,10 @@ const SignIn = () => {
       // }
     } catch (errors: any) {
       console.log(errors)
-      //     setLoading(false);
+          setLoading(false);
       //     CommonService.showErrors(errors?.response?.data?.payload);
-      //     toast.error(errors?.response?.data?.message);
+          // toast.error(errors?.response?.data?.errors);
+          toast.error(errors?.response?.data?.errors);          
         }
   }
       // {...formikForm.getFieldProps("comment")}
@@ -143,21 +162,20 @@ const SignIn = () => {
             <label htmlFor="email" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.EMAIL")}</label>
             <input
               onChange={formikForm.handleChange}
-              value={formikForm.values.email}
-              // onChange={(event) => {
-              //   formikForm.setFieldValue(
-              //     "email",
-              //     spacesRemover(event.target.value)
-              //   );
-              // }}
+              value={formikForm.values.email} 
               placeholder={t<string>("SIGN.EMAIL_PLACEHOLDER")}
               id="email"
               name="email"
               type="email"
-              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+              className={classNames({
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
+                "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":true,
+                "border-error-color":formikForm.errors.email
+              })}
             />
+            {formikForm.errors.email && (
+              <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.email}</p>
+            )}
           </div>
 
           <div className="form-group mb-[24px]">
@@ -170,10 +188,15 @@ const SignIn = () => {
               id="password"
               type="text"
               name="password"
-              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+              className={classNames({
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
+                "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border": true,
+                "border-error-color":formikForm.errors.password
+              })}
             />
+            {formikForm.errors.password && (
+              <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.password}</p>
+            )}            
           </div>     
 
           <div className="flex justify-between items-center mb-[32px]">
@@ -199,12 +222,15 @@ const SignIn = () => {
  
           <button
             type="submit"
-            className="bg-button-submit-footer py-[10px] px-[26px] rounded-[6px] 
-           w-full mb-[24px]
-          ">
+            disabled={loading}
+            className={classNames({
+              "py-[10px] px-[26px] rounded-[6px] w-full mb-[24px]": true,
+              "bg-simple-text cursor-not-allowed":loading,
+              "bg-button-submit-footer":!loading,
+            })}>
             <span className="text-list-title">
               {t<string>("SIGN.IN")}
-            </span>
+            </span> 
           </button>
           <p className="">
             <span className="text-[16px] leading-[26px] text-simple-text tracking-[-0.1px] mr-[12px]">{t<string>("SIGN.DONT_HAVE")}</span>
@@ -225,7 +251,7 @@ const SignIn = () => {
             </p>            
           </div>
 
-      </div>
+      </div> 
   </div>
   )
 };

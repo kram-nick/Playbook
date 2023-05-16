@@ -1,16 +1,83 @@
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/photos/sign/logo.svg";
 import icon_google from "../../assets/photos/sign/g_logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from 'yup';
+import AuthService from "../../core/services/auth.service";
+import classNames from "classnames";
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { UIRoutes } from "../../core/router";
+import { useState } from "react";
 
 const SignIn = () => {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();  
+
+  const valueFormValidationSchema = Yup.object().shape({
+    first_name: Yup.string()
+      .min(4, "Minimum 4 symbols")
+      .required("First name is required"), 
+    last_name: Yup.string()
+      .min(4, "Minimum 4 symbols")
+      .required("Last name is required"),         
+    email: Yup.string().required("Email is required"),
+    password: Yup.string()
+      .min(8, "Minimum 8 symbols")
+      .required("Password is required"),
+  });
+
+  const formikForm = useFormik<{
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+  }>({
+    initialValues: {
+      first_name: "",
+      last_name: "",      
+      email: "",
+      password: "",
+    },
+    validationSchema: valueFormValidationSchema,
+    onSubmit: async (values: any) => {
+      handleSubmitForm(values);
+    },
+  });  
+
+  const handleSubmitForm = async (values: any) => {
+    setLoading(true); 
+    try {
+      const response = await AuthService.create(
+        values.first_name,
+        values.last_name,
+        values.email,
+        values.password
+      ); 
+
+        
+      if (response.data.data.token){
+        toast.success(t<string>("SIGN.CREATE_SUCCESS"));   
+        setTimeout(() => {
+          setLoading(false);
+          navigate('/' + UIRoutes.SIGN_IN);
+        }, 200);
+      }
+  
+    } catch (errors: any) {
+      setLoading(false); 
+      toast.error(errors?.response?.data?.errors);          
+    }
+  }  
 
   return (
     <div className="flex mx-auto  min-h-[calc(100vh-102px)] font-poppins max-lg:min-h-[calc(100vh-61px)]">
       <div className="flex bg-cover bg-no-repeat bg-left-bottom justify-center  w-[46%] max-lg:bg-sign max-lg:w-[100%] 
         py-[50px] px-[100px] max-sm:px-[16px] max-sm:py-[24px]">
-        <form className="self-center w-full max-w-[425px] max-lg:bg-white 
+        <form onSubmit={formikForm.handleSubmit} 
+          className="self-center w-full max-w-[425px] max-lg:bg-white 
           max-lg:px-[48px] max-lg:py-[60px] max-sm:px-[16px] max-sm:py-[24px] max-sm:rounded-[8px]">
           <h1
               className="text-[24px] text-home-title text-center leading-normal mb-[32px] font-semibold">
@@ -21,7 +88,8 @@ const SignIn = () => {
             className="flex justify-center w-full mb-[32px] py-[10px] px-[26px] 
             rounded-[5px] shadow-free-trial
             border-solid border-[1px]  border-r-header-bottom
-          ">
+          "
+            type="button">
             <img src={icon_google} alt="" className="mr-[8px]" />
             <span className="text-[16px] text-home-title font-medium">
               {t<string>("SIGN.GOOGLE")}
@@ -34,42 +102,86 @@ const SignIn = () => {
             <div className="flex-[1] bg-header-bottom h-[1px]"></div>
           </div>        
 
-          <div className="form-group mb-[24px]">
-            <label htmlFor="name" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.NAME")}</label>
+          <div className="form-group mb-[24px]" >
+            <label htmlFor="first_name" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.FIRST_NAME")}</label>
             <input
-              placeholder={t<string>("SIGN.NAME")}
-              id="name"
+              onChange={formikForm.handleChange}
+              value={formikForm.values.first_name} 
+              placeholder={t<string>("SIGN.FIRST_NAME")}
+              id="first_name"
+              name="first_name"
               type="text"
-              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+              className={classNames({
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
+                "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":true,
+                "border-error-color":formikForm.errors.first_name
+              })}
             />
-          </div>
+            {formikForm.errors.first_name && (
+              <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.first_name}</p>
+            )}
+          </div> 
 
-          <div className="form-group mb-[24px]">
+          <div className="form-group mb-[24px]" >
+            <label htmlFor="last_name" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.LAST_NAME")}</label>
+            <input
+              onChange={formikForm.handleChange}
+              value={formikForm.values.last_name} 
+              placeholder={t<string>("SIGN.LAST_NAME")}
+              id="last_name"
+              name="last_name"
+              type="text"
+              className={classNames({
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
+                "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":true,
+                "border-error-color":formikForm.errors.last_name
+              })}
+            />
+            {formikForm.errors.last_name && (
+              <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.last_name}</p>
+            )}
+          </div>                 
+
+          <div className="form-group mb-[24px]" >
             <label htmlFor="email" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.EMAIL")}</label>
             <input
+              onChange={formikForm.handleChange}
+              value={formikForm.values.email} 
               placeholder={t<string>("SIGN.EMAIL_PLACEHOLDER")}
               id="email"
-              type="text"
-              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+              name="email"
+              type="email"
+              className={classNames({
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
+                "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":true,
+                "border-error-color":formikForm.errors.email
+              })}
             />
+            {formikForm.errors.email && (
+              <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.email}</p>
+            )}
           </div>
 
           <div className="form-group mb-[24px]">
             <label htmlFor="password" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
               {t<string>("SIGN.PASSWORD")}</label>
             <input
+              onChange={formikForm.handleChange}
+              value={formikForm.values.password}
               placeholder={t<string>("SIGN.PASSWORD_PLACEHOLDER")}
               id="password"
               type="text"
-              className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-              border-solid border-[1px] shadow-free-trial w-[100%]
-              leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+              name="password"
+              className={classNames({
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
+                "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border": true,
+                "border-error-color":formikForm.errors.password
+              })}
             />
-          </div>     
+            {formikForm.errors.password && (
+              <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.password}</p>
+            )}            
+          </div>    
 
           <div className="flex justify-between items-center mb-[32px]">
             <div className="flex">
@@ -77,8 +189,8 @@ const SignIn = () => {
               <div className="bg-white border-[1px] border-input w-[20px] h-[20px] mr-[8px] rounded-[5px] cursor-pointer flex 
                 flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">  
                 <svg className="fill-current hidden w-[20px] h-[20px] p-[4px] rounded-[5px] pointer-events-none" version="1.1" viewBox="0 0 17 12" xmlns="http://www.w3.org/2000/svg">  
-                  <g fill="none" fill-rule="evenodd">  
-                    <g transform="translate(-9 -11)" fill="#fff" fill-rule="nonzero">  
+                  <g fill="none" >  
+                    <g transform="translate(-9 -11)" fill="#fff" >  
                       <path d="m25.576 11.414c0.56558 0.55188 0.56558 1.4439 0 1.9961l-9.404 9.176c-0.28213 0.27529-0.65247 0.41385-1.0228 0.41385-0.37034 0-0.74068-0.13855-1.0228-0.41385l-4.7019-4.588c-0.56584-0.55188-0.56584-1.4442 0-1.9961 0.56558-0.55214 1.4798-0.55214 2.0456 0l3.679 3.5899 8.3812-8.1779c0.56558-0.55214 1.4798-0.55214 2.0456 0z" />  
                     </g>  
                   </g>  
@@ -87,11 +199,15 @@ const SignIn = () => {
               <label htmlFor="remember-me" className="text-[16px] leading-[20px] tracking-[-0.1px] cursor-pointer">{t<string>("SIGN.AGREE")}</label>
             </div>    
           </div>     
- 
+
           <button
-            className="bg-button-submit-footer py-[10px] px-[26px] rounded-[6px] 
-           w-full mb-[24px]
-          ">
+            type="submit"
+            disabled={loading}
+            className={classNames({
+              "py-[10px] px-[26px] rounded-[6px] w-full mb-[24px]": true,
+              "bg-simple-text cursor-not-allowed":loading,
+              "bg-button-submit-footer":!loading,
+            })}> 
             <span className="text-list-title">
               {t<string>("SIGN.UP_BTN")}
             </span>
@@ -116,6 +232,8 @@ const SignIn = () => {
           </div>
 
       </div>
+
+       
   </div>
   )
 };

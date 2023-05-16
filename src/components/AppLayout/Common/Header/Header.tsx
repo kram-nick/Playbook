@@ -2,10 +2,15 @@ import playbookLogo from "../../../../assets/photos/squeeze/mob-logo.svg";
 import arrowDown from "../../../../assets/photos/home/arrow-down.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import arrow_down from "../../assets/photos/main/arrow-down.svg";
+import HeaderProfile from "../../../HeaderProfile";
+ 
 
 const Header = () => {
   const { t } = useTranslation();
-
+  const token = localStorage.getItem(
+    process.env.REACT_APP_TOKEN_KEY
+  );
   return (
     <div className="min-[325px]:hidden lg:flex justify-between items-center px-[7vw] pt-[30px] pb-[20px]">
       <div>
@@ -35,23 +40,28 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="flex gap-[42px]">
-        {/* <button className="text-buttons-bg">
-          <span className="font-semibold font-poppins leading-[22px]">
-            {t<string>("COMMON.SIGN_IN")}
-          </span>
-        </button> */}
-        <Link  to="/sign-in" className="flex text-buttons-bg">
-          <span className="self-center font-semibold font-poppins leading-[22px]">
-            {t<string>("COMMON.SIGN_IN")}
-          </span>
-        </Link>        
-        <Link  to="/sign-up" className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color">
-          <span className="font-semibold font-poppins leading-[22px]">
-            {t<string>("COMMON.GET_STARTED")}
-          </span>
-        </Link>
-      </div>
+
+      {token ? (
+        <HeaderProfile />
+      ): (
+        <div className="flex gap-[42px]">
+          {/* <button className="text-buttons-bg">
+            <span className="font-semibold font-poppins leading-[22px]">
+              {t<string>("COMMON.SIGN_IN")}
+            </span>
+          </button> */}
+          <Link  to="/sign-in" className="flex text-buttons-bg">
+            <span className="self-center font-semibold font-poppins leading-[22px]">
+              {t<string>("COMMON.SIGN_IN")}
+            </span>
+          </Link>        
+          <Link  to="/sign-up" className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color">
+            <span className="font-semibold font-poppins leading-[22px]">
+              {t<string>("COMMON.GET_STARTED")}
+            </span>
+          </Link>
+        </div>         
+      )}
     </div>
   );
 };
