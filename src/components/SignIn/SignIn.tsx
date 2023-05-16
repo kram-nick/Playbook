@@ -2,15 +2,120 @@ import { useTranslation } from "react-i18next";
 import logo from "../../assets/photos/sign/logo.svg";
 import icon_google from "../../assets/photos/sign/g_logo.svg";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useFormik } from "formik";
+import AuthService from "../../core/services/auth.service";
 
 const SignIn = () => {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+
+  // localStorage.setItem(
+  //   process.env.REACT_APP_TOKEN_KEY,
+  //   response.data.payload.token
+  // );
+
+  console.log(process.env.REACT_APP_TOKEN_KEY);
+  // const valueFormValidationSchema = Yup.object().shape({
+  //   email_phone: Yup.string().required("Fill in your email or phone"),
+  //   password: Yup.string()
+  //     .min(8, "Minimum 8 symbols")
+  //     .required("Password is required"),
+  // });
+
+  const formikForm = useFormik<{
+    email: string;
+    password: string;
+  }>({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    // validationSchema: valueFormValidationSchema,
+    onSubmit: async (values: any) => {
+      console.log(values)
+      handleSubmitForm(values);
+    },
+  });
+
+  // const handleGoogleSignIn = async (values: any) => {
+  //   setLoading(true);
+  //   try {
+  //     const encoded_values: Auth.GoogleLogin = jwtDecode(values.credential);
+  //     const response = await AuthService.loginGoogle(encoded_values);
+  //     localStorage.setItem(
+  //       process.env.REACT_APP_TOKEN_KEY,
+  //       response.data.payload.token
+  //     );
+
+  // localStorage.setItem(
+  //   process.env.REACT_APP_TOKEN_KEY,
+  //   response.data.payload.token
+  // );      
+  //     // dispatch(setIsAuth(true));
+  //     setLoading(false);
+  //     localStorage.removeItem("prevPage");
+  //     document.body.style.overflowY = "scroll";
+  //     formikForm.resetForm();
+  //     dispatch(setModal(false));
+  //   } catch (errors: any) {
+  //     setLoading(false);
+  //     CommonService.showErrors(errors?.response?.data?.payload);
+  //     toast.error(errors?.response?.data?.message);
+  //   }
+  // };
+
+  const handleSubmitForm = async (values: any) => {
+    setLoading(true);
+
+    try {
+      const response = await AuthService.login(
+        values.email,
+        values.password
+      );
+
+      console.log(response)
+      // localStorage.setItem(
+      //   process.env.REACT_APP_TOKEN_KEY,
+      //   response.data.payload.token
+      // );
+
+      // dispatch(setIsAuth(true));
+      setLoading(false);
+      // document.body.style.overflowY = "scroll";
+      // dispatch(setModal(false));
+      // if (
+      //   response?.data?.payload.role === "admin" ||
+      //   response?.data?.payload.role === "super_admin"
+      // ) {
+      //   if (
+      //     !location.pathname.split("/").includes("banks-rating") &&
+      //     !location.pathname.split("/").includes("calculator")
+      //   ) {
+      //     navigate(/${UIRoutes.ADMIN}/${PrivateUIRoutes.ADMIN_PANEL});
+      //   }
+      // } else {
+      //   if (
+      //     !location.pathname.split("/").includes("banks-rating") &&
+      //     !location.pathname.split("/").includes("calculator")
+      //   ) {
+      //     navigate(/${UIRoutes.ACCOUNT}/${UIRoutes.PROFILE});
+      //   }
+      // }
+    } catch (errors: any) {
+      console.log(errors)
+      //     setLoading(false);
+      //     CommonService.showErrors(errors?.response?.data?.payload);
+      //     toast.error(errors?.response?.data?.message);
+        }
+  }
+      // {...formikForm.getFieldProps("comment")}
 
   return (
     <div className="flex mx-auto  min-h-[calc(100vh-102px)] font-poppins max-lg:min-h-[calc(100vh-61px)]">
       <div className="flex bg-cover bg-no-repeat bg-left-bottom justify-center  w-[46%] max-lg:bg-sign max-lg:w-[100%] 
         py-[50px] px-[100px] max-sm:px-[16px] max-sm:py-[24px]">
-        <form className="self-center w-full max-w-[425px] max-lg:bg-white 
+        <form onSubmit={formikForm.handleSubmit} className="self-center w-full max-w-[425px] max-lg:bg-white 
           max-lg:px-[48px] max-lg:py-[60px] max-sm:px-[16px] max-sm:py-[24px] max-sm:rounded-[8px]">
           <h1
               className="text-[24px] text-home-title text-center leading-normal mb-[32px] font-semibold">
@@ -34,12 +139,21 @@ const SignIn = () => {
             <div className="flex-[1] bg-header-bottom h-[1px]"></div>
           </div>        
 
-          <div className="form-group mb-[24px]">
+          <div className="form-group mb-[24px]" >
             <label htmlFor="email" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">{t<string>("SIGN.EMAIL")}</label>
             <input
+              onChange={formikForm.handleChange}
+              value={formikForm.values.email}
+              // onChange={(event) => {
+              //   formikForm.setFieldValue(
+              //     "email",
+              //     spacesRemover(event.target.value)
+              //   );
+              // }}
               placeholder={t<string>("SIGN.EMAIL_PLACEHOLDER")}
               id="email"
-              type="text"
+              name="email"
+              type="email"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
               border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
@@ -50,9 +164,12 @@ const SignIn = () => {
             <label htmlFor="password" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
               {t<string>("SIGN.PASSWORD")}</label>
             <input
+              onChange={formikForm.handleChange}
+              value={formikForm.values.password}
               placeholder={t<string>("SIGN.PASSWORD_PLACEHOLDER")}
               id="password"
               type="text"
+              name="password"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
               border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
@@ -81,6 +198,7 @@ const SignIn = () => {
           </div>     
  
           <button
+            type="submit"
             className="bg-button-submit-footer py-[10px] px-[26px] rounded-[6px] 
            w-full mb-[24px]
           ">
