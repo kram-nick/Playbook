@@ -8,6 +8,11 @@ import { useState } from "react";
 import ModalIcons from "./ModalIcons";
 import { useModal } from "../../core/hooks/useModal";
 import { colourStyles } from "../../core/constants";
+import { useFormik } from "formik";
+import * as Yup from 'yup';  
+import { toast } from 'react-toastify';
+import PlaybookService from "../../core/services/playbook.service";
+
 
 interface ModalType {
   children?: ReactNode;
@@ -48,14 +53,75 @@ export default function ModalPlaybookDetail(props: ModalType) {
     toggle();
   };
 
+  const formikForm = useFormik<{
+    name: string;
+    content: string;
+    color_code: string;
+    header_url: string;
+    icon_url: string;
+    favorited: any | boolean;
+    privacy: string;
+    category_id: number | string;
+    status: string;
+    order: string;
+    url: string;
+  }>({
+    initialValues: {
+      name: "",
+      content: "",
+      color_code: "#0052CC",
+      header_url: "https://www.google.com",
+      icon_url: "https://www.google.com",
+      favorited: "",
+      privacy: "",
+      category_id: 0,
+      status: '',
+      order: '',
+      url: ''
+    },
+    // validationSchema: valueFormValidationSchema,
+    onSubmit: async (values: any) => {
+      console.log(values)
+      if(!props.item){
+        createPlaybook(values)
+      }
+      // handleSubmitForm(values);
+    },
+  });  
+
+  function closePopup() {
+    formikForm.resetForm();
+    props.toggle();
+  }
+
+  const createPlaybook = async (values: any) => {
+    // setLoading(true); 
+    try {
+      values.privacy = values.privacy ? 'private' : 'public';
+      const response = await PlaybookService.createPlaybook(values);
+ 
+       console.log(response) 
+      if(props.item){
+        toast.success(t<string>("MAIN.UPDATE_SUCCESS")); 
+      } else {
+        toast.success(t<string>("MAIN.CREATE_SUCCESS")); 
+      }
+      closePopup(); 
+    } catch (errors: any) {
+      console.log(errors)
+      // setLoading(false); 
+      toast.error(errors?.response?.data?.errors);          
+    }
+  }  
+
   return (
     <>
       {props.isOpen && (
         <div>
-          <div className="modal-overlay bg-overlay" onClick={props.toggle}>
+          <div className="modal-overlay bg-overlay max-sm:overflow-y-auto max-sm:items-start" onClick={props.toggle}>
             <div
               onClick={(e) => e.stopPropagation()}
-              className="modal-box relative w-[100%] max-w-[530px] px-[24px] py-[24px] shadow-free-trial 
+              className="modal-box relative w-[100%] max-w-[530px] px-[24px] pt-[24px] shadow-free-trial 
                 border-[1px] border-solid border-border-btn bg-white font-poppins
                 max-sm:min-h-[100vh] max-sm:px-[16px] max-sm:py-[16px] max-sm:pb-[80px] max-sm:max-w-[100%]"
             >
@@ -69,7 +135,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
                 </button>
               </div>
 
-              <div className="form grid gap-y-[16px] mb-[24px]">
+              <form onSubmit={formikForm.handleSubmit} className="form grid gap-y-[16px] mb-[24px]">
                 <div className="form-group flex flex-wrap">
                   <label
                     htmlFor=""
@@ -78,14 +144,17 @@ export default function ModalPlaybookDetail(props: ModalType) {
                     {t<string>("FIELDS.NAME")}
                   </label>
                   <input
-                    placeholder={t<string>("FIELDS.NAME")}
-                    id="email"
-                    type="text"
+                    placeholder={t<string>("FIELDS.NAME")}  
+                    onChange={formikForm.handleChange}
+                    value={formikForm.values.name}  
+                    id="name"
+                    name="name"
+                    type="text"                    
                     className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-border-input
                     border-solid border-[1px] shadow-free-trial min-w-[100%]
                     leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
-                    onChange={(e) => setName(e.target.value)}
-                    value={props.item ? props.item.title : ""}
+                    // onChange={(e) => setName(e.target.value)}
+                    // value={props.item ? props.item.title : ""}
                   />
                 </div>
 
@@ -96,8 +165,11 @@ export default function ModalPlaybookDetail(props: ModalType) {
                   >
                     {t<string>("FIELDS.DESCRIPTION")}
                   </label>
-                  <textarea
-                    name=""
+                  <textarea 
+                    onChange={formikForm.handleChange}
+                    value={formikForm.values.content}  
+                    id="content"
+                    name="content"                       
                     placeholder={t<string>("FIELDS.DESCRIPTION")}
                     className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-border-input
                   border-solid border-[1px] shadow-free-trial min-w-[100%] h-[105px] resize-none
@@ -116,7 +188,8 @@ export default function ModalPlaybookDetail(props: ModalType) {
                   <Select className="select-custom h-[40px]"
                     defaultValue={colourOptions[1]}
                     options={colourOptions}
-                    styles={colourStyles}
+                    styles={colourStyles} 
+                    onChange={(option) => formikForm.setFieldValue('color_code', option.color)}                    
                   />
                 </div>
 
@@ -141,7 +214,11 @@ export default function ModalPlaybookDetail(props: ModalType) {
                     {t<string>("FIELDS.ADD_TO_F")}
                   </span>
                   <span className="switch flex w-[34px] h-[20px]">
-                    <input type="checkbox" hidden></input>
+                    <input type="checkbox" hidden
+                      onChange={formikForm.handleChange}
+                      value={formikForm.values.favorited}  
+                      id="favorited"
+                      name="favorited"></input>
                     <span
                       className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
                       bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
@@ -153,14 +230,38 @@ export default function ModalPlaybookDetail(props: ModalType) {
                     {t<string>("FIELDS.PRIVATE")}
                   </span>
                   <span className="switch flex w-[34px] h-[20px]">
-                    <input type="checkbox" hidden></input>
+                    <input type="checkbox" hidden
+                      onChange={formikForm.handleChange}
+                      value={formikForm.values.privacy}  
+                      id="privacy"
+                      name="privacy"
+                      ></input>
                     <span
                       className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
                       bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
                     ></span>
                   </span>
                 </label>
-              </div>
+
+                <div className="grid grid-cols-2 font-poppins gap-[16px] max-sm:absolute max-sm:bottom-[24px] 
+                  max-sm:left-[16px] max-sm:right-[16px]">
+                  <button
+                    className="h-[46px] flex items-center justify-center 
+                      py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
+                      text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
+                      title="Cancel"
+                      onClick={() => closePopup()} >
+                    Cancel 
+                  </button>
+                  <button
+                    type="submit"
+                    className="h-[46px] flex items-center justify-center  
+                      py-[8px] px-[15px] bg-buttons-bg rounded-[5px] text-buttons-color 
+                      text-[16px] font-medium leading-[20px] shadow-free-trial " >
+                      {props.item ? 'Save': 'Continue'}
+                  </button>
+                </div>                    
+              </form>
 
               {props.children}
             </div>

@@ -32,12 +32,13 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
   const { t } = useTranslation(); 
   const {ref, isShow, setIsShow} = useOutside(false);
    
-  const  [playbook, setPlaybook]  = useState(item);
-  let  [priority, setPriority]  = useState(item.priority);
+  let  [playbook, setPlaybook]: any  = useState(item);
+  let  [favorited, setFavorited]  = useState(item.favorited);
  
 
-  const handlePriorityClick = () => { 
-    setPriority(!priority); 
+  const handlePriorityClick = (item: any) => { 
+    item.favorited = !item.favorited
+    setFavorited(!favorited); 
   };
 
   // const handleChange = (item: any) => {
@@ -73,8 +74,8 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
         "w-[40px] h-[40px] rounded-[4px]" : !typeCard,
         "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border" : true
       })}>
-        {playbook.image && (
-          <img src={poster} alt="" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />
+        {playbook.header_url && (
+          <img src={playbook.header_url} alt="" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />
         )}
          
       </div>
@@ -86,7 +87,7 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
       })} >
         {typeCard && (
           <div className="icon w-[28px] h-[28px] flex">
-            <img src={index > 2 ? red_saas : blue_saas} alt="saas" className="w-[28px] h-[28px]" />                          
+            <img src={playbook.privacy === 'private' ? red_saas : blue_saas} alt="saas" className="w-[28px] h-[28px]" />                          
           </div>
         )}
 
@@ -94,17 +95,17 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
           "w-[calc(100%-28px)]":typeCard, 
           "text pl-[12px]" : true
         })} >
-          <p className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title">{playbook.title}</p>
+          <p className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title">{playbook.name}</p>
           <p className="text-[12px] leading-normal text-input-paceholder">{playbook.status} • {playbook.edited}</p>
         </div>    
 
-        <button onClick={() => handlePriorityClick()}
+        <button onClick={() => handlePriorityClick(playbook)}
           className={classNames({
             "top-[12px] right-[34px] w-[20px] h-[20px] max-lg:hidden":typeCard,
             "top-[50%] left-[16px] mt-[-12px] w-[24px] h-[24px]":!typeCard,
             "absolute" : true
           })}>
-          <img src={priority ? star_active : star} alt="" className="w-[100%]" />
+          <img src={playbook.favorited ? star_active : star} alt="" className="w-[100%]" />
         </button>
 
         <div className={classNames({
@@ -141,10 +142,10 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
                   <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.SHARE")}</span>
                 </li>   
-                <li onClick={() => handlePriorityClick()}
+                <li onClick={() => handlePriorityClick(playbook)}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border min-[1024px]:hidden 
                   max-[1024px]:px-[0px]"> 
-                  <img src={priority ? star_active : star_mobile} alt="" className="w-[24px] h-[24px]" />
+                  <img src={playbook ? star_active : star_mobile} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">{t<string>("MAIN.FAVORITE")}</span>
                 </li>              
                 <li onClick={() => handleEditClick(item)} 

@@ -13,8 +13,8 @@ import { useModal } from "../../core/hooks/useModal";
 
  
 type CardProps = {
-  items:Array<Playbook>,
-  item: Playbook,
+  items:Array<any>,
+  item: any,
   index: number,
   typeCard: boolean,
 }
@@ -23,7 +23,7 @@ const ProfileCard = ({items, item, index, typeCard}: CardProps) => {
   const { t } = useTranslation(); 
   const {ref, isShow, setIsShow} = useOutside(false);
    
-  const  [playbook, setPlaybook]  = useState(item);
+  const  [playbook, setPlaybook]: any  = useState(item);
   let { isOpenModal, toggle } = useModal();
   let  [priority, setPriority]  = useState(item.priority);
  
@@ -45,14 +45,14 @@ const ProfileCard = ({items, item, index, typeCard}: CardProps) => {
       })}>
 
         <div className="header">
-          <Link to="/playbook" className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]">{playbook.title}</Link>
+          <Link to="/playbook" className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]">{playbook.name}</Link>
           <p className="text-[16px] text-input-paceholder leading-[26px] max-[690px]:text-[14px]">Viewed 1235 times</p>
         </div>
   
         <div className="photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border 
           w-[100%] h-[240px] rounded-[8px]" >
-          {playbook.image && (
-            <img src={poster} alt="" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />
+          {playbook.header_url && (
+            <img src={playbook.header_url} alt="" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />
           )}
           
         </div>
@@ -64,7 +64,7 @@ const ProfileCard = ({items, item, index, typeCard}: CardProps) => {
           </button>
           <button onClick={() => handlePriorityClick()}
             className="w-[46px] h-[46px] p-[12px] rounded-[6px] border-header-bottom border-[1px] border-solid"  >
-            <img src={priority ? star_active : star} alt="" className="w-[100%]" />
+            <img src={playbook.favorited ? star_active : star} alt="" className="w-[100%]" />
           </button>         
         </div>
       </div>  

@@ -20,6 +20,44 @@ import ModalShare from "../Modals/ModalShare";
 import ModalShareSocial from "../Modals/ModalShareSocial";
 import { Filters } from "../../core/constants";
 import { useAppSelector } from "../../core/hooks/useRedux";
+import PlaybookService from "../../core/services/playbook.service";
+import useHttpGet from "../../core/hooks/useHttpGet";
+import { APIRoutes } from "../../core/http";
+ 
+
+const getBooks = () => {
+  // setLoading(true); 
+
+ 
+  // try {
+  //   const response = await PlaybookService.getMine();
+     
+ 
+  //   console.log(response)     
+
+    // dispatch(setIsAuth(true));
+     
+    // document.body.style.overflowY = "scroll";
+    // dispatch(setModal(false));
+    // toast.success(t<string>("SIGN.LOGIN_SUCCESS")); 
+ 
+ 
+  // } catch (errors: any) {
+    // console.log(errors)
+        // setLoading(false); 
+        // toast.error(errors?.response?.data?.errors);          
+      // }
+}
+
+// useHttpGet<any>(APIRoutes.PUBLIC_BANKS_OFFERS, {
+//   resolve: (response: any) => {
+//     setSubmittedApplications(response?.payload?.collection);
+//   },
+//   condition: Object.keys(submittedApplicationsFilter).length !== 0,
+//   query: { ...submittedApplicationsFilter },
+//   dependencies: [submitted, reloadChecker, submittedApplicationsFilter],
+// });
+
  
 
  
@@ -32,9 +70,47 @@ const AppMainContent = () => {
   let { isOpenSocialModal, toggleSocial } = useModalSocial(); 
   const [activeTab, setActiveTab] = useState(Filters[1]);
   const {search} = useAppSelector((state) => state.app);
-  let [items, setPlaybooks] = useState(playbooks);
+  let [items, setPlaybooks] = useState([]);
+  const [data, setData]:any = useState(null);
+ 
   let [selectedItem, setItem] = useState(null);
  
+  // getBooks()
+
+  // useHttpGet<any>(APIRoutes.PLAYBOOKS_MINE, {
+  //   query: { ...filter },
+  //   dependencies: [filter, submitted],
+  //   condition: Object.keys(filter).length !== 0,
+  //   resolve: (response) => {
+  //     setApplications(response?.payload?.collection);
+  //   },
+  // });  
+  useHttpGet<any>(APIRoutes.PLAYBOOKS + '/mine', {
+    resolve: (response: any) => { 
+      if(response){
+        setData(response.data);
+        setPlaybooks(response.data.playbooks)
+      } 
+    }, 
+    query: { },
+    dependencies: [],
+  });  
+
+  const handleActiveTab = (tab:any) => {
+    setActiveTab(tab); 
+    console.log(data)
+    if(data){
+      if( tab.id === 1){
+        setPlaybooks(data.playbooks)
+      } else if ( tab.id === 2 ){
+        setPlaybooks(data.favorites)
+      } else if ( tab.id === 3 ){
+        setPlaybooks(data.purchases)
+      }
+    }
+ 
+  };  
+
   const handleView = (type:any) => {
     handleViewType(type);
   };
@@ -52,7 +128,7 @@ const AppMainContent = () => {
   const deleteItem = (item?: any) => {
      
     if(item && item.id){
-      setPlaybooks(items.filter((playbook) => playbook.id !== item.id));
+      setPlaybooks(items.filter((playbook:any) => playbook.id !== item.id));
     }
     console.log(item)
     console.log(items);
@@ -134,7 +210,7 @@ const AppMainContent = () => {
                     {t<string>("MAIN.EMPTY_TEXT")}
                   </p>
                 </div>
-                <button
+                <button onClick={() => {setItem(null); openDetailModal()}}
                   className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
                 ">
@@ -154,7 +230,7 @@ const AppMainContent = () => {
                     max-[690px]:overflow-x-auto max-[690px]:whitespace-nowrap max-[690px]:ml-[-16px] max-[690px]:mr-[-16px]
                     max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px]">
                       {Filters.map((item: any, index: number) => (
-                        <div key={index}  onClick={() => setActiveTab(item)}
+                        <div key={index}  onClick={() => handleActiveTab(item)}
                           className={classNames({
                             "text-buttons-bg": activeTab.id === index + 1,
                             "text-nav-txt-private": activeTab.id !== index + 1,
@@ -237,25 +313,7 @@ const AppMainContent = () => {
             </button>
           </div>
         </ModalDelete>     
-        <ModalPlaybookDetail isOpen={isOpenDetailModal} toggle={toggleDetail} item={selectedItem}>
-          <div className="grid grid-cols-2 font-poppins gap-[16px] max-sm:absolute max-sm:bottom-[24px] 
-            max-sm:left-[16px] max-sm:right-[16px]">
-              <button
-                className="h-[46px] flex items-center justify-center 
-                  py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
-                  text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
-                  title="Cancel"
-                  onClick={toggleDetail} >
-                Cancel 
-              </button>
-              <button
-                className="h-[46px] flex items-center justify-center  
-                  py-[8px] px-[15px] bg-buttons-bg rounded-[5px] text-buttons-color 
-                  text-[16px] font-medium leading-[20px] shadow-free-trial " >
-                  {selectedItem ? 'Save': 'Continue'}
-              </button>
-            </div>          
-        </ModalPlaybookDetail>
+        <ModalPlaybookDetail isOpen={isOpenDetailModal} toggle={toggleDetail} item={selectedItem}></ModalPlaybookDetail>
         <ModalShare  isOpen={isOpenShareModal} toggle={toggleShare} item={selectedItem}></ModalShare>          
         <ModalShareSocial  isOpen={isOpenSocialModal} toggle={toggleSocial} item={selectedItem}></ModalShareSocial>          
      </div>

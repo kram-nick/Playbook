@@ -32,6 +32,7 @@
                 "SHARE":"Share"
         },
         "HOME": {
+                "HOME":"Home",
                 "TITLE": "Everyone needs a Playbook.",
                 "SUBTITLE": "Playbook allows you to create focus by building strategies and plays that 3-5x your revenue, cost savings and efficiency.",
                 "FREE_START": "Get Started for Free",
@@ -200,10 +201,14 @@
                "FILTER_TITLE":"Filter",
                "SORT_TITLE":"Sort",
                "SETTINGS":"Settings",
+               "ACC_SETTINGS":"Account settings",
                "DELETE":"Delete",
                "PREVIEW":"Preview",
                "SHARE":"Share",
-               "FAVORITE":"Favorite"
+               "FAVORITE":"Favorite",
+               "LOGOUT":"Logout",
+               "CREATE_SUCCESS":"The Playbook was successfully created",
+               "UPDATE_SUCCESS":"The Playbook has been successfully updated"
         },
         "FIELDS": {
                 "NAME":"Name",

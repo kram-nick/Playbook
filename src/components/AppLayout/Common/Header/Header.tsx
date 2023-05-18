@@ -20,6 +20,14 @@ const Header = () => {
           </Link>
            
           <div className="flex align-middle gap-[32px] items-center">
+          {token ? (
+            <div>
+            <Link to="/main" className="font-poppins font-medium text-header-links text-[15px]">
+              {t<string>("HOME.HOME")}
+            </Link>
+          </div> 
+          ): (
+          <>
             <div>
               <button className="font-poppins font-medium text-header-links text-[15px]">
                 {t<string>("COMMON.PRICING")}
@@ -37,6 +45,9 @@ const Header = () => {
                 />
               </button>
             </div>
+          </>
+          )}
+ 
           </div>
         </div>
       </div>
