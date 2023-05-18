@@ -207,8 +207,9 @@
                "SHARE":"Share",
                "FAVORITE":"Favorite",
                "LOGOUT":"Logout",
-               "CREATE_SUCCESS":"The Playbook was successfully created",
-               "UPDATE_SUCCESS":"The Playbook has been successfully updated"
+               "CREATE_SUCCESS": "The Playbook was successfully created",
+               "UPDATE_SUCCESS": "The Playbook has been successfully updated",
+               "DELETE_SUCCESS": "The Playbook has been successfully deleted"
         },
         "FIELDS": {
                 "NAME":"Name",

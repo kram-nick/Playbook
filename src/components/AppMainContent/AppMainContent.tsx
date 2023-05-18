@@ -23,47 +23,12 @@ import { useAppSelector } from "../../core/hooks/useRedux";
 import PlaybookService from "../../core/services/playbook.service";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
- 
-
-const getBooks = () => {
-  // setLoading(true); 
-
- 
-  // try {
-  //   const response = await PlaybookService.getMine();
-     
- 
-  //   console.log(response)     
-
-    // dispatch(setIsAuth(true));
-     
-    // document.body.style.overflowY = "scroll";
-    // dispatch(setModal(false));
-    // toast.success(t<string>("SIGN.LOGIN_SUCCESS")); 
- 
- 
-  // } catch (errors: any) {
-    // console.log(errors)
-        // setLoading(false); 
-        // toast.error(errors?.response?.data?.errors);          
-      // }
-}
-
-// useHttpGet<any>(APIRoutes.PUBLIC_BANKS_OFFERS, {
-//   resolve: (response: any) => {
-//     setSubmittedApplications(response?.payload?.collection);
-//   },
-//   condition: Object.keys(submittedApplicationsFilter).length !== 0,
-//   query: { ...submittedApplicationsFilter },
-//   dependencies: [submitted, reloadChecker, submittedApplicationsFilter],
-// });
-
- 
-
+import { toast } from "react-toastify";
  
 const AppMainContent = () => {
   const { t } = useTranslation();  
   const [listType, handleViewType] = useState(true); 
+  const [reloadData, setReloadData] = useState(true); 
   let { isOpenModal, toggle } = useModal();
   let { isOpenDetailModal, toggleDetail } = useModalDetail(); 
   let { isOpenShareModal, toggleShare } = useModalShare(); 
@@ -75,26 +40,25 @@ const AppMainContent = () => {
  
   let [selectedItem, setItem] = useState(null);
  
-  // getBooks()
 
-  // useHttpGet<any>(APIRoutes.PLAYBOOKS_MINE, {
-  //   query: { ...filter },
-  //   dependencies: [filter, submitted],
-  //   condition: Object.keys(filter).length !== 0,
-  //   resolve: (response) => {
-  //     setApplications(response?.payload?.collection);
-  //   },
-  // });  
+  
   useHttpGet<any>(APIRoutes.PLAYBOOKS + '/mine', {
     resolve: (response: any) => { 
+       
       if(response){
         setData(response.data);
         setPlaybooks(response.data.playbooks)
       } 
+      setReloadData(false);
     }, 
     query: { },
-    dependencies: [],
-  });  
+    condition: reloadData,
+    dependencies: [data, reloadData],
+  });   
+ 
+  const saveCallback = (reload: boolean) => {
+    setReloadData(reload); 
+  }
 
   const handleActiveTab = (tab:any) => {
     setActiveTab(tab); 
@@ -108,7 +72,6 @@ const AppMainContent = () => {
         setPlaybooks(data.purchases)
       }
     }
- 
   };  
 
   const handleView = (type:any) => {
@@ -125,18 +88,25 @@ const AppMainContent = () => {
     toggle(); 
   };
 
-  const deleteItem = (item?: any) => {
-     
-    if(item && item.id){
-      setPlaybooks(items.filter((playbook:any) => playbook.id !== item.id));
-    }
-    console.log(item)
-    console.log(items);
-    setItem(null);
-    isOpenModal = false;
-    toggle();    
+  const deleteItem = async (item?: any) => {
+    try { 
+      const response = await PlaybookService.delete(item.id);
+      if(response){
+        toast.success(t<string>("MAIN.DELETE_SUCCESS")); 
+        setReloadData(true); 
+        setItem(null);
+        isOpenModal = false;
+        toggle();    
+      }
+    } catch (errors: any) { 
+      toast.error(errors?.response?.data?.errors);          
+    }    
   }
 
+  const deleteCallback = (reload: boolean) => {
+    deleteItem(selectedItem);
+  }
+   
   const openDetailModal = (item?: any) => {
     if(item){ 
       setItem(item);
@@ -293,27 +263,8 @@ const AppMainContent = () => {
               </div>
             )}            
         </div> 
-        <ModalDelete isOpen={isOpenModal} toggle={toggle} item={selectedItem}>
-          <div className="grid grid-cols-2 font-poppins gap-[16px]">
-            <button
-              className="h-[46px] flex items-center justify-center 
-                py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
-                text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
-                title="Cancel"
-                onClick={() => {toggle()}} >
-              Cancel 
-            </button>
-            <button
-              className="h-[46px] flex items-center justify-center  
-                py-[8px] px-[15px] bg-danger rounded-[5px] text-buttons-color 
-                text-[16px] font-medium leading-[20px] shadow-free-trial "
-              onClick={() => {deleteItem(selectedItem)}} 
-              title="Delete" >
-                Yes, delete 
-            </button>
-          </div>
-        </ModalDelete>     
-        <ModalPlaybookDetail isOpen={isOpenDetailModal} toggle={toggleDetail} item={selectedItem}></ModalPlaybookDetail>
+        <ModalDelete isOpen={isOpenModal} toggle={toggle} item={selectedItem} onDelete={deleteCallback}></ModalDelete>     
+        <ModalPlaybookDetail isOpen={isOpenDetailModal} toggle={toggleDetail} item={selectedItem} onSave={saveCallback}></ModalPlaybookDetail>
         <ModalShare  isOpen={isOpenShareModal} toggle={toggleShare} item={selectedItem}></ModalShare>          
         <ModalShareSocial  isOpen={isOpenSocialModal} toggle={toggleSocial} item={selectedItem}></ModalShareSocial>          
      </div>

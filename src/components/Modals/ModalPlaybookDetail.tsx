@@ -19,6 +19,7 @@ interface ModalType {
   isOpen: boolean;
   class?: string;
   item: any;
+  onSave: (reload: boolean) => void
   toggle: () => void;
 }
 
@@ -44,8 +45,7 @@ export const colourOptions: readonly ColourOption[] = [
 ];
 
 export default function ModalPlaybookDetail(props: ModalType) {
-  const { t } = useTranslation();
-  const [name, setName] = useState("");
+  const { t } = useTranslation(); 
   let { isOpenModal, toggle } = useModal();
 
   const handleIconsModal = () => {
@@ -100,16 +100,15 @@ export default function ModalPlaybookDetail(props: ModalType) {
       values.privacy = values.privacy ? 'private' : 'public';
       const response = await PlaybookService.createPlaybook(values);
  
-       console.log(response) 
+       console.log(response);
+       props.onSave(true)
       if(props.item){
         toast.success(t<string>("MAIN.UPDATE_SUCCESS")); 
       } else {
         toast.success(t<string>("MAIN.CREATE_SUCCESS")); 
       }
       closePopup(); 
-    } catch (errors: any) {
-      console.log(errors)
-      // setLoading(false); 
+    } catch (errors: any) { 
       toast.error(errors?.response?.data?.errors);          
     }
   }  

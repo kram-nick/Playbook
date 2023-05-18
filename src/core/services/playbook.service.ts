@@ -25,6 +25,26 @@ export default class PlaybookService {
     return RequestsService.postMethod<any>(APIRoutes.PLAYBOOKS, formData);
   }  
 
+  static async favorite(
+    id: any, 
+    favorite: number
+  ): Promise<AxiosResponse<any>> {
+    const formData = {
+      playbook_id: id,
+      favorite: favorite
+    }; 
+    return RequestsService.putMethod<any>(APIRoutes.PLAYBOOKS_FAVORITE, formData);
+  }    
+
+  static async delete(
+    id: any 
+  ): Promise<AxiosResponse<any>> {
+ 
+    return RequestsService.deleteMethod<any>(APIRoutes.PLAYBOOKS + '/' + id);
+  }   
+
+
+
   // static async getPages(
   //   id: string, 
   // ): Promise<AxiosResponse<any>> { 

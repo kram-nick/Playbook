@@ -8,7 +8,7 @@ import AuthService from "../../core/services/auth.service";
 import classNames from "classnames";
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { UIRoutes } from "../../core/router";
+import { PrivateUIRoutes, UIRoutes } from "../../core/router";
 import { useState } from "react";
 
 const SignIn = () => {
@@ -59,10 +59,23 @@ const SignIn = () => {
 
         
       if (response.data.data.token){
+        localStorage.setItem(
+          process.env.REACT_APP_TOKEN_KEY,
+          response.data.data.token
+        );
+  
+        const user = {
+          email: response.data.data.user.email,
+          name: response.data.data.user.first_name + ' ' + response.data.data.user.last_name
+        }
+        localStorage.setItem(
+          'user', JSON.stringify(user)
+        );           
         toast.success(t<string>("SIGN.CREATE_SUCCESS"));   
         setTimeout(() => {
           setLoading(false);
-          navigate('/' + UIRoutes.SIGN_IN);
+          // navigate('/' + UIRoutes.SIGN_IN);
+          navigate('/' + PrivateUIRoutes.Main);
         }, 200);
       }
   

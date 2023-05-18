@@ -15,6 +15,8 @@ import icon_settings from "../../assets/photos/main/setting.svg";
 import icon_delete from "../../assets/photos/main/delete.svg";  
 import useOutside from "../../core/hooks/useOutside"; 
 import Playbook from "../../core/interface/playbook";
+import PlaybookService from "../../core/services/playbook.service";
+import { toast } from "react-toastify";
 
  
 type CardProps = {
@@ -36,14 +38,20 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
   let  [favorited, setFavorited]  = useState(item.favorited);
  
 
-  const handlePriorityClick = (item: any) => { 
-    item.favorited = !item.favorited
-    setFavorited(!favorited); 
-  };
+  const handlePriorityClick = async (item: any) => { 
+    console.log(item)
+ 
+    try { 
+      const response = await PlaybookService.favorite(item.id, item.favorited ? 0 : 1);
 
-  // const handleChange = (item: any) => {
-  //   onChangeList(item); 
-  // };
+      if(response) {
+        item.favorited = !item.favorited
+        setFavorited(!favorited); 
+      }
+    } catch (errors: any) { 
+      toast.error(errors?.response?.data?.errors);          
+    }       
+  };
  
   const handleOpen = () => {
     setIsShow(!isShow);

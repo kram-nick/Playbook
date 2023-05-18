@@ -7,6 +7,7 @@ interface ModalType {
   isOpen: boolean;
   class?: string;
   item: any;
+  onDelete: (reload: boolean) => void
   toggle: () => void;
 }
 
@@ -28,7 +29,24 @@ export default function ModalDelete(props: ModalType) {
               <div className="title text-[20px] font-medium mb-[8px] text-home-title leading-normal tracking-[-0.1px]">Delete</div>
               <p className="text-[16px] leading-normal text-simple-text tracking-[-0.1px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tincidunt sit senectus.</p>
             </div>
-            {props.children}
+            <div className="grid grid-cols-2 font-poppins gap-[16px]">
+              <button
+                className="h-[46px] flex items-center justify-center 
+                  py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
+                  text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
+                  title="Cancel"
+                  onClick={props.toggle} >
+                Cancel 
+              </button>
+              <button
+                className="h-[46px] flex items-center justify-center  
+                  py-[8px] px-[15px] bg-danger rounded-[5px] text-buttons-color 
+                  text-[16px] font-medium leading-[20px] shadow-free-trial "
+                onClick={() => {props.onDelete(true)}} 
+                title="Delete" >
+                  Yes, delete 
+              </button>
+            </div>
           </div>
         </div>
       )}

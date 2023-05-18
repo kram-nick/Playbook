@@ -4,6 +4,7 @@ export const APIRoutes = {
   AUTH_LOGIN:'/api/users/login',
   AUTH_CREATE:'/api/users/create',
   PLAYBOOKS: '/api/playbooks', 
+  PLAYBOOKS_FAVORITE: '/api/playbooks/favorite', 
 };
 
 const $api = axios.create({
