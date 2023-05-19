@@ -83,9 +83,7 @@ const SignIn = () => {
         response.data.data.token
       );
 
-      const user = {
-        email: response.data.data.email
-      }
+      const user = response.data.data.user;
       localStorage.setItem(
         'user', JSON.stringify(user)
       );       

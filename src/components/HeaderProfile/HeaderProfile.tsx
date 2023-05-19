@@ -37,16 +37,22 @@ const HeaderProfile = () => {
   return (
     <div   className="user flex items-center relative">
       <div onClick={handleToggle} className="relative w-[40px] cursor-pointer">
-        <div className="photo bg-center bg-no-repeat bg-without-photo 
-          bg-top-entrepreneur w-[40px] h-[40px] rounded-[50%]"></div>
+        <div className={classNames({
+            "photo bg-center bg-no-repeat bg-without-photo relative w-[40px] h-[40px] rounded-[50%] overflow-hidden": true,
+            "bg-top-entrepreneur": !user.profile_image
+          })}>
+            {user && user.profile_image ? (
+              <img className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" src={user.profile_image} alt="" />
+            ): ('')}
+          </div>
         <div className="status absolute border-solid border-[2px] border-buttons-color 
           rounded-[50%] border-bg-white bg-checkbox-bg w-[14px] h-[14px] bottom-[-3px]
           right-[-2px]"></div>
       </div>
 
       <div onClick={handleToggle} className="text gap-y-[2px] grid max-sm:hidden ml-[8px] cursor-pointer">
-        {user && user.name ? (
-          <p className="text-[12px] font-inter font-medium text-home-title leading-[12px]">{user.name}</p>
+        {user && user.first_name ? (
+          <p className="text-[12px] font-inter font-medium text-home-title leading-[12px]">{user.first_name} {user.last_name}</p>
         ) : ('')}  
         {user && user.email  ? (
           <p className="text-[10px] font-poppins font-normal text-simple-text leading-[16px] truncate max-w-[160px]">{user.email}</p>
