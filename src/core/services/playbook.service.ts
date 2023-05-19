@@ -24,6 +24,14 @@ export default class PlaybookService {
     }; 
     return RequestsService.postMethod<any>(APIRoutes.PLAYBOOKS, formData);
   }  
+  static async updatePlaybook(
+    data: any, 
+  ): Promise<AxiosResponse<any>> {
+    const formData = {
+      playbook: data
+    }; 
+    return RequestsService.putMethod<any>(APIRoutes.PLAYBOOKS + '/' + data.id, formData);
+  }    
 
   static async favorite(
     id: any, 

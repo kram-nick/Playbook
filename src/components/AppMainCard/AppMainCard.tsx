@@ -94,8 +94,8 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
         "item-content flex flex-wrap items-start font-poppins w-[100%]" : true
       })} >
         {typeCard && (
-          <div className="icon w-[28px] h-[28px] flex">
-            <img src={playbook.privacy === 'private' ? red_saas : blue_saas} alt="saas" className="w-[28px] h-[28px]" />                          
+          <div className="icon w-[28px] h-[28px] overflow-hidden relative rounded-[50%]">
+            <img src={playbook.profile_image ? playbook.profile_image : red_saas} alt="saas" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />                          
           </div>
         )}
 
@@ -104,8 +104,20 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
           "text pl-[12px]" : true
         })} >
           <p className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title">{playbook.name}</p>
-          <p className="text-[12px] leading-normal text-input-paceholder">{playbook.status} • {playbook.edited}</p>
+          <p className="text-[12px] leading-normal text-input-paceholder flex items-baseline">
+            
+            {/* {playbook.profile_first_name && (
+              <span className="truncate max-w-[calc(100%-60px)] inline-block"> */}
+                {playbook.profile_first_name ? playbook.profile_first_name + ' ' : ''} 
+                {playbook.profile_last_name ? playbook.profile_last_name + '  ' : ''}              
+              {/* </span>
+            )}
+  */}
+            {playbook.profile_last_name && playbook.status ? ' • ' : ''}
+            {playbook.status}  
+          </p>
         </div>    
+        {/* • {playbook.edited} */}
 
         <button onClick={() => handlePriorityClick(playbook)}
           className={classNames({

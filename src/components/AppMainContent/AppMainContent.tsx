@@ -44,7 +44,6 @@ const AppMainContent = () => {
   
   useHttpGet<any>(APIRoutes.PLAYBOOKS + '/mine', {
     resolve: (response: any) => { 
-       
       if(response){
         setData(response.data);
         setPlaybooks(response.data.playbooks)
@@ -57,7 +56,11 @@ const AppMainContent = () => {
   });   
  
   const saveCallback = (reload: boolean) => {
-    setReloadData(reload); 
+    console.log(reload);
+    setTimeout(() => {
+      setReloadData(reload); 
+    }, 300);
+     
   }
 
   const handleActiveTab = (tab:any) => {
@@ -97,6 +100,7 @@ const AppMainContent = () => {
         setItem(null);
         isOpenModal = false;
         toggle();    
+        
       }
     } catch (errors: any) { 
       toast.error(errors?.response?.data?.errors);          

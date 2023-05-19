@@ -4,7 +4,7 @@ import icon_add from "../../assets/photos/main/icon-smiley.svg";
 import icon_close from "../../assets/photos/main/modal-close.svg";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
-import { useState } from "react"; 
+import { useState, useEffect  } from "react"; 
 import ModalIcons from "./ModalIcons";
 import { useModal } from "../../core/hooks/useModal";
 import { colourStyles } from "../../core/constants";
@@ -42,25 +42,22 @@ export const colourOptions: readonly ColourOption[] = [
   { value: "forest", label: "Forest", color: "#00875A" },
   { value: "slate", label: "Slate", color: "#253858" },
   { value: "silver", label: "Silver", color: "#666666" },
+  { value: "white", label: "White", color: "#FFFFFF" },
 ];
 
 export default function ModalPlaybookDetail(props: ModalType) {
   const { t } = useTranslation(); 
   let { isOpenModal, toggle } = useModal();
-
-  const handleIconsModal = () => {
-    isOpenModal = true;
-    toggle();
-  };
-
+  const [reloadData, setReloadData] = useState(true); 
+  let [activeColor, setActiveColor]: any = useState(null);
   const formikForm = useFormik<{
     name: string;
     content: string;
     color_code: string;
     header_url: string;
     icon_url: string;
-    favorited: any | boolean;
-    privacy: string;
+    favorited: boolean | any;
+    privacy: boolean | any;
     category_id: number | string;
     status: string;
     order: string;
@@ -72,8 +69,8 @@ export default function ModalPlaybookDetail(props: ModalType) {
       color_code: "#0052CC",
       header_url: "https://www.google.com",
       icon_url: "https://www.google.com",
-      favorited: "",
-      privacy: "",
+      favorited: false,
+      privacy: false,
       category_id: 0,
       status: '',
       order: '',
@@ -84,30 +81,86 @@ export default function ModalPlaybookDetail(props: ModalType) {
       console.log(values)
       if(!props.item){
         createPlaybook(values)
+      } else {
+        updatePlaybook(values)
       }
       // handleSubmitForm(values);
     },
-  });  
+  });   
+  const handleIconsModal = () => {
+    isOpenModal = true;
+    toggle();
+  };
+
+  useEffect(() => {
+
+    if(props.item){
+      // props.item.privacy = props.item.privacy  === ('private' || true) ? true : false;
+      formikForm.setValues(props.item);
+      // formikForm.setFieldValue('id', props.item.id);
+      // formikForm.setFieldValue('name', props.item.name);
+      // formikForm.setFieldValue('content', props.item.content);
+      // formikForm.setFieldValue('favorited', props.item.favorited);
+      formikForm.setFieldValue('privacy', props.item.privacy === ('private' || true) ? true : false);
+      console.log(props.item)
+ 
+       
+      if(props.item.color_code){
+        const color = colourOptions.find(el => el.color === props.item.color_code);
+        setActiveColor(color);  
+      }
+    } else {
+      formikForm.resetForm();
+    }
+    setReloadData(false);
+  }, [props]);
+
+ 
+ 
+ 
 
   function closePopup() {
-    formikForm.resetForm();
+    formikForm.resetForm(); 
+    // setActiveColor(null);
+    // activeColor = null;
     props.toggle();
+    // isOpenModal = false; 
   }
+
+  const updatePlaybook = async (values: any) => {
+    // setLoading(true); 
+    console.log(values);
+    try {
+      values.privacy = values.privacy ? 'private' : 'public';
+      await PlaybookService.updatePlaybook(values).then(response => {
+        console.log(response);
+        props.onSave(true); 
+        toast.success(t<string>("MAIN.UPDATE_SUCCESS")); 
+        closePopup(); 
+      })
+ 
+ 
+    } catch (errors: any) { 
+      toast.error(errors?.response?.data?.errors);          
+    }
+  }    
 
   const createPlaybook = async (values: any) => {
     // setLoading(true); 
     try {
       values.privacy = values.privacy ? 'private' : 'public';
-      const response = await PlaybookService.createPlaybook(values);
- 
-       console.log(response);
-       props.onSave(true)
-      if(props.item){
-        toast.success(t<string>("MAIN.UPDATE_SUCCESS")); 
-      } else {
+      // const data = {
+      //   ...values,
+      //   privacy: values.privacy ? 'private' : 'public'
+      // }
+        await PlaybookService.createPlaybook(values).then(response => {
+        console.log(response);
+        props.onSave(true);
         toast.success(t<string>("MAIN.CREATE_SUCCESS")); 
-      }
-      closePopup(); 
+        closePopup(); 
+      });
+ 
+ 
     } catch (errors: any) { 
       toast.error(errors?.response?.data?.errors);          
     }
@@ -134,7 +187,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
                 </button>
               </div>
 
-              <form onSubmit={formikForm.handleSubmit} className="form grid gap-y-[16px] mb-[24px]">
+              <form onSubmit={formikForm.handleSubmit} {...props.item}  className="form grid gap-y-[16px] mb-[24px]">
                 <div className="form-group flex flex-wrap">
                   <label
                     htmlFor=""
@@ -185,7 +238,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
                   </label>
 
                   <Select className="select-custom h-[40px]"
-                    defaultValue={colourOptions[1]}
+                    defaultValue={activeColor}
                     options={colourOptions}
                     styles={colourStyles} 
                     onChange={(option) => formikForm.setFieldValue('color_code', option.color)}                    
@@ -215,7 +268,8 @@ export default function ModalPlaybookDetail(props: ModalType) {
                   <span className="switch flex w-[34px] h-[20px]">
                     <input type="checkbox" hidden
                       onChange={formikForm.handleChange}
-                      value={formikForm.values.favorited}  
+                      checked={formikForm.values.favorited }
+                      // value={formikForm.values.favorited}  
                       id="favorited"
                       name="favorited"></input>
                     <span
@@ -231,16 +285,19 @@ export default function ModalPlaybookDetail(props: ModalType) {
                   <span className="switch flex w-[34px] h-[20px]">
                     <input type="checkbox" hidden
                       onChange={formikForm.handleChange}
-                      value={formikForm.values.privacy}  
+                      // checked={formikForm.values.privacy }
+                      checked={formikForm.values.privacy}  
                       id="privacy"
                       name="privacy"
                       ></input>
+                      
                     <span
                       className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
                       bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
                     ></span>
                   </span>
                 </label>
+                {formikForm.values.privacy}
 
                 <div className="grid grid-cols-2 font-poppins gap-[16px] max-sm:absolute max-sm:bottom-[24px] 
                   max-sm:left-[16px] max-sm:right-[16px]">
