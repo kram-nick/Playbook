@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/photos/sign/logo.svg";
 import icon_google from "../../assets/photos/sign/g_logo.svg";
+import icon_hide from "../../assets/icon-hide.svg";
+import icon_show from "../../assets/icon-show.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
@@ -14,6 +16,7 @@ import { useState } from "react";
 const SignIn = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [hide, setHide] = useState(true);
   const navigate = useNavigate();  
 
   const valueFormValidationSchema = Yup.object().shape({
@@ -124,10 +127,10 @@ const SignIn = () => {
               className={classNames({
                 "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
                 "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":true,
-                "border-error-color":formikForm.errors.first_name
+                "border-error-color":formikForm.errors.first_name && formikForm.touched.first_name
               })}
             />
-            {formikForm.errors.first_name && (
+            {formikForm.errors.first_name && formikForm.touched.first_name && (
               <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.first_name}</p>
             )}
           </div> 
@@ -144,10 +147,10 @@ const SignIn = () => {
               className={classNames({
                 "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
                 "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":true,
-                "border-error-color":formikForm.errors.last_name
+                "border-error-color":formikForm.errors.last_name && formikForm.touched.last_name
               })}
             />
-            {formikForm.errors.last_name && (
+            {formikForm.errors.last_name && formikForm.touched.last_name && (
               <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.last_name}</p>
             )}
           </div>                 
@@ -164,15 +167,15 @@ const SignIn = () => {
               className={classNames({
                 "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
                 "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":true,
-                "border-error-color":formikForm.errors.email
+                "border-error-color":formikForm.errors.email && formikForm.touched.email
               })}
             />
-            {formikForm.errors.email && (
+            {formikForm.errors.email && formikForm.touched.email &&(
               <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.email}</p>
             )}
           </div>
 
-          <div className="form-group mb-[24px]">
+          <div className="form-group mb-[24px] relative">
             <label htmlFor="password" className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
               {t<string>("SIGN.PASSWORD")}</label>
             <input
@@ -180,15 +183,20 @@ const SignIn = () => {
               value={formikForm.values.password}
               placeholder={t<string>("SIGN.PASSWORD_PLACEHOLDER")}
               id="password"
-              type="text"
+              type={hide ? 'password' : 'text'}
               name="password"
               className={classNames({
                 "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]": true,
                 "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border": true,
-                "border-error-color":formikForm.errors.password
+                "border-error-color":formikForm.errors.password && formikForm.touched.password
               })}
             />
-            {formikForm.errors.password && (
+            <button type="button" onClick={() => setHide(!hide)} 
+              className="absolute right-[9px] top-[31px] w-[30px] h-[30px] rounded-[50%] p-[5px] hover:bg-search-input
+              transition-all duration-[300ms] ease-out hover:ease-in" >
+              <img src={hide ? icon_hide : icon_show} alt="" />
+            </button>            
+            {formikForm.errors.password && formikForm.touched.password && (
               <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">{formikForm.errors.password}</p>
             )}            
           </div>    
