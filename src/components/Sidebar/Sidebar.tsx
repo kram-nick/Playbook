@@ -46,12 +46,21 @@ const Sidebar = () => {
 
   const dispatch = useAppDispatch();
 
-  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
+  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/menu`, {
     resolve: (response: any) => {
       if (response) {
-        setPlaybooks(response.data.playbooks);
-        setToFavotire(response.favorites);
-        console.log(response);
+        response.data.playbooks?.forEach((e:any) => {
+          e.open = false;
+        });
+        response.favorites?.forEach((e:any) => {
+          e.open = false;
+        });        
+        setTimeout(() => {
+          setPlaybooks(response.data.playbooks);
+          setToFavotire(response.favorites);
+          console.log(response);          
+        }, 300);
+ 
       }
 
       setReloadData(false);
@@ -95,25 +104,16 @@ const Sidebar = () => {
       })
     );
   };
-
-  const openSubMenu = (e: any, item?: any) => {
-    e.stopPropagation();
-    if (item && item.id) {
-      item.open = !item.open;
-    }
-  };
   const selectedItemMenu = (item?: any, type?: string) => {
     dispatch(
       setSelectedData({
         id: item.id,
         selected: true,
-        name: item.name,
-        chapters: item.chapters,
-        chapter_title: '',
-        chapter_id: 0
+        name: item.name, 
       }) 
-    )
-    navigate(`/${PrivateUIRoutes.Chapters}/${item.id}`, );
+    ) 
+    
+    navigate(`/creating/${item.id}`);
     const data = { open: true, selected: false };
     if (type === "my") {
       selectedPlaybooks(data);
@@ -121,6 +121,22 @@ const Sidebar = () => {
       selectedFavorite(data);
     }
   };
+
+  const openSubMenu = (e: any, item?: any) => {
+    e.stopPropagation();
+    // if (item && item.id) {
+    //   item.open = !item.open;
+    // }
+    playbooks?.forEach((element:any) => {
+      if(element.id === item.id){
+        item.open = true;
+      } else {
+        item.open = false;
+      }
+    });
+    console.log(playbooks)
+  };
+ 
 
   const setPriorityItem = (e: any, item: any) => {
     e.stopPropagation();
@@ -236,83 +252,80 @@ const Sidebar = () => {
 
           {playbookItem.open && (
             <ul className="flex flex-col gap-[4px]  w-full">
-              {playbooks.map((playbook: any, index: number) => (
-                <li key={playbook.id} className="w-[100%]">
+              {playbooks.map((item: any, index: number) => (
+                <li key={item.id} className="w-[100%]">
                   <button
                     onClick={() => {
-                      selectedItemMenu(playbook, "my");
-                      navigate(`/creating/${playbook.id}`);
+                      selectedItemMenu(item, "my");
                     }}
                     className={classNames({
                       "sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
                         true,
                       "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px]":
-                        playbook.id === data.id,
+                      item.id === data.id,
                     })}>
                     <img
-                      onClick={(e) => openSubMenu(e, playbook)}
-                      src={playbook.id === data.id ? arrow_blue : to_arrow}
+                      onClick={(e) => openSubMenu(e, item)}
+                      src={item.id === data.id ? arrow_blue : to_arrow}
                       alt="arrow"
                       className={classNames({
-                        "rotate-[90deg]": playbook.open,
+                        "rotate-[90deg]": item.open,
                         "transition duration-200 ease": true,
                       })}
                     />
                     <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
                     <span
                       className={classNames({
-                        "text-buttons-bg": playbook.id === data.id,
-                        "text-top-sub-secondary": playbook.id !== data.id,
+                        "text-buttons-bg": item.id === data.id,
+                        "text-top-sub-secondary": item.id !== data.id,
                         "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                           true,
                       })}>
-                      {playbook.name}
+                      {item.name}
                     </span>
                     <div
                       className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
                       transition duration-200 ease invisible opacity-0">
                       <span
-                        onClick={(e) => setPriorityItem(e, playbook)}
+                        onClick={(e) => setPriorityItem(e, item)}
                         className={classNames({
-                          "hover:bg-active-playbook": playbook.id === data.id,
-                          "hover:bg-option-btn": playbook.id !== data.id,
+                          "hover:bg-active-playbook": item.id === data.id,
+                          "hover:bg-option-btn": item.id !== data.id,
                           "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer":
                             true,
                         })}>
                         <img
-                          src={playbook.favorited ? star_active : star}
+                          src={item.favorited ? star_active : star}
                           alt="add to favorite"
                         />
                       </span>
                       <span
                         onClick={(e) => e.stopPropagation()}
                         className={classNames({
-                          "hover:bg-active-playbook": playbook.id === data.id,
-                          "hover:bg-option-btn": playbook.id !== data.id,
+                          "hover:bg-active-playbook": item.id === data.id,
+                          "hover:bg-option-btn": item.id !== data.id,
                           "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer":
                             true,
                         })}>
                         <img
-                          src={playbook.id === data.id ? plus_blue : plus_gray}
+                          src={item.id === data.id ? plus_blue : plus_gray}
                           alt="add"
                         />
                       </span>
                     </div>
                   </button>
 
-                  {playbook.pages && playbook.open && (
+                  {item.pages && item.open && (
                     <>
-                      {playbook.pages.map((page: any, indexChapter: number) => (
+                      {item.pages.map((page: any, indexChapter: number) => (
                         <button
                           key={page.id}
                           onClick={() =>
                             dispatch(
                               setSelectedData({
-                                id: playbook.id,
+                                id: item.id,
                                 selected: true,
-                                name: playbook.name,
-                                chapter_title: page.name,
-                                chapter_id: page.id,
+                                name: item.name 
                               })
                             )
                           }
@@ -322,8 +335,8 @@ const Sidebar = () => {
                             "text-top-sub-secondary":
                               page.id !== data.chapter_id,
                             "text-buttons-bg":
-                              playbook.id === data.id &&
-                              page.id === data.chapter_id,
+                            item.id === data.id &&
+                            page.id === data.chapter_id,
                           })}>
                           <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
                             {page.title}
