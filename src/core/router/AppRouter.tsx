@@ -25,37 +25,37 @@ import SignLayout from "../../components/AppLayout/SignLayout";
 
 export const privateRoutes: IRoute[] = [
   {
-    path: PrivateUIRoutes.Create,
+    path: `${PrivateUIRoutes.Create}/:id`,
     element: <DraftContainer />,
   },
   {
     path: `${PrivateUIRoutes.Chapters}/:id`,
     element: <Chapters />,
-  },  
+  },
   {
     path: PrivateUIRoutes.Main,
     element: <MainContainer />,
-  },  
+  },
   {
     path: PrivateUIRoutes.Preview,
     element: <Preview />,
-  },  
+  },
   {
     path: PrivateUIRoutes.PreviewChapter,
     element: <PreviewDetail />,
-  },   
+  },
   {
     path: PrivateUIRoutes.Profile,
     element: <Profile />,
-  },  
+  },
   {
     path: PrivateUIRoutes.CardDetail,
     element: <PlaybookDetail />,
-  },     
+  },
   {
     path: PrivateUIRoutes.Settings,
     element: <Settings />,
-  },   
+  },
 ];
 
 export const squeezeRoutes: IRoute[] = [
@@ -101,7 +101,7 @@ export const singRoutes: IRoute[] = [
   {
     path: UIRoutes.RESET_PASSWORD,
     element: <ResetPassword />,
-  }  
+  },
 ];
 
 const AppRouter: FC = () => {
@@ -143,7 +143,7 @@ const AppRouter: FC = () => {
             path="*"
             element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
           />
-        </Route>        
+        </Route>
       </Routes>
     </ScrollTop>
   );
