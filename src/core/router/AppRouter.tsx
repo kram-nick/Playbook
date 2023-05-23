@@ -29,7 +29,7 @@ export const privateRoutes: IRoute[] = [
     element: <DraftContainer />,
   },
   {
-    path: PrivateUIRoutes.Chapters,
+    path: `${PrivateUIRoutes.Chapters}/:id`,
     element: <Chapters />,
   },  
   {

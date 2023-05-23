@@ -159,9 +159,9 @@ export default function ModalPlaybookDetail(props: ModalType) {
       // }
         await PlaybookService.createPlaybook(values).then(response => {
         console.log(response);
-        if(response){
-          console.log('/' + PrivateUIRoutes.Chapters + '/' + response.data.data.id)
-          navigate('/' + PrivateUIRoutes.Chapters, {state: response.data.data});
+        if(response){ 
+          console.log(`/${PrivateUIRoutes.Chapters}/${response.data.data.id}`)
+          navigate(`/${PrivateUIRoutes.Chapters}/${response.data.data.id}`, );
         }
         // props.onSave(true);
         toast.success(t<string>("MAIN.CREATE_SUCCESS")); 

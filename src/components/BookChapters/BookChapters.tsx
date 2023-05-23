@@ -16,26 +16,11 @@ type pagesProps = {
 
 const BookChapters = ({preview, data}: pagesProps) => {
   const { t } = useTranslation(); 
-  const [items, setChapters] = useState(Chapters);
-
-  useHttpGet<any>(APIRoutes.PLAYBOOKS + data.id + '/pages', {
-    resolve: (response: any) => { 
-      if(response){
-        console.log(response)
-        // setData(response.data);
-        // setPlaybooks(response.data.playbooks)
-      } 
-      // setReloadData(false);
-    }, 
-    query: { },
-    condition: false,
-    dependencies: [],
-  });   
- 
+  const [items, setChapters]: any = useState([]); 
 
   const deleteItem = (item?: any) => {
     if(item && item.id){
-      setChapters(items.filter((el) => el.id !== item.id));
+      setChapters(items.filter((el:any) => el?.id !== item.id));
     }
   }  
 
@@ -57,7 +42,7 @@ const BookChapters = ({preview, data}: pagesProps) => {
 
   return (
     <div className="relative font-poppins pb-[12px]">
-      {items.map((chapter: any, index: number) => ( 
+      {items?.map((chapter: any, index: number) => ( 
         <div className="rounded-[8px] bg-white mb-[12px] border-[1px] border-solid border-header-bottom" key={index} >
           <div  
             className={classNames({
@@ -67,12 +52,12 @@ const BookChapters = ({preview, data}: pagesProps) => {
             <div onClick={() => toggleItem(chapter)} 
               className="absolute z-[1] left-[0] right-[0] bottom-[0] top-[0]"></div>
             <img className={classNames({
-              "origin-center rotate-90":chapter.open, 
+              "origin-center rotate-90":chapter?.open, 
               "w-[24px] h-[24px] absolute top-[50%] left-[16px] mt-[-12px]" : true
             })} src={icon} alt="" />
            
             <div className="text-[20px] text-home-title leading-[28px] tracking-[-0.1px] font-medium
-              max-w-[calc(100%-210px)]">{chapter.title}</div>
+              max-w-[calc(100%-210px)]">{chapter?.title}</div>
 
             <div className="border-solid border-[1px] rounded-[5px] flex items-center bg-white relative z-[5]">
               <div className="rounded-l-[5px] h-[38px] border-solid border-r-[1px] flex items-center border-header-bottom
@@ -91,7 +76,7 @@ const BookChapters = ({preview, data}: pagesProps) => {
           </div>
           {chapter.open && (
             <div className="p-[16px] pb-[24px]">
-              <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]">{chapter.text}</p>
+              <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]">{chapter?.text}</p>
             </div>
           )}
         </div>

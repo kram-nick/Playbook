@@ -8,20 +8,38 @@ import classNames from "classnames";
 import BookChapters from "../BookChapters";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const ContentChapters = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const { title } = useAppSelector((state) => state.app.data);
   const [data, setData]:any = useState(null);
-  console.log(location)
+  const [reloadData, setReloadData] = useState(true); 
+
+  const {id} = useParams();
+  console.log(id);
+  
+  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${id}`, {
+    resolve: (response: any) => { 
+      if(response){
+        console.log(response);
+        setData(response.data);
+      } 
+      setReloadData(false);
+    }, 
+    query: { },
+    condition: reloadData,
+    dependencies: [data],
+  });   
+
+  console.log(location);
 
   return (
     <div className="w-full flex-1">
       <Header />
       <div className="p-[24px] gap-[32px]">
-        <BookBanner preview={false} data={location.state ? location.state : null} />
+        <BookBanner preview={false} data={data ? data : null} />
         <h1 className={classNames({
             "opacity-50":!title, 
             "text-[32px] font-poppins font-bold text-home-title mb-[24px]" : true
@@ -29,7 +47,7 @@ const ContentChapters = () => {
           {title ? (title) : (t<string>("CREATE.UNTITLED"))}
         </h1>
 
-        <BookChapters data={location.state.name ? location.state.name : null} />  
+        <BookChapters data={data ? data : null} />  
 
         <button className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg">
           <img src={plus} alt="" /> 
