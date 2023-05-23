@@ -1,5 +1,5 @@
-import Header from "../AppLayout/PrivateLayout/Header"; 
-import plus from "../../assets/photos/chapter/icon-plus.svg"; 
+import Header from "../AppLayout/PrivateLayout/Header";
+import plus from "../../assets/photos/chapter/icon-plus.svg";
 import { useState } from "react";
 import { useAppSelector } from "../../core/hooks/useRedux";
 import BookBanner from "../BookBanner";
@@ -14,45 +14,58 @@ const ContentChapters = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const { title } = useAppSelector((state) => state.app.data);
-  const [data, setData]:any = useState(null);
-  const [reloadData, setReloadData] = useState(true); 
+  const [data, setData]: any = useState(null);
+  const [reloadData, setReloadData] = useState(true);
 
-  const {id} = useParams();
-  console.log(id);
-  
-  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${id}`, {
-    resolve: (response: any) => { 
-      if(response){
-        console.log(response);
-        setData(response.data);
-      } 
+  const { id } = useParams();
+
+  const { fetchedData: playbook } = useHttpGet<any>(
+    `${APIRoutes.PLAYBOOKS}/${id}`,
+    {
+      dependencies: [id],
+    }
+  );
+
+  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${id}/pages`, {
+    resolve: (response: any) => {
+      if (response) {
+        setData(response?.data);
+      }
       setReloadData(false);
-    }, 
-    query: { },
-    condition: reloadData,
-    dependencies: [data],
-  });   
-
-  console.log(location);
+    },
+    dependencies: [id],
+  });
 
   return (
     <div className="w-full flex-1">
       <Header />
       <div className="p-[24px] gap-[32px]">
-        <BookBanner preview={false} data={data ? data : null} />
-        <h1 className={classNames({
-            "opacity-50":!title, 
-            "text-[32px] font-poppins font-bold text-home-title mb-[24px]" : true
+        <BookBanner
+          preview={false}
+          data={playbook?.data ? playbook?.data : null}
+        />
+        <h1
+          className={classNames({
+            "opacity-50": !playbook?.data?.name,
+            "text-[32px] font-poppins font-bold text-home-title mb-[24px]":
+              true,
           })}>
-          {title ? (title) : (t<string>("CREATE.UNTITLED"))}
+          {playbook?.data?.name
+            ? playbook?.data?.name
+            : t<string>("CREATE.UNTITLED")}
         </h1>
-
-        <BookChapters data={data ? data : null} />  
+        {data?.map((chapter: any, index: number) => (
+          <BookChapters
+            data={chapter ? chapter : null}
+            index={index}
+            key={chapter?.id}
+          />
+        ))}
 
         <button className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg">
-          <img src={plus} alt="" /> 
-          {(t<string>("BTNS.ADD_SECTION"))}
-        </button> 
+          <img src={plus} alt="" />
+          {t<string>("BTNS.ADD_SECTION")}
+        </button>
       </div>
     </div>
   );

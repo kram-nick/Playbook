@@ -19,12 +19,21 @@ import prepopulatedText from "../../core/plugins/SampleText";
 import exampleTheme from "../../core/constants/lexicalTheme";
 import ImagePlugin from "../../core/plugins/ImagePlugin";
 import { ImageNode } from "../../core/editor/nodes/ImageNode";
+import { useParams } from "react-router-dom";
+import { APIRoutes } from "../../core/http";
+import useHttpGet from "../../core/hooks/useHttpGet";
 
 function Placeholder() {
+  const { id } = useParams();
+
+  const { fetchedData: page } = useHttpGet<any>(`${APIRoutes.PAGES}/${id}`, {
+    dependencies: [id],
+  });
+
   return (
     <div className="editor-placeholder text-[20px]">
-      <p className="mb-2">Section Name</p>
-      <p>Description</p>
+      <p className="mb-2">{page?.data?.title}</p>
+      <p>{page?.data?.content}</p>
     </div>
   );
 }
@@ -49,7 +58,7 @@ const editorConfig = {
     TableRowNode,
     AutoLinkNode,
     LinkNode,
-    ImageNode
+    ImageNode,
   ],
 };
 
@@ -60,7 +69,9 @@ const Editor = () => {
         <ToolbarPlugin />
         <div className="relative min-h-[50vh]">
           <RichTextPlugin
-            contentEditable={<ContentEditable className="editor-input p-4 min-h-[50vh] outline-0" />}
+            contentEditable={
+              <ContentEditable className="editor-input p-4 min-h-[50vh] outline-0" />
+            }
             placeholder={<Placeholder />}
             ErrorBoundary={() => null}
           />
@@ -78,5 +89,3 @@ const Editor = () => {
 };
 
 export default Editor;
-
- 

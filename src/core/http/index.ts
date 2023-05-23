@@ -1,10 +1,11 @@
 import axios from "axios";
 
 export const APIRoutes = {
-  AUTH_LOGIN:'/api/users/login',
-  AUTH_CREATE:'/api/users/create',
-  PLAYBOOKS: '/api/playbooks', 
-  PLAYBOOKS_FAVORITE: '/api/playbooks/favorite', 
+  AUTH_LOGIN: "/api/users/login",
+  AUTH_CREATE: "/api/users/create",
+  PLAYBOOKS: "/api/playbooks",
+  PLAYBOOKS_FAVORITE: "/api/playbooks/favorite",
+  PAGES: "/api/pages",
 };
 
 const $api = axios.create({
