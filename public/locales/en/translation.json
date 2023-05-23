@@ -209,7 +209,8 @@
                "LOGOUT":"Logout",
                "CREATE_SUCCESS": "The Playbook was successfully created",
                "UPDATE_SUCCESS": "The Playbook has been successfully updated",
-               "DELETE_SUCCESS": "The Playbook has been successfully deleted"
+               "DELETE_SUCCESS": "The Playbook has been successfully deleted",
+               "DELETE_PAGE_SUCCESS": "The Page has been successfully deleted"
         },
         "FIELDS": {
                 "NAME":"Name",

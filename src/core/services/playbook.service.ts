@@ -60,6 +60,10 @@ export default class PlaybookService {
     );
   }
 
+  static async deletePage(id: any): Promise<AxiosResponse<any>> {
+    return RequestsService.deleteMethod<any>(APIRoutes.PAGES + "/" + id);
+  }
+
   // static async getPages(
   //   id: string,
   // ): Promise<AxiosResponse<any>> {

@@ -70,7 +70,7 @@ const Editor = () => {
         <div className="relative min-h-[50vh]">
           <RichTextPlugin
             contentEditable={
-              <ContentEditable className="editor-input p-4 min-h-[50vh] outline-0" />
+              <ContentEditable className="editor-input p-4 min-h-[50vh] max-h-[calc(100vh-280px)] overflow-y-auto outline-0" />
             }
             placeholder={<Placeholder />}
             ErrorBoundary={() => null}

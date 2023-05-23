@@ -320,14 +320,17 @@ const Sidebar = () => {
                       {item.pages.map((page: any, indexChapter: number) => (
                         <button
                           key={page.id}
-                          onClick={() =>
+                          onClick={() =>{
                             dispatch(
                               setSelectedData({
                                 id: item.id,
                                 selected: true,
-                                name: item.name 
+                                name: item.name,
+                                chapter_title: page.title
                               })
-                            )
+                            );
+                            navigate(`/editor/${page.id}`);
+                            }
                           }
                           className={classNames({
                             "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
@@ -458,17 +461,17 @@ const Sidebar = () => {
                       {playbook.pages.map((page: any, indexChapter: number) => (
                         <button
                           key={page.id}
-                          onClick={() =>
+                          onClick={() =>{
                             dispatch(
                               setSelectedData({
                                 id: playbook.id,
                                 selected: true,
-                                name: playbook.name,
-                                chapter_title: page.name,
-                                chapter_id: page.id,
+                                name: playbook.name, 
                                 url: page.url,
                               })
-                            )
+                            ) 
+                            navigate(`/editor/${page.id}`);
+                            }
                           }
                           className={classNames({
                             "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":

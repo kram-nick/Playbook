@@ -5,18 +5,20 @@ import divider from "../../../assets/photos/create/divider.svg";
 import preview from "../../../assets/photos/create/preview.svg";
 import play_active from "../../../assets/photos/main/play-active.svg";
 import add_user from "../../../assets/photos/create/add-user.svg";
-import { useAppSelector } from "../../../core/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import classNames from "classnames";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { setSelectedData } from "../../../core/store/reducers/app/appDataSlice";
 
 type HeaderProps = { 
   previewState?: boolean,
 }
  
-
 const Header = ({previewState}: HeaderProps) => {
   const { t } = useTranslation();
   const { data } = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();  
+  const navigate = useNavigate();
 
   return (
     <header className="h-[74px] bg-white flex items-center border-b-[1px] max-lg:h-[60px]">
@@ -30,13 +32,25 @@ const Header = ({previewState}: HeaderProps) => {
             Home
           </Link>
           {data && data.name && (
-            <span className={classNames({
-              "font-poppins flex items-center font-medium text-[14px] leading-[20px] gap-[4px] max-lg:text-[16px] max-lg:gap-[8px]":true,
+            <span onClick={() => {
+              dispatch(
+                setSelectedData({
+                  ...data, 
+                  chapter_title: ''
+                })
+              );              
+                navigate(`/creating/${data.id}`);
+              }} className={classNames({
+              "font-poppins flex items-center font-medium text-[14px] leading-[20px] gap-[4px] max-lg:text-[16px] max-lg:gap-[8px] cursor-pointer":true,
               "text-home-title":!data.chapter_title,
               "text-nav-txt-private max-lg:hidden":data.chapter_title,
             })}>
               <img src={divider} alt="" className="max-lg:hidden" /> 
-              <img src={back} alt="" className="hidden max-lg:block" /> 
+              <img src={back} onClick={(e) => {
+                  e.stopPropagation(); 
+                  navigate(`/main`)
+                }} 
+                alt="" className="hidden max-lg:block" /> 
               {data.name}
             </span>
           )}
@@ -44,8 +58,8 @@ const Header = ({previewState}: HeaderProps) => {
             <span className="font-poppins flex items-center font-medium text-[14px] leading-[20px] text-home-title 
               gap-[4px] max-lg:gap-[8px] max-[690px]:w-[100%]">
               <img src={divider} alt="" className="max-lg:hidden" /> 
-              <img src={back} alt="" className="hidden max-lg:block" /> 
-              <span className="truncate max-w-[100px] max-lg:text-[16px] max-[690px]:max-w-[100%]">{data.chapter_title}</span>
+              <img src={back} onClick={() => {navigate(`/creating/${data.id}`)}} alt="" className="hidden max-lg:block" /> 
+              <span className="truncate max-w-[200px] max-lg:text-[16px] max-[690px]:max-w-[100%]">{data.chapter_title}</span>
             </span>
           )}          
  

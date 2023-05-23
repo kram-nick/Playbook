@@ -6,6 +6,7 @@ interface ModalType {
   children?: ReactNode;
   isOpen: boolean;
   class?: string;
+  text?: string;
   item: any;
   onDelete: (reload: boolean) => void
   toggle: () => void;
@@ -27,7 +28,7 @@ export default function ModalDelete(props: ModalType) {
             </div>    
             <div className="text mb-[24px]">
               <div className="title text-[20px] font-medium mb-[8px] text-home-title leading-normal tracking-[-0.1px]">Delete</div>
-              <p className="text-[16px] leading-normal text-simple-text tracking-[-0.1px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tincidunt sit senectus.</p>
+              <p className="text-[16px] leading-normal text-simple-text tracking-[-0.1px]">{ props.text }</p>
             </div>
             <div className="grid grid-cols-2 font-poppins gap-[16px]">
               <button
