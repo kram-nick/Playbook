@@ -71,8 +71,8 @@ export default function ModalPlaybookDetail(props: ModalType) {
       name: "",
       content: "",
       color_code: "#0052CC",
-      header_url: "https://www.google.com",
-      icon_url: "https://www.google.com",
+      header_url: "url",
+      icon_url: "url",
       favorited: false,
       privacy: false,
       category_id: 0,
@@ -304,8 +304,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
                       bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
                     ></span>
                   </span>
-                </label>
-                {formikForm.values.privacy}
+                </label> 
 
                 <div className="grid grid-cols-2 font-poppins gap-[16px] max-sm:absolute max-sm:bottom-[24px] 
                   max-sm:left-[16px] max-sm:right-[16px]">

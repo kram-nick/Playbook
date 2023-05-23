@@ -22,14 +22,14 @@ const Header = ({previewState}: HeaderProps) => {
     <header className="h-[74px] bg-white flex items-center border-b-[1px] max-lg:h-[60px]">
       <nav className="w-full flex flex-row  justify-between pl-[24px] pr-[32px] items-center py-[10px] max-lg:px-[16px]">
         <div className="flex flex-row items-center gap-[8px] max-[690px]:max-w-[calc(100%-100px)]">
-          <Link  to="/home"
+          <Link  to="/main"
             className={classNames({
               "font-poppins font-medium text-[14px] leading-[20px] text-nav-txt-private":true,
-              "max-lg:hidden":data.title,
+              "max-lg:hidden":data.name,
             })}>
             Home
           </Link>
-          {data && data.title && (
+          {data && data.name && (
             <span className={classNames({
               "font-poppins flex items-center font-medium text-[14px] leading-[20px] gap-[4px] max-lg:text-[16px] max-lg:gap-[8px]":true,
               "text-home-title":!data.chapter_title,
@@ -37,7 +37,7 @@ const Header = ({previewState}: HeaderProps) => {
             })}>
               <img src={divider} alt="" className="max-lg:hidden" /> 
               <img src={back} alt="" className="hidden max-lg:block" /> 
-              {data.title}
+              {data.name}
             </span>
           )}
           {data && data.chapter_title && (

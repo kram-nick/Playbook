@@ -19,7 +19,7 @@ const ContentChapters = () => {
 
   return (
     <div className="w-full flex-1">
-      <Header  />
+      <Header />
       <div className="p-[24px] gap-[32px]">
         <BookBanner preview={false} data={location.state ? location.state : null} />
         <h1 className={classNames({
@@ -29,7 +29,7 @@ const ContentChapters = () => {
           {title ? (title) : (t<string>("CREATE.UNTITLED"))}
         </h1>
 
-        <BookChapters data={location.state ? location.state : null} />  
+        <BookChapters data={location.state.name ? location.state.name : null} />  
 
         <button className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg">
           <img src={plus} alt="" /> 

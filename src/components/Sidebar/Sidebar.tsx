@@ -81,7 +81,7 @@ const Sidebar = () => {
       setSelectedData({
         id: 0,
         selected: false,
-        title: '',
+        name: '',
         chapters: [],
         chapter_title: '',
         chapter_id: 0
@@ -91,8 +91,8 @@ const Sidebar = () => {
  
  
 
-  const openSubMenu = (item?: any) => {
-
+  const openSubMenu = (e: any, item?: any) => {
+    e.stopPropagation();
     if (item && item.id) {
       item.open = !item.open
     }
@@ -102,7 +102,7 @@ const Sidebar = () => {
       setSelectedData({
         id: item.id,
         selected: true,
-        title: item.title,
+        name: item.name,
         chapters: item.chapters,
         chapter_title: '',
         chapter_id: 0
@@ -210,7 +210,7 @@ const Sidebar = () => {
                         playbook.id === data.id
                     })}>
                     <img
-                      onClick={() => openSubMenu(playbook)}
+                      onClick={(e) => openSubMenu(e, playbook)}
                       src={playbook.id === data.id ? arrow_blue : to_arrow} alt="arrow"
                       className={classNames({
                         "rotate-[90deg]": playbook.open,
@@ -257,8 +257,8 @@ const Sidebar = () => {
                               setSelectedData({
                                 id: playbook.id,
                                 selected: true,
-                                title: playbook.title,
-                                chapter_title: page.title,
+                                name: playbook.name,
+                                chapter_title: page.name,
                                 chapter_id: page.id
                               })
                             )
@@ -317,7 +317,7 @@ const Sidebar = () => {
                         playbook.id === data.id
                     })}>
                     <img
-                      onClick={() => openSubMenu(playbook)}
+                      onClick={(e) => openSubMenu(e, playbook)}
                       src={playbook.id === data.id ? arrow_blue : to_arrow} alt="arrow"
                       className={classNames({
                         "rotate-[90deg]": playbook.open,
@@ -363,8 +363,8 @@ const Sidebar = () => {
                               setSelectedData({
                                 id: playbook.id,
                                 selected: true,
-                                title: playbook.title,
-                                chapter_title: page.title,
+                                name: playbook.name,
+                                chapter_title: page.name,
                                 chapter_id: page.id,
                                 url: page.url 
                               })
