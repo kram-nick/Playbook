@@ -16,16 +16,17 @@ import blue_saas from "../../assets/photos/create/blue-saas.svg";
 import plus_gray from "../../assets/photos/sidebar/plus-gray.svg";
 import star_active from "../../assets/photos/sidebar/star.svg";
 import star from "../../assets/photos/sidebar/favorite.svg"; 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
+import { PrivateUIRoutes } from "../../core/router";
 
 
 const Sidebar = () => {
   const { t } = useTranslation();
   const { data, sideOpen } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
- 
+  const navigate = useNavigate();
   const [playbookItem, selectedPlaybooks] = useState({ open: false, selected: false });
   const [favoriteItem, selectedFavorite] = useState({ open: false, selected: false });
  
@@ -108,6 +109,7 @@ const Sidebar = () => {
         chapter_id: 0
       }) 
     )
+    navigate(`/${PrivateUIRoutes.Chapters}/${item.id}`, );
     const data = { open: true, selected: false };
     if (type === 'my') {
       selectedPlaybooks(data);
