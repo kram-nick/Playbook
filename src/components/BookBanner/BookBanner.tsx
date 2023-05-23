@@ -20,7 +20,7 @@ const BookBanner = ({ preview, data }: BookBannerProps) => {
   return (
     <div className="relative rounded-t-[8px] bg-header-bottom h-[218px] mb-[52px] font-poppins max-[1024px]:rounded-t-[0px]">
       <div className="absolute w-[73px] h-[73px] left-[50px] bottom-[-24px] z-[10]">
-        <img src={data.icon_url ? data.icon_url : icon} alt="" />
+        <img src={data?.icon_url ? data?.icon_url : icon} alt="" />
       </div>
       {isBanner && (
         <div
