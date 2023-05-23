@@ -17,17 +17,37 @@ import plus_gray from "../../assets/photos/sidebar/plus-gray.svg";
 import star_active from "../../assets/photos/sidebar/star.svg";
 import star from "../../assets/photos/sidebar/favorite.svg"; 
 import { Link } from "react-router-dom";
+import useHttpGet from "../../core/hooks/useHttpGet";
+import { APIRoutes } from "../../core/http";
 
 
 const Sidebar = () => {
+  const { t } = useTranslation();
+  const { data, sideOpen } = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();
+ 
   const [playbookItem, selectedPlaybooks] = useState({ open: false, selected: false });
   const [favoriteItem, selectedFavorite] = useState({ open: false, selected: false });
  
-  let [items, setPlaybooks] = useState(playbooks);
-  let [itemsFavorites, setToFavotire] = useState(favourites);
-  const { data, sideOpen } = useAppSelector((state) => state.app);
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  let [playbooks, setPlaybooks]:any = useState([]);
+  let [favorites, setToFavotire]:any = useState(favourites);
+ 
+  const [reloadData, setReloadData] = useState(true);  
+
+  useHttpGet<any>(APIRoutes.PLAYBOOKS + '/menu', {
+    resolve: (response: any) => { 
+      if(response){
+        setPlaybooks(response.data.playbooks); 
+        setToFavotire(response.favorites);
+        console.log(response);       
+      } 
+ 
+      setReloadData(false);
+    }, 
+    query: { },
+    condition: reloadData,
+    dependencies: [playbooks, favorites, reloadData],
+  });   
 
   const selectedTopItem = (item: any, type: string, itemType: string) => {
     handlePlaybooks();
@@ -99,19 +119,19 @@ const Sidebar = () => {
   const setPriorityItem = (e: any, item: any) => {
     e.stopPropagation();
     item.priority = true;
-    itemsFavorites.push(item);
+    favorites.push(item);
 
     if (item && item.id) {
-      setPlaybooks(items.filter((playbook) => playbook.id !== item.id));
+      setPlaybooks(playbooks.filter((playbook:any) => playbook.id !== item.id));
     }
   }
   const removeFromFavorite = (e: any, item: any) => {
     e.stopPropagation();
     item.priority = false;
-    items.push(item);
+    playbooks.push(item);
 
     if (item && item.id) {
-      setToFavotire(itemsFavorites.filter((playbook) => playbook.id !== item.id));
+      setToFavotire(favorites.filter((playbook:any) => playbook.id !== item.id));
     }
   }
 
@@ -179,7 +199,7 @@ const Sidebar = () => {
 
           {playbookItem.open && (
             <ul className="flex flex-col gap-[4px]  w-full">
-              {items.map((playbook: any, index: number) => (
+              {playbooks.map((playbook: any, index: number) => (
                 <li key={playbook.id} className="w-[100%]">
                   <button
                     onClick={() => selectedItemMenu(playbook, 'my')}
@@ -204,7 +224,7 @@ const Sidebar = () => {
                         "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                           true
                       })}>
-                      {playbook.title}
+                      {playbook.name}
                     </span>
                     <div className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
                       transition duration-200 ease invisible opacity-0">
@@ -214,7 +234,7 @@ const Sidebar = () => {
                           "hover:bg-option-btn": playbook.id !== data.id,
                           "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer": true
                         })}>
-                        <img src={playbook.priority ? star_active : star} alt="add to favorite" />
+                        <img src={playbook.favorited ? star_active : star} alt="add to favorite" />
                       </span>
                       <span onClick={(e) => e.stopPropagation()}
                         className={classNames({
@@ -227,32 +247,30 @@ const Sidebar = () => {
                     </div>
                   </button>
 
-                  {playbook.chapters.length && playbook.open && (
+                  {playbook.pages && playbook.open && (
                     <>
-                      {playbook.chapters.map((chapter: any, indexChapter: number) => (
+                      {playbook.pages.map((page: any, indexChapter: number) => (
                         <button
-                          key={chapter.id}
+                          key={page.id}
                           onClick={() =>
                             dispatch(
                               setSelectedData({
                                 id: playbook.id,
                                 selected: true,
                                 title: playbook.title,
-                                chapter_title: chapter.title,
-                                chapter_id: chapter.id,
-                                chapters: playbook.chapters,
-                                chapter_text: chapter.text
+                                chapter_title: page.title,
+                                chapter_id: page.id
                               })
                             )
                           }
                           className={classNames({
                             "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
                               true,
-                            "text-top-sub-secondary": chapter.id !== data.chapter_id,
+                            "text-top-sub-secondary": page.id !== data.chapter_id,
                             "text-buttons-bg":
-                              playbook.id === data.id && chapter.id === data.chapter_id,
+                              playbook.id === data.id && page.id === data.chapter_id,
                           })}>
-                          <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">{chapter.title}</p>
+                          <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">{page.title}</p>
                         </button>
                       ))}
                     </>
@@ -287,7 +305,7 @@ const Sidebar = () => {
           </button>
           {favoriteItem.open && (
             <ul className="flex flex-col gap-[4px] ">
-              {itemsFavorites.map((playbook: any, index: number) => (
+              {favorites.map((playbook: any, index: number) => (
 
                 <li key={playbook.id} className="w-[100%]">
                   <button
@@ -313,7 +331,7 @@ const Sidebar = () => {
                         "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                           true
                       })}>
-                      {playbook.title}
+                      {playbook.name}
                     </span>
                     <div className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
                       transition duration-200 ease invisible opacity-0">
@@ -323,7 +341,7 @@ const Sidebar = () => {
                           "hover:bg-option-btn": playbook.id !== data.id,
                           "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]": true
                         })}>
-                        <img src={playbook.priority ? star_active : star} alt="add to favorite" />
+                        <img src={playbook.favorited ? star_active : star} alt="add to favorite" />
                       </span>
                       <span onClick={(e) => e.stopPropagation()}
                         className={classNames({
@@ -335,32 +353,31 @@ const Sidebar = () => {
                       </span>
                     </div>
                   </button>
-                  {playbook.chapters && playbook.open && (
+                  {playbook.pages && playbook.open && (
                     <>
-                      {playbook.chapters.map((chapter: any, indexChapter: number) => (
+                      {playbook.pages.map((page: any, indexChapter: number) => (
                         <button
-                          key={chapter.id}
+                          key={page.id}
                           onClick={() =>
                             dispatch(
                               setSelectedData({
                                 id: playbook.id,
                                 selected: true,
                                 title: playbook.title,
-                                chapter_title: chapter.title,
-                                chapter_id: chapter.id,
-                                chapters: playbook.chapters,
-                                chapter_text: chapter.text
+                                chapter_title: page.title,
+                                chapter_id: page.id,
+                                url: page.url 
                               })
                             )
                           }
                           className={classNames({
                             "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
                               true,
-                            "text-top-sub-secondary": chapter.id !== data.chapter_id,
+                            "text-top-sub-secondary": page.id !== data.chapter_id,
                             "text-buttons-bg":
-                              playbook.id === data.id && chapter.id === data.chapter_id,
+                              playbook.id === data.id && page.id === data.chapter_id,
                           })}>
-                          <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">{chapter.title}</p>
+                          <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">{page.title}</p>
                         </button>
                       ))}
                     </>

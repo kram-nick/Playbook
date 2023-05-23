@@ -64,14 +64,13 @@ const AppMainContent = () => {
   }
 
   const handleActiveTab = (tab:any) => {
-    setActiveTab(tab); 
-    console.log(data)
+    setActiveTab(tab);  
     if(data){
-      if( tab.id === 1){
+      if( tab.id === 2){
         setPlaybooks(data.playbooks)
-      } else if ( tab.id === 2 ){
-        setPlaybooks(data.favorites)
       } else if ( tab.id === 3 ){
+        setPlaybooks(data.favorites)
+      } else if ( tab.id === 4 ){
         setPlaybooks(data.purchases)
       }
     }
@@ -170,33 +169,7 @@ const AppMainContent = () => {
           </button>
         </div>
         <div className="content">
-
-            {items.length === 0 && (
-              <div className="empty font-poppins flex items-center justify-center flex-wrap mt-[8vh]">
-                <img src={icon_empty} alt="empty page" />
-                
-                <div className="w-[100%] text-center mt-[20px] mb-[40px]">
-
-                  <p className="text-home-title text-[20px] font-medium leading-[28px] tracking-[-0.1px] mb-[16px]">
-                    {t<string>("MAIN.EMPTY_TITLE")}
-                  </p>
-                  <p className="tracking-[-0.1px] text-[16px] leading-[26px] text-simple-text">
-                    {t<string>("MAIN.EMPTY_TEXT")}
-                  </p>
-                </div>
-                <button onClick={() => {setItem(null); openDetailModal()}}
-                  className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
-                  shadow-free-trial h-[40px] gap-[6px]
-                ">
-                  <span className="text-list-title text-[16px] font-medium">
-                    {t<string>("MAIN.CREATE_BTN")}
-                  </span>
-                  <img src={icon_plus} alt="" />
-                </button>                
-              </div>
-            )}
-
-            {items.length !== 0 && (
+            {data && (data.playbooks !== 0 || data.favorites.length !== 0 || data.purchases.length !== 0)  ? (
               <div>
                 <div className="flex items-start flex-wrap justify-between font-poppins w-[100%] pb-[24px] max-lg:pb-[32px]
                   max-[690px]:flex-col-reverse max-[690px]:pb-[16px]">
@@ -265,7 +238,31 @@ const AppMainContent = () => {
  
                 </div>
               </div>
-            )}            
+            ) : ('')}    
+            {items.length === 0 && (
+              <div className="empty font-poppins flex items-center justify-center flex-wrap mt-[8vh]">
+                <img src={icon_empty} alt="empty page" />
+                
+                <div className="w-[100%] text-center mt-[20px] mb-[40px]">
+
+                  <p className="text-home-title text-[20px] font-medium leading-[28px] tracking-[-0.1px] mb-[16px]">
+                    {t<string>("MAIN.EMPTY_TITLE")}
+                  </p>
+                  <p className="tracking-[-0.1px] text-[16px] leading-[26px] text-simple-text">
+                    {t<string>("MAIN.EMPTY_TEXT")}
+                  </p>
+                </div>
+                <button onClick={() => {setItem(null); openDetailModal()}}
+                  className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
+                  shadow-free-trial h-[40px] gap-[6px]
+                ">
+                  <span className="text-list-title text-[16px] font-medium">
+                    {t<string>("MAIN.CREATE_BTN")}
+                  </span>
+                  <img src={icon_plus} alt="" />
+                </button>                
+              </div>
+            )}                    
         </div> 
         <ModalDelete isOpen={isOpenModal} toggle={toggle} item={selectedItem} onDelete={deleteCallback}></ModalDelete>     
         <ModalPlaybookDetail isOpen={isOpenDetailModal} toggle={toggleDetail} item={selectedItem} onSave={saveCallback}></ModalPlaybookDetail>

@@ -18,8 +18,8 @@ export enum UIRoutes {
 
 export enum PrivateUIRoutes {
   Main = "main",
-  Create = "create",
-  Chapters = "chapters",
+  Create = "editor",
+  Chapters = "creating",
   Preview = "preview",
   PreviewChapter = 'preview-chapter',
   Profile = 'profile',

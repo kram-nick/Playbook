@@ -6,11 +6,31 @@ import icon_delete from "../../assets/photos/chapter/delete.svg";
 
 import { Chapters } from "../../core/constants/sidebar";
 import classNames from "classnames";
+import useHttpGet from "../../core/hooks/useHttpGet";
+import { APIRoutes } from "../../core/http";
 
-const BookChapters = () => {
+type pagesProps = { 
+  preview?: boolean,
+  data?: any
+}
+
+const BookChapters = ({preview, data}: pagesProps) => {
   const { t } = useTranslation(); 
   const [items, setChapters] = useState(Chapters);
 
+  useHttpGet<any>(APIRoutes.PLAYBOOKS + data.id + '/pages', {
+    resolve: (response: any) => { 
+      if(response){
+        console.log(response)
+        // setData(response.data);
+        // setPlaybooks(response.data.playbooks)
+      } 
+      // setReloadData(false);
+    }, 
+    query: { },
+    condition: false,
+    dependencies: [],
+  });   
  
 
   const deleteItem = (item?: any) => {

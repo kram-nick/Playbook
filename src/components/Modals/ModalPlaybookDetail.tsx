@@ -12,6 +12,8 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';  
 import { toast } from 'react-toastify';
 import PlaybookService from "../../core/services/playbook.service";
+import { useNavigate } from "react-router-dom";
+import { PrivateUIRoutes } from "../../core/router";
 
 
 interface ModalType {
@@ -48,8 +50,10 @@ export const colourOptions: readonly ColourOption[] = [
 export default function ModalPlaybookDetail(props: ModalType) {
   const { t } = useTranslation(); 
   let { isOpenModal, toggle } = useModal();
+  const navigate = useNavigate();
   const [reloadData, setReloadData] = useState(true); 
   let [activeColor, setActiveColor]: any = useState(null);
+
   const formikForm = useFormik<{
     name: string;
     content: string;
@@ -155,7 +159,11 @@ export default function ModalPlaybookDetail(props: ModalType) {
       // }
         await PlaybookService.createPlaybook(values).then(response => {
         console.log(response);
-        props.onSave(true);
+        if(response){
+          console.log('/' + PrivateUIRoutes.Chapters + '/' + response.data.data.id)
+          navigate('/' + PrivateUIRoutes.Chapters, {state: response.data.data});
+        }
+        // props.onSave(true);
         toast.success(t<string>("MAIN.CREATE_SUCCESS")); 
         closePopup(); 
       });
