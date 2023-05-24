@@ -25,7 +25,11 @@ import SignLayout from "../../components/AppLayout/SignLayout";
 
 export const privateRoutes: IRoute[] = [
   {
-    path: `${PrivateUIRoutes.Create}/:id`,
+    path: `${PrivateUIRoutes.Create}/:playbook_id`,
+    element: <DraftContainer />,
+  },
+  {
+    path: `${PrivateUIRoutes.Create}/:playbook_id/:page_id`,
     element: <DraftContainer />,
   },
   {
