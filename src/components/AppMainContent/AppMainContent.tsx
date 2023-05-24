@@ -151,7 +151,7 @@ const AppMainContent = () => {
           <div>
             <h1 className="text-[24px] font-semibold text-home-title leading-normal">Search Results</h1>
             <p className="text-[16px] leading-[20px] font-medium mt-[5px]">
-              You searched for "{searchData?.search}". {searchData?.data?.playbooks?.length} Reuslts returned
+              You searched for "{searchData?.search}". {searchData?.data?.playbooks?.length} Results returned
             </p>          
           </div>
         )}
