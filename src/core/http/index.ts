@@ -6,6 +6,7 @@ export const APIRoutes = {
   PLAYBOOKS: "/api/playbooks",
   PLAYBOOKS_FAVORITE: "/api/playbooks/favorite",
   PAGES: "/api/pages",
+  SEARCH: "/api/search",
 };
 
 const $api = axios.create({

@@ -64,6 +64,12 @@ export default class PlaybookService {
     return RequestsService.deleteMethod<any>(APIRoutes.PAGES + "/" + id);
   }
 
+  static async search(
+    search: string,
+  ): Promise<AxiosResponse<any>> {
+    return RequestsService.getMethod<any>(APIRoutes.SEARCH + '?search=' + search);
+  }  
+
   // static async getPages(
   //   id: string,
   // ): Promise<AxiosResponse<any>> {
