@@ -34,7 +34,7 @@ const AppMainContent = () => {
   let { isOpenShareModal, toggleShare } = useModalShare(); 
   let { isOpenSocialModal, toggleSocial } = useModalSocial(); 
   const [activeTab, setActiveTab] = useState(Filters[1]);
-  const {search} = useAppSelector((state) => state.app);
+  const {searchData} = useAppSelector((state) => state.app);
   let [items, setPlaybooks] = useState([]);
   const [data, setData]:any = useState(null);
  
@@ -147,15 +147,15 @@ const AppMainContent = () => {
      <div className="px-[24px] py-[24px] max-lg:px-[32px] max-[690px]:px-[16px] max-[690px]:py-[12px]">
  
         <div className="flex items-center justify-between font-poppins w-[100%] pb-[20px] max-lg:pb-[16px] max-[690px]:hidden">
-        {search && (
+        {searchData?.search && (
           <div>
             <h1 className="text-[24px] font-semibold text-home-title leading-normal">Search Results</h1>
             <p className="text-[16px] leading-[20px] font-medium mt-[5px]">
-              You searched for "{search}". 20 Reuslts returned
+              You searched for "{searchData?.search}". {searchData?.data?.playbooks?.length} Reuslts returned
             </p>          
           </div>
         )}
-        {!search && (
+        {!searchData?.search && (
           <h1 className="text-[24px] font-semibold text-home-title leading-normal">Playbooks</h1>
         )}        
           <button
@@ -171,8 +171,10 @@ const AppMainContent = () => {
         <div className="content">
             {data && (data.playbooks !== 0 || data.favorites.length !== 0 || data.purchases.length !== 0)  ? (
               <div>
+ 
                 <div className="flex items-start flex-wrap justify-between font-poppins w-[100%] pb-[24px] max-lg:pb-[32px]
                   max-[690px]:flex-col-reverse max-[690px]:pb-[16px]">
+                  {!searchData.search && (
                   <div className="flex items-end gap-[24px] border-b-[1px] border-solid border-header-bottom 
                     max-[690px]:overflow-x-auto max-[690px]:whitespace-nowrap max-[690px]:ml-[-16px] max-[690px]:mr-[-16px]
                     max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px]">
@@ -192,9 +194,11 @@ const AppMainContent = () => {
                           </div>
                         </div>
                       ))}                    
-                  </div>
+                  </div>                  
+                  )}                    
+ 
 
-                  <div className="options flex items-center max-[690px]:w-[100%] max-[690px]:justify-between max-[690px]:pb-[16px]">
+                  <div className="options flex items-center max-[690px]:w-[100%] max-[690px]:justify-between max-[690px]:pb-[16px] ml-[auto]">
                     <div className="flex items-center">
                       <span className="mr-[13px] text-[16px] leading-[26px] tracking-[-0.1px] 
                         text-simple-text max-md:hidden">{t<string>("MAIN.SORT_TITLE")}</span>
@@ -230,11 +234,22 @@ const AppMainContent = () => {
                    "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":listType,
                    "grid gap-y-[12px]":!listType,
                   })}>
-
-                  {items.map((playbook: any, index: number) => (
-                    <AppMainCard key={playbook.id} items={items} item={playbook} index={index} typeCard={listType}
-                    onChangeList={openDeleteModal} onEditItem={openEditModal} onShareItem={openShareModal} onSocialModal={openSocialModal} />
-                  ))}
+                  {searchData.search ? (
+                    <>
+                      {searchData?.data?.playbooks?.map((playbook: any, index: number) => (
+                        <AppMainCard key={playbook.id} items={items} item={playbook} index={index} typeCard={listType}
+                        onChangeList={openDeleteModal} onEditItem={openEditModal} onShareItem={openShareModal} onSocialModal={openSocialModal} />
+                      ))}                    
+                    </>
+                  ) : (
+                    <>
+                      {items.map((playbook: any, index: number) => (
+                        <AppMainCard key={playbook.id} items={items} item={playbook} index={index} typeCard={listType}
+                        onChangeList={openDeleteModal} onEditItem={openEditModal} onShareItem={openShareModal} onSocialModal={openSocialModal} />
+                      ))}                    
+                    </>
+                  )}
+ 
  
                 </div>
               </div>

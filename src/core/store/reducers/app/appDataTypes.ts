@@ -1,6 +1,9 @@
 export type AppDataTypes = {
   language: string;
-  search: string;
+  searchData: {
+    search: string;
+    data: any;
+  }
   sideOpen: boolean;
   data: {
     selected: boolean;

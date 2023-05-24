@@ -4,7 +4,10 @@ import { AppDataTypes } from "./appDataTypes";
 const initialState: AppDataTypes = {
   language: "en",
   sideOpen: true,
-  search:'',
+  searchData: {
+    search: '',
+    data: null
+  },
   data: {
     selected: false,
     id: null,
@@ -21,8 +24,8 @@ const appSlice = createSlice({
     setToggleSidebar(state, action: PayloadAction<boolean>) {
       state.sideOpen = action.payload;
     },    
-    setSearch(state, action: PayloadAction<string>) {
-      state.search = action.payload;
+    setSearch(state, action: PayloadAction<any>) {
+      state.searchData = action.payload;
     },     
     setLanguage(state, action: PayloadAction<string>) {
       state.language = action.payload;
