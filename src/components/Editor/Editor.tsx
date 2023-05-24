@@ -12,6 +12,10 @@ import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
+import { useFormik } from "formik";
+import { $getRoot, $getSelection, $getTextContent } from "lexical";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { toast } from "react-toastify";
 
 import ActionsPlugin from "../../core/plugins/ActionsPlugin";
 import CodeHighlightPlugin from "../../core/plugins/CodeHighlightPlugin";
@@ -62,7 +66,29 @@ const editorConfig = {
   ],
 };
 
+function onChange(editorState: any) {
+  editorState.read(() => {
+    // Read the contents of the EditorState here.
+    const root = $getRoot();
+    const selection = $getSelection();
+
+    console.log(root.__cachedText);
+  });
+}
+
 const Editor = () => {
+  const formikForm = useFormik<{
+    title: string;
+    content: string;
+  }>({
+    initialValues: {
+      title: "Section title",
+      content: "",
+    },
+    // validationSchema: valueFormValidationSchema,
+    onSubmit: async (values: any) => {},
+  });
+
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
@@ -75,6 +101,7 @@ const Editor = () => {
             placeholder={<Placeholder />}
             ErrorBoundary={() => null}
           />
+          <OnChangePlugin onChange={onChange} />
           <AutoFocusPlugin />
           <ImagePlugin />
           <ListPlugin />
@@ -82,6 +109,7 @@ const Editor = () => {
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
           <CodeHighlightPlugin />
         </div>
+
         <ActionsPlugin />
       </div>
     </LexicalComposer>
