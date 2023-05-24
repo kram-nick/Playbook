@@ -29,6 +29,21 @@ import chart0 from "../../assets/photos/home/many_job.svg";
 import Testimonials from "../../components/Testimonials";
 import Pricing from "../../components/Pricing";
 
+const read_lg = require('../../assets/photos/home-tabs/read-lg.png');
+const read_md = require('../../assets/photos/home-tabs/read-md.png');
+const read_sm = require('../../assets/photos/home-tabs/read-sm.png');
+
+const сommunity_lg = require('../../assets/photos/home-tabs/сommunity-lg.png');
+const сommunity_md = require('../../assets/photos/home-tabs/сommunity-md.png');
+const сommunity_sm = require('../../assets/photos/home-tabs/сommunity-sm.png');
+const publish_lg = require('../../assets/photos/home-tabs/publish-lg.png');
+const publish_md = require('../../assets/photos/home-tabs/publish-md.png');
+const publish_sm = require('../../assets/photos/home-tabs/publish-sm.png');
+
+const grow_lg = require('../../assets/photos/home-tabs/grow-lg.png');
+const grow_md = require('../../assets/photos/home-tabs/grow-md.png');
+const grow_sm = require('../../assets/photos/home-tabs/grow-sm.png');
+
 const HomePage = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(1);
@@ -327,9 +342,9 @@ const HomePage = () => {
               {t<string>("HOME.WHY_PB")}
           </h2>
 
-          <div className="rounded-[20px] bg-white shadow-review-card pt-[28px] min-[1024px]:pl-[36px] 
+          <div className="rounded-[20px] bg-white shadow-review-card pt-[28px] min-[1024px]:pl-[36px] relative
             max-[1024px]:px-[40px] max-[1024px]:pb-[60px] max-[650px]:pt-[12px] max-[650px]:px-[16px] max-[650px]:pb-[40px]">
-            <div className="overflow-auto mb-[14px] max-[1024px]:mb-[50px] max-[1024px]:px-[40px] max-[1024px]:mx-[-40px] max-[650px]:mx-[-16px]
+            <div className="overflow-auto mb-[14px] max-[1024px]:mb-[0px] max-[1024px]:px-[40px] max-[1024px]:mx-[-40px] max-[650px]:mx-[-16px]
               max-[1024px]:px-[16px]"> 
               <div className="inline-flex items-end gap-[24px] pt-[5px] pb-[15px] border-b-[1px] border-solid
                   "> 
@@ -386,33 +401,84 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-end max-[1024px]:flex-wrap max-[1024px]:flex-col-reverse">
-              <div className="min-[1024px]:max-w-[40%] pt-[40px] min-[1024px]:pb-[90px] max-[1024px]:w-[100%] max-[1024px]:pt-[50px]
-                max-[650px]:pt-[40px]">
-                <h3 className="font-bold text-[32px] leading-[42px] text-home-title mb-[24px] max-w-[390px] max-[650px]:text-[24px]
+
+
+            <div className="flex justify-between items-end max-[1024px]:flex-wrap max-[1024px]:flex-col-reverse ">
+
+
+              <div className="min-[1024px]:max-w-[40%] pt-[80px] min-[1024px]:pb-[95px] max-[1024px]:w-[100%] max-[1024px]:pt-[50px]
+                max-[650px]:pt-[40px]">                  
+                <h3 className="font-bold text-[32px] leading-[42px] text-home-title mb-[24px] max-w-[390px] max-[1024px]:max-w-[100%] 
+                  max-[650px]:text-[24px]
                   max-[650px]:leading-normal max-[650px]:mb-[18px]">
-                    {t<string>("HOME.WHY_TITLE_1")}
+                    {activeTab === 1 && (<>{t<string>("HOME.WHY_TITLE_1")}</>)}
+                    {activeTab === 2 && (<>{t<string>("HOME.WHY_TITLE_2")}</>)}
+                    {activeTab === 3 && (<>{t<string>("HOME.WHY_TITLE_3")}</>)}
+                    {activeTab === 4 && (<>{t<string>("HOME.WHY_TITLE_4")}</>)}
+                    {activeTab === 5 && (<>{t<string>("HOME.WHY_TITLE_5")}</>)}
+                     
                 </h3>
                 <p className="text-[16px] leading-[26px] text-simple-text mb-[48px] max-[650px]:mb-[24px]">
-                  {t<string>("HOME.WHY_DESC_1")}
-                </p>
+                  {activeTab === 1 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
+                  {activeTab === 2 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
+                  {activeTab === 3 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
+                  {activeTab === 4 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
+                  {activeTab === 5 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
+                </p>                  
+ 
                 <Link to="/sign-up" className="table text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial">
                   {t<string>("HOME.FREE_START")}
                 </Link>                
               </div>
-              <div className="min-[1024px]:max-w-[50%] relative max-[1024px]:max-w-[92%] max-[1024px]:right-[-40px] 
-                max-[650px]:right-[-16px]">
-                <div className="image border-[8px] border-b-[0px] border-r-[0px] border-create-bg-main rounded-tl-[16px] relative z-[2]
-                  max-[650px]:border-t-[4px] max-[650px]:border-l-[4px]">
-                    <img src={why_image} alt="" className="w-[100%]" />
-                </div>                
-                <img src={why_arrow_top} alt="" className="absolute top-[8px] right-[calc(100%-55px)] z-[1] max-[1024px]:max-w-[17vw] 
-                  max-[1024px]:rotate-[-10deg] max-[1024px]:right-[90%]" />
-                <img src={why_arrow_bottom} alt="" className="absolute bottom-[28px] min-[1024px]:right-[calc(100%+20px)] z-[3]
-                  max-[1024px]:bottom-[0] max-[1024px]:right-[90%] max-[1024px]:max-w-[20vw]" />                
-              </div>
- 
-            </div>
+              {activeTab === 1 && ( 
+                <>
+                  <img src={read_lg} alt="" className="min-[1024px]:max-w-[60%] absolute right-[0] bottom-[0] max-h-[100%] max-[1024px]:hidden" />
+                  <img src={read_md} alt="" className="min-[1024px]:hidden max-[650px]:hidden mt-[15px] max-w-[calc(100%+80px)] mx-[-40px]" />
+                  <img src={read_sm} alt="" className="min-[650px]:hidden mt-[35px] max-w-[calc(100%+16px)] mr-[-16px]" />
+                </>
+              )}              
+              {activeTab === 2 && (
+                <div className="min-[1024px]:max-w-[50%] relative max-[1024px]:max-w-[92%] max-[1024px]:right-[-40px]
+                  max-[1024px]:mt-[45px] 
+                  max-[650px]:right-[-16px]">
+                  <div className="image border-[8px] border-b-[0px] border-r-[0px] border-create-bg-main rounded-tl-[16px] relative z-[2]
+                    max-[650px]:border-t-[4px] max-[650px]:border-l-[4px]">
+                      <img src={why_image} alt="" className="w-[100%]" />
+                  </div>                
+                  <img src={why_arrow_top} alt="" className="absolute top-[8px] right-[calc(100%-55px)] z-[1] max-[1024px]:max-w-[17vw] 
+                    max-[1024px]:rotate-[-10deg] max-[1024px]:right-[90%]" />
+                  <img src={why_arrow_bottom} alt="" className="absolute bottom-[28px] min-[1024px]:right-[calc(100%+20px)] z-[3]
+                    max-[1024px]:bottom-[0] max-[1024px]:right-[90%] max-[1024px]:max-w-[20vw]" />                
+                </div>
+              )}
+              {activeTab === 3 && ( 
+                <>
+                  <img src={сommunity_lg} alt="" className="min-[1024px]:max-w-[70%] absolute right-[0] bottom-[0] max-h-[100%] 
+                    max-[1024px]:hidden" />
+                  <img src={сommunity_md} alt="" className="min-[1024px]:hidden max-[650px]:hidden mt-[45px] 
+                    max-w-[calc(100%+80px)] mx-[-40px]" />
+                  <img src={сommunity_sm} alt="" className="min-[650px]:hidden mt-[25px] max-w-[calc(100%+32px)] mx-[-16px]" />
+                </>
+              )} 
+              {activeTab === 4 && ( 
+                <>
+                  <img src={publish_lg} alt="" className="min-[1024px]:max-w-[61%] absolute right-[0] bottom-[0] max-h-[100%] 
+                    max-[1024px]:hidden" />
+                  <img src={publish_md} alt="" className="min-[1024px]:hidden max-[650px]:hidden mt-[10px] 
+                    max-w-[calc(100%+80px)] mx-[-40px]" />
+                  <img src={publish_sm} alt="" className="min-[650px]:hidden mt-[20px] max-w-[calc(100%+32px)] mx-[-16px]" />
+                </>
+              )}  
+              {activeTab === 5 && ( 
+                <>
+                  <img src={grow_lg} alt="" className="min-[1024px]:max-w-[53%] absolute right-[5%] bottom-[0] max-h-[95%] 
+                    max-[1024px]:hidden" />
+                  <img src={grow_md} alt="" className="min-[1024px]:hidden max-[650px]:hidden mt-[10px] 
+                    max-w-[calc(100%+80px)] mx-[-40px]" />
+                  <img src={grow_sm} alt="" className="min-[650px]:hidden mt-[50px] max-w-[calc(100%+32px)] mx-[-16px]" />
+                </>
+              )}                                            
+            </div> 
           </div>
         
         </div>
