@@ -60,15 +60,29 @@ export default class PlaybookService {
     );
   }
 
-  static async deletePage(id: any): Promise<AxiosResponse<any>> {
-    return RequestsService.deleteMethod<any>(APIRoutes.PAGES + "/" + id);
+  static async addPage(data: any): Promise<AxiosResponse<any>> {
+    const formData = {
+      page: data,
+    };
+    return RequestsService.postMethod<any>(APIRoutes.PAGES, formData);
   }
 
-  static async search(
-    search: string,
-  ): Promise<AxiosResponse<any>> {
-    return RequestsService.getMethod<any>(APIRoutes.SEARCH + '?search=' + search);
-  }  
+  static async updatePage(id: string, data: any): Promise<AxiosResponse<any>> {
+    const formData = {
+      page: data,
+    };
+    return RequestsService.putMethod<any>(`${APIRoutes.PAGES}/${id}`, formData);
+  }
+
+  static async deletePage(id: any): Promise<AxiosResponse<any>> {
+    return RequestsService.deleteMethod<any>(`${APIRoutes.PAGES}/${id}`);
+  }
+
+  static async search(search: string): Promise<AxiosResponse<any>> {
+    return RequestsService.getMethod<any>(
+      APIRoutes.SEARCH + "?search=" + search
+    );
+  }
 
   // static async getPages(
   //   id: string,

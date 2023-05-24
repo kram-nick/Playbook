@@ -3,6 +3,7 @@ import to_arrow from "../../assets/photos/create/right.svg";
 import home from "../../assets/photos/create/home.svg";
 import Editor from "../Editor/Editor";
 import { useAppSelector } from "../../core/hooks/useRedux";
+
 const NewDraft = () => {
   const { title } = useAppSelector((state) => state.app.data);
 

@@ -23,24 +23,26 @@ import prepopulatedText from "../../core/plugins/SampleText";
 import exampleTheme from "../../core/constants/lexicalTheme";
 import ImagePlugin from "../../core/plugins/ImagePlugin";
 import { ImageNode } from "../../core/editor/nodes/ImageNode";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { APIRoutes } from "../../core/http";
 import useHttpGet from "../../core/hooks/useHttpGet";
+import { useTranslation } from "react-i18next";
+import PlaybookService from "../../core/services/playbook.service";
+import { PrivateUIRoutes } from "../../core/router";
 
-function Placeholder() {
-  const { id } = useParams();
+type Props = {
+  title: string;
+  content: string;
+};
 
-  const { fetchedData: page } = useHttpGet<any>(`${APIRoutes.PAGES}/${id}`, {
-    dependencies: [id],
-  });
-
+const Placeholder: React.FC<Props> = ({ title, content }) => {
   return (
     <div className="editor-placeholder text-[20px]">
-      <p className="mb-2">{page?.data?.title}</p>
-      <p>{page?.data?.content}</p>
+      <p className="mb-2">{title}</p>
+      <p>{content}</p>
     </div>
   );
-}
+};
 
 const editorConfig = {
   editorState: prepopulatedText,
@@ -77,17 +79,73 @@ function onChange(editorState: any) {
 }
 
 const Editor = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { playbook_id, page_id } = useParams();
+
+  useHttpGet<any>(`${APIRoutes.PAGES}/${page_id}`, {
+    resolve: (response: any) => {
+      if (response) {
+        formikForm.setFieldValue("title", response?.data?.title);
+        formikForm.setFieldValue("content", response?.data?.content);
+      }
+    },
+    condition: Boolean(page_id),
+    dependencies: [page_id],
+  });
+
   const formikForm = useFormik<{
-    title: string;
+    playbook_id: string;
     content: string;
+    privacy: boolean;
+    tags: string;
+    title: string;
+    url: string;
   }>({
     initialValues: {
-      title: "Section title",
+      playbook_id: "",
       content: "",
+      privacy: true,
+      tags: "",
+      title: "",
+      url: "",
     },
     // validationSchema: valueFormValidationSchema,
-    onSubmit: async (values: any) => {},
+    onSubmit: async (values: any) => {
+      page_id ? updatePage(values) : addPage(values);
+    },
   });
+
+  const addPage = async (values: any) => {
+    console.log(values);
+    try {
+      values.privacy = values.privacy ? "private" : "public";
+      const response = await PlaybookService.addPage(values);
+      console.log(response);
+      toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
+      navigate(`${PrivateUIRoutes.Chapters}/${values.playbook_id}`);
+    } catch (errors: any) {
+      toast.error(errors?.response?.data?.errors);
+    }
+  };
+
+  const updatePage = async (values: any) => {
+    try {
+      values.privacy = values.privacy ? "private" : "public";
+
+      delete values.playbook_id;
+
+      const response = await PlaybookService.updatePage(
+        String(page_id),
+        values
+      );
+      console.log(response);
+      toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
+      navigate(`${PrivateUIRoutes.Chapters}/${values.playbook_id}`);
+    } catch (errors: any) {
+      toast.error(errors?.response?.data?.errors);
+    }
+  };
 
   return (
     <LexicalComposer initialConfig={editorConfig}>
@@ -98,7 +156,12 @@ const Editor = () => {
             contentEditable={
               <ContentEditable className="editor-input p-4 min-h-[50vh] max-h-[calc(100vh-280px)] overflow-y-auto outline-0" />
             }
-            placeholder={<Placeholder />}
+            placeholder={
+              <Placeholder
+                title={formikForm.values.title}
+                content={formikForm.values.content}
+              />
+            }
             ErrorBoundary={() => null}
           />
           <OnChangePlugin onChange={onChange} />
