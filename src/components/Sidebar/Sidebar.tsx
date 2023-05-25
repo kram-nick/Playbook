@@ -2,7 +2,7 @@ import { useState } from "react";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
-import { favourites, playbooks } from "../../core/constants/sidebar";
+// import { favourites, playbooks } from "../../core/constants/sidebar";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import {
   setSelectedData,
@@ -35,7 +35,7 @@ const Sidebar = () => {
   });
 
   const [playbooks, setPlaybooks]: any = useState([]);
-  const [favorites, setToFavotire]: any = useState(favourites);
+  const [favorites, setToFavotire]: any = useState([]);
 
   const [reloadData, setReloadData] = useState(true);
 
@@ -115,6 +115,14 @@ const Sidebar = () => {
     const data = { open: true, selected: false };
     if (type === "my") {
       selectedPlaybooks(data);
+      playbooks?.forEach((element: any) => {
+        if (element.id === item.id) {
+          element.open = !element.open;
+        } else {
+          element.open = false;
+        }
+      });     
+      setPlaybooks(playbooks); 
     } else if (type === "favorite") {
       selectedFavorite(data);
     }
@@ -122,17 +130,15 @@ const Sidebar = () => {
 
   const openSubMenu = (e: any, item?: any) => {
     e.stopPropagation();
-    // if (item && item.id) {
-    //   item.open = !item.open;
-    // }
-    playbooks?.forEach((element: any) => {
-      if (element.id === item.id) {
-        item.open = true;
-      } else {
-        item.open = false;
-      }
-    });
-    console.log(playbooks);
+ 
+    // playbooks?.forEach((element: any) => {
+    //   if (element.id === item.id) {
+    //     element.open = true;
+    //   } else {
+    //     element.open = false;
+    //   }
+    // }); 
+    console.log(item);
   };
 
   const setPriorityItem = (e: any, item: any) => {
@@ -271,7 +277,7 @@ const Sidebar = () => {
                     })}
                   >
                     <img
-                      onClick={(e) => openSubMenu(e, item)}
+                      // onClick={(e) => openSubMenu(e, item)}
                       src={item.id === data.id ? arrow_blue : to_arrow}
                       alt="arrow"
                       className={classNames({
@@ -279,7 +285,7 @@ const Sidebar = () => {
                         "transition duration-200 ease": true,
                       })}
                     />
-                    <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
+                    <img src={item.privacy === 'private' ? red_saas : blue_saas} alt="saas" />
                     <span
                       className={classNames({
                         "text-buttons-bg": item.id === data.id,
