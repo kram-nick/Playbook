@@ -18,9 +18,11 @@ export default function ActionsPlugin(): JSX.Element {
       const root = $getRoot();
       const firstChild = root.getFirstChild();
       if ($isCodeNode(firstChild) && firstChild.getLanguage() === "markdown") {
-        $convertFromMarkdownString(
-          firstChild.getTextContent(),
-          PLAYGROUND_TRANSFORMERS
+        console.log(
+          $convertFromMarkdownString(
+            firstChild.getTextContent(),
+            PLAYGROUND_TRANSFORMERS
+          )
         );
       } else {
         const markdown = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
@@ -35,25 +37,6 @@ export default function ActionsPlugin(): JSX.Element {
   }, [editor]);
 
   return (
-    <div className="actions flex flex-row justify-end px-[16px] pt-[18px] pb-[24px]">
-      <button
-        className="action-button py-[8px] px-[45px] bg-white rounded-[5px] text-home-title
-        text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] mr-[16px]"
-        onClick={handleMarkdownToggle}
-        title="Convert From Markdown"
-        aria-label="Convert from markdown">
-        Cancel
-        {/* <i className="markdown" /> */}
-      </button>
-      <button
-        className="action-button py-[8px] px-[45px] bg-buttons-bg rounded-[5px] text-buttons-color 
-          text-[16px] font-medium leading-[20px] shadow-free-trial "
-        onClick={handleMarkdownToggle}
-        title="Convert From Markdown"
-        aria-label="Convert from markdown">
-        Save
-        {/* <i className="markdown" /> */}
-      </button>
-    </div>
+    <div className="actions flex flex-row justify-end px-[16px] pt-[18px] pb-[24px]"></div>
   );
 }

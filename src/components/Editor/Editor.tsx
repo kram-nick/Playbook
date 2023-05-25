@@ -16,6 +16,7 @@ import { useFormik } from "formik";
 import { $getRoot, $getSelection, $getTextContent } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { toast } from "react-toastify";
+import * as Yup from "yup";
 
 import ActionsPlugin from "../../core/plugins/ActionsPlugin";
 import CodeHighlightPlugin from "../../core/plugins/CodeHighlightPlugin";
@@ -30,16 +31,12 @@ import { useTranslation } from "react-i18next";
 import PlaybookService from "../../core/services/playbook.service";
 import { PrivateUIRoutes } from "../../core/router";
 
-type Props = {
-  title: string;
-  content: string;
-};
+const Placeholder = () => {
+  const { t } = useTranslation();
 
-const Placeholder: React.FC<Props> = ({ title, content }) => {
   return (
     <div className="editor-placeholder text-[20px]">
-      <p className="mb-2">{title}</p>
-      <p>{content}</p>
+      <p>{t<string>("EDIT.DESCRIPTION")}</p>
     </div>
   );
 };
@@ -94,6 +91,11 @@ const Editor = () => {
     dependencies: [page_id],
   });
 
+  const valueFormValidationSchema = Yup.object().shape({
+    title: Yup.string().required(t<string>("ERRORS.NAME_REQUIRED")),
+    content: Yup.string().required(t<string>("ERRORS.CONTENT_REQUIRED")),
+  });
+
   const formikForm = useFormik<{
     playbook_id: string;
     content: string;
@@ -110,7 +112,7 @@ const Editor = () => {
       title: "",
       url: "",
     },
-    // validationSchema: valueFormValidationSchema,
+    validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
       page_id ? updatePage(values) : addPage(values);
     },
@@ -141,41 +143,83 @@ const Editor = () => {
       );
       console.log(response);
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
-      navigate(`${PrivateUIRoutes.Chapters}/${values.playbook_id}`);
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
     }
   };
 
   return (
-    <LexicalComposer initialConfig={editorConfig}>
-      <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
-        <ToolbarPlugin />
-        <div className="relative min-h-[50vh]">
-          <RichTextPlugin
-            contentEditable={
-              <ContentEditable className="editor-input p-4 min-h-[50vh] max-h-[calc(100vh-280px)] overflow-y-auto outline-0" />
-            }
-            placeholder={
-              <Placeholder
-                title={formikForm.values.title}
-                content={formikForm.values.content}
-              />
-            }
-            ErrorBoundary={() => null}
-          />
-          <OnChangePlugin onChange={onChange} />
-          <AutoFocusPlugin />
-          <ImagePlugin />
-          <ListPlugin />
-          <LinkPlugin />
-          <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-          <CodeHighlightPlugin />
-        </div>
-
-        <ActionsPlugin />
+    <form
+      className="flex flex-col gap-[30px]"
+      onSubmit={formikForm.handleSubmit}
+    >
+      <div>
+        <input
+          className="outline-none pl-4 rounded-[8px] h-[40px] w-[100%] border-[1px] border-header-bottom text-[20px] font-medium font-poppins"
+          placeholder={t<string>("EDIT.SECTION_NAME")}
+          {...formikForm.getFieldProps("title")}
+        />
+        {formikForm.errors.title && !page_id && (
+          <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[10px]">
+            {formikForm.errors.title}
+          </p>
+        )}
       </div>
-    </LexicalComposer>
+
+      <div>
+        <LexicalComposer initialConfig={editorConfig}>
+          <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
+            <ToolbarPlugin />
+            <div className="relative min-h-[50vh]">
+              <RichTextPlugin
+                contentEditable={
+                  <ContentEditable
+                    className="editor-input p-4 min-h-[50vh] max-h-[calc(100vh-280px)] overflow-y-auto outline-0"
+                    value={formikForm.values.content}
+                  />
+                }
+                placeholder={<Placeholder />}
+                ErrorBoundary={() => null}
+              />
+              <OnChangePlugin onChange={onChange} />
+              <AutoFocusPlugin />
+              <ImagePlugin />
+              <ListPlugin />
+              <LinkPlugin />
+              <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+              <CodeHighlightPlugin />
+            </div>
+
+            <div className="actions flex flex-row justify-end px-[16px] pt-[18px] pb-[24px]">
+              <button
+                className="action-button py-[8px] px-[45px] bg-white rounded-[5px] text-home-title
+        text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] mr-[16px]"
+                title="Convert From Markdown"
+                aria-label="Convert from markdown"
+              >
+                Cancel
+                {/* <i className="markdown" /> */}
+              </button>
+              <button
+                className="action-button py-[8px] px-[45px] bg-buttons-bg rounded-[5px] text-buttons-color 
+          text-[16px] font-medium leading-[20px] shadow-free-trial "
+                title="Convert From Markdown"
+                aria-label="Convert from markdown"
+                type="submit"
+              >
+                Save
+                {/* <i className="markdown" /> */}
+              </button>
+            </div>
+          </div>
+        </LexicalComposer>
+        {formikForm.errors.content && !page_id && (
+          <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[10px]">
+            {formikForm.errors.content}
+          </p>
+        )}
+      </div>
+    </form>
   );
 };
 
