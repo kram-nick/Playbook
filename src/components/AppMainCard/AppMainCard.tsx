@@ -17,6 +17,7 @@ import useOutside from "../../core/hooks/useOutside";
 import Playbook from "../../core/interface/playbook";
 import PlaybookService from "../../core/services/playbook.service";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
  
 type CardProps = {
@@ -33,7 +34,7 @@ type CardProps = {
 const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, onShareItem, onSocialModal}: CardProps) => { 
   const { t } = useTranslation(); 
   const {ref, isShow, setIsShow} = useOutside(false);
-   
+  const navigate = useNavigate();
   let  [playbook, setPlaybook]: any  = useState(item);
   let  [favorited, setFavorited]  = useState(item.favorited);
  
@@ -77,8 +78,8 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
       "pl-[56px] pr-[12px] py-[12px]":!typeCard,
       "flex flex-wrap bg-white rounded-[8px] border-[1px] border-solid card-border relative" : true
     })}>
-      <div className={classNames({
-        "w-[100%] h-[180px] rounded-t-[8px]":typeCard,
+      <Link  to={`/creating/${item.id}`}  className={classNames({
+        "w-[100%] h-[180px] rounded-t-[8px] cursor-pointer":typeCard,
         "w-[40px] h-[40px] rounded-[4px]" : !typeCard,
         "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border" : true
       })}>
@@ -86,7 +87,7 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
           <img src={playbook.header_url} alt="" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />
         )}
          
-      </div>
+      </Link>
 
       <div className={classNames({
         "pl-[8px] pr-[70px] py-[12px] relative max-lg:pr-[25px]":typeCard,
@@ -94,25 +95,30 @@ const AppMainCard = ({items, item, index, typeCard, onChangeList, onEditItem, on
         "item-content flex flex-wrap items-start font-poppins w-[100%]" : true
       })} >
         {typeCard && (
-          <div className="icon w-[28px] h-[28px] overflow-hidden relative rounded-[50%]">
+          <Link  to={`/profile`} className="icon w-[28px] h-[28px] overflow-hidden relative rounded-[50%]">
             <img src={playbook.profile_image ? playbook.profile_image : red_saas} alt="saas" className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]" />                          
-          </div>
+          </Link>
         )}
 
         <div className={classNames({
           "w-[calc(100%-28px)]":typeCard, 
           "text pl-[12px]" : true
         })} >
-          <p className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title">{playbook.name}</p>
-          <p className="text-[12px] leading-normal text-input-paceholder flex items-baseline">
+          <Link  to={`/creating/${item.id}`} className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title cursor-pointer">
+            {playbook.name}
+          </Link>
+          <p  className="text-[12px] leading-normal text-input-paceholder flex items-baseline">
             
             {/* {playbook.profile_first_name && (
               <span className="truncate max-w-[calc(100%-60px)] inline-block"> */}
-                {playbook.profile_first_name ? playbook.profile_first_name + ' ' : ''} 
-                {playbook.profile_last_name ? playbook.profile_last_name + '  ' : ''}              
+             
               {/* </span>
             )}
   */}
+            <Link className="mr-[4px]" to={`/profile`}>
+              {playbook.profile_first_name ? playbook.profile_first_name + ' ' : ''} 
+              {playbook.profile_last_name ? playbook.profile_last_name + '  ' : ''}  
+            </Link>
             {playbook.profile_last_name && playbook.status ? ' • ' : ''}
             {playbook.status}  
           </p>

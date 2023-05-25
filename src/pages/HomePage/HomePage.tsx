@@ -419,11 +419,11 @@ const HomePage = () => {
                      
                 </h3>
                 <p className="text-[16px] leading-[26px] text-simple-text mb-[48px] max-[650px]:mb-[24px]">
-                  {activeTab === 1 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
+                  {activeTab === 1 && (<>{t<string>("HOME.WHY_DESC_1")}</>)} 
                   {activeTab === 2 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
-                  {activeTab === 3 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
-                  {activeTab === 4 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
-                  {activeTab === 5 && (<>{t<string>("HOME.WHY_DESC_2")}</>)} 
+                  {activeTab === 3 && (<>{t<string>("HOME.WHY_DESC_3")}</>)} 
+                  {activeTab === 4 && (<>{t<string>("HOME.WHY_DESC_4")}</>)} 
+                  {activeTab === 5 && (<>{t<string>("HOME.WHY_DESC_5")}</>)} 
                 </p>                  
  
                 <Link to="/sign-up" className="table text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial">

@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ const Banner = () => {
           ">
             {t<string>("HOME.TELL_US")}
           </p>
-          <button
+          <Link  to="/sign-up"
             className="mt-[50px] bg-banner-btn font-bold py-[17px] px-[32px] text-buttons-color rounded-[8px] font-poppins
           max-sm:text-[16px]
           max-sm:font-semibold
@@ -41,7 +42,7 @@ const Banner = () => {
           max-lg:mt-[40px]
           ">
             {t<string>("HOME.TOUCH")}
-          </button>
+          </Link>
         </div>
       </div>
     </div>
