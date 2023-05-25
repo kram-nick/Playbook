@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import icon from "../../assets/photos/chapter/arrow-right.svg";
+import arrow from "../../assets/photos/chapter/arrow-right.svg";
 import edit from "../../assets/photos/chapter/edit.svg";
 import icon_delete from "../../assets/photos/chapter/delete.svg";
 
@@ -13,8 +13,12 @@ import { toast } from "react-toastify";
 import PlaybookService from "../../core/services/playbook.service";
 import ModalDelete from "../Modals/ModalDelete";
 import { useModal } from "../../core/hooks/useModal";
-import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
+import {
+  setOpenedPages,
+  setSelectedData,
+} from "../../core/store/reducers/app/appDataSlice";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
+import { Data } from "../../core/models/data";
 
 type pagesProps = {
   preview?: boolean;
@@ -23,16 +27,15 @@ type pagesProps = {
   onDelete: (item: any) => void;
 };
 
-const BookChapters = ({
+const BookChapters: React.FC<pagesProps> = ({
   preview,
   dataContent,
   index,
   onDelete,
-}: pagesProps) => {
+}) => {
   const { t } = useTranslation();
-  const [items, setChapters]: any = useState([]);
   let { isOpenModal, toggle } = useModal();
-  const { data } = useAppSelector((state) => state.app);
+  const { data, openedPages } = useAppSelector((state) => state.app);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -50,20 +53,29 @@ const BookChapters = ({
     }
   };
 
-  const toggleItem = (item?: any) => {
-    if (item && item?.id) {
-      items.forEach((el: any) => {
-        if (el?.id === item?.id) {
-          el.open = true;
-        } else {
-          el.open = false;
-        }
-      });
-    }
-    setChapters(items);
-  };
+  // const toggleItem = (item?: any) => {
+  //   if (item && item?.id) {
+  //     items.forEach((el: any) => {
+  //       if (el?.id === item?.id) {
+  //         el.open = true;
+  //       } else {
+  //         el.open = false;
+  //       }
+  //     });
+  //   }
+  //   setItems(items);
+  // };
 
-  console.log(dataContent);
+  const toggleSection = (clickedPage: Data.Page) => {
+    if (openedPages.includes(clickedPage.id)) {
+      const newopenedPages = openedPages.filter(
+        (id: string) => clickedPage.id !== id
+      );
+      dispatch(setOpenedPages(newopenedPages));
+    } else {
+      dispatch(setOpenedPages([...openedPages, clickedPage.id]));
+    }
+  };
 
   return (
     <div className="relative font-poppins pb-[12px]">
@@ -75,21 +87,21 @@ const BookChapters = ({
           className={classNames({
             "bg-chapter-color border-b-[1px] border-b-solid border-header-bottom":
               dataContent?.open,
-            "flex items-center justify-between relative pl-[48px] px-[16px] py-[15px] rounded-t-[8px]":
+            "flex items-center justify-between relative pl-[48px] px-[16px] py-[15px] rounded-t-[8px] cursor-pointer":
               true,
           })}
         >
           <div
-            onClick={() => toggleItem(dataContent)}
+            onClick={() => toggleSection(dataContent)}
             className="absolute z-[1] left-[0] right-[0] bottom-[0] top-[0]"
           ></div>
           <img
             className={classNames({
-              "origin-center rotate-90": dataContent?.open,
+              "origin-center rotate-90": openedPages.includes(dataContent.id),
               "w-[24px] h-[24px] absolute top-[50%] left-[16px] mt-[-12px]":
                 true,
             })}
-            src={icon}
+            src={arrow}
             alt=""
           />
 
@@ -132,10 +144,10 @@ const BookChapters = ({
             </div>
           </div>
         </div>
-        {dataContent?.open && (
+        {openedPages.includes(dataContent.id) && (
           <div className="p-[16px] pb-[24px]">
             <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]">
-              {dataContent?.text}
+              {dataContent?.content}
             </p>
           </div>
         )}

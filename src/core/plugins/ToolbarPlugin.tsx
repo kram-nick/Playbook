@@ -5,7 +5,7 @@ import {
   FORMAT_TEXT_COMMAND,
   $getSelection,
   $isRangeSelection,
-  $createParagraphNode, 
+  $createParagraphNode,
   $getNodeByKey,
   FORMAT_ELEMENT_COMMAND,
   LexicalEditor,
@@ -31,13 +31,13 @@ import {
   $isCodeNode,
   getDefaultCodeLanguage,
   getCodeLanguages,
-} from "@lexical/code"; 
+} from "@lexical/code";
 import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
   $patchStyleText,
   $setBlocksType,
-} from '@lexical/selection';
+} from "@lexical/selection";
 import icon_bold from "../../assets/photos/editor/bold.svg";
 import icon_italic from "../../assets/photos/editor/italic.svg";
 import icon_underline from "../../assets/photos/editor/underline.svg";
@@ -59,7 +59,7 @@ import Button from "../editor/ui/Button";
 import { DialogActions } from "../editor/ui/Dialog";
 import { useModal } from "../hooks/useModal";
 import DropDown, { DropDownItem } from "../editor/ui/DropDown";
-import './../editor/ui/default.css';
+import "./../editor/ui/default.css";
 
 export type InsertImagePayload = Readonly<ImagePayload>;
 const LowPriority = 1;
@@ -75,12 +75,12 @@ const supportedBlockTypes = new Set([
 ]);
 
 const FONT_FAMILY_OPTIONS: [string, string][] = [
-  ['Arial', 'Arial'],
-  ['Courier New', 'Courier New'],
-  ['Georgia', 'Georgia'],
-  ['Times New Roman', 'Times New Roman'],
-  ['Trebuchet MS', 'Trebuchet MS'],
-  ['Verdana', 'Verdana'],
+  ["Arial", "Arial"],
+  ["Courier New", "Courier New"],
+  ["Georgia", "Georgia"],
+  ["Times New Roman", "Times New Roman"],
+  ["Trebuchet MS", "Trebuchet MS"],
+  ["Verdana", "Verdana"],
 ];
 
 const blockTypeToBlockName: any = {
@@ -101,8 +101,8 @@ function Divider() {
 }
 
 function dropDownActiveClass(active: boolean) {
-  if (active) return 'active dropdown-item-active';
-  else return '';
+  if (active) return "active dropdown-item-active";
+  else return "";
 }
 
 function FontDropDown({
@@ -110,7 +110,7 @@ function FontDropDown({
   value,
   style,
   disabled = false,
-  type
+  type,
 }: {
   editor: LexicalEditor;
   value: string;
@@ -122,7 +122,7 @@ function FontDropDown({
     (option: string) => {
       editor.update(() => {
         const selection = $getSelection();
-        console.log(selection)
+        console.log(selection);
         if ($isRangeSelection(selection)) {
           $patchStyleText(selection, {
             [style]: option,
@@ -130,35 +130,34 @@ function FontDropDown({
         }
       });
     },
-    [editor, style],
+    [editor, style]
   );
 
   const buttonAriaLabel =
-    style === 'font-family'
-      ? 'Formatting options for font family'
-      : 'Formatting options for font size';
+    style === "font-family"
+      ? "Formatting options for font family"
+      : "Formatting options for font size";
 
   return (
     <DropDown
       disabled={disabled}
-      buttonClassName={'font-toolbar-item ' + style}
+      buttonClassName={"font-toolbar-item " + style}
       buttonLabel={value}
       typeMenu={type}
       buttonIconClassName={
-        style === 'font-family' ? 'icon block-type font-family' : ''
+        style === "font-family" ? "icon block-type font-family" : ""
       }
-      buttonAriaLabel={buttonAriaLabel}>
-      {FONT_FAMILY_OPTIONS.map(
-        ([option, text]) => (
-         
-          <DropDownItem
-            className={`item ${dropDownActiveClass(value === option)}`}
-            onClick={() => handleClick(option)}
-            key={option}>
-            <span className="text">{text}</span>
-          </DropDownItem>
-        ),
-      )}
+      buttonAriaLabel={buttonAriaLabel}
+    >
+      {FONT_FAMILY_OPTIONS.map(([option, text]) => (
+        <DropDownItem
+          className={`item ${dropDownActiveClass(value === option)}`}
+          onClick={() => handleClick(option)}
+          key={option}
+        >
+          <span className="text">{text}</span>
+        </DropDownItem>
+      ))}
     </DropDown>
   );
 }
@@ -183,7 +182,7 @@ function FloatingLinkEditor({ editor }: any) {
   const mouseDownRef = useRef(false);
   const [linkUrl, setLinkUrl] = useState("");
   const [isEditMode, setEditMode] = useState(false);
-  const [lastSelection, setLastSelection] = useState(null); 
+  const [lastSelection, setLastSelection] = useState(null);
 
   const updateLinkEditor = useCallback(() => {
     const selection: any = $getSelection();
@@ -468,8 +467,6 @@ function BlockOptionsDropdownList({
     setShowBlockOptionsDropDown(false);
   };
 
- 
-
   return (
     <div className="dropdown" ref={dropDownRef}>
       {/* <button className="item" onClick={formatParagraph}>
@@ -518,18 +515,18 @@ function InsertImageUploadedDialogBody({
 }: {
   onClick: (payload: InsertImagePayload) => void;
 }) {
-  const [src, setSrc] = useState('');
-  const [altText, setAltText] = useState('');
+  const [src, setSrc] = useState("");
+  const [altText, setAltText] = useState("");
 
-  const isDisabled = src === '';
+  const isDisabled = src === "";
 
   const loadImage = (files: FileList | null) => {
     const reader = new FileReader();
     reader.onload = function () {
-      if (typeof reader.result === 'string') {
+      if (typeof reader.result === "string") {
         setSrc(reader.result);
       }
-      return '';
+      return "";
     };
     if (files !== null) {
       reader.readAsDataURL(files[0]);
@@ -555,18 +552,19 @@ function InsertImageUploadedDialogBody({
         <Button
           data-test-id="image-modal-file-upload-btn"
           disabled={isDisabled}
-          onClick={() => onClick({altText, src})}>
+          onClick={() => onClick({ altText, src })}
+        >
           Confirm
         </Button>
       </DialogActions>
     </>
   );
 }
-export default function ToolbarPlugin() {
+const ToolbarPlugin: React.FC<{ setContent: any }> = ({ setContent }) => {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);
   const [blockType, setBlockType] = useState<string>("paragraph");
-  const [fontFamily, setFontFamily] = useState<string>('Arial');
+  const [fontFamily, setFontFamily] = useState<string>("Arial");
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [selectedElementKey, setSelectedElementKey] = useState(null);
   const [showBlockOptionsDropDown, setShowBlockOptionsDropDown] =
@@ -591,6 +589,7 @@ export default function ToolbarPlugin() {
       const elementDOM = editor.getElementByKey(elementKey);
       if (elementDOM !== null) {
         setSelectedElementKey(elementKey);
+        setContent(elementDOM);
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType(anchorNode, ListNode);
           const type = parentList ? parentList.getTag() : element.getTag();
@@ -664,7 +663,6 @@ export default function ToolbarPlugin() {
     }
   }, [editor, isLink]);
 
-
   const formatParagraph = () => {
     if (blockType !== "paragraph") {
       editor.update(() => {
@@ -678,127 +676,136 @@ export default function ToolbarPlugin() {
     setShowBlockOptionsDropDown(false);
   };
 
-
-
-  
-
- 
   return (
-    <div
-      className="toolbar flex items-center flex-row border-b border-header-bottom px-[12px] py-[17px]"
-       >
- 
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-            }}
-            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isBold ? "active" : "")}
-            aria-label="Format Bold"> 
-            <img src={icon_bold} alt="Format Bold" />
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-            }}
-            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isItalic ? "active" : "")}
-            aria-label="Format Italics"> 
-            <img src={icon_italic} alt="Format italic" />
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-            }}
-            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isUnderline ? "active" : "")}
-            aria-label="Format Underline"> 
-            <img src={icon_underline} alt="Format underline" />
-          </button>
-          <FontDropDown
-            disabled={!isEditable}
-            style={'font-family'}
-            value={fontFamily}
+    <div className="toolbar flex items-center flex-row border-b border-header-bottom px-[12px] py-[17px]">
+      <button
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+        }}
+        className={
+          "toolbar-item spaced w-[28px] h-[28px] mr-[14px] " +
+          (isBold ? "active" : "")
+        }
+        aria-label="Format Bold"
+      >
+        <img src={icon_bold} alt="Format Bold" />
+      </button>
+      <button
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+        }}
+        className={
+          "toolbar-item spaced w-[28px] h-[28px] mr-[14px] " +
+          (isItalic ? "active" : "")
+        }
+        aria-label="Format Italics"
+      >
+        <img src={icon_italic} alt="Format italic" />
+      </button>
+      <button
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+        }}
+        className={
+          "toolbar-item spaced w-[28px] h-[28px] mr-[14px] " +
+          (isUnderline ? "active" : "")
+        }
+        aria-label="Format Underline"
+      >
+        <img src={icon_underline} alt="Format underline" />
+      </button>
+      <FontDropDown
+        disabled={!isEditable}
+        style={"font-family"}
+        value={fontFamily}
+        editor={editor}
+        type={"fonts"}
+      />
+      <button
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+        }}
+        className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] "
+        aria-label="Left Align"
+      >
+        <img src={icon_left} alt="Format left" />
+      </button>
+      <button
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
+        }}
+        className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] "
+        aria-label="Center Align"
+      >
+        <img src={icon_center} alt="Format center" />
+      </button>
+      <button
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
+        }}
+        className="toolbar-item w-[28px] h-[28px] mr-[14px] "
+        aria-label="Justify Align"
+      >
+        <img src={icon_layout} alt="Format center" />
+      </button>{" "}
+      <button
+        className="toolbar-item spaced w-[28px] h-[28px] mr-[24px] "
+        onClick={formatParagraph}
+      >
+        <img src={icon_paragrph} alt="Format paragraph" />
+        {blockType === "paragraph" && <span className="active" />}
+      </button>
+      <button
+        onClick={insertLink}
+        className={
+          "toolbar-item spaced w-[28px] h-[28px] mr-[14px] " +
+          (isLink ? "active" : "")
+        }
+        aria-label="Insert Link"
+      >
+        <i className="format link" />
+        <img src={icon_link} alt="Format link" />
+      </button>
+      {isLink &&
+        createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
+      <button
+        className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] "}
+        aria-label="Insert photo"
+        // onClick={() => {
+        //   showModal('Insert Image', (onClose) => (
+        //     <InsertImageDialog
+        //       activeEditor={activeEditor}
+        //       onClose={onClose}
+        //     />
+        //   ));
+        // }}
+      >
+        <img src={icon_image} alt="Insert Images" />
+      </button>
+      <button
+        className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] "}
+        aria-label="Insert emoji"
+      >
+        <img src={icon_smile} alt="Insert emoji" />
+      </button>
+      <button
+        onClick={() => setShowBlockOptionsDropDown(!showBlockOptionsDropDown)}
+        ref={toolbarRef}
+        className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] "}
+      >
+        <img src={icon_add} alt="Plus" />
+      </button>
+      {showBlockOptionsDropDown &&
+        createPortal(
+          <BlockOptionsDropdownList
             editor={editor}
-            type={'fonts'}
-          /> 
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
-            }}
-            className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] "
-            aria-label="Left Align"
-          >
-            <img src={icon_left} alt="Format left" /> 
-          </button>
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
-            }}
-            className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] "
-            aria-label="Center Align"
-          >
-            <img src={icon_center} alt="Format center" /> 
-          </button> 
-          <button
-            onClick={() => {
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
-            }}
-            className="toolbar-item w-[28px] h-[28px] mr-[14px] "
-            aria-label="Justify Align"
-          >
-            <img src={icon_layout} alt="Format center" /> 
-          </button>{" "}    
-          <button className="toolbar-item spaced w-[28px] h-[28px] mr-[24px] " onClick={formatParagraph}>
-          
-            <img src={icon_paragrph} alt="Format paragraph" />
-            {blockType === "paragraph" && <span className="active" />}
-          </button>                
- 
-          <button
-            onClick={insertLink}
-            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " + (isLink ? "active" : "")}
-            aria-label="Insert Link">
-            <i className="format link" />
-            <img src={icon_link} alt="Format link" />
-          </button>
-          {isLink &&
-            createPortal(<FloatingLinkEditor editor={editor} />, document.body)}
-           <button 
-            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " }
-            aria-label="Insert photo"  
-              // onClick={() => {
-              //   showModal('Insert Image', (onClose) => (
-              //     <InsertImageDialog
-              //       activeEditor={activeEditor}
-              //       onClose={onClose}
-              //     />
-              //   ));
-              // }} 
-              >          
-            <img src={icon_image} alt="Insert Images" />
-          </button>  
-          <button 
-            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " }
-            aria-label="Insert emoji"> 
-            <img src={icon_smile} alt="Insert emoji" />
-          </button>    
-          <button onClick={() =>
-              setShowBlockOptionsDropDown(!showBlockOptionsDropDown)
-            }
-            ref={toolbarRef}
-            className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] " } > 
-            <img src={icon_add} alt="Plus" />
-          </button>    
-
-          {showBlockOptionsDropDown &&
-            createPortal(
-              <BlockOptionsDropdownList
-                editor={editor}
-                blockType={blockType}
-                toolbarRef={toolbarRef}
-                setShowBlockOptionsDropDown={setShowBlockOptionsDropDown}
-              />,
-              document.body
-            )}             
-          {/* <DropDown
+            blockType={blockType}
+            toolbarRef={toolbarRef}
+            setShowBlockOptionsDropDown={setShowBlockOptionsDropDown}
+          />,
+          document.body
+        )}
+      {/* <DropDown
             disabled={!isEditable}
             buttonClassName="toolbar-item spaced"
             buttonLabel="Insert"
@@ -883,7 +890,6 @@ export default function ToolbarPlugin() {
  
  
           </DropDown>                                 */}
- 
       {/* <button
         className="flex items-center action-button py-[8px] px-[15px] bg-white rounded-[5px] text-simple-text
         text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] ml-auto"
@@ -895,4 +901,6 @@ export default function ToolbarPlugin() {
       {/* <ImageToolbar/> */}
     </div>
   );
-}
+};
+
+export default ToolbarPlugin;

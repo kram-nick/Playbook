@@ -5,16 +5,17 @@ const initialState: AppDataTypes = {
   language: "en",
   sideOpen: true,
   searchData: {
-    search: '',
-    data: null
+    search: "",
+    data: null,
   },
   data: {
     selected: false,
     id: null,
     title: "",
     chapter_title: "",
-    chapters: []
+    chapters: [],
   },
+  openedPages: [],
 };
 
 const appSlice = createSlice({
@@ -23,10 +24,10 @@ const appSlice = createSlice({
   reducers: {
     setToggleSidebar(state, action: PayloadAction<boolean>) {
       state.sideOpen = action.payload;
-    },    
+    },
     setSearch(state, action: PayloadAction<any>) {
       state.searchData = action.payload;
-    },     
+    },
     setLanguage(state, action: PayloadAction<string>) {
       state.language = action.payload;
     },
@@ -34,8 +35,17 @@ const appSlice = createSlice({
       console.log(action.payload);
       state.data = action.payload;
     },
+    setOpenedPages(state, action: PayloadAction<string[]>) {
+      state.openedPages = action.payload;
+    },
   },
 });
 
 export default appSlice.reducer;
-export const {setToggleSidebar, setLanguage, setSelectedData, setSearch } = appSlice.actions;
+export const {
+  setToggleSidebar,
+  setLanguage,
+  setSelectedData,
+  setSearch,
+  setOpenedPages,
+} = appSlice.actions;

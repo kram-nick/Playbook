@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -30,6 +31,9 @@ import useHttpGet from "../../core/hooks/useHttpGet";
 import { useTranslation } from "react-i18next";
 import PlaybookService from "../../core/services/playbook.service";
 import { PrivateUIRoutes } from "../../core/router";
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
+import { setOpenedPages } from "../../core/store/reducers/app/appDataSlice";
+import { Data } from "../../core/models/data";
 
 const Placeholder = () => {
   const { t } = useTranslation();
@@ -70,25 +74,29 @@ function onChange(editorState: any) {
     // Read the contents of the EditorState here.
     const root = $getRoot();
     const selection = $getSelection();
-
-    console.log(root.__cachedText);
   });
 }
 
 const Editor = () => {
+  const [savedData, setSavedData] = useState<Data.Page | any>();
+  const [update, setUpdate] = useState<boolean>(false);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { playbook_id, page_id } = useParams();
+
+  const { openedPages } = useAppSelector((state) => state.app);
 
   useHttpGet<any>(`${APIRoutes.PAGES}/${page_id}`, {
     resolve: (response: any) => {
       if (response) {
         formikForm.setFieldValue("title", response?.data?.title);
         formikForm.setFieldValue("content", response?.data?.content);
+        setSavedData(response?.data);
       }
     },
     condition: Boolean(page_id),
-    dependencies: [page_id],
+    dependencies: [page_id, update],
   });
 
   const valueFormValidationSchema = Yup.object().shape({
@@ -105,8 +113,9 @@ const Editor = () => {
     url: string;
   }>({
     initialValues: {
-      playbook_id: "",
-      content: "",
+      playbook_id: String(playbook_id),
+      content:
+        "content content content content content content content content content content content",
       privacy: true,
       tags: "",
       title: "",
@@ -119,33 +128,41 @@ const Editor = () => {
   });
 
   const addPage = async (values: any) => {
-    console.log(values);
     try {
       values.privacy = values.privacy ? "private" : "public";
       const response = await PlaybookService.addPage(values);
-      console.log(response);
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
-      navigate(`${PrivateUIRoutes.Chapters}/${values.playbook_id}`);
+      dispatch(setOpenedPages([...openedPages, response?.data?.data?.id]));
+      navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
     }
   };
 
   const updatePage = async (values: any) => {
+    if (
+      savedData.title === formikForm.values.title &&
+      savedData.content === formikForm.values.content
+    ) {
+      toast.warn("Nothing wasn't changed!");
+      return;
+    }
+
     try {
       values.privacy = values.privacy ? "private" : "public";
 
       delete values.playbook_id;
 
-      const response = await PlaybookService.updatePage(
-        String(page_id),
-        values
-      );
-      console.log(response);
+      await PlaybookService.updatePage(String(page_id), values);
+      setUpdate(!update);
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
     }
+  };
+
+  const setContent = (value: string) => {
+    formikForm.setFieldValue("content", value);
   };
 
   return (
@@ -159,7 +176,7 @@ const Editor = () => {
           placeholder={t<string>("EDIT.SECTION_NAME")}
           {...formikForm.getFieldProps("title")}
         />
-        {formikForm.errors.title && !page_id && (
+        {formikForm.errors.title && formikForm.touched.title && !page_id && (
           <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[10px]">
             {formikForm.errors.title}
           </p>
@@ -169,7 +186,7 @@ const Editor = () => {
       <div>
         <LexicalComposer initialConfig={editorConfig}>
           <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
-            <ToolbarPlugin />
+            <ToolbarPlugin setContent={setContent} />
             <div className="relative min-h-[50vh]">
               <RichTextPlugin
                 contentEditable={
@@ -194,30 +211,34 @@ const Editor = () => {
               <button
                 className="action-button py-[8px] px-[45px] bg-white rounded-[5px] text-home-title
         text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] mr-[16px]"
-                title="Convert From Markdown"
-                aria-label="Convert from markdown"
+                title={t<string>("BTNS.CANCEL")}
+                aria-label={t<string>("BTNS.CANCEL")}
+                type="button"
+                onClick={() => {
+                  navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
+                }}
               >
-                Cancel
-                {/* <i className="markdown" /> */}
+                {t<string>("BTNS.CANCEL")}
               </button>
               <button
                 className="action-button py-[8px] px-[45px] bg-buttons-bg rounded-[5px] text-buttons-color 
           text-[16px] font-medium leading-[20px] shadow-free-trial "
-                title="Convert From Markdown"
-                aria-label="Convert from markdown"
+                title={t<string>("BTNS.SAVE")}
+                aria-label={t<string>("BTNS.SAVE")}
                 type="submit"
               >
-                Save
-                {/* <i className="markdown" /> */}
+                {t<string>("BTNS.SAVE")}
               </button>
             </div>
           </div>
         </LexicalComposer>
-        {formikForm.errors.content && !page_id && (
-          <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[10px]">
-            {formikForm.errors.content}
-          </p>
-        )}
+        {formikForm.errors.content &&
+          formikForm.touched.content &&
+          !page_id && (
+            <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[10px]">
+              {formikForm.errors.content}
+            </p>
+          )}
       </div>
     </form>
   );

@@ -3,7 +3,7 @@ export type AppDataTypes = {
   searchData: {
     search: string;
     data: any;
-  }
+  };
   sideOpen: boolean;
   data: {
     selected: boolean;
@@ -11,8 +11,9 @@ export type AppDataTypes = {
     title?: string;
     name?: string;
     chapters?: Array<any>;
-    chapter_id?:  null | number;
-    chapter_title?:  string;
-    chapter_text?:  string;
+    chapter_id?: null | number;
+    chapter_title?: string;
+    chapter_text?: string;
   };
+  openedPages: string[];
 };
