@@ -60,6 +60,17 @@ export default class PlaybookService {
     );
   }
 
+
+  static async changePrivacy(data: any, id: any): Promise<AxiosResponse<any>> {
+    const formData = {
+      playbook: data,
+    };
+    return RequestsService.putMethod<any>(
+      `${APIRoutes.PLAYBOOKS}/${id}`,
+      formData
+    );
+  }  
+
   static async addPage(data: any): Promise<AxiosResponse<any>> {
     const formData = {
       page: data,
