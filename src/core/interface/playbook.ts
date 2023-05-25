@@ -4,7 +4,7 @@ type Playbook ={
   status: string;
   edited: string;
   priority: boolean;
-  favorited: boolean;
+  favorited: boolean | any;
   image: boolean;
 }
 

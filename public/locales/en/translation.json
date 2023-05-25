@@ -216,6 +216,7 @@
                "FAVORITE":"Favorite",
                "LOGOUT":"Logout",
                "CREATE_SUCCESS": "The Playbook was successfully created",
+               "UPDATE_PRIVACY_SUCCESS": "The Playbook privacy has been successfully updated",
                "UPDATE_SUCCESS": "The Playbook has been successfully updated",
                "DELETE_SUCCESS": "The Playbook has been successfully deleted",
                "DELETE_PAGE_SUCCESS": "The Page has been successfully deleted"
