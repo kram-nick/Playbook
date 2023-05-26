@@ -52,21 +52,8 @@ const BookChapters: React.FC<pagesProps> = ({
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
     }
-  };
-
-  // const toggleItem = (item?: any) => {
-  //   if (item && item?.id) {
-  //     items.forEach((el: any) => {
-  //       if (el?.id === item?.id) {
-  //         el.open = true;
-  //       } else {
-  //         el.open = false;
-  //       }
-  //     });
-  //   }
-  //   setItems(items);
-  // };
-
+  }; 
+ 
   const toggleSection = (clickedPage: Data.Page) => {
     if (openedPages.includes(clickedPage.id)) {
       const newopenedPages = openedPages.filter(
@@ -110,14 +97,20 @@ const BookChapters: React.FC<pagesProps> = ({
           </div>
           <div className="border-solid border-[1px] rounded-[5px] flex items-center bg-white relative z-[5]">
             <button
+          
               type="button"
-              onClick={() => {
+              onClick={() => {      
+                const setData = {
+                  ...data,
+                  page_id: dataContent.id,
+                  page_title: dataContent.title,
+                  open: data?.open ? data?.open : true, 
+                  type: data?.type ? data?.type : 'my'                    
+                }       
                 dispatch(
-                  setSelectedData({
-                    ...data,
-                    chapter_title: dataContent.title,
-                  })
+                  setSelectedData(setData)
                 );
+                localStorage.setItem('selected_playbook', JSON.stringify(setData));
                 navigate(
                   `/editor/${dataContent?.playbook_id}/${dataContent?.id}`
                 );

@@ -25,7 +25,7 @@ const PlaybookDetail = () => {
   }
  
   return (
-    <div className="bg-create-bg-main min-h-[100vh]">
+    <div className="bg-create-bg-main min-h-[100vh] w-[100%]">
       <AppHeader profile={true} /> 
 
       <div className="max-w-[1230px] px-[15px] mx-[auto] pb-[40px]">

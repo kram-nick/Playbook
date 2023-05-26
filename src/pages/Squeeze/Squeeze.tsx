@@ -15,16 +15,17 @@ const Squeeze = () => {
 
   return (
     <main className="pb-[32px]">
+      {/* max-lg:bg-tablet-transparent */}
       <div
         className={classnames({
-          "pt-[40px] bg-no-repeat bg-center bg-cover flex flex-col items-center gap-[5.7vw] 2xl-[2000px]:h-[960px] max-[415px]:h-[900px] max-[415px]:bg-mob-transparent max-[910px]:min-h-[910px] max-lg:bg-tablet-transparent max-lg:min-h-[980px] lg:min-h-[100vh]":
+          "pt-[40px] bg-no-repeat bg-center bg-cover flex flex-col items-center gap-[5.7vw] 2xl-[2000px]:h-[960px] max-[515px]:h-[auto] max-[515px]:pb-[200px] max-[515px]:min-h-[auto]  max-[910px]:min-h-[910px]  max-lg:min-h-[980px] lg:min-h-[100vh]":
             true,
-          "lg:bg-engineering-bckg":
+          "bg-engineering-bckg max-[515px]:pb-[100px!important]":
             location.pathname.split("-")[1] === "engineering",
-          "lg:bg-entrepreneur-bckg":
+          "bg-entrepreneur-bckg max-[515px]:pb-[100px!important]":
             location.pathname.split("-")[1] === "entrepreneur",
-          "lg:bg-product-bckg": location.pathname.split("-")[1] === "product",
-          "lg:bg-sales-bckg": location.pathname.split("-")[1] === "sales",
+          "bg-product-bckg max-[515px]:pb-[100px!important]": location.pathname.split("-")[1] === "product",
+          "bg-sales-bckg max-[515px]:pb-[200px!important] max-[515px]:bg-[bottom] max-[515px]:mb-[-80px]": location.pathname.split("-")[1] === "sales",
         })}>
         <img
           className="hidden lg:block"
@@ -129,7 +130,7 @@ const Squeeze = () => {
                 max-lg:min-w-[80vw]
               border-[1px] border-solid border-input-squeeze bg-top-playbook
               shadow-inp-squeeze text-[16px] font-poppins text-inp-squeez-placeholder leading-[21px]
-              outline-none max-[1084px]:px-[36px]"
+              outline-none max-[1084px]:px-[36px] box-border w-[100%]"
               />
               <img
                 className="absolute bottom-[24px] left-[13vw] 

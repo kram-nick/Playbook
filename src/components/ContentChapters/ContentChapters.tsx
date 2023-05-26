@@ -29,6 +29,7 @@ const ContentChapters = () => {
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${playbook_id}/pages`, {
     resolve: (response: any) => {
       if (response) {
+        console.log(response)
         setData(response?.data);
       }
     },

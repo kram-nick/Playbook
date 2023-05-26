@@ -42,9 +42,12 @@ import { useTranslation } from "react-i18next";
 import PlaybookService from "../../core/services/playbook.service";
 import { PrivateUIRoutes } from "../../core/router";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import { setOpenedPages } from "../../core/store/reducers/app/appDataSlice";
+import {
+  setOpenedPages,
+  setSelectedData,
+} from "../../core/store/reducers/app/appDataSlice";
 import { Data } from "../../core/models/data";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { setReloadChecker } from "../../core/store/reducers/helpers/helpersDataSlice";
 
 const Placeholder = () => {
   const { t } = useTranslation();
@@ -97,7 +100,7 @@ const Editor = () => {
   const navigate = useNavigate();
   const { playbook_id, page_id } = useParams();
 
-  const { openedPages } = useAppSelector((state) => state.app);
+  const { openedPages, data } = useAppSelector((state) => state.app);
 
   const initialEditorState = (editor: LexicalEditor): void => {
     const root = $getRoot();
@@ -156,6 +159,7 @@ const Editor = () => {
       values.privacy = values.privacy ? "private" : "public";
       const response = await PlaybookService.addPage(values);
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
+      dispatch(setReloadChecker(true));
       dispatch(setOpenedPages([response?.data?.data?.id]));
       navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
     } catch (errors: any) {
@@ -246,6 +250,18 @@ const Editor = () => {
                 aria-label={t<string>("BTNS.CANCEL")}
                 type="button"
                 onClick={() => {
+                  const setData = {
+                    ...data,
+                    page_id: null,
+                    page_title: "",
+                    open: data?.open ? data?.open : true,
+                    type: data?.type ? data?.type : "my",
+                  };
+                  dispatch(setSelectedData(setData));
+                  localStorage.setItem(
+                    "selected_playbook",
+                    JSON.stringify(setData)
+                  );
                   navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
                 }}
               >
