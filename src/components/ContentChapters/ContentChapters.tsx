@@ -1,7 +1,7 @@
 import Header from "../AppLayout/PrivateLayout/Header";
 import plus from "../../assets/photos/chapter/icon-plus.svg";
-import { useState } from "react";
-import { useAppSelector } from "../../core/hooks/useRedux";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import BookBanner from "../BookBanner";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
@@ -10,35 +10,30 @@ import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PrivateUIRoutes } from "../../core/router";
+import { setOpenedPages } from "../../core/store/reducers/app/appDataSlice";
 
 const ContentChapters = () => {
   const { t } = useTranslation();
   const [data, setData]: any = useState(null);
-  const { id } = useParams();
+  const { playbook_id } = useParams();
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
   const { fetchedData: playbook } = useHttpGet<any>(
-    `${APIRoutes.PLAYBOOKS}/${id}`,
+    `${APIRoutes.PLAYBOOKS}/${playbook_id}`,
     {
-      dependencies: [id],
+      dependencies: [playbook_id],
     }
   );
 
-  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${id}/pages`, {
+  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${playbook_id}/pages`, {
     resolve: (response: any) => {
       if (response) {
         setData(response?.data);
       }
     },
-    dependencies: [id],
+    dependencies: [playbook_id, reloadChecker],
   });
-
-  const deletePage = (id: any) => {
-    if (id) {
-      setData(data.filter((item: any) => item.id !== id));
-    }
-    console.log(true);
-  };
 
   return (
     <div className="w-full flex-1">
@@ -53,8 +48,7 @@ const ContentChapters = () => {
             "opacity-50": !playbook?.data?.name,
             "text-[32px] font-poppins font-bold text-home-title mb-[24px]":
               true,
-          })}
-        >
+          })}>
           {playbook?.data?.name
             ? playbook?.data?.name
             : t<string>("CREATE.UNTITLED")}
@@ -64,16 +58,14 @@ const ContentChapters = () => {
             dataContent={chapter ? chapter : null}
             index={index}
             key={chapter?.id}
-            onDelete={deletePage}
           />
         ))}
 
         <button
           className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg"
           onClick={() => {
-            navigate(`/${PrivateUIRoutes.Create}/${id}`);
-          }}
-        >
+            navigate(`/${PrivateUIRoutes.Create}/${playbook_id}`);
+          }}>
           <img src={plus} alt="" />
           {t<string>("BTNS.ADD_SECTION")}
         </button>

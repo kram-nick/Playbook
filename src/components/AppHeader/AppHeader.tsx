@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next"; 
+import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 
-import search_icon from "../../assets/photos/main/search.svg"; 
+import search_icon from "../../assets/photos/main/search.svg";
 import icon_burger from "../../assets/photos/common/burger.svg";
 import playbookLogo from "../../assets/photos/squeeze/mob-logo.svg";
 import icon_close from "../../assets/photos/main/modal-close.svg";
@@ -12,7 +12,7 @@ import {
   setToggleSidebar,
 } from "../../core/store/reducers/app/appDataSlice";
 import HeaderProfile from "../HeaderProfile";
-import PlaybookService from "../../core/services/playbook.service"; 
+import PlaybookService from "../../core/services/playbook.service";
 import { useFormik } from "formik";
 
 type HeaderProps = {
@@ -21,44 +21,43 @@ type HeaderProps = {
 
 const AppHeader = ({ profile }: HeaderProps) => {
   const { t } = useTranslation();
-  const {sideOpen } = useAppSelector((state) => state.app); 
+  const { sideOpen } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
 
   const handleSubmit = (values: any) => {
     PlaybookService.search(values?.search)
-    .then((response) => {
-      dispatch(setSearch({
-        search: values?.search,
-        data: response?.data?.data
-      }));
-      console.log(response);
-    })
-    .catch((error) => { 
-    });    
+      .then((response) => {
+        dispatch(
+          setSearch({
+            search: values?.search,
+            data: response?.data?.data,
+          })
+        );
+      })
+      .catch((error) => {});
   };
 
   const reset = (e: any) => {
     e.stopPropagation();
-    formikForm.setFieldValue('search', '');
-    dispatch(setSearch({
-      search: '',
-      data: null
-    }));  
-    console.log(formikForm.values)  
-  }
+    formikForm.setFieldValue("search", "");
+    dispatch(
+      setSearch({
+        search: "",
+        data: null,
+      })
+    );
+  };
 
   const formikForm = useFormik<{
-    search: string; 
+    search: string;
   }>({
     initialValues: {
-      search: "", 
+      search: "",
     },
     onSubmit: async (values: any) => {
-      console.log(values);
       handleSubmit(values);
     },
-  });   
-  
+  });
 
   return (
     <header
@@ -101,22 +100,23 @@ const AppHeader = ({ profile }: HeaderProps) => {
             <input
               placeholder={t<string>("MAIN.SEARCH_PLACEHOLDER")}
               onChange={formikForm.handleChange}
-              value={formikForm.values.search}  
+              value={formikForm.values.search}
               id="search"
               name="search"
-              type="text"               
+              type="text"
               className="py-[10px] pl-[48px] pr-[12px] h-[46px] rounded-[8px]  placeholder:text-simple-text
               border-solid border-[1px] w-[100%] bg-search-input
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border max-lg:h-[44px]"
             />
             {formikForm.values.search && (
-              <button type="button" onClick={(e) => reset(e)} 
+              <button
+                type="button"
+                onClick={(e) => reset(e)}
                 className="absolute right-[5px] mt-[-15px] top-[50%] w-[30px] h-[30px] rounded-[50%] 
-                transition-all duration-[300ms] ease-out hover:ease-in" >
+                transition-all duration-[300ms] ease-out hover:ease-in">
                 <img src={icon_close} alt="" />
-              </button> 
+              </button>
             )}
-              
           </form>
         </div>
 

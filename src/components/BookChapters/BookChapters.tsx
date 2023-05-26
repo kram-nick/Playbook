@@ -19,23 +19,23 @@ import {
 } from "../../core/store/reducers/app/appDataSlice";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { Data } from "../../core/models/data";
+import { setReloadChecker } from "../../core/store/reducers/helpers/helpersDataSlice";
 
 type pagesProps = {
   preview?: boolean;
   dataContent?: any;
   index: number;
-  onDelete: (item: any) => void;
 };
 
 const BookChapters: React.FC<pagesProps> = ({
   preview,
   dataContent,
   index,
-  onDelete,
 }) => {
   const { t } = useTranslation();
   let { isOpenModal, toggle } = useModal();
   const { data, openedPages } = useAppSelector((state) => state.app);
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -43,11 +43,12 @@ const BookChapters: React.FC<pagesProps> = ({
   const deleteItem = async () => {
     try {
       await PlaybookService.deletePage(dataContent.id).then((resp) => {
-        onDelete(dataContent.id);
+        // onDelete(dataContent.id);
         toggle();
         isOpenModal = false;
         toast.success(t<string>("MAIN.DELETE_PAGE_SUCCESS"));
       });
+      dispatch(setReloadChecker(!reloadChecker));
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
     }
@@ -105,9 +106,8 @@ const BookChapters: React.FC<pagesProps> = ({
           <div
             className="text-[20px] text-home-title leading-[28px] tracking-[-0.1px] font-medium
               max-w-[calc(100%-210px)]">
-            {dataContent?.title}
+            <span> #{index + 1}</span> {dataContent?.title}
           </div>
-
           <div className="border-solid border-[1px] rounded-[5px] flex items-center bg-white relative z-[5]">
             <button
               type="button"
