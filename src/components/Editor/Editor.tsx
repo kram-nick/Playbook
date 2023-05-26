@@ -177,7 +177,8 @@ const Editor = () => {
   return (
     <form
       className="flex flex-col gap-[30px]"
-      onSubmit={formikForm.handleSubmit}>
+      onSubmit={formikForm.handleSubmit}
+    >
       <div>
         <input
           className="outline-none pl-4 rounded-[8px] h-[40px] w-[100%] border-[1px] border-header-bottom text-[20px] font-medium font-poppins"
@@ -194,7 +195,11 @@ const Editor = () => {
       <div>
         <LexicalComposer initialConfig={editorConfig}>
           <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
-            <ToolbarPlugin setContent={setContent} setNode={setNode} />
+            <ToolbarPlugin
+              content={formikForm.values.content}
+              setContent={setContent}
+              setNode={setNode}
+            />
             <div className="relative min-h-[50vh]">
               <RichTextPlugin
                 contentEditable={
@@ -224,7 +229,8 @@ const Editor = () => {
                 type="button"
                 onClick={() => {
                   navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
-                }}>
+                }}
+              >
                 {t<string>("BTNS.CANCEL")}
               </button>
               <button
@@ -232,7 +238,8 @@ const Editor = () => {
           text-[16px] font-medium leading-[20px] shadow-free-trial "
                 title={t<string>("BTNS.SAVE")}
                 aria-label={t<string>("BTNS.SAVE")}
-                type="submit">
+                type="submit"
+              >
                 {t<string>("BTNS.SAVE")}
               </button>
             </div>

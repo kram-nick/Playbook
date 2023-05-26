@@ -9,7 +9,9 @@ import {
   $getNodeByKey,
   FORMAT_ELEMENT_COMMAND,
   LexicalEditor,
+  $getRoot,
 } from "lexical";
+import { $generateHtmlFromNodes } from "@lexical/html";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $wrapNodes, $isAtNodeEnd } from "@lexical/selection";
 import { $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
@@ -147,12 +149,14 @@ function FontDropDown({
       buttonIconClassName={
         style === "font-family" ? "icon block-type font-family" : ""
       }
-      buttonAriaLabel={buttonAriaLabel}>
+      buttonAriaLabel={buttonAriaLabel}
+    >
       {FONT_FAMILY_OPTIONS.map(([option, text]) => (
         <DropDownItem
           className={`item ${dropDownActiveClass(value === option)}`}
           onClick={() => handleClick(option)}
-          key={option}>
+          key={option}
+        >
           <span className="text">{text}</span>
         </DropDownItem>
       ))}
@@ -550,17 +554,19 @@ function InsertImageUploadedDialogBody({
         <Button
           data-test-id="image-modal-file-upload-btn"
           disabled={isDisabled}
-          onClick={() => onClick({ altText, src })}>
+          onClick={() => onClick({ altText, src })}
+        >
           Confirm
         </Button>
       </DialogActions>
     </>
   );
 }
-const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
-  setContent,
-  setNode,
-}) => {
+const ToolbarPlugin: React.FC<{
+  content: string;
+  setContent: any;
+  setNode: any;
+}> = ({ content, setContent, setNode }) => {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);
   const [blockType, setBlockType] = useState<string>("paragraph");
@@ -577,8 +583,25 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
 
+  useEffect(() => {
+    if (!content) {
+      return;
+    }
+    editor.update(() => {
+      const parser = new DOMParser();
+      const dom: any = parser.parseFromString(content, "text/html");
+      console.log(dom);
+      const nodes: any = $generateHtmlFromNodes(editor, dom);
+      console.log(dom, nodes);
+      const paragraphNode = $createParagraphNode();
+      nodes.forEach((n: any) => paragraphNode.append(n));
+      $getRoot().append(paragraphNode);
+    });
+  }, []);
+
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
+
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
       const element =
@@ -695,7 +718,8 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
           "toolbar-item spaced w-[28px] h-[28px] mr-[14px] " +
           (isBold ? "active" : "")
         }
-        aria-label="Format Bold">
+        aria-label="Format Bold"
+      >
         <img src={icon_bold} alt="Format Bold" />
       </button>
       <button
@@ -707,7 +731,8 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
           "toolbar-item spaced w-[28px] h-[28px] mr-[14px] " +
           (isItalic ? "active" : "")
         }
-        aria-label="Format Italics">
+        aria-label="Format Italics"
+      >
         <img src={icon_italic} alt="Format italic" />
       </button>
       <button
@@ -719,7 +744,8 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
           "toolbar-item spaced w-[28px] h-[28px] mr-[14px] " +
           (isUnderline ? "active" : "")
         }
-        aria-label="Format Underline">
+        aria-label="Format Underline"
+      >
         <img src={icon_underline} alt="Format underline" />
       </button>
       <FontDropDown
@@ -735,7 +761,8 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
         }}
         className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] "
-        aria-label="Left Align">
+        aria-label="Left Align"
+      >
         <img src={icon_left} alt="Format left" />
       </button>
       <button
@@ -744,7 +771,8 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
         }}
         className="toolbar-item spaced w-[28px] h-[28px] mr-[14px] "
-        aria-label="Center Align">
+        aria-label="Center Align"
+      >
         <img src={icon_center} alt="Format center" />
       </button>
       <button
@@ -753,13 +781,15 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
           editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
         }}
         className="toolbar-item w-[28px] h-[28px] mr-[14px] "
-        aria-label="Justify Align">
+        aria-label="Justify Align"
+      >
         <img src={icon_layout} alt="Format center" />
       </button>{" "}
       <button
         type="button"
         className="toolbar-item spaced w-[28px] h-[28px] mr-[24px] "
-        onClick={formatParagraph}>
+        onClick={formatParagraph}
+      >
         <img src={icon_paragrph} alt="Format paragraph" />
         {blockType === "paragraph" && <span className="active" />}
       </button>
@@ -770,7 +800,8 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
           "toolbar-item spaced w-[28px] h-[28px] mr-[14px] " +
           (isLink ? "active" : "")
         }
-        aria-label="Insert Link">
+        aria-label="Insert Link"
+      >
         <i className="format link" />
         <img src={icon_link} alt="Format link" />
       </button>
@@ -794,14 +825,16 @@ const ToolbarPlugin: React.FC<{ setContent: any; setNode: any }> = ({
       <button
         type="button"
         className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] "}
-        aria-label="Insert emoji">
+        aria-label="Insert emoji"
+      >
         <img src={icon_smile} alt="Insert emoji" />
       </button>
       <button
         type="button"
         onClick={() => setShowBlockOptionsDropDown(!showBlockOptionsDropDown)}
         ref={toolbarRef}
-        className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] "}>
+        className={"toolbar-item spaced w-[28px] h-[28px] mr-[14px] "}
+      >
         <img src={icon_add} alt="Plus" />
       </button>
       {showBlockOptionsDropDown &&
