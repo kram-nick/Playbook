@@ -172,7 +172,7 @@ const Editor = () => {
     console.log(value);
   };
 
-  console.log(formikForm.values.content);
+  // console.log(formikForm.values.content);
 
   return (
     <form
