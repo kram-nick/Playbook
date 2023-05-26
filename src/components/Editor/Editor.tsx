@@ -80,6 +80,7 @@ function onChange(editorState: any) {
 const Editor = () => {
   const [savedData, setSavedData] = useState<Data.Page | any>();
   const [update, setUpdate] = useState<boolean>(false);
+
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ const Editor = () => {
     resolve: (response: any) => {
       if (response) {
         formikForm.setFieldValue("title", response?.data?.title);
+
         formikForm.setFieldValue("content", response?.data?.content);
         setSavedData(response?.data);
       }
@@ -114,8 +116,7 @@ const Editor = () => {
   }>({
     initialValues: {
       playbook_id: String(playbook_id),
-      content:
-        "content content content content content content content content content content content",
+      content: "",
       privacy: true,
       tags: "",
       title: "",
@@ -165,11 +166,18 @@ const Editor = () => {
     formikForm.setFieldValue("content", value);
   };
 
+  const setNode = (value: HTMLElement) => {
+    // value.textContent = formikForm.values.content;
+
+    console.log(value);
+  };
+
+  console.log(formikForm.values.content);
+
   return (
     <form
       className="flex flex-col gap-[30px]"
-      onSubmit={formikForm.handleSubmit}
-    >
+      onSubmit={formikForm.handleSubmit}>
       <div>
         <input
           className="outline-none pl-4 rounded-[8px] h-[40px] w-[100%] border-[1px] border-header-bottom text-[20px] font-medium font-poppins"
@@ -186,7 +194,7 @@ const Editor = () => {
       <div>
         <LexicalComposer initialConfig={editorConfig}>
           <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
-            <ToolbarPlugin setContent={setContent} />
+            <ToolbarPlugin setContent={setContent} setNode={setNode} />
             <div className="relative min-h-[50vh]">
               <RichTextPlugin
                 contentEditable={
@@ -216,8 +224,7 @@ const Editor = () => {
                 type="button"
                 onClick={() => {
                   navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
-                }}
-              >
+                }}>
                 {t<string>("BTNS.CANCEL")}
               </button>
               <button
@@ -225,8 +232,7 @@ const Editor = () => {
           text-[16px] font-medium leading-[20px] shadow-free-trial "
                 title={t<string>("BTNS.SAVE")}
                 aria-label={t<string>("BTNS.SAVE")}
-                type="submit"
-              >
+                type="submit">
                 {t<string>("BTNS.SAVE")}
               </button>
             </div>
