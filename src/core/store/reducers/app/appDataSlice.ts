@@ -32,7 +32,6 @@ const appSlice = createSlice({
       state.language = action.payload;
     },
     setSelectedData(state, action: PayloadAction<any>) {
-      console.log(action.payload);
       state.data = action.payload;
     },
     setOpenedPages(state, action: PayloadAction<string[]>) {

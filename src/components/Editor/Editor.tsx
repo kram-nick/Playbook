@@ -133,7 +133,7 @@ const Editor = () => {
       values.privacy = values.privacy ? "private" : "public";
       const response = await PlaybookService.addPage(values);
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
-      dispatch(setOpenedPages([...openedPages, response?.data?.data?.id]));
+      dispatch(setOpenedPages([response?.data?.data?.id]));
       navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
@@ -168,8 +168,6 @@ const Editor = () => {
 
   const setNode = (value: HTMLElement) => {
     // value.textContent = formikForm.values.content;
-
-    console.log(value);
   };
 
   // console.log(formikForm.values.content);
