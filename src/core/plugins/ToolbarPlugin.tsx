@@ -10,6 +10,8 @@ import {
   FORMAT_ELEMENT_COMMAND,
   LexicalEditor,
   $getRoot,
+  EditorState,
+  $setSelection,
 } from "lexical";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
@@ -62,6 +64,8 @@ import { DialogActions } from "../editor/ui/Dialog";
 import { useModal } from "../hooks/useModal";
 import DropDown, { DropDownItem } from "../editor/ui/DropDown";
 import "./../editor/ui/default.css";
+import { $generateNodesFromDOM } from "@lexical/html";
+import e from "express";
 
 export type InsertImagePayload = Readonly<ImagePayload>;
 const LowPriority = 1;
@@ -124,7 +128,6 @@ function FontDropDown({
     (option: string) => {
       editor.update(() => {
         const selection = $getSelection();
-        console.log(selection);
         if ($isRangeSelection(selection)) {
           $patchStyleText(selection, {
             [style]: option,
@@ -584,20 +587,32 @@ const ToolbarPlugin: React.FC<{
   const [isCode, setIsCode] = useState(false);
 
   useEffect(() => {
-    if (!content) {
-      return;
-    }
     editor.update(() => {
-      const parser = new DOMParser();
-      const dom: any = parser.parseFromString(content, "text/html");
-      console.log(dom);
-      const nodes: any = $generateHtmlFromNodes(editor, dom);
-      console.log(dom, nodes);
-      const paragraphNode = $createParagraphNode();
-      nodes.forEach((n: any) => paragraphNode.append(n));
-      $getRoot().append(paragraphNode);
+      const currentHtmlContent = $generateHtmlFromNodes(editor, null);
+
+      if (content && currentHtmlContent !== content && !editor.isComposing()) {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(content, "text/html");
+        const nodes = $generateNodesFromDOM(editor, dom);
+
+        const validNodesToInsert = nodes.map((node: any) => {
+          const paragraphNode = $createParagraphNode();
+
+          if (node.getType() === "text") {
+            paragraphNode.append(node);
+            return paragraphNode;
+          } else {
+            return node;
+          }
+        });
+
+        const root = $getRoot();
+        root.clear();
+        root.append(...validNodesToInsert);
+        $setSelection(null);
+      }
     });
-  }, []);
+  }, [content]);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -610,12 +625,6 @@ const ToolbarPlugin: React.FC<{
           : anchorNode.getTopLevelElementOrThrow();
       const elementKey: any = element.getKey();
       const elementDOM = editor.getElementByKey(elementKey);
-
-      // console.log(elementDOM?.outerHTML);
-
-      // console.log(elem);
-
-      // console.log(elementDOM);
 
       if (elementDOM !== null) {
         setSelectedElementKey(elementKey);

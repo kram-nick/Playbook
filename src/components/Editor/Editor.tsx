@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -14,7 +14,17 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
 import { useFormik } from "formik";
-import { $getRoot, $getSelection, $getTextContent } from "lexical";
+import { $generateHtmlFromNodes } from "@lexical/html";
+import { $generateNodesFromDOM } from "@lexical/html";
+import {
+  $createParagraphNode,
+  $createTextNode,
+  $getRoot,
+  $getSelection,
+  $getTextContent,
+  $setSelection,
+  LexicalEditor,
+} from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -34,6 +44,7 @@ import { PrivateUIRoutes } from "../../core/router";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { setOpenedPages } from "../../core/store/reducers/app/appDataSlice";
 import { Data } from "../../core/models/data";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 const Placeholder = () => {
   const { t } = useTranslation();
@@ -88,18 +99,30 @@ const Editor = () => {
 
   const { openedPages } = useAppSelector((state) => state.app);
 
-  useHttpGet<any>(`${APIRoutes.PAGES}/${page_id}`, {
-    resolve: (response: any) => {
-      if (response) {
-        formikForm.setFieldValue("title", response?.data?.title);
+  const initialEditorState = (editor: LexicalEditor): void => {
+    const root = $getRoot();
+    const paragraph = $createParagraphNode();
+    const text = $createTextNode("Welcome to collab!");
+    paragraph.append(text);
+    root.append(paragraph);
+  };
 
-        formikForm.setFieldValue("content", response?.data?.content);
-        setSavedData(response?.data);
-      }
-    },
-    condition: Boolean(page_id),
-    dependencies: [page_id, update],
-  });
+  const { fetchedData: page } = useHttpGet<any>(
+    `${APIRoutes.PAGES}/${page_id}`,
+    {
+      resolve: (response: any) => {
+        if (response) {
+          formikForm.setFieldValue("title", response?.data?.title);
+
+          formikForm.setFieldValue("content", response?.data?.content);
+
+          setSavedData(response?.data);
+        }
+      },
+      condition: Boolean(page_id),
+      dependencies: [page_id, update],
+    }
+  );
 
   const valueFormValidationSchema = Yup.object().shape({
     title: Yup.string().required(t<string>("ERRORS.NAME_REQUIRED")),
@@ -194,22 +217,19 @@ const Editor = () => {
         <LexicalComposer initialConfig={editorConfig}>
           <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
             <ToolbarPlugin
-              content={formikForm.values.content}
+              content={page?.data?.content}
               setContent={setContent}
               setNode={setNode}
             />
             <div className="relative min-h-[50vh]">
               <RichTextPlugin
                 contentEditable={
-                  <ContentEditable
-                    className="editor-input p-4 min-h-[50vh] max-h-[calc(100vh-280px)] overflow-y-auto outline-0"
-                    value={formikForm.values.content}
-                  />
+                  <ContentEditable className="editor-input p-4 min-h-[50vh] max-h-[calc(100vh-280px)] overflow-y-auto outline-0" />
                 }
                 placeholder={<Placeholder />}
                 ErrorBoundary={() => null}
               />
-              <OnChangePlugin onChange={onChange} />
+
               <AutoFocusPlugin />
               <ImagePlugin />
               <ListPlugin />
