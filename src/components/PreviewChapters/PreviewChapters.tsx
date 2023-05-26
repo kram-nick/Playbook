@@ -20,8 +20,8 @@ const PreviewChapters = () => {
         selected: true,
         title: data.title,
         chapters: data.chapters,
-        chapter_title: chapter.title,
-        chapter_id: chapter.id
+        page_title: chapter.title,
+        page_id: chapter.id
       })
     )   
   }

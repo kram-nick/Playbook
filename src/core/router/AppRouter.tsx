@@ -22,6 +22,7 @@ import Settings from "../../pages/Settings";
 import NewPassword from "../../components/NewPassword";
 import ResetPassword from "../../components/ResetPassword";
 import SignLayout from "../../components/AppLayout/SignLayout";
+import PrivateLayout from "../../components/AppLayout/PrivateLayout";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -130,7 +131,7 @@ const AppRouter: FC = () => {
             element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
           />
         </Route>
-        <Route path="/*" element={<SqueezeLayout />}>
+        <Route path="/*" element={<PrivateLayout />}>
           {privateRoutes.map((route, index) => (
             <Route key={`${route.path}${index}`} {...route} />
           ))}

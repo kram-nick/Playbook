@@ -7,13 +7,15 @@ export type AppDataTypes = {
   sideOpen: boolean;
   data: {
     selected: boolean;
+    open: boolean;
     id: null | number;
     title?: string;
+    type?: string;
     name?: string;
     chapters?: Array<any>;
-    chapter_id?: null | number;
-    chapter_title?: string;
-    chapter_text?: string;
+    page_id?: null | number;
+    page_title?: string;
+    page_text?: string;
   };
   openedPages: string[];
 };

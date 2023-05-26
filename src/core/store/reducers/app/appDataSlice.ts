@@ -10,9 +10,12 @@ const initialState: AppDataTypes = {
   },
   data: {
     selected: false,
+    open: false,
     id: null,
+    type: '',
     title: "",
-    chapter_title: "",
+    page_title: "",
+    page_id: 0,
     chapters: [],
   },
   openedPages: [],

@@ -53,7 +53,7 @@ const BookChapters: React.FC<pagesProps> = ({
       toast.error(errors?.response?.data?.errors);
     }
   };
-
+  console.log(dataContent)
   // const toggleItem = (item?: any) => {
   //   if (item && item?.id) {
   //     items.forEach((el: any) => {
@@ -110,14 +110,20 @@ const BookChapters: React.FC<pagesProps> = ({
           </div>
           <div className="border-solid border-[1px] rounded-[5px] flex items-center bg-white relative z-[5]">
             <button
+          
               type="button"
-              onClick={() => {
+              onClick={() => {      
+                const setData = {
+                  ...data,
+                  page_id: dataContent.id,
+                  page_title: dataContent.title,
+                  open: data?.open ? data?.open : true, 
+                  type: data?.type ? data?.type : 'my'                    
+                }       
                 dispatch(
-                  setSelectedData({
-                    ...data,
-                    chapter_title: dataContent.title,
-                  })
+                  setSelectedData(setData)
                 );
+                localStorage.setItem('selected_playbook', JSON.stringify(setData));
                 navigate(
                   `/editor/${dataContent?.playbook_id}/${dataContent?.id}`
                 );

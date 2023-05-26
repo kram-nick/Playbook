@@ -32,7 +32,7 @@ import { useTranslation } from "react-i18next";
 import PlaybookService from "../../core/services/playbook.service";
 import { PrivateUIRoutes } from "../../core/router";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import { setOpenedPages } from "../../core/store/reducers/app/appDataSlice";
+import { setOpenedPages, setSelectedData } from "../../core/store/reducers/app/appDataSlice";
 import { Data } from "../../core/models/data";
 
 const Placeholder = () => {
@@ -86,7 +86,7 @@ const Editor = () => {
   const navigate = useNavigate();
   const { playbook_id, page_id } = useParams();
 
-  const { openedPages } = useAppSelector((state) => state.app);
+  const { openedPages, data } = useAppSelector((state) => state.app);
 
   useHttpGet<any>(`${APIRoutes.PAGES}/${page_id}`, {
     resolve: (response: any) => {
@@ -226,6 +226,17 @@ const Editor = () => {
                 aria-label={t<string>("BTNS.CANCEL")}
                 type="button"
                 onClick={() => {
+                  const setData = {
+                    ...data,
+                    page_id: null,
+                    page_title: '',
+                    open: data?.open ? data?.open : true, 
+                    type: data?.type ? data?.type : 'my'                    
+                  }       
+                  dispatch(
+                    setSelectedData(setData)
+                  );
+                  localStorage.setItem('selected_playbook', JSON.stringify(setData));                
                   navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
                 }}
               >
