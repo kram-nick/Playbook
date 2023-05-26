@@ -132,7 +132,7 @@ const HomePage = () => {
             className="flex gap-[85.5px]  mt-[15px]
           max-lg:hidden
           ">
-            <button className="flex items-center gap-[12px]">
+            {/* <button className="flex items-center gap-[12px]">
               <img src={facebook} alt="facebook" />
               <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
                 {t<string>("HOME.FACEBOOK")}
@@ -143,7 +143,7 @@ const HomePage = () => {
               <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
                 {t<string>("HOME.YOUTUBE")}
               </span>
-            </button>
+            </button> */}
             <a
               href="https://twitter.com/playbookwork"
               target="blank"
@@ -222,7 +222,7 @@ const HomePage = () => {
           max-lg:flex
           max-[1024px]:mb-[50px]
         ">
-          <button
+          {/* <button
             className="flex items-center gap-[12px] max-sm:flex-1 
           max-sm:gap-[4px]
           max-sm:justify-between
@@ -241,7 +241,7 @@ const HomePage = () => {
             <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
               {t<string>("HOME.YOUTUBE")}
             </span>
-          </button>
+          </button> */}
           <a
             href="https://twitter.com/playbookwork"
             target="blank"

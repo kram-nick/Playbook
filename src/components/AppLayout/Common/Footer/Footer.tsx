@@ -127,7 +127,7 @@ const Footer = () => {
                 </button>
               </div>
               <ul className="flex flex-row gap-[24px] lg:items-center">
-                <li>
+                {/* <li>
                   <button>
                     <img
                       src={facebook}
@@ -154,7 +154,7 @@ const Footer = () => {
                       className="max-lg:block hidden"
                     />
                   </button>
-                </li>
+                </li> */}
                 <li>
                   <a href="https://twitter.com/playbookwork" target="blank">
                     <img
