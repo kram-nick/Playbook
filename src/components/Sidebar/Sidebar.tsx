@@ -23,6 +23,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
 import { PrivateUIRoutes } from "../../core/router";
+import { setReloadChecker } from "../../core/store/reducers/helpers/helpersDataSlice";
 
 const Sidebar = () => {
   const [playbookItem, selectedPlaybooks] = useState({
@@ -46,38 +47,32 @@ const Sidebar = () => {
   const { reloadChecker } = useAppSelector((state) => state.helpers);
 
   const dispatch = useAppDispatch();
- 
+  console.log(reloadChecker)
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/menu`, {
     resolve: (response: any) => {
       let menuItem:any = localStorage.getItem('selected_playbook');  
-      if(menuItem && !data.id){
+      if(menuItem ){
         menuItem = JSON.parse(menuItem);
-        dispatch(
-          setSelectedData(menuItem)
-        );  
-        console.log(menuItem);
-        const menuSectionData = { open: true, selected: false };
-        if(menuItem?.type === 'my'){
-          console.log(playbookItem)  
-          selectedPlaybooks(menuSectionData);
+        if(!data.id){
+          dispatch(
+            setSelectedData(menuItem)
+          );            
+          const menuSectionData = { open: true, selected: false };
+          if(menuItem?.type === 'my'){ 
+            selectedPlaybooks(menuSectionData);
+          }
+          if(menuItem?.type === 'favorite'){
+            selectedFavorite(menuSectionData);
+          } 
         }
-        if(menuItem?.type === 'favorite'){
-          selectedFavorite(menuSectionData);
-        }     
-          
+         
       }
-   
-       
+      console.log(menuItem);
       if (response) {
         response.data.playbooks?.forEach((e: any) => {
           if(menuItem?.id === e.id){
             e.open = menuItem?.open;
-
-            if(e.pages?.length){
-              e?.pages?.forEach((page:any) => {
-                
-              });
-            }
+            console.log(e);
           } else {
             e.open = e.open ? true : false;
           }
@@ -93,10 +88,9 @@ const Sidebar = () => {
         setTimeout(() => {
           setPlaybooks(response.data.playbooks);
           setToFavotire(response.favorites);
-        }, 300);
-      }
-
-      // setReloadData(false);
+        }, 100);
+        dispatch(setReloadChecker(false));
+      } 
     }, 
     dependencies: [reloadChecker],
   });

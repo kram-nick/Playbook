@@ -34,6 +34,7 @@ import { PrivateUIRoutes } from "../../core/router";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { setOpenedPages, setSelectedData } from "../../core/store/reducers/app/appDataSlice";
 import { Data } from "../../core/models/data";
+import { setReloadChecker } from "../../core/store/reducers/helpers/helpersDataSlice";
 
 const Placeholder = () => {
   const { t } = useTranslation();
@@ -133,6 +134,7 @@ const Editor = () => {
       values.privacy = values.privacy ? "private" : "public";
       const response = await PlaybookService.addPage(values);
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
+      dispatch(setReloadChecker(true));
       dispatch(setOpenedPages([response?.data?.data?.id]));
       navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
     } catch (errors: any) {

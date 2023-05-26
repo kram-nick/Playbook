@@ -52,21 +52,8 @@ const BookChapters: React.FC<pagesProps> = ({
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
     }
-  };
-  console.log(dataContent)
-  // const toggleItem = (item?: any) => {
-  //   if (item && item?.id) {
-  //     items.forEach((el: any) => {
-  //       if (el?.id === item?.id) {
-  //         el.open = true;
-  //       } else {
-  //         el.open = false;
-  //       }
-  //     });
-  //   }
-  //   setItems(items);
-  // };
-
+  }; 
+ 
   const toggleSection = (clickedPage: Data.Page) => {
     if (openedPages.includes(clickedPage.id)) {
       const newopenedPages = openedPages.filter(
