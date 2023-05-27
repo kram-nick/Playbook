@@ -95,6 +95,15 @@ export default class PlaybookService {
     );
   }
 
+  static async publishPlaybook(id: string): Promise<AxiosResponse<any>> {
+    const formData = {
+      playbook: {
+        status: 'published'
+      },
+    };
+    return RequestsService.putMethod<any>(`${APIRoutes.PLAYBOOKS}/${id}`, formData);
+  }  
+
   // static async getPages(
   //   id: string,
   // ): Promise<AxiosResponse<any>> {

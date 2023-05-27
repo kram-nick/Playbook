@@ -1,16 +1,19 @@
 import Header from "../AppLayout/PrivateLayout/Header";  
 import arrow from "../../assets/photos/main/arrow-right.svg"; 
- 
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import BookBanner from "../BookBanner";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames"; 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
+import { APIRoutes } from "../../core/http";
+import useHttpGet from "../../core/hooks/useHttpGet";
 
 const PreviewChapters = () => {
   const { t } = useTranslation();
-  const { data } = useAppSelector((state) => state.app);
+  const [data, setData]: any = useState(null);
+  const { playbook_id } = useParams();
   const dispatch = useAppDispatch();
 
   const  openChapter = (data:any, chapter: any) => {
@@ -26,6 +29,27 @@ const PreviewChapters = () => {
     )   
   }
 
+  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${playbook_id}`, {
+    resolve: (response: any) => {
+      if (response && !data) { 
+        setData(response?.data);
+        dispatch(
+          setSelectedData(response?.data)
+        )  
+        localStorage.setItem('selected_playbook', JSON.stringify(response?.data));
+      }
+    },
+    dependencies: [playbook_id],
+  });
+
+  const { fetchedData: pages } = useHttpGet<any>(
+    `${APIRoutes.PLAYBOOKS}/${playbook_id}/pages`,
+    {
+      dependencies: [playbook_id],
+    }
+  );
+ 
+
   return (
     <div className="w-full flex-1">
       <Header previewState={true} />
@@ -34,38 +58,34 @@ const PreviewChapters = () => {
  
         <div className="rounded-[8px] bg-white max-[1024px]:rounded-t-[0] shadow-free-trial 
         border-[1px] border-solid border-header-bottom">
-          <BookBanner preview={true} />
+          <BookBanner preview={true} data={data} />
 
           <div className="grid p-[24px] gap-y-[16px] mt-[-50px] max-[1024px]:px-[32px] max-[690px]:px-[16px]">
             <h1 className={classNames({
-                "opacity-50":!data.title, 
+                "opacity-50":!data?.name, 
                 "text-[32px] font-poppins font-bold text-home-title" : true
               })}>
-              {data.title ? (data.title) : (t<string>("CREATE.UNTITLED"))}
+              {data?.name ? (data?.name) : (t<string>("CREATE.UNTITLED"))}
             </h1>             
-            {data && data.chapters?.length ? (
+            {data && data?.content ? (
               <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]">
-              {data.chapters.length ? data.chapters[0].text : ''}</p>
+              {data?.content}</p>
             ) : ('')}
-            {data && data.chapters?.length ? (
+            {pages && pages?.data?.length ? (
               <>
-                {data.chapters.map((chapter: any, index: number) => ( 
-                  <Link key={index} onClick={() => openChapter(data, chapter)} to="/preview-chapter" 
+                {pages?.data?.map((page: any, index: number) => ( 
+                  <Link key={index} onClick={() => openChapter(data, page)} to="/preview-chapter" 
                     className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
                       border-[1px] border-solid border-card-border gap-[30px] max-[690px]:p-[12px]">
                     <span className="font-poppins text-[20px] text-home-title  font-medium leading-[28px]">
-                      {chapter.title}
+                      {page?.title}
                     </span>
                     <img src={arrow} alt="preview" />
                   </Link>    
                 ))}
               </>
             ) : ('')}
-
-            {data && data.chapters?.length ? (
-              <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]">
-              {data.chapters.length ? data.chapters[0].text : ''}</p>
-            ) : ('')}            
+         
           </div>
         </div>
  

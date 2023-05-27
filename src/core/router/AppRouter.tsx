@@ -42,7 +42,7 @@ export const privateRoutes: IRoute[] = [
     element: <MainContainer />,
   },
   {
-    path: PrivateUIRoutes.Preview,
+    path: `${PrivateUIRoutes.Preview}/:playbook_id`,
     element: <Preview />,
   },
   {

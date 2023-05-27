@@ -16,6 +16,7 @@ export type AppDataTypes = {
     page_id?: null | number;
     page_title?: string;
     page_text?: string;
+    status?: string;
   };
   openedPages: string[];
 };

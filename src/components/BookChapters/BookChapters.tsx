@@ -105,8 +105,10 @@ const BookChapters: React.FC<pagesProps> = ({
                   page_id: dataContent.id,
                   page_title: dataContent.title,
                   open: data?.open ? data?.open : true, 
-                  type: data?.type ? data?.type : 'my'                    
+                  type: data?.type ? data?.type : 'my',
+                  status: dataContent?.status                  
                 }       
+                console.log(dataContent)
                 dispatch(
                   setSelectedData(setData)
                 );

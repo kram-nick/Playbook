@@ -84,7 +84,7 @@ const Pricing = () => {
               </li>
               <li className="flex items-center gap-[12px] text-[16px] leading-[26px] tracking-[-0.1px] text-home-title">
                 <img src={check} alt=""  className="min-w-[20px] w-[20px]"/>
-                1 {t<string>("HOME.PRICE_OL_2")}
+                5 {t<string>("HOME.PRICE_OL_2")}
               </li> 
               <li className="flex items-center gap-[12px] text-[16px] leading-[26px] tracking-[-0.1px] text-home-title">
                 <img src={check} alt=""  className="min-w-[20px] w-[20px]"/>
@@ -125,7 +125,7 @@ const Pricing = () => {
               </li>
               <li className="flex items-center gap-[12px] text-[16px] leading-[26px] tracking-[-0.1px] text-home-title">
                 <img src={check} alt=""  className="min-w-[20px] w-[20px]"/>
-                1 {t<string>("HOME.PRICE_OL_2")}
+                ∞ {t<string>("HOME.PRICE_OL_2")}
               </li> 
               <li className="flex items-center gap-[12px] text-[16px] leading-[26px] tracking-[-0.1px] text-home-title">
                 <img src={check} alt=""  className="min-w-[20px] w-[20px]"/>

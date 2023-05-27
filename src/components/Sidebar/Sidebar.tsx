@@ -36,9 +36,7 @@ const Sidebar = () => {
   });
 
   const [playbooks, setPlaybooks]: any = useState([]);
-  const [favorites, setToFavotire]: any = useState([]);
-  const [reloadData, setReloadData] = useState(true);
-  const { param_id } = useParams();
+  const [favorites, setToFavotire]: any = useState([]); 
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -113,8 +111,7 @@ const Sidebar = () => {
     }
   };
 
-  const handlePlaybooks = () => {
-    // setShowPlaybooks(!showPlaybooks);
+  const handlePlaybooks = () => { 
     dispatch(
       setSelectedData({
         id: 0,

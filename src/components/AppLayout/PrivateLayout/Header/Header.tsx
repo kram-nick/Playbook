@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-
 import back from "../../../../assets/photos/main/arrow-back.svg";
 import divider from "../../../../assets/photos/create/divider.svg";
 import preview from "../../../../assets/photos/create/preview.svg";
@@ -9,6 +8,8 @@ import { useAppDispatch, useAppSelector } from "../../../../core/hooks/useRedux"
 import classNames from "classnames";
 import { Link, useNavigate } from "react-router-dom";
 import { setSelectedData } from "../../../../core/store/reducers/app/appDataSlice";
+import PlaybookService from "../../../../core/services/playbook.service";
+import { toast } from "react-toastify";
 
 type HeaderProps = { 
   previewState?: boolean,
@@ -18,7 +19,29 @@ const Header = ({previewState}: HeaderProps) => {
   const { t } = useTranslation();
   const { data } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();  
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+
+  const publishPlaybook = () => {
+    let data: any = localStorage.getItem('selected_playbook');
+    data = data ? JSON.parse(data) : null;
+    console.log(data)
+    if(data){
+      if(data?.status !== 'published'){
+        try { 
+          PlaybookService.publishPlaybook(data?.id).then(resp => {
+            toast.success(t<string>("MAIN.PUBLISHED_SUCCESS"));
+            navigate(`/preview/${data ? data?.id : ''}`);
+          }); 
+           
+        } catch (errors: any) {
+          toast.error(errors?.response?.data?.errors);
+        }
+      } else {
+        navigate(`/preview/${data ? data?.id : ''}`);
+      }
+ 
+    } 
+  };
 
   return (
     <header className="h-[74px] bg-white flex items-center border-b-[1px] max-lg:h-[60px]">
@@ -89,16 +112,18 @@ const Header = ({previewState}: HeaderProps) => {
           </span> */}
         </div>
         <div className="flex flex-row gap-[28px] rounded-[5px] items-center max-lg:gap-[12px] max-[690px]:min-w-[60px]">
-        <Link  to="/preview" className="flex flex-row gap-[4px] items-center cursor-pointer">
-          <span className={classNames({
-            "font-poppins text-[16px]   font-medium leading-[20.8px] max-lg:hidden":true,
-            "text-buttons-bg":previewState,
-            "text-nav-txt-private":!previewState,
-          })}>
+        <button 
+          onClick={publishPlaybook}
+          className="flex flex-row gap-[4px] items-center cursor-pointer">
+            <span className={classNames({
+              "font-poppins text-[16px]   font-medium leading-[20.8px] max-lg:hidden":true,
+              "text-buttons-bg":previewState,
+              "text-nav-txt-private":!previewState,
+            })}>
             {t<string>("MAIN.PREVIEW")}
           </span>
           <img src={previewState ? play_active: preview} alt="preview" className="max-lg:w-[24px] max-lg:h-[24px]" />
-        </Link>            
+        </button>            
           {/* <button className="flex flex-row gap-[4px] items-center cursor-pointer">
             <span className={classNames({
               "font-poppins text-[16px] text-nav-txt-private font-medium leading-[20.8px]":true

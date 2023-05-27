@@ -33,12 +33,12 @@ const Footer = () => {
             max-sm:gap-[8px]
             ">
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                {t<string>("COMMON.HANDBOOK")}
+                {t<string>("COMMON.DISCOVER")}
               </li>
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                {t<string>("COMMON.ENTERPRISE")}
+                {t<string>("COMMON.CREATE")}
               </li>
-              <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+              {/* <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.READLINES")}
               </li>
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
@@ -46,7 +46,7 @@ const Footer = () => {
               </li>
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.AGENCIES")}
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -55,16 +55,18 @@ const Footer = () => {
               {t<string>("COMMON.RESOURCES")}
             </span>
             <ul
-              className="flex flex-col gap-[12px]
-            max-sm:gap-[8px]
-            ">
+              className="flex flex-col gap-[12px] max-sm:gap-[8px]">
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                {t<string>("COMMON.BLOG")}
+                <Link to="/sign-in">
+                  {t<string>("COMMON.LOGIN")}
+                </Link>                
               </li>
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                {t<string>("COMMON.DEMO")}
+                <Link to="/sign-up">
+                  {t<string>("COMMON.SIGN_UP")}
+                </Link>
               </li>
-              <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+              {/* <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.NEWSLETTER")}
               </li>
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
@@ -75,7 +77,7 @@ const Footer = () => {
               </li>
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.CONVOS")}
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="flex gap-[40px] flex-col flex-1 min-w-max ">

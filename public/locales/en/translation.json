@@ -1,13 +1,16 @@
 {
   "COMMON": {
     "PRICING": "Pricing",
-    "RESOURCES": "Resources",
+    "RESOURCES": "Account",
     "SIGN_IN": "Sign in",
     "GET_STARTED": "Get started",
-    "SOLUTIONS": "Solutions",
+    "SOLUTIONS": "Product",
     "LEGAL": "Legal",
     "SUBSCRIBE": "Subscribe To Our New",
-    "HANDBOOK": "Online Employee Handbook",
+    "DISCOVER": "Discover",
+    "CREATE": "Create",
+    "LOGIN": "Login",
+    "SIGN_UP": "Sign Up",
     "ENTERPRISE": "Enterprise Policy Management",
     "READLINES": "SOC 2 Audit Readlines",
     "BRANDED": "Branded Employee Handbook",
@@ -216,6 +219,7 @@
     "LOGOUT": "Logout",
     "CREATE_SUCCESS": "The Playbook was successfully created",
     "UPDATE_SUCCESS": "The Playbook has been successfully updated",
+    "PUBLISHED_SUCCESS": "The Playbook has been successfully published",
     "UPDATE_PRIVACY_SUCCESS": "The Playbook privacy has been successfully updated",
     "DELETE_SUCCESS": "The Playbook has been successfully deleted",
     "DELETE_PAGE_SUCCESS": "The Page has been successfully deleted"

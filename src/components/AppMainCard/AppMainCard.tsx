@@ -18,6 +18,8 @@ import Playbook from "../../core/interface/playbook";
 import PlaybookService from "../../core/services/playbook.service";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
+import { useAppDispatch } from "../../core/hooks/useRedux";
 
 type CardProps = {
   items: Array<Playbook>;
@@ -41,10 +43,11 @@ const AppMainCard = ({
   onSocialModal,
 }: CardProps) => {
   const { t } = useTranslation();
-  const { ref, isShow, setIsShow } = useOutside(false);
+  const { ref, isShow, setIsShow } = useOutside(false); 
   const navigate = useNavigate();
   let [playbook, setPlaybook]: any = useState(item);
   let [favorited, setFavorited] = useState(item.favorited);
+  const dispatch = useAppDispatch();
 
   const handlePriorityClick = async (item: any) => {
     try {
@@ -89,12 +92,25 @@ const AppMainCard = ({
         "flex flex-wrap bg-white rounded-[8px] border-[1px] border-solid card-border relative":
           true,
       })}>
-      <Link
-        to={`/creating/${item.id}`}
+      <p
+        onClick={() => {
+          const setData = {
+            id: item.id,
+            selected: true,
+            open: true,
+            name: item?.name,
+            type: 'my',
+            status: item?.status
+          };
+          
+          dispatch(setSelectedData(setData));
+          localStorage.setItem("selected_playbook", JSON.stringify(setData));  
+          navigate(`/creating/${item.id}`);      
+        }} 
         className={classNames({
           "w-[100%] h-[180px] rounded-t-[8px] cursor-pointer": typeCard,
           "w-[40px] h-[40px] rounded-[4px]": !typeCard,
-          "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border":
+          "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border cursor-pointer":
             true,
         })}>
         {playbook.header_url && (
@@ -104,7 +120,7 @@ const AppMainCard = ({
             className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]"
           />
         )}
-      </Link>
+      </p>
 
       <div
         className={classNames({
@@ -129,11 +145,24 @@ const AppMainCard = ({
             "w-[calc(100%-28px)]": typeCard,
             "text pl-[12px]": true,
           })}>
-          <Link
-            to={`/creating/${item.id}`}
+          <span
+            onClick={() => {
+              const setData = {
+                id: item.id,
+                selected: true,
+                open: true,
+                name: item?.name,
+                type: 'my',
+                status: item?.status
+              };
+              
+              dispatch(setSelectedData(setData));
+              localStorage.setItem("selected_playbook", JSON.stringify(setData));  
+              navigate(`/creating/${item.id}`);      
+            }} 
             className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title cursor-pointer">
             {playbook.name}
-          </Link>
+          </span>
           <p className="text-[12px] leading-normal text-input-paceholder flex items-baseline">
             {/* {playbook.profile_first_name && (
               <span className="truncate max-w-[calc(100%-60px)] inline-block"> */}

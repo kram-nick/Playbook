@@ -17,6 +17,7 @@ const initialState: AppDataTypes = {
     page_title: "",
     page_id: 0,
     chapters: [],
+    status: ''
   },
   openedPages: [],
 };
