@@ -494,7 +494,7 @@ const HomePage = () => {
           </h2>
           <p className="text-center text-[16px] leading-[26px] text-simple-text max-w-[534px] mx-[auto] mb-[80px] 
             max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
-            {t<string>("HOME.CHART2_TEXT")}
+            {t<string>("HOME.JOB_TEXT")}
           </p>
  
           <img src={chart0} alt="" className="w-[100%] shadow-chart-grow" /> 

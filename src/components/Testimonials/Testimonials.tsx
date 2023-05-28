@@ -17,17 +17,18 @@ const Testimonials = () => {
 
   return (
     <section className="bg-white min-[1024px]:pt-[80px] min-[1024px]:pb-[140px] max-[1024px]:pt-[110px] max-[1024px]:pb-[110px]
-    max-[650px]:pt-[70px] max-[650px]:pb-[80px] overflow-hidden">
+    max-[650px]:pt-[70px] max-[650px]:pb-[80px] overflow-hidden ">
 
       <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
         <h2 className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px] max-w-[670px] mx-[auto]
-            max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]">
+            max-lg:text-[28px] max-lg:leading-[36.4px] mb-[100px] 
+            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
             {t<string>("HOME.WHAT_SAY_TITLE")}
         </h2>
-        <p className="text-center text-[16px] leading-[26px] text-simple-text max-w-[594px] mx-[auto] mb-[100px] 
+        {/* <p className="text-center text-[16px] leading-[26px] text-simple-text max-w-[594px] mx-[auto] mb-[100px] 
           max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
           {t<string>("HOME.WHAT_SAY_TEXT")}
-        </p>
+        </p> */}
 
  
         <Swiper
