@@ -253,6 +253,14 @@ const Sidebar = () => {
           <img src={playbookLogo} alt="playbookLogo" />
         </Link>
 
+        <Link to="/discover" 
+          className="bg-button-submit-footer flex items-center justify-center w-[100%] py-[4px] px-[16px] rounded-[5px]
+            shadow-free-trial h-[38px] gap-[6px] mb-[10px] mt-[30px]">
+          <span className="text-list-title text-[16px] font-medium">
+            {t<string>("MAIN.DISCOVER")}
+          </span>
+        </Link>
+
         <nav
           className={classNames({
             "flex flex-col w-[255px] transition-[opacity] duration-[150ms] ease-in":
@@ -401,7 +409,7 @@ const Sidebar = () => {
               ))}
             </ul>
           )}
-          <hr className="my-[24px]" />
+          <hr className="my-[16px]" />
           <button
             className={classNames({
               "bg-active-playbook  border-top-engineering rounded-[4px] ":

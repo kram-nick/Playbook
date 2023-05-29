@@ -146,3 +146,34 @@ export const SettingsTabs = [
     title: 'Notifications'
   }
 ]
+
+export const DiscoverTabs = [
+  {
+    id: 1,
+    title: 'I’m a'
+  },
+  {
+    id: 2,
+    title: 'Hobbyist'
+  },
+  {
+    id: 3,
+    title: 'First time founder'
+  },
+  {
+    id: 4,
+    title: 'Soloentrepreneur'
+  },
+  {
+    id: 5,
+    title: 'Small Business Owner'
+  },
+  {
+    id: 6,
+    title: 'Product Builder'
+  } ,
+  {
+    id: 7,
+    title: 'Startup Executive'
+  }      
+]

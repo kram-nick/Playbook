@@ -23,6 +23,7 @@ import NewPassword from "../../components/NewPassword";
 import ResetPassword from "../../components/ResetPassword";
 import SignLayout from "../../components/AppLayout/SignLayout";
 import PrivateLayout from "../../components/AppLayout/PrivateLayout";
+import Discover from "../../pages/Discover";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -87,6 +88,10 @@ export const publicRoutes: IRoute[] = [
     path: UIRoutes.HOME,
     element: <HomePage />,
   },
+  {
+    path: UIRoutes.DISCOVER,
+    element: <Discover />,
+  },  
   { path: UIRoutes.TERM_OF_USE, element: <TermsOfUse /> },
 ];
 

@@ -5,6 +5,7 @@ export interface IRoute {
 
 export enum UIRoutes {
   HOME = "home",
+  DISCOVER = "discover",
   SQUEEZE_SALES = "squeeze-sales",
   SQUEEZE_PRODUCT = "squeeze-product",
   SQUEEZE_ENGINEERING = "squeeze-engineering",

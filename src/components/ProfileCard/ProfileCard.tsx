@@ -13,13 +13,14 @@ import { useModal } from "../../core/hooks/useModal";
 
  
 type CardProps = {
-  items:Array<any>,
-  item: any,
-  index: number,
-  typeCard: boolean,
+  items?:Array<any>,
+  item?: any,
+  index?: number,
+  typeCard?: boolean,
+  discover?: boolean,
 }
 
-const ProfileCard = ({items, item, index, typeCard}: CardProps) => { 
+const ProfileCard = ({items, item, index, typeCard, discover}: CardProps) => { 
   const { t } = useTranslation(); 
   const {ref, isShow, setIsShow} = useOutside(false);
    
@@ -40,13 +41,37 @@ const ProfileCard = ({items, item, index, typeCard}: CardProps) => {
   return(
     <>
       <div className={classNames({
-        "w-[calc(50%-10px)] max-[690px]:w-[100%]":typeCard, 
+        "w-[calc(50%-10px)] max-[690px]:w-[100%]":typeCard && !discover, 
         "grid bg-white rounded-[8px] border-[1px] border-solid card-border relative p-[18px] gap-y-[16px]" : true
       })}>
 
         <div className="header">
-          <Link to="/playbook" className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]">{playbook.name}</Link>
-          <p className="text-[16px] text-input-paceholder leading-[26px] max-[690px]:text-[14px]">Viewed 1235 times</p>
+          <Link to="/playbook" className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]">
+            {playbook.name}
+          </Link>
+          {!discover && (
+            <p className="text-[16px] text-input-paceholder leading-[26px] max-[690px]:text-[14px]">Viewed 1235 times</p>
+          )}
+
+          {discover && (
+            <Link
+              to={`/profile`}
+              className="flex items-center gap-[10px] mt-[8px]">
+                <div className="icon w-[24px] h-[24px] overflow-hidden relative rounded-[50%]">
+                  {playbook.profile_image && (
+                    <img
+                      src={playbook.profile_image}
+                      alt="Profile avatar"
+                      className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]"
+                    />
+                  )}
+                </div>
+                <span className="text-input-paceholder text-[16px] tracking-[-0.1px] max-w-[calc(100%-34px)]">
+                  {playbook?.profile_first_name} {playbook?.profile_last_name}
+                </span>
+            </Link>
+          )}          
+           
         </div>
   
         <div className="photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border 
@@ -58,8 +83,9 @@ const ProfileCard = ({items, item, index, typeCard}: CardProps) => {
         </div>
 
         <div className="flex items-center gap-[8px]">
-          <button onClick={()=> toggle()}  className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] border-solid 
-            shadow-free-trial bg-blue-light text-buttons-bg text-[16px] font-medium flex items-center text-center justify-center"  >
+          <button onClick={()=> toggle()}  className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
+            border-solid shadow-free-trial bg-blue-light text-buttons-bg text-[16px] font-medium flex items-center 
+            text-center justify-center"  >
             {t<string>("PROFILE.GET_FREE")}
           </button>
           <button onClick={() => handlePriorityClick()}

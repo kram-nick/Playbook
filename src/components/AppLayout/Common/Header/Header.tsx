@@ -28,23 +28,25 @@ const Header = () => {
           </div> 
           ): (
           <>
-            <div>
-              <button className="font-poppins font-medium text-header-links text-[15px]">
-                {t<string>("COMMON.PRICING")}
-              </button>
-            </div>
-            <div>
-              <button className="font-poppins flex items-center gap-3 text-header-links">
-                <span className="font-poppins font-medium text-[15px]">
-                  {t<string>("COMMON.RESOURCES")}
-                </span>
-                <img
-                  className="cursor-pointer"
-                  src={arrowDown}
-                  alt="arrow down"
-                />
-              </button>
-            </div>
+         
+            <button className="font-poppins font-medium text-header-links text-[15px]">
+              {t<string>("COMMON.PRICING")}
+            </button>
+            <Link to="/discover" className="font-poppins font-medium text-header-links text-[15px]">
+              {t<string>("MAIN.DISCOVER")}
+            </Link>            
+
+            <button className="font-poppins flex items-center gap-3 text-header-links">
+              <span className="font-poppins font-medium text-[15px]">
+                {t<string>("COMMON.RESOURCES")}
+              </span>
+              <img
+                className="cursor-pointer"
+                src={arrowDown}
+                alt="arrow down"
+              />
+            </button>
+   
           </>
           )}
  
