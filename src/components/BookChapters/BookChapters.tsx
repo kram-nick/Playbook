@@ -42,7 +42,7 @@ const BookChapters: React.FC<pagesProps> = ({
 
   const deleteItem = async () => {
     try {
-      await PlaybookService.deletePage(dataContent.id).then((resp) => {
+      await PlaybookService.DeletePage(dataContent.id).then((resp) => {
         // onDelete(dataContent.id);
         toggle();
         isOpenModal = false;
@@ -52,8 +52,8 @@ const BookChapters: React.FC<pagesProps> = ({
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
     }
-  }; 
- 
+  };
+
   const toggleSection = (clickedPage: Data.Page) => {
     if (openedPages.includes(clickedPage.id)) {
       const newopenedPages = openedPages.filter(
@@ -97,22 +97,22 @@ const BookChapters: React.FC<pagesProps> = ({
           </div>
           <div className="border-solid border-[1px] rounded-[5px] flex items-center bg-white relative z-[5]">
             <button
-          
               type="button"
-              onClick={() => {      
+              onClick={() => {
                 const setData = {
                   ...data,
                   page_id: dataContent.id,
                   page_title: dataContent.title,
-                  open: data?.open ? data?.open : true, 
-                  type: data?.type ? data?.type : 'my',
-                  status: dataContent?.status                  
-                }       
-                console.log(dataContent)
-                dispatch(
-                  setSelectedData(setData)
+                  open: data?.open ? data?.open : true,
+                  type: data?.type ? data?.type : "my",
+                  status: dataContent?.status,
+                };
+                console.log(dataContent);
+                dispatch(setSelectedData(setData));
+                localStorage.setItem(
+                  "selected_playbook",
+                  JSON.stringify(setData)
                 );
-                localStorage.setItem('selected_playbook', JSON.stringify(setData));
                 navigate(
                   `/editor/${dataContent?.playbook_id}/${dataContent?.id}`
                 );

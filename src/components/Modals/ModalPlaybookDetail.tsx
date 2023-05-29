@@ -48,11 +48,13 @@ export const colourOptions: readonly ColourOption[] = [
 ];
 
 export default function ModalPlaybookDetail(props: ModalType) {
+  const [activeColor, setActiveColor] = useState<any>(colourOptions[1]);
+
   const { t } = useTranslation();
-  let { isOpenModal, toggle } = useModal();
+
   const navigate = useNavigate();
-  const [reloadData, setReloadData] = useState(true);
-  const [activeColor, setActiveColor]: any = useState(null);
+
+  let { isOpenModal, toggle } = useModal();
 
   const formikForm = useFormik<{
     name: string;
@@ -70,9 +72,10 @@ export default function ModalPlaybookDetail(props: ModalType) {
     initialValues: {
       name: "",
       content: "",
-      color_code: "",
-      header_url: "url",
-      icon_url: "url",
+      color_code: "#0052CC",
+      header_url:
+        "https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1618602532707-3OAII3QVHYKCW3KJ1HJU/cars_boast.jpg",
+      icon_url: "https://cdn-icons-png.flaticon.com/512/4436/4436481.png",
       favorited: false,
       privacy: false,
       category_id: 0,
@@ -97,7 +100,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
         formikForm.setFieldValue("privacy", !formikForm.values.privacy);
         const privacy = !formikForm.values.privacy ? "private" : "public";
 
-        PlaybookService.changePrivacy(
+        PlaybookService.ChangePrivacy(
           { privacy: privacy },
           props?.item?.id
         ).then((response) => {
@@ -108,7 +111,9 @@ export default function ModalPlaybookDetail(props: ModalType) {
         });
       } catch (errors: any) {
         formikForm.setFieldValue("privacy", !formikForm.values.privacy);
-        toast.error(errors?.response?.data?.errors);
+        for (let error in errors?.response?.data?.errors) {
+          toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+        }
       }
     }
   };
@@ -134,14 +139,12 @@ export default function ModalPlaybookDetail(props: ModalType) {
       }
     } else {
       setActiveColor(colourOptions[1]);
-      formikForm.resetForm();
     }
   }, [props?.item]);
 
   function closePopup() {
-    formikForm.resetForm();
-    setActiveColor(null);
     props.toggle();
+    formikForm.resetForm();
     // props.onSave(true);
     // isOpenModal = false;
   }
@@ -150,13 +153,15 @@ export default function ModalPlaybookDetail(props: ModalType) {
     // setLoading(true);
     try {
       values.privacy = values.privacy ? "private" : "public";
-      await PlaybookService.updatePlaybook(values).then((response) => {
+      await PlaybookService.UpdatePlaybook(values).then((response) => {
         props.onSave(true);
         toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
         closePopup();
       });
     } catch (errors: any) {
-      toast.error(errors?.response?.data?.errors);
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+      }
     }
   };
 
@@ -177,7 +182,9 @@ export default function ModalPlaybookDetail(props: ModalType) {
         closePopup();
       });
     } catch (errors: any) {
-      toast.error(errors?.response?.data?.errors);
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+      }
     }
   };
 
@@ -244,28 +251,24 @@ export default function ModalPlaybookDetail(props: ModalType) {
                   border-solid border-[1px] shadow-free-trial min-w-[100%] h-[105px] resize-none
                   leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"></textarea>
                 </div>
+                <div className="form-group">
+                  <label
+                    htmlFor=""
+                    className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+                    {t<string>("FIELDS.COLOR")}
+                  </label>
 
-                {activeColor && (
-                  <div className="form-group">
-                    <label
-                      htmlFor=""
-                      className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
-                      {t<string>("FIELDS.COLOR")}
-                    </label>
-
-                    <Select
-                      className="select-custom h-[40px]"
-                      defaultValue={activeColor}
-                      options={colourOptions}
-                      styles={colourStyles}
-                      onChange={(option) =>
-                        formikForm.setFieldValue("color_code", option.color)
-                      }
-                    />
-                  </div>
-                )}
-
-                <div className="flex items-center rounded-[4px] bg-gray-btn px-[8px] py-[6px] gap-[6px] cursor-pointer">
+                  <Select
+                    className="select-custom h-[40px]"
+                    defaultValue={activeColor}
+                    options={colourOptions}
+                    styles={colourStyles}
+                    onChange={(option) =>
+                      formikForm.setFieldValue("color_code", option.color)
+                    }
+                  />
+                </div>
+                {/* <div className="flex items-center rounded-[4px] bg-gray-btn px-[8px] py-[6px] gap-[6px] cursor-pointer">
                   <img src={icon_banner} alt="" />
                   <span className="text-[14px] tracking-[-0.01px] leading-[20px]">
                     {t<string>("FIELDS.ADD_COVER")}
@@ -278,7 +281,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
                   <span className="text-[14px] tracking-[-0.01px] leading-[20px]">
                     {t<string>("FIELDS.ADD_ICON")}
                   </span>
-                </div>
+                </div> */}
 
                 <label className="flex items-center  w-[100%] justify-between">
                   <span className="text-[16px] text-home-title leading-[20px]">
