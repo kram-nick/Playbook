@@ -11,4 +11,10 @@ export declare namespace Data {
     views: string;
     tags: string;
   }
+
+  interface File {
+    mode: string;
+    file: any;
+    playbook_id: string;
+  }
 }

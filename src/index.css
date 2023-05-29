@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scroll-behavior: smooth
+}
+
 @layer base {
   a {
     @apply cursor-pointer;
@@ -14,11 +18,12 @@
     font-size: 24px;
   }
 
-  input:checked + div {
+  input:checked+div {
     @apply border-blue-500;
     @apply bg-checkbox-bg;
   }
-  input:checked + div svg {
+
+  input:checked+div svg {
     @apply block;
   }
 }
@@ -29,10 +34,12 @@ html:not(.touch-screen) *::-webkit-scrollbar {
   width: 10px;
   height: 4px;
 }
+
 html:not(.touch-screen)::-webkit-scrollbar-track,
 html:not(.touch-screen) *::-webkit-scrollbar-track {
   background: #f5f5f5;
 }
+
 html:not(.touch-screen)::-webkit-scrollbar-thumb,
 html:not(.touch-screen) *::-webkit-scrollbar-thumb {
   background: #d4d4d4;
@@ -55,6 +62,7 @@ html:not(.touch-screen) *::-webkit-scrollbar-thumb {
 .switch {
   position: relative;
 }
+
 .switch-check:after {
   content: "";
   position: absolute;
@@ -67,10 +75,12 @@ html:not(.touch-screen) *::-webkit-scrollbar-thumb {
   border-radius: 15px;
   transition: all 0.2s ease-in;
 }
-input:checked + .switch-check {
+
+input:checked+.switch-check {
   background: #2b71f7;
 }
-input:checked + .switch-check:after {
+
+input:checked+.switch-check:after {
   left: 15px;
 }
 
@@ -78,11 +88,13 @@ input:checked + .switch-check:after {
 .css-1u9des2-indicatorSeparator {
   display: none;
 }
+
 .custom-invite .select-custom {
   position: absolute;
   right: 70px;
   top: 0;
 }
+
 .custom-invite .css-t3ipsp-control,
 .custom-invite .css-13cymwt-control {
   border: 0 !important;
@@ -94,55 +106,67 @@ input:checked + .switch-check:after {
   min-width: 120px;
   max-width: 140px;
 }
+
 .custom-invite .select-custom .css-15lsz6c-indicatorContainer,
 .custom-invite .select-custom .css-1xc3v61-indicatorContainer {
   color: #606266;
   padding: 0;
   margin-left: 4px;
 }
+
 .custom-invite .select-custom .css-qbdosj-Input {
   height: 40px;
   padding: 0;
   margin: 0;
 }
+
 .custom-invite .css-13cymwt-control div:nth-child(1),
 .custom-invite .css-t3ipsp-control div:nth-child(1) {
   padding: 0;
 }
 
-.select-custom > div > div:nth-child(2) > div {
+.select-custom>div>div:nth-child(2)>div {
   color: #242428;
 }
-.select-custom > div:nth-child(3) > div:nth-child(1) {
+
+.select-custom>div:nth-child(3)>div:nth-child(1) {
   padding-left: 16px !important;
 }
+
 .select-custom input {
   color: #242428 !important;
 }
-.select-custom #react-select-3-listbox > div:nth-child(1) > * {
+
+.select-custom #react-select-3-listbox>div:nth-child(1)>* {
   padding-left: 16px !important;
 }
-.select-custom > div {
+
+.select-custom>div {
   min-height: 100%;
 }
+
 /* EmojiPickerReact  */
 .customEmojiPicker .EmojiPickerReact.epr-main {
   padding: 0;
   border: 0;
   border-radius: 0;
 }
+
 .customEmojiPicker .EmojiPickerReact .epr-header-overlay {
   padding: 0 !important;
   margin-bottom: 24px;
 }
+
 .customEmojiPicker .epr-emoji-variation-picker,
 .customEmojiPicker .EmojiPickerReact .epr-emoji-category-label,
 .customEmojiPicker .EmojiPickerReact .epr-category-nav {
   display: none !important;
 }
+
 .customEmojiPicker .EmojiPickerReact .epr-emoji-category-content {
   margin: 0 !important;
 }
+
 .customEmojiPicker .EmojiPickerReact .epr-search-container input.epr-search {
   background-color: #fff !important;
   border: 1px solid #e5e5e5;
@@ -167,15 +191,19 @@ input:checked + .switch-check:after {
   opacity: 1;
   visibility: visible;
 }
+
 .overflow-visible.swiper-horizontal {
   overflow: visible;
 }
-.testimonial-swiper .swiper-slide:nth-child(2n) > div {
+
+.testimonial-swiper .swiper-slide:nth-child(2n)>div {
   transform: rotate(3deg);
 }
+
 .testimonial-swiper .swiper-slide:nth-child(2n) .quote {
   background-color: #ff2b80;
 }
+
 .testimonial-swiper .swiper-slide:nth-child(3n + 3) .quote {
   background-color: #fbcb33;
 }
@@ -194,15 +222,18 @@ input:checked + .switch-check:after {
   box-shadow: 0 0 0 0px rgba(43, 113, 247, 0.2);
   transition: all 0.3s;
 }
+
 .swiper-pagination .swiper-pagination-bullet-active {
   background: #2b71f7;
   box-shadow: 0 0 0 3px rgba(43, 113, 247, 0.2);
 }
+
 @media screen and (max-width: 650px) {
   .testimonial-swiper .swiper-pagination {
     margin-top: 28px;
   }
-  .testimonial-swiper .swiper-slide:nth-child(2n) > div {
+
+  .testimonial-swiper .swiper-slide:nth-child(2n)>div {
     transform: rotate(1.5deg);
   }
 }

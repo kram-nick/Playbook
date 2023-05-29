@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import $api, { APIRoutes } from "../http";
 import RequestsService from "./request.service";
+import { Data } from "../models/data";
 // {"playbook":
 //   {"name":"Sales Playbook",
 //   "url":"https://www.google.com",
@@ -22,7 +23,7 @@ export default class PlaybookService {
     return RequestsService.postMethod<any>(APIRoutes.PLAYBOOKS, formData);
   }
 
-  static async updatePlaybook(data: any): Promise<AxiosResponse<any>> {
+  static async UpdatePlaybook(data: any): Promise<AxiosResponse<any>> {
     const formData = {
       playbook: data,
     };
@@ -32,7 +33,7 @@ export default class PlaybookService {
     );
   }
 
-  static async favorite(
+  static async Favorite(
     id: any,
     favorite: number
   ): Promise<AxiosResponse<any>> {
@@ -46,11 +47,11 @@ export default class PlaybookService {
     );
   }
 
-  static async delete(id: any): Promise<AxiosResponse<any>> {
+  static async Delete(id: any): Promise<AxiosResponse<any>> {
     return RequestsService.deleteMethod<any>(APIRoutes.PLAYBOOKS + "/" + id);
   }
 
-  static async updateChapter(data: any, id: any): Promise<AxiosResponse<any>> {
+  static async UpdateChapter(data: any, id: any): Promise<AxiosResponse<any>> {
     const formData = {
       chapter: data,
     };
@@ -60,8 +61,7 @@ export default class PlaybookService {
     );
   }
 
-
-  static async changePrivacy(data: any, id: any): Promise<AxiosResponse<any>> {
+  static async ChangePrivacy(data: any, id: any): Promise<AxiosResponse<any>> {
     const formData = {
       playbook: data,
     };
@@ -69,40 +69,47 @@ export default class PlaybookService {
       `${APIRoutes.PLAYBOOKS}/${id}`,
       formData
     );
-  }  
+  }
 
-  static async addPage(data: any): Promise<AxiosResponse<any>> {
+  static async AddPage(data: any): Promise<AxiosResponse<any>> {
     const formData = {
       page: data,
     };
     return RequestsService.postMethod<any>(APIRoutes.PAGES, formData);
   }
 
-  static async updatePage(id: string, data: any): Promise<AxiosResponse<any>> {
+  static async UpdatePage(id: string, data: any): Promise<AxiosResponse<any>> {
     const formData = {
       page: data,
     };
     return RequestsService.putMethod<any>(`${APIRoutes.PAGES}/${id}`, formData);
   }
 
-  static async deletePage(id: any): Promise<AxiosResponse<any>> {
+  static async DeletePage(id: any): Promise<AxiosResponse<any>> {
     return RequestsService.deleteMethod<any>(`${APIRoutes.PAGES}/${id}`);
   }
 
-  static async search(search: string): Promise<AxiosResponse<any>> {
+  static async Search(search: string): Promise<AxiosResponse<any>> {
     return RequestsService.getMethod<any>(
       APIRoutes.SEARCH + "?search=" + search
     );
   }
 
-  static async publishPlaybook(id: string): Promise<AxiosResponse<any>> {
+  static async PublishPlaybook(id: string): Promise<AxiosResponse<any>> {
     const formData = {
       playbook: {
-        status: 'published'
+        status: "published",
       },
     };
-    return RequestsService.putMethod<any>(`${APIRoutes.PLAYBOOKS}/${id}`, formData);
-  }  
+    return RequestsService.putMethod<any>(
+      `${APIRoutes.PLAYBOOKS}/${id}`,
+      formData
+    );
+  }
+
+  static async UploadFile(data: Data.File): Promise<AxiosResponse<any>> {
+    return RequestsService.postMethod<any>(`${APIRoutes.FILE_UPLOAD}`, data);
+  }
 
   // static async getPages(
   //   id: string,

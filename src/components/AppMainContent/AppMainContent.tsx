@@ -93,7 +93,7 @@ const AppMainContent = () => {
 
   const deleteItem = async (item?: any) => {
     try {
-      const response = await PlaybookService.delete(item.id);
+      const response = await PlaybookService.Delete(item.id);
       if (response) {
         toast.success(t<string>("MAIN.DELETE_SUCCESS"));
         setReloadData(true);
@@ -102,7 +102,9 @@ const AppMainContent = () => {
         toggle();
       }
     } catch (errors: any) {
-      toast.error(errors?.response?.data?.errors);
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+      }
     }
   };
 

@@ -43,7 +43,7 @@ const AppMainCard = ({
   onSocialModal,
 }: CardProps) => {
   const { t } = useTranslation();
-  const { ref, isShow, setIsShow } = useOutside(false); 
+  const { ref, isShow, setIsShow } = useOutside(false);
   const navigate = useNavigate();
   let [playbook, setPlaybook]: any = useState(item);
   let [favorited, setFavorited] = useState(item.favorited);
@@ -51,7 +51,7 @@ const AppMainCard = ({
 
   const handlePriorityClick = async (item: any) => {
     try {
-      const response = await PlaybookService.favorite(
+      const response = await PlaybookService.Favorite(
         item.id,
         item.favorited ? 0 : 1
       );
@@ -99,14 +99,14 @@ const AppMainCard = ({
             selected: true,
             open: true,
             name: item?.name,
-            type: 'my',
-            status: item?.status
+            type: "my",
+            status: item?.status,
           };
-          
+
           dispatch(setSelectedData(setData));
-          localStorage.setItem("selected_playbook", JSON.stringify(setData));  
-          navigate(`/creating/${item.id}`);      
-        }} 
+          localStorage.setItem("selected_playbook", JSON.stringify(setData));
+          navigate(`/creating/${item.id}`);
+        }}
         className={classNames({
           "w-[100%] h-[180px] rounded-t-[8px] cursor-pointer": typeCard,
           "w-[40px] h-[40px] rounded-[4px]": !typeCard,
@@ -152,14 +152,17 @@ const AppMainCard = ({
                 selected: true,
                 open: true,
                 name: item?.name,
-                type: 'my',
-                status: item?.status
+                type: "my",
+                status: item?.status,
               };
-              
+
               dispatch(setSelectedData(setData));
-              localStorage.setItem("selected_playbook", JSON.stringify(setData));  
-              navigate(`/creating/${item.id}`);      
-            }} 
+              localStorage.setItem(
+                "selected_playbook",
+                JSON.stringify(setData)
+              );
+              navigate(`/creating/${item.id}`);
+            }}
             className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title cursor-pointer">
             {playbook.name}
           </span>

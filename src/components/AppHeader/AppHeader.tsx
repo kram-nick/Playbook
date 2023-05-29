@@ -25,7 +25,7 @@ const AppHeader = ({ profile }: HeaderProps) => {
   const dispatch = useAppDispatch();
 
   const handleSubmit = (values: any) => {
-    PlaybookService.search(values?.search)
+    PlaybookService.Search(values?.search)
       .then((response) => {
         dispatch(
           setSearch({
