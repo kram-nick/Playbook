@@ -1,16 +1,21 @@
-import { useTranslation } from "react-i18next";
-import logo from "../../assets/photos/sign/logo.svg";
-import icon_google from "../../assets/photos/sign/g_logo.svg";
-import icon_hide from "../../assets/icon-hide.svg";
-import icon_show from "../../assets/icon-show.svg";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useFormik } from "formik";
+import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
-import AuthService from "../../core/services/auth.service";
+import { useFormik } from "formik";
+import { useGoogleLogin } from "@react-oauth/google";
+
 import classNames from "classnames";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import logo from "../../assets/photos/sign/logo.svg";
+import icon_hide from "../../assets/icon-hide.svg";
+import icon_google from "../../assets/photos/sign/g_logo.svg";
+import icon_show from "../../assets/icon-show.svg";
+
+import AuthService from "../../core/services/auth.service";
 import { PrivateUIRoutes } from "../../core/router";
 
 const SignIn = () => {
@@ -46,32 +51,16 @@ const SignIn = () => {
     },
   });
 
-  // const handleGoogleSignIn = async (values: any) => {
-  //   setLoading(true);
-  //   try {
-  //     const encoded_values: Auth.GoogleLogin = jwtDecode(values.credential);
-  //     const response = await AuthService.loginGoogle(encoded_values);
-  //     localStorage.setItem(
-  //       process.env.REACT_APP_TOKEN_KEY,
-  //       response.data.payload.token
-  //     );
-
-  // localStorage.setItem(
-  //   process.env.REACT_APP_TOKEN_KEY,
-  //   response.data.payload.token
-  // );
-  //     // dispatch(setIsAuth(true));
-  //     setLoading(false);
-  //     localStorage.removeItem("prevPage");
-  //     document.body.style.overflowY = "scroll";
-  //     formikForm.resetForm();
-  //     dispatch(setModal(false));
-  //   } catch (errors: any) {
-  //     setLoading(false);
-  //     CommonService.showErrors(errors?.response?.data?.payload);
-  //     toast.error(errors?.response?.data?.message);
-  //   }
-  // };
+  const handleGoogleSignIn = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      try {
+        await AuthService.loginGoogle(codeResponse.code);
+      } catch (errors: any) {
+        console.log(errors);
+      }
+    },
+    flow: "auth-code",
+  });
 
   const handleSubmitForm = async (values: any) => {
     setLoading(true);
@@ -139,6 +128,7 @@ const SignIn = () => {
           </h1>
 
           <button
+            onClick={handleGoogleSignIn}
             className="flex justify-center w-full mb-[32px] py-[10px] px-[26px] 
             rounded-[5px] shadow-free-trial
             border-solid border-[1px]  border-r-header-bottom

@@ -3,6 +3,7 @@ import axios from "axios";
 export const APIRoutes = {
   AUTH_LOGIN: "/api/users/login",
   AUTH_CREATE: "/api/users/create",
+  AUTH_GOOGLE: "/api/auth/google/token",
   PLAYBOOKS: "/api/playbooks",
   PLAYBOOKS_FAVORITE: "/api/playbooks/favorite",
   PAGES: "/api/pages",

@@ -77,9 +77,10 @@ const BookBanner = ({ preview, data }: BookBannerProps) => {
             <input
               className="hidden"
               onChange={(event) => {
-                if (event?.target?.files) {
+                event.preventDefault();
+                if (event.target.files) {
                   handleUpload(
-                    event?.target?.files[0],
+                    event.target.files[0],
                     FileMode.PLAYBOOK_HEADER_IMAGE
                   );
                 }
