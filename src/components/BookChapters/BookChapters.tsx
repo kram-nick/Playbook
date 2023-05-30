@@ -32,6 +32,8 @@ const BookChapters: React.FC<pagesProps> = ({
   dataContent,
   index,
 }) => {
+  const [dragging, setDragging] = useState(false);
+
   const { t } = useTranslation();
   let { isOpenModal, toggle } = useModal();
   const { data, openedPages } = useAppSelector((state) => state.app);
@@ -65,8 +67,23 @@ const BookChapters: React.FC<pagesProps> = ({
     }
   };
 
+  const dragStart = () => {
+    setDragging(true);
+  };
+
+  const dragEnd = () => {
+    setDragging(false);
+  };
+
   return (
-    <div className="relative font-poppins pb-[12px]">
+    <div
+      className={classNames({
+        "relative font-poppins pb-[12px] item": true,
+        "dragging opacity-30": dragging,
+      })}
+      draggable={true}
+      onDragStart={dragStart}
+      onDragEnd={dragEnd}>
       <div
         className="rounded-[8px] bg-white mb-[12px] border-[1px] border-solid border-header-bottom"
         key={index}>

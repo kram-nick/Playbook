@@ -1,6 +1,6 @@
 import Header from "../AppLayout/PrivateLayout/Header";
 import plus from "../../assets/photos/chapter/icon-plus.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import BookBanner from "../BookBanner";
 import { useTranslation } from "react-i18next";
@@ -29,12 +29,27 @@ const ContentChapters = () => {
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${playbook_id}/pages`, {
     resolve: (response: any) => {
       if (response) {
-        console.log(response)
+        console.log(response);
         setData(response?.data);
       }
     },
     dependencies: [playbook_id, reloadChecker],
   });
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    const list: any = document.querySelector(".list");
+    const draggingItem = document.querySelector(".dragging");
+
+    const siblings = [...list?.querySelectorAll(".item:not(.dragging)")];
+
+    const nextSibling = siblings.find((sibling) => {
+      return event.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+    });
+
+    list.insertBefore(draggingItem, nextSibling);
+  };
 
   return (
     <div className="w-full flex-1">
@@ -54,13 +69,18 @@ const ContentChapters = () => {
             ? playbook?.data?.name
             : t<string>("CREATE.UNTITLED")}
         </h1>
-        {data?.map((chapter: any, index: number) => (
-          <BookChapters
-            dataContent={chapter ? chapter : null}
-            index={index}
-            key={chapter?.id}
-          />
-        ))}
+        <div
+          onDragOver={handleDragOver}
+          onDragEnter={(e) => e.preventDefault()}
+          className="list">
+          {data?.map((chapter: any, index: number) => (
+            <BookChapters
+              dataContent={chapter ? chapter : null}
+              index={index}
+              key={chapter?.id}
+            />
+          ))}
+        </div>
 
         <button
           className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg"
