@@ -1,13 +1,16 @@
-import playbookLogo from "../../../../assets/photos/squeeze/mob-logo.svg";
-import arrowDown from "../../../../assets/photos/home/arrow-down.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+import playbookLogo from "../../../../assets/photos/squeeze/mob-logo.svg";
+import arrowDown from "../../../../assets/photos/home/arrow-down.svg";
 import arrow_down from "../../assets/photos/main/arrow-down.svg";
 import HeaderProfile from "../../../HeaderProfile";
+import useAuth from "../../../../core/hooks/useAuth";
 
 const Header = () => {
   const { t } = useTranslation();
-  const token = localStorage.getItem(process.env.REACT_APP_TOKEN_KEY);
+  const { isAuth } = useAuth();
+
   return (
     <div className="min-[325px]:hidden lg:flex justify-between items-center px-[7vw] pt-[30px] pb-[20px]">
       <div>
@@ -17,11 +20,12 @@ const Header = () => {
           </Link>
 
           <div className="flex align-middle gap-[32px] items-center">
-            {token ? (
+            {isAuth ? (
               <div>
                 <Link
                   to="/main"
-                  className="font-poppins font-medium text-header-links text-[15px]">
+                  className="font-poppins font-medium text-header-links text-[15px]"
+                >
                   {t<string>("HOME.HOME")}
                 </Link>
               </div>
@@ -30,13 +34,17 @@ const Header = () => {
                 <div>
                   <a
                     href="#pricing"
-                    className="font-poppins font-medium text-header-links text-[15px]">
+                    className="font-poppins font-medium text-header-links text-[15px]"
+                  >
                     {t<string>("COMMON.PRICING")}
                   </a>
                 </div>
-                <Link to="/discover" className="font-poppins font-medium text-header-links text-[15px]">
+                <Link
+                  to="/discover"
+                  className="font-poppins font-medium text-header-links text-[15px]"
+                >
                   {t<string>("MAIN.DISCOVER")}
-                </Link> 
+                </Link>
                 <div>
                   <button className="font-poppins flex items-center gap-3 text-header-links">
                     <span className="font-poppins font-medium text-[15px]">
@@ -55,7 +63,7 @@ const Header = () => {
         </div>
       </div>
 
-      {token ? (
+      {isAuth ? (
         <HeaderProfile />
       ) : (
         <div className="flex gap-[42px]">
@@ -71,7 +79,8 @@ const Header = () => {
           </Link>
           <Link
             to="/sign-up"
-            className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color">
+            className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color"
+          >
             <span className="font-semibold font-poppins leading-[22px]">
               {t<string>("COMMON.GET_STARTED")}
             </span>

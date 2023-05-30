@@ -108,7 +108,24 @@ export default class PlaybookService {
   }
 
   static async UploadFile(data: Data.File): Promise<AxiosResponse<any>> {
-    return RequestsService.postMethod<any>(`${APIRoutes.FILE_UPLOAD}`, data);
+    const formData = new FormData();
+    formData.append("mode", data.mode);
+    formData.append("file", data.file);
+    formData.append("playbook_id", data.playbook_id);
+
+    return RequestsService.postMethod<any>(
+      `${APIRoutes.FILE_UPLOAD}`,
+      formData
+    );
+  }
+
+  static async CreateOrder(data: {
+    listing_id: string;
+  }): Promise<AxiosResponse<any>> {
+    const order = {
+      order: data,
+    };
+    return RequestsService.postMethod<any>(`${APIRoutes.ORDERS}`, order);
   }
 
   // static async getPages(
