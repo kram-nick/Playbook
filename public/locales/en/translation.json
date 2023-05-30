@@ -225,7 +225,8 @@
     "DELETE_SUCCESS": "The Playbook has been successfully deleted",
     "DELETE_PAGE_SUCCESS": "The Page has been successfully deleted",
     "DISCOVER": "Discover",
-    "DISCOVER_TITLE": "Discover playbooks that help you execute and get results."
+    "DISCOVER_TITLE": "Discover playbooks that help you execute and get results.",
+    "PLEASE_SELECT": "Please select"
   },
   "EDIT": {
     "SECTION_NAME": "Section Name",
@@ -235,6 +236,7 @@
     "NAME_REQUIRED": "Name is required",
     "CONTENT_REQUIRED": "Content is required",
     "EMAIL_REQUIRED": "Email is required",
+    "INVALID_EMAIL": "Invalid Email",
     "PASSWORD_REQUIRED": "Password is required",
     "MIN_4": "Minimum 4 symbols",
     "MIN_8": "Minimum 8 symbols",

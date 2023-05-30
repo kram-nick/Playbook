@@ -10,6 +10,7 @@ export const APIRoutes = {
   SEARCH: "/api/search",
   FILE_UPLOAD: "/api/files/upload",
   ORDERS: "/api/orders",
+  USERS_ACCOUNT: "/api/users/account",
 };
 
 const $api = axios.create({
