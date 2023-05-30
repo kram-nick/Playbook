@@ -16,6 +16,13 @@ import { Data } from "../models/data";
 //   "content":""}
 // }
 export default class PlaybookService {
+  static async updateUserAccount(data: any): Promise<AxiosResponse<any>> {
+    const formData = {
+      playbook: data,
+    };
+    return RequestsService.postMethod<any>(APIRoutes.USERS_ACCOUNT, formData);
+  }
+
   static async createPlaybook(data: any): Promise<AxiosResponse<any>> {
     const formData = {
       playbook: data,

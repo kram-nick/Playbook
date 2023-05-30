@@ -9,6 +9,7 @@ import icon_add from "../../assets/photos/main/plus-upload.svg";
 import upload from "../../assets/photos/main/upload.svg";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
+import { useNavigate } from "react-router-dom";
 export interface selectOption {
   readonly value: string;
   readonly label: string;
@@ -30,6 +31,7 @@ export const countryOptions: readonly selectOption[] = [
 const MainContent = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(SettingsTabs[0]);
+  const navigate = useNavigate();
 
   const valueFormValidationSchema = Yup.object().shape({
     email: Yup.string().email(t<string>("ERRORS.INVALID_EMAIL")),
@@ -131,6 +133,9 @@ const MainContent = () => {
               <button
                 className="min-w-[130px] h-[38px] flex items-center justify-center px-[15px] bg-white rounded-[5px] text-home-title
                 text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
+                onClick={() => {
+                  navigate("/");
+                }}
               >
                 {t<string>("BTNS.CANCEL")}
               </button>
@@ -219,11 +224,11 @@ const MainContent = () => {
             >
               {formikForm.values.profile_image ? (
                 <div
-                  className="relative 
-                w-[80px] h-[80px] rounded-[50%]"
+                  className="
+                w-[80px] h-[80px] rounded-[50%] overflow-hidden"
                 >
                   <img
-                    className="w-[100%] h-[100%] rounded-[50%] object-cover"
+                    className="w-[100%] h-[100%] object-cover"
                     src={formikForm.values.profile_image}
                     alt=""
                   />
