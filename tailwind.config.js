@@ -60,6 +60,8 @@ module.exports = {
         "payment-checkbox": "#F5FAFF",
         "payment-second-title": "#242428",
         "border-apply": "rgba(43, 113, 247, 0.04);",
+        "accent-pay-code": "#47B5FF",
+        "order-main": "#272D37",
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
@@ -78,9 +80,10 @@ module.exports = {
         "chart-mobile":
           "-3.87497px 1.72221px 95.5825px rgba(135, 135, 135, 0.25), 0px 0px 0px 3.87497px rgba(71, 181, 255, 0.1);",
         "chart-grow": "-10px 6px 34px rgba(50, 50, 61, 0.04)",
+        "playbook-md": "-7.94729px 3.17892px 38.147px rgba(54, 54, 62, 0.09)",
         review: "-4px -4px 27px rgba(38, 37, 47, 0.05)",
         pricing: "0 0 0 8px rgba(71, 181, 255, 0.12)",
-        "playbook-md": "-7.94729px 3.17892px 38.147px rgba(54, 54, 62, 0.09)",
+        "payment-btn": "0px 1px 2px rgba(16, 24, 40, 0.04)",
       },
       backgroundImage: {
         sign: "url('./assets/photos/sign/bg-sign.svg')",

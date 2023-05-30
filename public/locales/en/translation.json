@@ -317,6 +317,17 @@
     "FULL_NAME": "Full Name",
     "INPUT_TEXT": "Input text",
     "APPLY": "Apply",
-    "PAY_NOW": "Pay  Now"
+    "PAY_NOW": "Pay  Now",
+    "THANK_YOU_MSSG": "Thank you for your order!",
+    "YOUR_NUMBER": "Your order number is",
+    "CONFIRM_MSSG": "We’ll send your confirmation to",
+    "CAUTION_MSSG": "It might not arrive immediately. Make sure to check your spam folder.",
+    "VISIT_BTN": "Visit your playbook",
+    "WRONG_MSSG": "Something went wrong!",
+    "UNSUCCESS_MSSG": "Payment was unsuccessful",
+    "LI_ITEM_1": "Verify Payment Information",
+    "LI_ITEM_2": "Refresh and Retry",
+    "LI_ITEM_3": "Contact your card issuer",
+    "AGAIN_BTN": "Try Again"
   }
 }
