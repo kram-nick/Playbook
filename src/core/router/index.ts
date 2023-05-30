@@ -22,8 +22,8 @@ export enum PrivateUIRoutes {
   Create = "editor",
   Chapters = "creating",
   Preview = "preview",
-  PreviewChapter = 'preview-chapter',
-  Profile = 'profile',
-  CardDetail = 'playbook',
-  Settings = 'settings',
+  PreviewChapter = "preview-chapter",
+  Profile = "profile",
+  CardDetail = "playbook",
+  Settings = "settings",
 }

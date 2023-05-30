@@ -224,8 +224,8 @@
     "UPDATE_PRIVACY_SUCCESS": "The Playbook privacy has been successfully updated",
     "DELETE_SUCCESS": "The Playbook has been successfully deleted",
     "DELETE_PAGE_SUCCESS": "The Page has been successfully deleted",
-    "DISCOVER":"Discover",
-    "DISCOVER_TITLE":"Discover playbooks that help you execute and get results."
+    "DISCOVER": "Discover",
+    "DISCOVER_TITLE": "Discover playbooks that help you execute and get results."
   },
   "EDIT": {
     "SECTION_NAME": "Section Name",
@@ -296,5 +296,19 @@
     "LAST_NAME": "Last name",
     "PHOTO_SIZE": "SVG, PNG, JPG or GIF (max. 800x400px)",
     "UPLOAD": "Upload file"
+  },
+
+  "PAYMENT": {
+    "THANK_YOU_MSSG": "Thank you for your order!",
+    "YOUR_NUMBER": "Your order number is",
+    "CONFIRM_MSSG": "We’ll send your confirmation to",
+    "CAUTION_MSSG": "It might not arrive immediately. Make sure to check your spam folder.",
+    "VISIT_BTN": "Visit your playbook",
+    "WRONG_MSSG": "Something went wrong!",
+    "UNSUCCESS_MSSG": "Payment was unsuccessful",
+    "LI_ITEM_1": "Verify Payment Information",
+    "LI_ITEM_2": "Refresh and Retry",
+    "LI_ITEM_3": "Contact your card issuer",
+    "AGAIN_BTN": "Try Again"
   }
 }

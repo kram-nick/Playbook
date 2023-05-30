@@ -55,7 +55,9 @@ module.exports = {
         "chapter-color": "#F6F6F6",
         "option-btn": "#E3E3E3",
         "chart-color": "#47B5FF",
-        "error-color": "#de0f0f"
+        "error-color": "#de0f0f",
+        "accent-pay-code": "#47B5FF",
+        "order-main": "#272D37",
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
@@ -73,7 +75,8 @@ module.exports = {
         "chart-grow": "-10px 6px 34px rgba(50, 50, 61, 0.04)",
         "review": "-4px -4px 27px rgba(38, 37, 47, 0.05)",
         "pricing": "0 0 0 8px rgba(71, 181, 255, 0.12)",
-        "playbook-md": "-7.94729px 3.17892px 38.147px rgba(54, 54, 62, 0.09)"
+        "playbook-md": "-7.94729px 3.17892px 38.147px rgba(54, 54, 62, 0.09)",
+        "payment-btn": "0px 1px 2px rgba(16, 24, 40, 0.04)"
       },
       backgroundImage: {
         "sign": "url('./assets/photos/sign/bg-sign.svg')",
