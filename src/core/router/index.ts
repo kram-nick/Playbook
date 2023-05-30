@@ -15,6 +15,7 @@ export enum UIRoutes {
   SIGN_UP = "sign-up",
   NEW_PASSWORD = "create-password",
   RESET_PASSWORD = "reset-password",
+  PAYMENT = "payment",
 }
 
 export enum PrivateUIRoutes {
@@ -22,8 +23,8 @@ export enum PrivateUIRoutes {
   Create = "editor",
   Chapters = "creating",
   Preview = "preview",
-  PreviewChapter = 'preview-chapter',
-  Profile = 'profile',
-  CardDetail = 'playbook',
-  Settings = 'settings',
+  PreviewChapter = "preview-chapter",
+  Profile = "profile",
+  CardDetail = "playbook",
+  Settings = "settings",
 }

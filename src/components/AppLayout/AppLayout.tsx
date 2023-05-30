@@ -15,11 +15,11 @@ const AppLayout = () => {
         <TermsHeader />
       ) : (
         <Header />
-      )} 
+      )}
       <Mobile />
-            
+
       <Outlet />
-      <Footer />
+      {location.pathname.slice(1) !== "payment" && <Footer />}
       <ToastContainer />
     </>
   );

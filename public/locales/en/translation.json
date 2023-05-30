@@ -224,8 +224,8 @@
     "UPDATE_PRIVACY_SUCCESS": "The Playbook privacy has been successfully updated",
     "DELETE_SUCCESS": "The Playbook has been successfully deleted",
     "DELETE_PAGE_SUCCESS": "The Page has been successfully deleted",
-    "DISCOVER":"Discover",
-    "DISCOVER_TITLE":"Discover playbooks that help you execute and get results."
+    "DISCOVER": "Discover",
+    "DISCOVER_TITLE": "Discover playbooks that help you execute and get results."
   },
   "EDIT": {
     "SECTION_NAME": "Section Name",
@@ -296,5 +296,27 @@
     "LAST_NAME": "Last name",
     "PHOTO_SIZE": "SVG, PNG, JPG or GIF (max. 800x400px)",
     "UPLOAD": "Upload file"
+  },
+  "PAYMENT": {
+    "BACK": "Back",
+    "PAYMENT_TITLE": "Select payment method",
+    "PAYPAL": "PayPal",
+    "CREDIT_OR_DEBIT_CARD": "Credit / Debit Card",
+    "HAVE_TO_PAY": "You have to pay",
+    "PAYMENT_INVOICE": "Payment & Invoice",
+    "PAY_DESCRIPTION": "We will take care about all your payments. You can relax While you make your clients happily.",
+    "YEAR_PLAN": "Yearly Subscription Plan",
+    "PLAN_DESC": "We will take care about all your payments. You can relax While you make your clients happily.",
+    "CHANGE": "Change",
+    "PAYMENT": "Payment",
+    "HOLDER_NAME": "Card Holder Name",
+    "CARD_NUMBER": "Card Number",
+    "EXPIRY_DATE": "Expiry date",
+    "CVV": "CVV",
+    "DISCOUNT_COUPON": "Discount Coupon (Optional)",
+    "FULL_NAME": "Full Name",
+    "INPUT_TEXT": "Input text",
+    "APPLY": "Apply",
+    "PAY_NOW": "Pay  Now"
   }
 }

@@ -1,17 +1,20 @@
+import { useState } from "react";
+import { PrivateUIRoutes, UIRoutes } from "../../core/router";
 import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { useGoogleLogin } from "@react-oauth/google";
+
+import "react-toastify/dist/ReactToastify.css";
+import * as Yup from "yup";
+import AuthService from "../../core/services/auth.service";
+import classNames from "classnames";
+
 import logo from "../../assets/photos/sign/logo.svg";
 import icon_google from "../../assets/photos/sign/g_logo.svg";
 import icon_hide from "../../assets/icon-hide.svg";
 import icon_show from "../../assets/icon-show.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import AuthService from "../../core/services/auth.service";
-import classNames from "classnames";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { PrivateUIRoutes, UIRoutes } from "../../core/router";
-import { useState } from "react";
 
 const SignIn = () => {
   const { t } = useTranslation();
@@ -48,6 +51,33 @@ const SignIn = () => {
     onSubmit: async (values: any) => {
       handleSubmitForm(values);
     },
+  });
+
+  const handleGoogleSignIn = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      try {
+        const response = await AuthService.loginGoogle(
+          codeResponse.access_token
+        );
+        localStorage.setItem(
+          process.env.REACT_APP_TOKEN_KEY,
+          response.data.data.token
+        );
+
+        const user = response.data.data.user;
+        localStorage.setItem("user", JSON.stringify(user));
+
+        if (response.data.data.token) {
+          setTimeout(() => {
+            setLoading(false);
+            navigate("/" + PrivateUIRoutes.Main);
+          }, 300);
+        }
+      } catch (errors: any) {
+        console.log(errors);
+      }
+    },
+    flow: "implicit",
   });
 
   const handleSubmitForm = async (values: any) => {
@@ -97,6 +127,7 @@ const SignIn = () => {
           </h1>
 
           <button
+            onClick={() => handleGoogleSignIn()}
             className="flex justify-center w-full mb-[32px] py-[10px] px-[26px] 
             rounded-[5px] shadow-free-trial
             border-solid border-[1px]  border-r-header-bottom
