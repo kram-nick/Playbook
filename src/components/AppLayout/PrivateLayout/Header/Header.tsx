@@ -9,7 +9,7 @@ import {
   useAppSelector,
 } from "../../../../core/hooks/useRedux";
 import classNames from "classnames";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setSelectedData } from "../../../../core/store/reducers/app/appDataSlice";
 import PlaybookService from "../../../../core/services/playbook.service";
 import { toast } from "react-toastify";

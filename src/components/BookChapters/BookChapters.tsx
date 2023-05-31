@@ -8,7 +8,7 @@ import { Chapters } from "../../core/constants/sidebar";
 import classNames from "classnames";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import PlaybookService from "../../core/services/playbook.service";
 import ModalDelete from "../Modals/ModalDelete";
@@ -33,6 +33,8 @@ const BookChapters: React.FC<pagesProps> = ({
   index,
 }) => {
   const [dragging, setDragging] = useState(false);
+
+  const { playbook_id } = useParams();
 
   const { t } = useTranslation();
   let { isOpenModal, toggle } = useModal();
@@ -73,6 +75,22 @@ const BookChapters: React.FC<pagesProps> = ({
 
   const dragEnd = () => {
     setDragging(false);
+
+    let arr: any = [];
+
+    document.querySelectorAll(".item").forEach((elem: any) => {
+      arr.push(elem.id);
+    });
+
+    handleOrder(arr);
+  };
+
+  const handleOrder = async (arr: string[]) => {
+    try {
+      await PlaybookService.UpdatePlaybookOrder(String(playbook_id), arr);
+    } catch (error) {
+      // console.log(error);
+    }
   };
 
   return (
@@ -81,6 +99,7 @@ const BookChapters: React.FC<pagesProps> = ({
         "relative font-poppins pb-[12px] item": true,
         "dragging opacity-30": dragging,
       })}
+      id={dataContent.id}
       draggable={true}
       onDragStart={dragStart}
       onDragEnd={dragEnd}>

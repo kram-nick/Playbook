@@ -1,6 +1,6 @@
 import Header from "../AppLayout/PrivateLayout/Header";
 import plus from "../../assets/photos/chapter/icon-plus.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import BookBanner from "../BookBanner";
 import { useTranslation } from "react-i18next";
@@ -15,9 +15,12 @@ import { setOpenedPages } from "../../core/store/reducers/app/appDataSlice";
 const ContentChapters = () => {
   const { t } = useTranslation();
   const [data, setData]: any = useState(null);
+
   const { playbook_id } = useParams();
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const { reloadChecker } = useAppSelector((state) => state.helpers);
   const { fetchedData: playbook } = useHttpGet<any>(
     `${APIRoutes.PLAYBOOKS}/${playbook_id}`,
@@ -29,7 +32,6 @@ const ContentChapters = () => {
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${playbook_id}/pages`, {
     resolve: (response: any) => {
       if (response) {
-        console.log(response);
         setData(response?.data);
       }
     },

@@ -114,6 +114,21 @@ export default class PlaybookService {
     );
   }
 
+  static async UpdatePlaybookOrder(
+    id: string,
+    data: string[]
+  ): Promise<AxiosResponse<any>> {
+    const formData = {
+      playbook: {
+        order: data,
+      },
+    };
+    return RequestsService.putMethod<any>(
+      `${APIRoutes.PLAYBOOK_ENTITY}/${id}`,
+      formData
+    );
+  }
+
   static async UploadFile(data: Data.File): Promise<AxiosResponse<any>> {
     const formData = new FormData();
     formData.append("mode", data.mode);
