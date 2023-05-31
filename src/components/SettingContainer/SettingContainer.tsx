@@ -10,6 +10,9 @@ import upload from "../../assets/photos/main/upload.svg";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import PlaybookService from "../../core/services/playbook.service";
+import { Data } from "../../core/models/data";
 export interface selectOption {
   readonly value: string;
   readonly label: string;
@@ -31,20 +34,22 @@ export const countryOptions: readonly selectOption[] = [
 const MainContent = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(SettingsTabs[0]);
+  const [profileImage, setProfileImage] = useState<null | File>(null);
   const navigate = useNavigate();
 
   const valueFormValidationSchema = Yup.object().shape({
-    email: Yup.string().email(t<string>("ERRORS.INVALID_EMAIL")),
+    first_name: Yup.string().required(t<string>("ERRORS.NOT_EMPTY")),
+    last_name: Yup.string().required(t<string>("ERRORS.NOT_EMPTY")),
+    username: Yup.string().required(t<string>("ERRORS.NOT_EMPTY")),
   });
 
-  useHttpGet<any>(APIRoutes.USERS_ACCOUNT, {
+  const { fetchedData: userInfo } = useHttpGet<any>(APIRoutes.USERS_ACCOUNT, {
     resolve: (response: any) => {
-      console.log(response?.data);
       if (response) {
         for (let key in response?.data) {
-          response?.data[key]
-            ? formikForm.setFieldValue(key, response?.data[key])
-            : formikForm.setFieldValue(key, "");
+          if (formikForm.values.hasOwnProperty(key)) {
+            formikForm.setFieldValue(key, response?.data[key]);
+          }
         }
       }
     },
@@ -55,30 +60,61 @@ const MainContent = () => {
   const formikForm = useFormik<{
     first_name: string;
     last_name: string;
+    username: string;
+    profile_image: string;
     email: string;
-    bio: string;
     timezone: string;
     country_code: string;
-    profile_image: string;
     title: string;
+    bio: string;
   }>({
     initialValues: {
       first_name: "",
       last_name: "",
+      username: "",
+      profile_image: "",
       email: "",
-      bio: "",
       timezone: "",
       country_code: "",
-      profile_image: "",
       title: "",
+      bio: "",
     },
     validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      // handleSubmitForm(values);
+      delete values.email;
+
+      for (let item in values) {
+        if (values[item] !== userInfo.data[item]) {
+          handleSubmit({
+            ...values,
+            profile_image: profileImage || values.profile_image,
+          });
+          return;
+        }
+      }
+
+      toast.warn("Nothing wasn't updated.");
     },
   });
 
-  console.log(formikForm.values.country_code);
+  const handleSubmit = async (values: Data.UserAccount) => {
+    try {
+      await PlaybookService.updateUserAccount(values);
+      toast.success("User account successfully updated!");
+    } catch (errors: any) {
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+      }
+    }
+  };
+
+  const photoUploader = (file: File) => {
+    if (file) {
+      setProfileImage(file);
+      const fileUrl = URL.createObjectURL(file);
+      formikForm.setFieldValue("profile_image", fileUrl);
+    }
+  };
 
   return (
     <>
@@ -161,13 +197,21 @@ const MainContent = () => {
               >
                 {t<string>("SETTINGS.FIRST_NAME")}
               </label>
-              <input
-                placeholder={t<string>("SETTINGS.FIRST_NAME")}
-                className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+              <div>
+                <input
+                  placeholder={t<string>("SETTINGS.FIRST_NAME")}
+                  className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
                 border-solid border-[1px] border-header-bottom shadow-free-trial max-[690px]:w-[100%] leading-[18px] font-normal 
                 font-poppins text-[16px] tracking-[-0.01px] outline-none box-border max-[690px]:mb-[20px]"
-                {...formikForm.getFieldProps("first_name")}
-              />
+                  {...formikForm.getFieldProps("first_name")}
+                />
+                {formikForm.errors.first_name &&
+                  formikForm.touched.first_name && (
+                    <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">
+                      {formikForm.errors.first_name}
+                    </p>
+                  )}
+              </div>
 
               <label
                 htmlFor=""
@@ -175,13 +219,47 @@ const MainContent = () => {
               >
                 {t<string>("SETTINGS.LAST_NAME")}
               </label>
-              <input
-                placeholder={t<string>("SETTINGS.LAST_NAME")}
-                className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+              <div>
+                <input
+                  placeholder={t<string>("SETTINGS.LAST_NAME")}
+                  className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
                 border-solid border-[1px] border-header-bottom shadow-free-trial max-[690px]:w-[100%]
                 leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
-                {...formikForm.getFieldProps("last_name")}
+                  {...formikForm.getFieldProps("last_name")}
+                />
+                {formikForm.errors.last_name &&
+                  formikForm.touched.last_name && (
+                    <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">
+                      {formikForm.errors.last_name}
+                    </p>
+                  )}
+              </div>
+            </div>
+          </div>
+
+          <div className="line my-[20px] h-[1px] bg-header-bottom"></div>
+
+          <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
+            <div
+              className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
+            max-[690px]:mb-[6px] max-[690px]:font-normal"
+            >
+              {t<string>("SETTINGS.USERNAME")}
+            </div>
+
+            <div className="max-w-[512px] w-[100%] max-[690px]:max-w-[100%]">
+              <input
+                placeholder={t<string>("SETTINGS.USERNAME")}
+                className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+                border-solid border-[1px] border-header-bottom shadow-free-trial w-[100%]
+                leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+                {...formikForm.getFieldProps("username")}
               />
+              {formikForm.errors.username && formikForm.touched.username && (
+                <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">
+                  {formikForm.errors.username}
+                </p>
+              )}
             </div>
           </div>
 
@@ -197,9 +275,10 @@ const MainContent = () => {
 
             <div className="max-w-[512px] w-[100%] max-[690px]:max-w-[100%]">
               <input
+                disabled
                 placeholder={t<string>("SETTINGS.EMAIL")}
                 className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
-                border-solid border-[1px] border-header-bottom shadow-free-trial w-[100%]
+                border-solid border-[1px] bg-banner-txt border-header-bottom shadow-free-trial w-[100%]
                 leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
                 {...formikForm.getFieldProps("email")}
               />
@@ -222,24 +301,34 @@ const MainContent = () => {
               className="flex items-start gap-[20px] max-w-[512px] w-[100%] max-[1024px]:max-w-[100%] max-[1024px]:items-center
                max-[1024px]:justify-between max-[690px]:flex-wrap"
             >
-              {formikForm.values.profile_image ? (
-                <div
-                  className="
+              <div className="flex flex-col items-center">
+                {formikForm.values.profile_image ? (
+                  <div
+                    className="
                 w-[80px] h-[80px] rounded-[50%] overflow-hidden"
-                >
-                  <img
-                    className="w-[100%] h-[100%] object-cover"
-                    src={formikForm.values.profile_image}
-                    alt=""
-                  />
-                </div>
-              ) : (
-                <div
-                  className="photo relative bg-center bg-no-repeat bg-without-photo 
+                  >
+                    <img
+                      className="w-[100%] h-[100%] object-cover"
+                      src={formikForm.values.profile_image}
+                      alt=""
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="photo relative bg-center bg-no-repeat bg-without-photo 
               bg-top-entrepreneur w-[80px] h-[80px] rounded-[50%] "
-                ></div>
-              )}
-              <div
+                  ></div>
+                )}
+                <button
+                  onClick={() => formikForm.setFieldValue("profile_image", "")}
+                  type="button"
+                  className="flex items-center justify-center px-[15px] bg-white rounded-[5px] text-home-title
+                text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] mt-[4px]"
+                >
+                  {t<string>("SETTINGS.REMOVE")}
+                </button>
+              </div>
+              <label
                 className="px-[24px] py-[24px] border-[1px] border-solid border-header-bottom bg-white 
                 rounded-[18px] cursor-pointer w-[calc(100%-100px)] max-[1024px]:hidden"
               >
@@ -255,15 +344,29 @@ const MainContent = () => {
                 <p className="text-center text-[14px] tracking-[-0.1px] font-normal leading-[20px] text-simple-text">
                   {t<string>("SETTINGS.PHOTO_SIZE")}
                 </p>
-              </div>
-              <div
+                <input
+                  className="hidden"
+                  type="file"
+                  onChange={(event: any) =>
+                    photoUploader(event.target.files[0])
+                  }
+                />
+              </label>
+              <label
                 className="cursor-pointer hidden max-[1024px]:flex items-center justify-center bg-white rounded-[6px] px-[15px]
                 shadow-free-trial w-[calc(100%-100px)] max-w-[512px] h-[45px] border-[1px] border-solid border-header-bottom
                 gap-[6px] text-[16px] font-medium max-[690px]:w-[100%] max-[690px]:max-w-[100%]"
               >
+                <input
+                  className="hidden"
+                  type="file"
+                  onChange={(event: any) =>
+                    photoUploader(event.target.files[0])
+                  }
+                />
                 <img src={upload} alt="" />
                 {t<string>("SETTINGS.UPLOAD")}
-              </div>
+              </label>
             </div>
           </div>
           <div className="line my-[20px] h-[1px] bg-header-bottom"></div>

@@ -241,7 +241,8 @@
     "MIN_4": "Minimum 4 symbols",
     "MIN_8": "Minimum 8 symbols",
     "FIRST_NAME_REQUIRED": "First name is required",
-    "LAST_NAME_REQUIRED": "Last name is required"
+    "LAST_NAME_REQUIRED": "Last name is required",
+    "NOT_EMPTY": "This field can't be empty"
   },
   "FIELDS": {
     "NAME": "Name",
@@ -297,7 +298,9 @@
     "FIRST_NAME": "First name",
     "LAST_NAME": "Last name",
     "PHOTO_SIZE": "SVG, PNG, JPG or GIF (max. 800x400px)",
-    "UPLOAD": "Upload file"
+    "UPLOAD": "Upload file",
+    "USERNAME": "Username",
+    "REMOVE": "Remove"
   },
   "PAYMENT": {
     "BACK": "Back",

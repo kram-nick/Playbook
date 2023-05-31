@@ -16,11 +16,10 @@ import { Data } from "../models/data";
 //   "content":""}
 // }
 export default class PlaybookService {
-  static async updateUserAccount(data: any): Promise<AxiosResponse<any>> {
-    const formData = {
-      playbook: data,
-    };
-    return RequestsService.postMethod<any>(APIRoutes.USERS_ACCOUNT, formData);
+  static async updateUserAccount(
+    data: Data.UserAccount
+  ): Promise<AxiosResponse<any>> {
+    return RequestsService.putMethod<any>(APIRoutes.USERS_ACCOUNT, data);
   }
 
   static async createPlaybook(data: any): Promise<AxiosResponse<any>> {
@@ -124,7 +123,7 @@ export default class PlaybookService {
       },
     };
     return RequestsService.putMethod<any>(
-      `${APIRoutes.PLAYBOOK_ENTITY}/${id}`,
+      `${APIRoutes.PLAYBOOKS}/${id}`,
       formData
     );
   }

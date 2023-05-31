@@ -17,4 +17,15 @@ export declare namespace Data {
     file: any;
     playbook_id: string;
   }
+
+  interface UserAccount {
+    first_name: "";
+    last_name: "";
+    username: "";
+    profile_image: "";
+    country_code: "";
+    timezone: "";
+    title: "";
+    bio: "";
+  }
 }
