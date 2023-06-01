@@ -99,16 +99,9 @@ export default function ModalPlaybookDetail(props: ModalType) {
       try {
         formikForm.setFieldValue("privacy", !formikForm.values.privacy);
         const privacy = !formikForm.values.privacy ? "private" : "public";
-
-        PlaybookService.ChangePrivacy(
-          { privacy: privacy },
-          props?.item?.id
-        ).then((response) => {
-          if (response) {
-            props.onSave(true);
-            toast.success(t<string>("MAIN.UPDATE_PRIVACY_SUCCESS"));
-          }
-        });
+        PlaybookService.ChangePrivacy({ privacy: privacy }, props?.item?.id);
+        props.onSave(true);
+        toast.success(t<string>("MAIN.UPDATE_PRIVACY_SUCCESS"));
       } catch (errors: any) {
         formikForm.setFieldValue("privacy", !formikForm.values.privacy);
         for (let error in errors?.response?.data?.errors) {
@@ -153,11 +146,10 @@ export default function ModalPlaybookDetail(props: ModalType) {
     // setLoading(true);
     try {
       values.privacy = values.privacy ? "private" : "public";
-      await PlaybookService.UpdatePlaybook(values).then((response) => {
-        props.onSave(true);
-        toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
-        closePopup();
-      });
+      await PlaybookService.UpdatePlaybook(values);
+      props.onSave(true);
+      toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
+      closePopup();
     } catch (errors: any) {
       for (let error in errors?.response?.data?.errors) {
         toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
@@ -173,14 +165,11 @@ export default function ModalPlaybookDetail(props: ModalType) {
       //   ...values,
       //   privacy: values.privacy ? 'private' : 'public'
       // }
-      await PlaybookService.CreatePlaybook(values).then((response) => {
-        if (response) {
-          navigate(`/${PrivateUIRoutes.Chapters}/${response.data.data.id}`);
-        }
-        props.onSave(true);
-        toast.success(t<string>("MAIN.CREATE_SUCCESS"));
-        closePopup();
-      });
+      const response = await PlaybookService.CreatePlaybook(values);
+      navigate(`/${PrivateUIRoutes.Chapters}/${response.data.data.id}`);
+      props.onSave(true);
+      toast.success(t<string>("MAIN.CREATE_SUCCESS"));
+      closePopup();
     } catch (errors: any) {
       for (let error in errors?.response?.data?.errors) {
         toast.error(`${error} ${errors?.response?.data?.errors[error]}`);

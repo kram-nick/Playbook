@@ -18,12 +18,6 @@ export default function ActionsPlugin(): JSX.Element {
       const root = $getRoot();
       const firstChild = root.getFirstChild();
       if ($isCodeNode(firstChild) && firstChild.getLanguage() === "markdown") {
-        console.log(
-          $convertFromMarkdownString(
-            firstChild.getTextContent(),
-            PLAYGROUND_TRANSFORMERS
-          )
-        );
       } else {
         const markdown = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
         root

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PrivateUIRoutes, UIRoutes } from "../../core/router";
+import { PrivateUIRoutes } from "../../core/router";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -285,7 +285,7 @@ const SignIn = () => {
               />
               <div
                 className="bg-white border-[1px] border-input w-[20px] h-[20px] mr-[8px] rounded-[5px] cursor-pointer flex 
-                flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500"
+                flex-shrink-0 justify-center items-center focus-within:border-blue-500"
               >
                 <svg
                   className="fill-current hidden w-[20px] h-[20px] p-[4px] rounded-[5px] pointer-events-none"

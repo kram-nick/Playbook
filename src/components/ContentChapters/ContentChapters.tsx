@@ -1,6 +1,6 @@
 import Header from "../AppLayout/PrivateLayout/Header";
 import plus from "../../assets/photos/chapter/icon-plus.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import BookBanner from "../BookBanner";
 import { useTranslation } from "react-i18next";
@@ -8,9 +8,8 @@ import classNames from "classnames";
 import BookChapters from "../BookChapters";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PrivateUIRoutes } from "../../core/router";
-import { setOpenedPages } from "../../core/store/reducers/app/appDataSlice";
 
 const ContentChapters = () => {
   const { t } = useTranslation();
@@ -66,7 +65,8 @@ const ContentChapters = () => {
             "opacity-50": !playbook?.data?.name,
             "text-[32px] font-poppins font-bold text-home-title mb-[24px]":
               true,
-          })}>
+          })}
+        >
           {playbook?.data?.name
             ? playbook?.data?.name
             : t<string>("CREATE.UNTITLED")}
@@ -74,7 +74,8 @@ const ContentChapters = () => {
         <div
           onDragOver={handleDragOver}
           onDragEnter={(e) => e.preventDefault()}
-          className="list">
+          className="list"
+        >
           {data?.map((chapter: any, index: number) => (
             <BookChapters
               dataContent={chapter ? chapter : null}
@@ -88,9 +89,10 @@ const ContentChapters = () => {
           className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg"
           onClick={() => {
             navigate(`/${PrivateUIRoutes.Create}/${playbook_id}`);
-          }}>
+          }}
+        >
           <img src={plus} alt="" />
-          {t<string>("BTNS.ADD_SECTION")}
+          {t<string>("BTNS.ADD_PAGE")}
         </button>
       </div>
     </div>
