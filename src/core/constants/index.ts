@@ -1,34 +1,30 @@
- 
-import Select, { StylesConfig } from 'react-select';
+import Select, { StylesConfig } from "react-select";
 
 export const selectStyles: StylesConfig<any, true> = {
-  control: (styles) => ({ ...styles, backgroundColor: 'white' }),
+  control: (styles) => ({ ...styles, backgroundColor: "white" }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
- 
     return {
       ...styles,
       backgroundColor: isDisabled
         ? undefined
         : isSelected
-        ? '#F5F5F5'
+        ? "#F5F5F5"
         : isFocused
-        ? '#F5F5F5'
+        ? "#F5F5F5"
         : undefined,
-      color: isSelected
-        ? '#242428' 
-        : '#242428',
-      cursor: isDisabled ? 'not-allowed' : 'pointer',
+      color: isSelected ? "#242428" : "#242428",
+      cursor: isDisabled ? "not-allowed" : "pointer",
 
-      ':active': {
-        ...styles[':active'],
+      ":active": {
+        ...styles[":active"],
         backgroundColor: !isDisabled
           ? isSelected
-            ? '#F5F5F5'
-            : '#FFFFFF'
+            ? "#F5F5F5"
+            : "#FFFFFF"
           : undefined,
       },
     };
-  }, 
+  },
 };
 
 const dot = (color = "transparent") => ({
@@ -46,39 +42,35 @@ const dot = (color = "transparent") => ({
 });
 
 export const colourStyles: StylesConfig<any> = {
-  control: (styles) => ({ ...styles, backgroundColor: 'white' }),
+  control: (styles) => ({ ...styles, backgroundColor: "white" }),
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
- 
     return {
       ...styles,
       ...dot(data.color),
       backgroundColor: isDisabled
         ? undefined
         : isSelected
-        ? '#F5F5F5'
+        ? "#F5F5F5"
         : isFocused
-        ? '#F5F5F5'
+        ? "#F5F5F5"
         : undefined,
-      color: isSelected
-        ? '#242428' 
-        : '#242428',
-      cursor: isDisabled ? 'not-allowed' : 'pointer',
+      color: isSelected ? "#242428" : "#242428",
+      cursor: isDisabled ? "not-allowed" : "pointer",
 
-      ':active': {
-        ...styles[':active'],
+      ":active": {
+        ...styles[":active"],
         backgroundColor: !isDisabled
           ? isSelected
-            ? '#F5F5F5'
-            : '#FFFFFF'
+            ? "#F5F5F5"
+            : "#FFFFFF"
           : undefined,
       },
     };
   },
   input: (styles) => ({ ...styles, ...dot() }),
   placeholder: (styles) => ({ ...styles, ...dot("#ccc") }),
-  singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }) 
+  singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
 };
-
 
 export const Documents = [
   "Privacy Policy",
@@ -91,89 +83,78 @@ export const Documents = [
 
 export const User = {
   name: "Erik Brown",
-  email:"ebrown@mail.com",
-  photo:''
-}
+  email: "ebrown@mail.com",
+  photo: "",
+};
 
 export const tabsIcons = [
   {
     id: 1,
-    title: 'Emojis'
+    title: "Emojis",
   },
   {
     id: 2,
-    title: 'Icons'
+    title: "Icons",
   },
   {
     id: 3,
-    title: 'Custom'
-  }
-]
+    title: "Custom",
+  },
+];
 
-export const Filters = [
-  {
-    id: 1,
-    title: 'All'
-  },
-  {
-    id: 2,
-    title: 'My Playbooks'
-  },
-  {
-    id: 3,
-    title: 'Favorite'
-  },
-  {
-    id: 4,
-    title: 'Purchased'
-  }
-]
+export const TabsHeadings: string[] = [
+  "MAIN.ALL",
+  "MAIN.MY_PLAYBOOKS",
+  "MAIN.FAVORITE",
+  "MAIN.PURCHASED",
+  "MAIN.LISTINGS",
+];
 export const SettingsTabs = [
   {
     id: 1,
-    title: 'Profile'
+    title: "Profile",
   },
   {
     id: 2,
-    title: 'Password'
+    title: "Password",
   },
   {
     id: 3,
-    title: 'Plan'
+    title: "Plan",
   },
   {
     id: 4,
-    title: 'Notifications'
-  }
-]
+    title: "Notifications",
+  },
+];
 
 export const DiscoverTabs = [
   {
     id: 1,
-    title: 'I’m a'
+    title: "I’m a",
   },
   {
     id: 2,
-    title: 'Hobbyist'
+    title: "Hobbyist",
   },
   {
     id: 3,
-    title: 'First time founder'
+    title: "First time founder",
   },
   {
     id: 4,
-    title: 'Soloentrepreneur'
+    title: "Soloentrepreneur",
   },
   {
     id: 5,
-    title: 'Small Business Owner'
+    title: "Small Business Owner",
   },
   {
     id: 6,
-    title: 'Product Builder'
-  } ,
+    title: "Product Builder",
+  },
   {
     id: 7,
-    title: 'Startup Executive'
-  }      
-]
+    title: "Startup Executive",
+  },
+];

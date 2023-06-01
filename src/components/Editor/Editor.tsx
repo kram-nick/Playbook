@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -14,16 +14,22 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
 import { useFormik } from "formik";
+import { $generateHtmlFromNodes } from "@lexical/html";
+import { $generateNodesFromDOM } from "@lexical/html";
 import {
   $createParagraphNode,
   $createTextNode,
   $getRoot,
   $getSelection,
+  $getTextContent,
+  $setSelection,
   LexicalEditor,
 } from "lexical";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
+import ActionsPlugin from "../../core/plugins/ActionsPlugin";
 import CodeHighlightPlugin from "../../core/plugins/CodeHighlightPlugin";
 import prepopulatedText from "../../core/plugins/SampleText";
 import exampleTheme from "../../core/constants/lexicalTheme";
@@ -77,6 +83,14 @@ const editorConfig = {
   ],
 };
 
+function onChange(editorState: any) {
+  editorState.read(() => {
+    // Read the contents of the EditorState here.
+    const root = $getRoot();
+    const selection = $getSelection();
+  });
+}
+
 const Editor = () => {
   const [savedData, setSavedData] = useState<Data.Page | any>();
   const [update, setUpdate] = useState<boolean>(false);
@@ -86,7 +100,7 @@ const Editor = () => {
   const navigate = useNavigate();
   const { playbook_id, page_id } = useParams();
 
-  const { data } = useAppSelector((state) => state.app);
+  const { openedPages, data } = useAppSelector((state) => state.app);
 
   const initialEditorState = (editor: LexicalEditor): void => {
     const root = $getRoot();
@@ -158,7 +172,7 @@ const Editor = () => {
       savedData.title === formikForm.values.title &&
       savedData.content === formikForm.values.content
     ) {
-      toast.warn(t<string>("ERRORS.NOT_UPDATED"));
+      toast.warn("Nothing wasn't changed!");
       return;
     }
 

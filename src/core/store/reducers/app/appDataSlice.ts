@@ -12,14 +12,15 @@ const initialState: AppDataTypes = {
     selected: false,
     open: false,
     id: null,
-    type: '',
+    type: "",
     title: "",
     page_title: "",
     page_id: 0,
     chapters: [],
-    status: ''
+    status: "",
   },
   openedPages: [],
+  listType: true,
 };
 
 const appSlice = createSlice({
@@ -41,6 +42,9 @@ const appSlice = createSlice({
     setOpenedPages(state, action: PayloadAction<string[]>) {
       state.openedPages = action.payload;
     },
+    setListType(state, action: PayloadAction<boolean>) {
+      state.listType = action.payload;
+    },
   },
 });
 
@@ -51,4 +55,5 @@ export const {
   setSelectedData,
   setSearch,
   setOpenedPages,
+  setListType,
 } = appSlice.actions;

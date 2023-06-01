@@ -29,7 +29,9 @@
     "RIGHTS": "All Rights Reserved",
     "TERM_SERVICE": "Term of Service",
     "PLAYBOOKS": "My Playbooks",
-    "FAVOURITES": "Favorite",
+    "FAVORITES": "Favorite",
+    "PURCHASES": "Purchases",
+    "LISTINGS": "Listings",
     "DRAFT": "DRAFT",
     "PREVIEW": "Preview",
     "SHARE": "Share"
@@ -226,7 +228,11 @@
     "DELETE_PAGE_SUCCESS": "The Page has been successfully deleted",
     "DISCOVER": "Discover",
     "DISCOVER_TITLE": "Discover playbooks that help you execute and get results.",
-    "PLEASE_SELECT": "Please select"
+    "PLEASE_SELECT": "Please select",
+    "ALL": "All",
+    "MY_PLAYBOOKS": "My Playbooks",
+    "PURCHASED": "Purchased",
+    "LISTINGS": "Listings"
   },
   "EDIT": {
     "SECTION_NAME": "Section Name",

@@ -5,3 +5,11 @@ export enum FileMode {
   PLAYBOOK_THUMBNAILS = "3",
   PLAYYBOOK_ICON = "4",
 }
+
+export enum MainTabs {
+  All = 0,
+  My = 1,
+  Favorite = 2,
+  Purchased = 3,
+  Listings = 4,
+}

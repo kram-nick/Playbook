@@ -19,4 +19,5 @@ export type AppDataTypes = {
     status?: string;
   };
   openedPages: string[];
+  listType: boolean;
 };

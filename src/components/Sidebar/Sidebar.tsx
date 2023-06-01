@@ -447,7 +447,7 @@ const Sidebar = () => {
                   true,
               })}
             >
-              {t<string>("COMMON.FAVOURITES")}
+              {t<string>("COMMON.FAVORITES")}
             </span>
             <img
               src={favoriteItem.selected ? plus_blue : plus}
