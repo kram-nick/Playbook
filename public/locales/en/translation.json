@@ -242,7 +242,9 @@
     "MIN_8": "Minimum 8 symbols",
     "FIRST_NAME_REQUIRED": "First name is required",
     "LAST_NAME_REQUIRED": "Last name is required",
-    "NOT_EMPTY": "This field can't be empty"
+    "NOT_EMPTY": "This field can't be empty",
+    "NOT_UPDATED": "Nothing wasn't updated.",
+    "ACCOUNT_UPDATED": "User account successfully updated!"
   },
   "FIELDS": {
     "NAME": "Name",

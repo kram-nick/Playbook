@@ -16,13 +16,16 @@ import { Data } from "../models/data";
 //   "content":""}
 // }
 export default class PlaybookService {
-  static async updateUserAccount(
+  static async UpdateUserAccount(
     data: Data.UserAccount
   ): Promise<AxiosResponse<any>> {
-    return RequestsService.putMethod<any>(APIRoutes.USERS_ACCOUNT, data);
+    const formData = {
+      user: data,
+    };
+    return RequestsService.putMethod<any>(APIRoutes.USERS_ACCOUNT, formData);
   }
 
-  static async createPlaybook(data: any): Promise<AxiosResponse<any>> {
+  static async CreatePlaybook(data: any): Promise<AxiosResponse<any>> {
     const formData = {
       playbook: data,
     };
@@ -34,7 +37,7 @@ export default class PlaybookService {
       playbook: data,
     };
     return RequestsService.putMethod<any>(
-      APIRoutes.PLAYBOOKS + "/" + data.id,
+      `${APIRoutes.PLAYBOOKS}/${data.id}`,
       formData
     );
   }
@@ -54,7 +57,7 @@ export default class PlaybookService {
   }
 
   static async Delete(id: any): Promise<AxiosResponse<any>> {
-    return RequestsService.deleteMethod<any>(APIRoutes.PLAYBOOKS + "/" + id);
+    return RequestsService.deleteMethod<any>(`${APIRoutes.PLAYBOOKS}/${id}`);
   }
 
   static async UpdateChapter(data: any, id: any): Promise<AxiosResponse<any>> {

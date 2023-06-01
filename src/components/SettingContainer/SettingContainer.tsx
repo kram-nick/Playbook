@@ -35,6 +35,7 @@ const MainContent = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(SettingsTabs[0]);
   const [profileImage, setProfileImage] = useState<null | File>(null);
+  const [updateReloader, setUpdateReloader] = useState(false);
   const navigate = useNavigate();
 
   const valueFormValidationSchema = Yup.object().shape({
@@ -53,8 +54,7 @@ const MainContent = () => {
         }
       }
     },
-    query: {},
-    dependencies: [],
+    dependencies: [updateReloader],
   });
 
   const formikForm = useFormik<{
@@ -85,7 +85,7 @@ const MainContent = () => {
 
       for (let item in values) {
         if (values[item] !== userInfo.data[item]) {
-          handleSubmit({
+          HandleSubmit({
             ...values,
             profile_image: profileImage || values.profile_image,
           });
@@ -93,14 +93,15 @@ const MainContent = () => {
         }
       }
 
-      toast.warn("Nothing wasn't updated.");
+      toast.warn(t<string>("ERRORS.NOT_UPDATED"));
     },
   });
 
-  const handleSubmit = async (values: Data.UserAccount) => {
+  const HandleSubmit = async (values: Data.UserAccount) => {
     try {
-      await PlaybookService.updateUserAccount(values);
-      toast.success("User account successfully updated!");
+      await PlaybookService.UpdateUserAccount(values);
+      toast.success(t<string>("ERRORS.ACCOUNT_UPDATED"));
+      setUpdateReloader(!updateReloader);
     } catch (errors: any) {
       for (let error in errors?.response?.data?.errors) {
         toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
@@ -108,7 +109,7 @@ const MainContent = () => {
     }
   };
 
-  const photoUploader = (file: File) => {
+  const PhotoUploader = (file: File) => {
     if (file) {
       setProfileImage(file);
       const fileUrl = URL.createObjectURL(file);
@@ -348,7 +349,7 @@ const MainContent = () => {
                   className="hidden"
                   type="file"
                   onChange={(event: any) =>
-                    photoUploader(event.target.files[0])
+                    PhotoUploader(event.target.files[0])
                   }
                 />
               </label>
@@ -361,7 +362,7 @@ const MainContent = () => {
                   className="hidden"
                   type="file"
                   onChange={(event: any) =>
-                    photoUploader(event.target.files[0])
+                    PhotoUploader(event.target.files[0])
                   }
                 />
                 <img src={upload} alt="" />
