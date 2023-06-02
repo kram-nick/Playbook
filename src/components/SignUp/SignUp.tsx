@@ -29,7 +29,9 @@ const SignIn = () => {
     last_name: Yup.string()
       .min(4, t<string>("ERRORS.MIN_4"))
       .required(t<string>("ERRORS.LAST_NAME_REQUIRED")),
-    email: Yup.string().required(t<string>("ERRORS.EMAIL_REQUIRED")),
+    email: Yup.string()
+      .required(t<string>("ERRORS.EMAIL_REQUIRED"))
+      .email(t<string>("ERRORS.INVALID_EMAIL")),
     password: Yup.string()
       .min(8, t<string>("ERRORS.MIN_8"))
       .required(t<string>("ERRORS.PASSWORD_REQUIRED")),

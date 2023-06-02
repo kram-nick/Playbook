@@ -30,7 +30,9 @@ const SignIn = () => {
 
   // console.log(process.env.REACT_APP_TOKEN_KEY);
   const valueFormValidationSchema = Yup.object().shape({
-    email: Yup.string().required(t<string>("ERRORS.EMAIL_REQUIRED")),
+    email: Yup.string()
+      .required(t<string>("ERRORS.EMAIL_REQUIRED"))
+      .email(t<string>("ERRORS.INVALID_EMAIL")),
     password: Yup.string()
       .min(8, t<string>("ERRORS.MIN_8"))
       .required(t<string>("ERRORS.PASSWORD_REQUIRED")),
