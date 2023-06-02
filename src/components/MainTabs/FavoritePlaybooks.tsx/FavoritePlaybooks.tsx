@@ -13,9 +13,11 @@ import { useAppSelector } from "../../../core/hooks/useRedux";
 const FavoritePlaybooks = () => {
   const { t } = useTranslation();
   const { listType } = useAppSelector((state) => state.app);
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
+
   const { fetchedData } = useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
     query: {},
-    dependencies: [],
+    dependencies: [reloadChecker],
   });
 
   return (
@@ -27,8 +29,7 @@ const FavoritePlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
+            })}>
             {fetchedData?.data?.favorites.map(
               (playbook: any, index: number) => (
                 <AppMainCard
@@ -60,8 +61,7 @@ const FavoritePlaybooks = () => {
             // }}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>

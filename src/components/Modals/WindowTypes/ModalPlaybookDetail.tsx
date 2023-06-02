@@ -1,28 +1,23 @@
 import React, { ReactNode } from "react";
 import icon_banner from "../../assets/photos/main/icon-banner.svg";
 import icon_add from "../../assets/photos/main/icon-smiley.svg";
-import icon_close from "../../assets/photos/main/modal-close.svg";
+import icon_close from "../../../assets/photos/main/modal-close.svg";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
 import { useState, useEffect } from "react";
-import ModalIcons from "./ModalIcons";
-import useModal from "../../core/hooks/useModal";
-import { colourStyles } from "../../core/constants";
+
+import useModal from "../../../core/hooks/useModal";
+import { colourStyles } from "../../../core/constants";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import PlaybookService from "../../core/services/playbook.service";
+import PlaybookService from "../../../core/services/playbook.service";
 import { useNavigate } from "react-router-dom";
-import { PrivateUIRoutes } from "../../core/router";
-import { useAppSelector } from "../../core/hooks/useRedux";
-import { Modal } from "../../core/models/enums";
-
-interface ModalType {
-  children?: ReactNode;
-  class?: string;
-  item: any;
-  onSave: (reload: boolean) => void;
-}
+import { PrivateUIRoutes } from "../../../core/router";
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
+import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
+import useHttpGet from "../../../core/hooks/useHttpGet";
+import { APIRoutes } from "../../../core/http";
 
 export interface ColourOption {
   readonly value: string;
@@ -47,15 +42,26 @@ export const colourOptions: readonly ColourOption[] = [
   { value: "black", label: "Black", color: "#000000" },
 ];
 
-export default function ModalPlaybookDetail(props: ModalType) {
+export default function ModalPlaybookDetail() {
   const [activeColor, setActiveColor] = useState<any>(colourOptions[1]);
 
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const navigate = useNavigate();
+  const { sharedData, sharedId, reloadChecker, playbookType } = useAppSelector(
+    (state) => state.helpers
+  );
+  const { closeModal } = useModal();
 
-  const { openModal, closeModal } = useModal();
-  const { isModalOpen, modalType } = useAppSelector((state) => state.app);
+  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${sharedId}`, {
+    query: {},
+    dependencies: [reloadChecker],
+    resolve: (repsonse) => {
+      console.log(repsonse);
+    },
+  });
+
   const formikForm = useFormik<{
     name: string;
     content: string;
@@ -85,7 +91,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
     },
     // validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      if (!props.item) {
+      if (playbookType === "create") {
         createPlaybook(values);
       } else {
         updatePlaybook(values);
@@ -94,53 +100,47 @@ export default function ModalPlaybookDetail(props: ModalType) {
     },
   });
 
-  const handlePrivate = () => {
-    if (props?.item) {
-      try {
-        formikForm.setFieldValue("privacy", !formikForm.values.privacy);
-        const privacy = !formikForm.values.privacy ? "private" : "public";
-        PlaybookService.ChangePrivacy({ privacy: privacy }, props?.item?.id);
-        props.onSave(true);
-        toast.success(t<string>("MAIN.UPDATE_PRIVACY_SUCCESS"));
-      } catch (errors: any) {
-        formikForm.setFieldValue("privacy", !formikForm.values.privacy);
-        for (let error in errors?.response?.data?.errors) {
-          toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
-        }
+  const handlePrivate = async () => {
+    try {
+      formikForm.setFieldValue("privacy", !formikForm.values.privacy);
+      const privacy = !formikForm.values.privacy ? "private" : "public";
+      await PlaybookService.ChangePrivacy({ privacy: privacy }, sharedData?.id);
+
+      dispatch(setReloadChecker(!reloadChecker));
+      toast.success(t<string>("MAIN.UPDATE_PRIVACY_SUCCESS"));
+    } catch (errors: any) {
+      formikForm.setFieldValue("privacy", !formikForm.values.privacy);
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
       }
     }
   };
 
-  // const handleIconsModal = () => {
-  //   isOpenModal = true;
-  //   toggle();
-  // };
-
   useEffect(() => {
-    if (props?.item?.id) {
-      formikForm.setValues(props.item);
+    if (sharedData?.id) {
+      formikForm.setValues(sharedData);
       formikForm.setFieldValue(
         "privacy",
-        props.item.privacy === ("private" || true) ? true : false
+        sharedData.privacy === ("private" || true) ? true : false
       );
 
-      if (props?.item?.color_code) {
+      if (sharedData?.color_code) {
         const color = colourOptions.find(
-          (el) => el.color === props.item.color_code
+          (el) => el.color === sharedData.color_code
         );
         setActiveColor(color);
       }
     } else {
       setActiveColor(colourOptions[1]);
     }
-  }, [props?.item]);
+  }, [sharedData]);
 
   const updatePlaybook = async (values: any) => {
     // setLoading(true);
     try {
       values.privacy = values.privacy ? "private" : "public";
       await PlaybookService.UpdatePlaybook(values);
-      props.onSave(true);
+      dispatch(setReloadChecker(!reloadChecker));
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
       closeModal();
     } catch (errors: any) {
@@ -160,7 +160,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
       // }
       const response = await PlaybookService.CreatePlaybook(values);
       navigate(`/${PrivateUIRoutes.Chapters}/${response.data.data.id}`);
-      props.onSave(true);
+      dispatch(setReloadChecker(!reloadChecker));
       toast.success(t<string>("MAIN.CREATE_SUCCESS"));
       closeModal();
     } catch (errors: any) {
@@ -169,6 +169,8 @@ export default function ModalPlaybookDetail(props: ModalType) {
       }
     }
   };
+
+  console.log(playbookType);
 
   return (
     <div>
@@ -184,7 +186,7 @@ export default function ModalPlaybookDetail(props: ModalType) {
             <p
               className="text-[20px] font-medium text-home-title leading-[26px] tracking-[-0.1px]
                   max-sm:text-[16px] max-sm:leading-[22px] max-sm:pl-[28px]">
-              {props.item ? "Edit Details" : "Add a Playbook"}
+              {playbookType === "edit" ? "Edit Details" : "Add a Playbook"}
             </p>
             <button className="absolute top-[16px] right-[16px] max-sm:right-[auto] max-sm:top-[6px] max-sm:left-[6px]">
               <img src={icon_close} alt="" onClick={closeModal} />
@@ -315,15 +317,12 @@ export default function ModalPlaybookDetail(props: ModalType) {
                 className="h-[46px] flex items-center justify-center  
                       py-[8px] px-[15px] bg-buttons-bg rounded-[5px] text-buttons-color 
                       text-[16px] font-medium leading-[20px] shadow-free-trial ">
-                {props.item ? "Save" : "Continue"}
+                {sharedData ? "Save" : "Continue"}
               </button>
             </div>
           </form>
-
-          {props.children}
         </div>
       </div>
-      {isModalOpen && modalType === Modal.ICONS && <ModalIcons />}
     </div>
   );
 }

@@ -13,9 +13,11 @@ const PurchasedPlaybooks = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { listType } = useAppSelector((state) => state.app);
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
+
   const { fetchedData } = useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
     query: {},
-    dependencies: [],
+    dependencies: [reloadChecker],
   });
 
   return (
@@ -27,8 +29,7 @@ const PurchasedPlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
+            })}>
             {fetchedData?.data?.purchases.map(
               (playbook: any, index: number) => (
                 <AppMainCard
@@ -59,8 +60,7 @@ const PurchasedPlaybooks = () => {
             }}
             className="bg-button-submit-footer flex items-center py-[5px] px-[92px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.DISCOVER")}
             </span>

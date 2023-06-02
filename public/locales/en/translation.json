@@ -363,6 +363,7 @@
   "MODALS": {
     "DELETE": "Delete",
     "CANCEL": "Cancel",
-    "CONFIRM": "Yes, delete"
+    "CONFIRM": "Yes, delete",
+    "PAGE_DELETE": "Do you really want to delete the page?"
   }
 }

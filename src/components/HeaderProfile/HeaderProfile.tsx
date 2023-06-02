@@ -89,8 +89,8 @@ const HeaderProfile = () => {
       <button
         onClick={handleOpen}
         className={classNames({
-          "min-[1024px]:bg-card-border ml-[5px]": isShow,
-          "max-sm:hidden w-[30px] h-[30px] rounded-[8px] flex items-center justify-center":
+          "min-[1024px]:bg-card-border ": isShow,
+          "max-sm:hidden w-[30px] h-[30px] rounded-[8px] flex items-center justify-center ml-[5px]":
             true,
         })}
       >

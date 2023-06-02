@@ -6,16 +6,29 @@ import icon_empty from "../../../assets/photos/main/empty.svg";
 import icon_plus from "../../../assets/photos/main/plus.svg";
 import { useTranslation } from "react-i18next";
 import AppMainCard from "../../AppMainCard/AppMainCard";
-import { useAppSelector } from "../../../core/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
+import useModal from "../../../core/hooks/useModal";
+import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
+import { Modal } from "../../../core/models/enums";
 
 const MyPlaybooks = () => {
   const { t } = useTranslation();
   const { listType } = useAppSelector((state) => state.app);
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
+  const dispatch = useAppDispatch();
+  const { openModal } = useModal();
+
   const { fetchedData } = useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
     query: {},
-    dependencies: [],
+    dependencies: [reloadChecker],
   });
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  const handleNewPlaybook = () => {
+    dispatch(setPlaybookType("create"));
+    openModal(Modal.PLAYBOOK_DETAILS);
+    console.log("open");
+  };
 
   return (
     <div>
@@ -26,8 +39,7 @@ const MyPlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
+            })}>
             {fetchedData?.data?.playbooks.map(
               (playbook: any, index: number) => (
                 <AppMainCard
@@ -55,14 +67,10 @@ const MyPlaybooks = () => {
             </p>
           </div>
           <button
-            // onClick={() => {
-            //   setItem(null);
-            //   openDetailModal();
-            // }}
+            onClick={handleNewPlaybook}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>
