@@ -2,118 +2,36 @@ import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import { useState } from "react";
 
-import icon_plus from "../../assets/photos/main/plus.svg";
+import { useNavigate } from "react-router-dom";
 
+import icon_plus from "../../assets/photos/main/plus.svg";
 import icon_down_gray from "../../assets/photos/main/arrow-down-gray.svg";
 import icon_grid from "../../assets/photos/main/icon-grid.svg";
 import icon_grid_default from "../../assets/photos/main/icon-grid-default.svg";
 import icon_row from "../../assets/photos/main/row-vertical.svg";
 import icon_row_default from "../../assets/photos/main/row-vertical-default.svg";
 
-import { playbooks } from "../../core/constants/sidebar";
-import AppMainCard from "../AppMainCard";
-
-import ModalDelete from "../Modals/ModalDelete";
-import ModalPlaybookDetail from "../Modals/ModalPlaybookDetail";
-
-import ModalShare from "../Modals/ModalShare";
-import ModalShareSocial from "../Modals/ModalShareSocial";
-import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import PlaybookService from "../../core/services/playbook.service";
-import useHttpGet from "../../core/hooks/useHttpGet";
-import { APIRoutes } from "../../core/http";
-import { toast } from "react-toastify";
 import AllPlaybooks from "../MainTabs/AllPlaybooks.tsx/AllPlaybooks";
 import MyPlaybooks from "../MainTabs/MyPlaybooks/MyPlaybooks";
 import FavoritePlaybooks from "../MainTabs/FavoritePlaybooks.tsx/FavoritePlaybooks";
 import PurchasedPlaybooks from "../MainTabs/PurchasedPlaybooks.tsx/PurchasedPlaybooks";
 import Listings from "../MainTabs/Listings/Listings";
-import { MainTabs, Modal } from "../../core/models/enums";
+
+import { MainTabs } from "../../core/models/enums";
 import { TabsHeadings } from "../../core/constants";
-import { useNavigate } from "react-router-dom";
 import { setListType } from "../../core/store/reducers/app/appDataSlice";
-import ModalPurchase from "../Modals/ModalPurchase";
-import useModal from "../../core/hooks/useModal";
+
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 
 const AppMainContent = () => {
   const { t } = useTranslation();
-  const [reloadData, setReloadData] = useState(true);
 
   const [activeTab, setActiveTab] = useState(0);
-  const { searchData, isModalOpen, modalType } = useAppSelector(
-    (state) => state.app
-  );
-  const [data, setData]: any = useState(null);
-
-  let [selectedItem, setItem] = useState(null);
+  const { searchData } = useAppSelector((state) => state.app);
 
   const { listType } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { openModal } = useModal();
-  const saveCallback = (reload: boolean) => {
-    setTimeout(() => {
-      setReloadData(reload);
-    }, 300);
-  };
-
-  const setSelectedItem = (item: any) => {
-    setItem(item);
-  };
-
-  const openDeleteModal = (item: any) => {
-    setSelectedItem(item);
-    openModal(Modal.PLAYBOOK_DELETE);
-  };
-
-  const deleteItem = async (item?: any) => {
-    try {
-      const response = await PlaybookService.Delete(item.id);
-      if (response) {
-        toast.success(t<string>("MAIN.DELETE_SUCCESS"));
-        setReloadData(true);
-        setItem(null);
-      }
-    } catch (errors: any) {
-      for (let error in errors?.response?.data?.errors) {
-        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
-      }
-    }
-  };
-
-  const deleteCallback = (reload: boolean) => {
-    deleteItem(selectedItem);
-  };
-
-  const openDetailModal = (item?: any) => {
-    if (item) {
-      setItem(item);
-    } else {
-      setItem(null);
-    }
-    openModal(Modal.PLAYBOOK_DETAILS);
-  };
-
-  const openEditModal = (item?: any) => {
-    openDetailModal(item);
-  };
-  const openShareModal = (item?: any) => {
-    if (item) {
-      setItem(item);
-    } else {
-      setItem(null);
-    }
-
-    openModal(Modal.PLAYBOOK_SHARE);
-  };
-  const openSocialModal = (item?: any) => {
-    if (item) {
-      setItem(item);
-    } else {
-      setItem(null);
-    }
-    openModal(Modal.PLAYBOOK_SOCIAL);
-  };
 
   return (
     <div className="px-[24px] py-[24px] max-lg:px-[32px] max-[690px]:px-[16px] max-[690px]:py-[12px]">
@@ -138,10 +56,7 @@ const AppMainContent = () => {
           <button
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
             shadow-free-trial h-[40px] gap-[6px]"
-            onClick={() => {
-              setItem(null);
-              openDetailModal();
-            }}>
+            onClick={() => {}}>
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.ADD_BTN")}
             </span>
@@ -244,18 +159,6 @@ const AppMainContent = () => {
         {activeTab === MainTabs.Purchased && <PurchasedPlaybooks />}
         {activeTab === MainTabs.Listings && <Listings />}
       </div>
-      {isModalOpen && modalType === Modal.PLAYBOOK_DELETE && (
-        <ModalDelete item={selectedItem} onDelete={deleteCallback} />
-      )}
-      {isModalOpen && modalType === Modal.PURCHASE && <ModalPurchase />}
-      {isModalOpen && modalType === Modal.PLAYBOOK_DETAILS && (
-        <ModalPlaybookDetail item={selectedItem} onSave={saveCallback} />
-      )}
-      {isModalOpen && modalType === Modal.PURCHASE}
-      {isModalOpen && modalType === Modal.PURCHASE}
-
-      {/* <ModalShare item={selectedItem}></ModalShare> */}
-      {/* <ModalShareSocial item={selectedItem}></ModalShareSocial> */}
     </div>
   );
 };

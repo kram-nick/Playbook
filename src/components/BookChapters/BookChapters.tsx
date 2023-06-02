@@ -1,17 +1,11 @@
 import { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import arrow from "../../assets/photos/chapter/arrow-right.svg";
-import edit from "../../assets/photos/chapter/edit.svg";
-import icon_delete from "../../assets/photos/chapter/delete.svg";
-
-import { Chapters } from "../../core/constants/sidebar";
-import classNames from "classnames";
-import useHttpGet from "../../core/hooks/useHttpGet";
-import { APIRoutes } from "../../core/http";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+import classNames from "classnames";
+
+import ModalDeletePage from "../Modals/WindowTypes/ModalDeletePage";
+
 import PlaybookService from "../../core/services/playbook.service";
-import ModalDelete from "../Modals/ModalDelete";
 
 import {
   setOpenedPages,
@@ -19,45 +13,29 @@ import {
 } from "../../core/store/reducers/app/appDataSlice";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { Data } from "../../core/models/data";
-import { setReloadChecker } from "../../core/store/reducers/helpers/helpersDataSlice";
 import { Modal } from "../../core/models/enums";
 import useModal from "../../core/hooks/useModal";
 
+import arrow from "../../assets/photos/chapter/arrow-right.svg";
+import edit from "../../assets/photos/chapter/edit.svg";
+import icon_delete from "../../assets/photos/chapter/delete.svg";
+
 type pagesProps = {
-  preview?: boolean;
   dataContent?: any;
   index: number;
 };
 
-const BookChapters: React.FC<pagesProps> = ({
-  preview,
-  dataContent,
-  index,
-}) => {
+const BookChapters: React.FC<pagesProps> = ({ dataContent, index }) => {
   const [dragging, setDragging] = useState(false);
 
   const { playbook_id } = useParams();
 
   const { t } = useTranslation();
-  const { closeModal, openModal } = useModal();
-  const { data, openedPages, isModalOpen, modalType } = useAppSelector(
-    (state) => state.app
-  );
-  const { reloadChecker } = useAppSelector((state) => state.helpers);
+  const { openModal } = useModal();
+  const { data, openedPages } = useAppSelector((state) => state.app);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const deleteItem = async () => {
-    try {
-      await PlaybookService.DeletePage(dataContent.id);
-      closeModal();
-      toast.success(t<string>("MAIN.DELETE_PAGE_SUCCESS"));
-      dispatch(setReloadChecker(!reloadChecker));
-    } catch (errors: any) {
-      toast.error(errors?.response?.data?.errors);
-    }
-  };
 
   const toggleSection = (clickedPage: Data.Page) => {
     if (openedPages.includes(clickedPage.id)) {
@@ -160,7 +138,7 @@ const BookChapters: React.FC<pagesProps> = ({
               {t<string>("BTNS.EDIT")}
             </button>
             <div
-              onClick={() => openModal(Modal.PLAYBOOK_DELETE)}
+              onClick={() => openModal(Modal.PAGE_DELETE)}
               className="rounded-r-[5px] h-[38px]  flex items-center 
                 px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
                 hover:bg-people-bg transition duration-300 linear">
@@ -178,13 +156,6 @@ const BookChapters: React.FC<pagesProps> = ({
           </div>
         )}
       </div>
-      {isModalOpen && modalType === Modal.PLAYBOOK_DELETE && (
-        <ModalDelete
-          item={dataContent}
-          onDelete={deleteItem}
-          text="Do you really want to delete the page?"
-        />
-      )}
     </div>
   );
 };

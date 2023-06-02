@@ -18,14 +18,11 @@ import Playbook from "../../core/interface/playbook";
 import PlaybookService from "../../core/services/playbook.service";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  setIsModalOpen,
-  setModalType,
-  setSelectedData,
-} from "../../core/store/reducers/app/appDataSlice";
+import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { Modal } from "../../core/models/enums";
 import useModal from "../../core/hooks/useModal";
+import { setSharedId } from "../../core/store/reducers/helpers/helpersDataSlice";
 
 type CardProps = {
   items: Array<Playbook>;
@@ -33,7 +30,7 @@ type CardProps = {
   index: number;
 };
 
-const AppMainCard = ({ items, item, index }: CardProps) => {
+const AppMainCard = ({ item }: CardProps) => {
   let [playbook, setPlaybook]: any = useState(item);
   let [favorited, setFavorited] = useState(item.favorited);
 
@@ -42,7 +39,9 @@ const AppMainCard = ({ items, item, index }: CardProps) => {
   const { ref, isShow, setIsShow } = useOutside(false);
   const navigate = useNavigate();
   const { openModal } = useModal();
-  const { listType } = useAppSelector((state) => state.app);
+  const { listType, isModalOpen, modalType } = useAppSelector(
+    (state) => state.app
+  );
   const dispatch = useAppDispatch();
 
   const handlePriorityClick = async (item: any) => {
@@ -78,6 +77,11 @@ const AppMainCard = ({ items, item, index }: CardProps) => {
   // const handleSocialClick = (item: Playbook) => {
   //   onSocialModal(item);
   // };
+
+  const handleDelete = () => {
+    openModal(Modal.PLAYBOOK_DELETE);
+    dispatch(setSharedId(playbook.id));
+  };
 
   return (
     <div
@@ -240,7 +244,9 @@ const AppMainCard = ({ items, item, index }: CardProps) => {
                     {t<string>("MAIN.PREVIEW")}
                   </span>
                 </li>
-                <li className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                <li
+                  onClick={() => {}}
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
                     {t<string>("MAIN.SHARE")}
@@ -259,7 +265,9 @@ const AppMainCard = ({ items, item, index }: CardProps) => {
                     {t<string>("MAIN.FAVORITE")}
                   </span>
                 </li>
-                <li className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                <li
+                  onClick={() => openModal(Modal.PLAYBOOK_DETAILS)}
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img
                     src={icon_settings}
                     alt=""
@@ -270,7 +278,7 @@ const AppMainCard = ({ items, item, index }: CardProps) => {
                   </span>
                 </li>
                 <li
-                  onClick={() => openModal(Modal.PLAYBOOK_DELETE)}
+                  onClick={handleDelete}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img src={icon_delete} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">

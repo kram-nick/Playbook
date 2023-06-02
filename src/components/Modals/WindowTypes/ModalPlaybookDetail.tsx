@@ -5,17 +5,15 @@ import icon_close from "../../assets/photos/main/modal-close.svg";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
 import { useState, useEffect } from "react";
-import ModalIcons from "./ModalIcons";
-import useModal from "../../core/hooks/useModal";
-import { colourStyles } from "../../core/constants";
+
+import useModal from "../../../core/hooks/useModal";
+import { colourStyles } from "../../../core/constants";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import PlaybookService from "../../core/services/playbook.service";
+import PlaybookService from "../../../core/services/playbook.service";
 import { useNavigate } from "react-router-dom";
-import { PrivateUIRoutes } from "../../core/router";
-import { useAppSelector } from "../../core/hooks/useRedux";
-import { Modal } from "../../core/models/enums";
+import { PrivateUIRoutes } from "../../../core/router";
 
 interface ModalType {
   children?: ReactNode;
@@ -54,8 +52,8 @@ export default function ModalPlaybookDetail(props: ModalType) {
 
   const navigate = useNavigate();
 
-  const { openModal, closeModal } = useModal();
-  const { isModalOpen, modalType } = useAppSelector((state) => state.app);
+  const { closeModal } = useModal();
+
   const formikForm = useFormik<{
     name: string;
     content: string;
@@ -110,11 +108,6 @@ export default function ModalPlaybookDetail(props: ModalType) {
       }
     }
   };
-
-  // const handleIconsModal = () => {
-  //   isOpenModal = true;
-  //   toggle();
-  // };
 
   useEffect(() => {
     if (props?.item?.id) {
@@ -319,11 +312,10 @@ export default function ModalPlaybookDetail(props: ModalType) {
               </button>
             </div>
           </form>
-
           {props.children}
         </div>
       </div>
-      {isModalOpen && modalType === Modal.ICONS && <ModalIcons />}
+      {/* {isModalOpen && modalType === Modal.ICONS && <ModalIcons />} */}
     </div>
   );
 }

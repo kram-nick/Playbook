@@ -4,8 +4,9 @@ import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
 import icon_add from "../../assets/photos/main/plus-upload.svg";
-import { tabsIcons } from "../../core/constants";
-import useModal from "../../core/hooks/useModal";
+
+import { tabsIcons } from "../../../core/constants";
+import useModal from "../../../core/hooks/useModal";
 
 interface ModalType {
   class?: string;
