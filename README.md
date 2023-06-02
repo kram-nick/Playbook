@@ -15,3 +15,17 @@ When you're ready to build the project for production, you can run the following
 - npm run build
 
 This will create a production-ready build of the project in the build directory.
+
+# Docker
+
+Run the following command to build app Image:
+
+- docker-compose build
+
+Once Image will be created , you should run the following command to create app Container:
+
+- docker-compose run app
+
+After your container was created and stopped, you can run it again with command:
+
+- docker-compose up
