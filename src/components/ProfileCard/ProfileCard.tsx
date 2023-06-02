@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import useModal from "../../core/hooks/useModal";
 import useAuth from "../../core/hooks/useAuth";
 import PlaybookService from "../../core/services/playbook.service";
-import { useAppSelector } from "../../core/hooks/useRedux";
+
 import { Modal } from "../../core/models/enums";
 
 type CardProps = {
@@ -29,7 +29,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
 
   const { t } = useTranslation();
 
-  const { isShow, setIsShow } = useOutside(false);
+  const { openModal } = useModal();
 
   const { isAuth } = useAuth();
 
@@ -37,8 +37,8 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
     setPriority(!priority);
   };
 
-  const handleOpen = () => {
-    setIsShow(!isShow);
+  const handleSignUp = () => {
+    openModal(Modal.SIGN_UP);
   };
 
   const createOrder = async (id: string) => {
@@ -102,9 +102,9 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
 
       <div className="flex items-center gap-[8px]">
         <button
-          // onClick={() =>
-          //   !isAuth ? toggle() : createOrder(playbook.listing_id)
-          // }
+          onClick={() =>
+            !isAuth ? handleSignUp() : createOrder(playbook.listing_id)
+          }
           className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
             border-solid shadow-free-trial bg-blue-light text-buttons-bg text-[16px] font-medium flex items-center 
             text-center justify-center">

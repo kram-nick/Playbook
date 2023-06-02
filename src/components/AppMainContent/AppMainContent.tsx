@@ -17,21 +17,30 @@ import FavoritePlaybooks from "../MainTabs/FavoritePlaybooks.tsx/FavoritePlayboo
 import PurchasedPlaybooks from "../MainTabs/PurchasedPlaybooks.tsx/PurchasedPlaybooks";
 import Listings from "../MainTabs/Listings/Listings";
 
-import { MainTabs } from "../../core/models/enums";
+import { MainTabs, Modal } from "../../core/models/enums";
 import { TabsHeadings } from "../../core/constants";
 import { setListType } from "../../core/store/reducers/app/appDataSlice";
 
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
+import { setPlaybookType } from "../../core/store/reducers/helpers/helpersDataSlice";
+import useModal from "../../core/hooks/useModal";
 
 const AppMainContent = () => {
   const { t } = useTranslation();
 
   const [activeTab, setActiveTab] = useState(0);
-  const { searchData } = useAppSelector((state) => state.app);
+  const { searchData, listType } = useAppSelector((state) => state.app);
 
-  const { listType } = useAppSelector((state) => state.app);
+  const { openModal } = useModal();
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const handleNewPlaybook = () => {
+    dispatch(setPlaybookType("create"));
+    openModal(Modal.PLAYBOOK_DETAILS);
+    console.log("open");
+  };
 
   return (
     <div className="px-[24px] py-[24px] max-lg:px-[32px] max-[690px]:px-[16px] max-[690px]:py-[12px]">
@@ -56,7 +65,7 @@ const AppMainContent = () => {
           <button
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
             shadow-free-trial h-[40px] gap-[6px]"
-            onClick={() => {}}>
+            onClick={handleNewPlaybook}>
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.ADD_BTN")}
             </span>

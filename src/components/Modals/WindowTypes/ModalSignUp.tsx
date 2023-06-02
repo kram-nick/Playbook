@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import icon_google from "../../assets/photos/sign/g_logo.svg";
-import icon_close from "../../assets/photos/main/modal-close.svg";
+import icon_google from "../../../assets/photos/sign/g_logo.svg";
+import icon_close from "../../../assets/photos/main/modal-close.svg";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -49,11 +49,14 @@ export default function ModalSignup(props: ModalType) {
         <img src={icon_close} alt="" onClick={closeModal} />
       </button>
 
-      <form className="self-center w-full max-lg:bg-white ">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="self-center w-full max-lg:bg-white ">
         <h1 className="text-[24px] text-home-title text-center leading-normal mb-[32px] font-semibold">
           {t<string>("SIGN.UP")}
         </h1>
-
         <button
           onClick={() => handleGoogleSignIn()}
           type="button"
@@ -85,12 +88,12 @@ export default function ModalSignup(props: ModalType) {
             placeholder={t<string>("SIGN.NAME")}
             id="name"
             type="text"
+            onChange={(e) => e.preventDefault()}
             className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
                   border-solid border-[1px] shadow-free-trial w-[100%]
                   leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
           />
         </div>
-
         <div className="form-group mb-[24px]">
           <label
             htmlFor="email"
@@ -101,12 +104,12 @@ export default function ModalSignup(props: ModalType) {
             placeholder={t<string>("SIGN.EMAIL_PLACEHOLDER")}
             id="email"
             type="text"
+            onChange={(e) => e.preventDefault()}
             className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
                   border-solid border-[1px] shadow-free-trial w-[100%]
                   leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
           />
         </div>
-
         <div className="form-group mb-[24px]">
           <label
             htmlFor="password"
@@ -122,7 +125,6 @@ export default function ModalSignup(props: ModalType) {
                   leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
           />
         </div>
-
         <div className="flex justify-between items-center mb-[32px]">
           <div className="flex">
             <input
@@ -155,7 +157,6 @@ export default function ModalSignup(props: ModalType) {
             </label>
           </div>
         </div>
-
         <button
           className="bg-button-submit-footer py-[10px] px-[26px] rounded-[6px] 
               w-full mb-[24px]

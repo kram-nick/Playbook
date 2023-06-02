@@ -1,16 +1,14 @@
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
-import icon_delete from "../../assets/photos/main/modal-delete.svg";
-import icon_close from "../../assets/photos/main/modal-close.svg";
+import icon_delete from "../../../assets/photos/main/modal-delete.svg";
+import icon_close from "../../../assets/photos/main/modal-close.svg";
 
 import useModal from "../../../core/hooks/useModal";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
-import { toast } from "react-toastify";
+
 import PlaybookService from "../../../core/services/playbook.service";
-import {
-  setReloadChecker,
-  setSharedId,
-} from "../../../core/store/reducers/helpers/helpersDataSlice";
+import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 export default function ModalDeletePlaybook() {
   const { t } = useTranslation();
