@@ -33,7 +33,7 @@ import MyPlaybooks from "../MainTabs/MyPlaybooks/MyPlaybooks";
 import FavoritePlaybooks from "../MainTabs/FavoritePlaybooks.tsx/FavoritePlaybooks";
 import PurchasedPlaybooks from "../MainTabs/PurchasedPlaybooks.tsx/PurchasedPlaybooks";
 import Listings from "../MainTabs/Listings/Listings";
-import { MainTabs } from "../../core/models/enums";
+import { MainTabs, Modal } from "../../core/models/enums";
 import { TabsHeadings } from "../../core/constants";
 import { useNavigate } from "react-router-dom";
 import { setListType } from "../../core/store/reducers/app/appDataSlice";
@@ -47,7 +47,9 @@ const AppMainContent = () => {
   let { isOpenShareModal, toggleShare } = useModalShare();
   let { isOpenSocialModal, toggleSocial } = useModalSocial();
   const [activeTab, setActiveTab] = useState(0);
-  const { searchData } = useAppSelector((state) => state.app);
+  const { searchData, isModalOpen, modalType } = useAppSelector(
+    (state) => state.app
+  );
   const [data, setData]: any = useState(null);
 
   let [selectedItem, setItem] = useState(null);
@@ -259,7 +261,7 @@ const AppMainContent = () => {
         toggle={toggle}
         item={selectedItem}
         onDelete={deleteCallback}></ModalDelete>
-      <ModalPurchase />
+      {isModalOpen && modalType === Modal.PURCHASE && <ModalPurchase />}
       <ModalPlaybookDetail
         isOpen={isOpenDetailModal}
         toggle={toggleDetail}
