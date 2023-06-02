@@ -21,6 +21,8 @@ const initialState: AppDataTypes = {
   },
   openedPages: [],
   listType: true,
+  modalType: "",
+  isModalOpen: false,
 };
 
 const appSlice = createSlice({
@@ -45,6 +47,12 @@ const appSlice = createSlice({
     setListType(state, action: PayloadAction<boolean>) {
       state.listType = action.payload;
     },
+    setModalType(state, action: PayloadAction<string>) {
+      state.modalType = action.payload;
+    },
+    setIsModalOpen(state, action: PayloadAction<boolean>) {
+      state.isModalOpen = action.payload;
+    },
   },
 });
 
@@ -56,4 +64,6 @@ export const {
   setSearch,
   setOpenedPages,
   setListType,
+  setIsModalOpen,
+  setModalType,
 } = appSlice.actions;

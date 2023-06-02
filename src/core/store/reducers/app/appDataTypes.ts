@@ -20,4 +20,6 @@ export type AppDataTypes = {
   };
   openedPages: string[];
   listType: boolean;
+  isModalOpen: boolean;
+  modalType: string;
 };

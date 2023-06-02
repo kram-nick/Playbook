@@ -342,5 +342,17 @@
     "LI_ITEM_2": "Refresh and Retry",
     "LI_ITEM_3": "Contact your card issuer",
     "AGAIN_BTN": "Try Again"
+  },
+  "PURCHASE": {
+    "BUY": "Buy now",
+    "CANCEL": "Cancel",
+    "TITLE": "Purchase this playbook",
+    "AUTHOR": "About the Author",
+    "DESC": "Description",
+    "PRICE": "Price",
+    "RETAIL": "Retail Price",
+    "TAX": "Tax",
+    "DISCOUNT": "Discount",
+    "TOTAL": "Total"
   }
 }

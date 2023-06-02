@@ -13,3 +13,13 @@ export enum MainTabs {
   Purchased = 3,
   Listings = 4,
 }
+
+export enum Modal {
+  PLAYBOOK_DELETE = "PLAYBOOK_DELETE",
+  PLAYBOOK_DETAILS = "PLAYBOOK_DETAILS",
+  PLAYBOOK_SOCIAL = "PLAYBOOK_SOCIAL",
+  PLAYBOOK_SHARE = "PLAYBOOK_SHARE",
+  ICONS = "ICONS",
+  SIGN_UP = "SIGN_UP",
+  PURCHASE = "PURCHASE",
+}
