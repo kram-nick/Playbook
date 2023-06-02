@@ -7,9 +7,11 @@ import icon_plus from "../../../assets/photos/main/plus.svg";
 import { useTranslation } from "react-i18next";
 import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppSelector } from "../../../core/hooks/useRedux";
+import { useNavigate } from "react-router-dom";
 
 const PurchasedPlaybooks = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { listType } = useAppSelector((state) => state.app);
   const { fetchedData } = useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
     query: {},
@@ -31,7 +33,7 @@ const PurchasedPlaybooks = () => {
               (playbook: any, index: number) => (
                 <AppMainCard
                   key={playbook.id}
-                  items={fetchedData?.data?.playbooks}
+                  items={fetchedData?.data?.purchases}
                   item={playbook}
                   index={index}
                 />
@@ -45,25 +47,23 @@ const PurchasedPlaybooks = () => {
 
           <div className="w-[100%] text-center mt-[20px] mb-[40px]">
             <p className="text-home-title text-[20px] font-medium leading-[28px] tracking-[-0.1px] mb-[16px]">
-              {t<string>("MAIN.EMPTY_TITLE")}
+              {t<string>("MAIN.EMPTY_PURCHASE_TITLE")}
             </p>
             <p className="tracking-[-0.1px] text-[16px] leading-[26px] text-simple-text">
-              {t<string>("MAIN.EMPTY_TEXT")}
+              {t<string>("MAIN.EMPTY_PURCHASE_TEXT")}
             </p>
           </div>
           <button
-            // onClick={() => {
-            //   setItem(null);
-            //   openDetailModal();
-            // }}
-            className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
+            onClick={() => {
+              navigate("/discover");
+            }}
+            className="bg-button-submit-footer flex items-center py-[5px] px-[92px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
                 "
           >
             <span className="text-list-title text-[16px] font-medium">
-              {t<string>("MAIN.CREATE_BTN")}
+              {t<string>("MAIN.DISCOVER")}
             </span>
-            <img src={icon_plus} alt="" />
           </button>
         </div>
       )}

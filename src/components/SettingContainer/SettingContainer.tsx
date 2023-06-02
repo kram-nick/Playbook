@@ -51,6 +51,7 @@ const MainContent = () => {
     resolve: (response: any) => {
       if (response) {
         dispatch(setUser(response.data));
+        localStorage.setItem("user", JSON.stringify(response.data));
         for (let key in response?.data) {
           if (formikForm.values.hasOwnProperty(key)) {
             formikForm.setFieldValue(key, response?.data[key]);

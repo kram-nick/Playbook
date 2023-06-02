@@ -15,6 +15,9 @@ const AllPlaybooks = () => {
     query: {},
     dependencies: [],
   });
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  console.log(fetchedData);
 
   return (
     <div>
@@ -48,7 +51,9 @@ const AllPlaybooks = () => {
               {t<string>("MAIN.EMPTY_TITLE")}
             </p>
             <p className="tracking-[-0.1px] text-[16px] leading-[26px] text-simple-text">
-              {t<string>("MAIN.EMPTY_TEXT")}
+              {`${t<string>("MAIN.EMPTY_TEXT_1")} ${
+                user.first_name
+              }! ${t<string>("MAIN.EMPTY_TEXT_2")}`}
             </p>
           </div>
           <button

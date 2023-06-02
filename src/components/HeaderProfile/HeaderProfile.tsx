@@ -16,7 +16,7 @@ import { useAppSelector } from "../../core/hooks/useRedux";
 const HeaderProfile = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [userData, setUserData] = useState<Data.UserAccount>();
+  const [userData, setUserData] = useState<Data.UserAccount | any>();
   const [openDropmenu, setOpen] = useState(false);
   const { ref, isShow, setIsShow } = useOutside(false);
   const { user } = useAppSelector((state) => state.account);
@@ -47,13 +47,13 @@ const HeaderProfile = () => {
           className={classNames({
             "photo bg-center bg-no-repeat bg-without-photo relative w-[40px] h-[40px] rounded-[50%] overflow-hidden":
               true,
-            "bg-top-entrepreneur": !user.profile_image,
+            "bg-top-entrepreneur": !userData?.profile_image,
           })}
         >
-          {user && user.profile_image ? (
+          {userData && userData?.profile_image ? (
             <img
               className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]"
-              src={user.profile_image}
+              src={userData?.profile_image}
               alt=""
             />
           ) : (
@@ -71,16 +71,16 @@ const HeaderProfile = () => {
         onClick={handleToggle}
         className="text gap-y-[2px] grid max-sm:hidden ml-[8px] cursor-pointer"
       >
-        {user && user.first_name ? (
+        {userData && userData?.first_name ? (
           <p className="text-[12px] font-inter font-medium text-home-title leading-[12px]">
-            {user.first_name} {user.last_name}
+            {userData?.first_name} {userData?.last_name}
           </p>
         ) : (
           ""
         )}
-        {user && user.email ? (
+        {userData && userData?.email ? (
           <p className="text-[10px] font-poppins font-normal text-simple-text leading-[16px] truncate max-w-[160px]">
-            {user.email}
+            {userData?.email}
           </p>
         ) : (
           ""

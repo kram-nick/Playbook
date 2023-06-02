@@ -4,6 +4,8 @@ import { APIRoutes } from "../../../core/http";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
 import icon_plus from "../../../assets/photos/main/plus.svg";
+import star from "../../../assets/photos/main/favorite-star.svg";
+
 import { useTranslation } from "react-i18next";
 import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppSelector } from "../../../core/hooks/useRedux";
@@ -31,7 +33,7 @@ const FavoritePlaybooks = () => {
               (playbook: any, index: number) => (
                 <AppMainCard
                   key={playbook.id}
-                  items={fetchedData?.data?.playbooks}
+                  items={fetchedData?.data?.favorites}
                   item={playbook}
                   index={index}
                 />
@@ -41,14 +43,14 @@ const FavoritePlaybooks = () => {
         </div>
       ) : (
         <div className="empty font-poppins flex items-center justify-center flex-wrap mt-[8vh]">
-          <img src={icon_empty} alt="empty page" />
+          <img src={star} alt="empty page" />
 
           <div className="w-[100%] text-center mt-[20px] mb-[40px]">
             <p className="text-home-title text-[20px] font-medium leading-[28px] tracking-[-0.1px] mb-[16px]">
-              {t<string>("MAIN.EMPTY_TITLE")}
+              {t<string>("MAIN.FAVORITE_EMPTY_TITLE")}
             </p>
             <p className="tracking-[-0.1px] text-[16px] leading-[26px] text-simple-text">
-              {t<string>("MAIN.EMPTY_TEXT")}
+              {t<string>("MAIN.FAVORITE_EMPTY_TEXT")}
             </p>
           </div>
           <button
