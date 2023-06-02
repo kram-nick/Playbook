@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import PlaybookService from "../../core/services/playbook.service";
 import { Data } from "../../core/models/data";
+import { useAppDispatch } from "../../core/hooks/useRedux";
+import { setUser } from "../../core/store/reducers/account/accountDataSlice";
 export interface selectOption {
   readonly value: string;
   readonly label: string;
@@ -36,6 +38,7 @@ const MainContent = () => {
   const [activeTab, setActiveTab] = useState(SettingsTabs[0]);
   const [profileImage, setProfileImage] = useState<null | File>(null);
   const [updateReloader, setUpdateReloader] = useState(false);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const valueFormValidationSchema = Yup.object().shape({
@@ -47,6 +50,7 @@ const MainContent = () => {
   const { fetchedData: userInfo } = useHttpGet<any>(APIRoutes.USERS_ACCOUNT, {
     resolve: (response: any) => {
       if (response) {
+        dispatch(setUser(response.data));
         for (let key in response?.data) {
           if (formikForm.values.hasOwnProperty(key)) {
             formikForm.setFieldValue(key, response?.data[key]);
