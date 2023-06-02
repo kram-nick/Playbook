@@ -1,10 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { useAppDispatch } from "../../core/hooks/useRedux";
-import {
-  setIsModalOpen,
-  setModalType,
-} from "../../core/store/reducers/app/appDataSlice";
+import useModal from "../../core/hooks/useModal";
 
 import icon_close from "../../assets/photos/main/modal-close.svg";
 import small_banner from "../../assets/photos/purchase/card.svg";
@@ -12,14 +8,9 @@ import avatar from "../../assets/photos/purchase/avatar.svg";
 import big_avatar from "../../assets/photos/purchase/big-avatar.svg";
 
 const ModalPurchase = () => {
-  const dispatch = useAppDispatch();
+  const { closeModal } = useModal();
 
   const { t } = useTranslation();
-
-  const closeModal = () => {
-    dispatch(setIsModalOpen(false));
-    dispatch(setModalType(""));
-  };
 
   return (
     <div className="modal-overlay bg-overlay" onClick={closeModal}>

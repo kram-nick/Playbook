@@ -15,12 +15,7 @@ import AppMainCard from "../AppMainCard";
 
 import ModalDelete from "../Modals/ModalDelete";
 import ModalPlaybookDetail from "../Modals/ModalPlaybookDetail";
-import {
-  useModal,
-  useModalDetail,
-  useModalShare,
-  useModalSocial,
-} from "../../core/hooks/useModal";
+
 import ModalShare from "../Modals/ModalShare";
 import ModalShareSocial from "../Modals/ModalShareSocial";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
@@ -38,14 +33,12 @@ import { TabsHeadings } from "../../core/constants";
 import { useNavigate } from "react-router-dom";
 import { setListType } from "../../core/store/reducers/app/appDataSlice";
 import ModalPurchase from "../Modals/ModalPurchase";
+import useModal from "../../core/hooks/useModal";
 
 const AppMainContent = () => {
   const { t } = useTranslation();
   const [reloadData, setReloadData] = useState(true);
-  let { isOpenModal, toggle } = useModal();
-  let { isOpenDetailModal, toggleDetail } = useModalDetail();
-  let { isOpenShareModal, toggleShare } = useModalShare();
-  let { isOpenSocialModal, toggleSocial } = useModalSocial();
+
   const [activeTab, setActiveTab] = useState(0);
   const { searchData, isModalOpen, modalType } = useAppSelector(
     (state) => state.app
@@ -57,7 +50,7 @@ const AppMainContent = () => {
   const { listType } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const { openModal } = useModal();
   const saveCallback = (reload: boolean) => {
     setTimeout(() => {
       setReloadData(reload);
@@ -70,8 +63,7 @@ const AppMainContent = () => {
 
   const openDeleteModal = (item: any) => {
     setSelectedItem(item);
-    isOpenModal = true;
-    toggle();
+    openModal(Modal.PLAYBOOK_DELETE);
   };
 
   const deleteItem = async (item?: any) => {
@@ -81,8 +73,6 @@ const AppMainContent = () => {
         toast.success(t<string>("MAIN.DELETE_SUCCESS"));
         setReloadData(true);
         setItem(null);
-        isOpenModal = false;
-        toggle();
       }
     } catch (errors: any) {
       for (let error in errors?.response?.data?.errors) {
@@ -101,8 +91,7 @@ const AppMainContent = () => {
     } else {
       setItem(null);
     }
-    isOpenDetailModal = true;
-    toggleDetail();
+    openModal(Modal.PLAYBOOK_DETAILS);
   };
 
   const openEditModal = (item?: any) => {
@@ -114,8 +103,8 @@ const AppMainContent = () => {
     } else {
       setItem(null);
     }
-    isOpenShareModal = true;
-    toggleShare();
+
+    openModal(Modal.PLAYBOOK_SHARE);
   };
   const openSocialModal = (item?: any) => {
     if (item) {
@@ -123,8 +112,7 @@ const AppMainContent = () => {
     } else {
       setItem(null);
     }
-    isOpenSocialModal = true;
-    toggleSocial();
+    openModal(Modal.PLAYBOOK_SOCIAL);
   };
 
   return (
@@ -256,25 +244,18 @@ const AppMainContent = () => {
         {activeTab === MainTabs.Purchased && <PurchasedPlaybooks />}
         {activeTab === MainTabs.Listings && <Listings />}
       </div>
-      <ModalDelete
-        isOpen={isOpenModal}
-        toggle={toggle}
-        item={selectedItem}
-        onDelete={deleteCallback}></ModalDelete>
+      {isModalOpen && modalType === Modal.PLAYBOOK_DELETE && (
+        <ModalDelete item={selectedItem} onDelete={deleteCallback} />
+      )}
       {isModalOpen && modalType === Modal.PURCHASE && <ModalPurchase />}
-      <ModalPlaybookDetail
-        isOpen={isOpenDetailModal}
-        toggle={toggleDetail}
-        item={selectedItem}
-        onSave={saveCallback}></ModalPlaybookDetail>
-      <ModalShare
-        isOpen={isOpenShareModal}
-        toggle={toggleShare}
-        item={selectedItem}></ModalShare>
-      <ModalShareSocial
-        isOpen={isOpenSocialModal}
-        toggle={toggleSocial}
-        item={selectedItem}></ModalShareSocial>
+      {isModalOpen && modalType === Modal.PLAYBOOK_DETAILS && (
+        <ModalPlaybookDetail item={selectedItem} onSave={saveCallback} />
+      )}
+      {isModalOpen && modalType === Modal.PURCHASE}
+      {isModalOpen && modalType === Modal.PURCHASE}
+
+      {/* <ModalShare item={selectedItem}></ModalShare> */}
+      {/* <ModalShareSocial item={selectedItem}></ModalShareSocial> */}
     </div>
   );
 };

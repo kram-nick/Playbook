@@ -1,53 +1,23 @@
-import { useState } from "react";
+import {
+  setIsModalOpen,
+  setModalType,
+} from "../store/reducers/app/appDataSlice";
+import { useAppDispatch } from "./useRedux";
 
-export function useModal() {
-  const [isOpenModal, setisOpen] = useState(false);
+const useModal = () => {
+  const dispatch = useAppDispatch();
 
-  const toggle = () => {
-    setisOpen(!isOpenModal);
+  const closeModal = () => {
+    dispatch(setModalType(""));
+    dispatch(setIsModalOpen(false));
   };
 
-  return {
-    isOpenModal,
-    toggle
-  };
-}
-
-export function useModalDetail() {
-  const [isOpenDetailModal, setisOpen] = useState(false);
-
-  const toggleDetail = () => {
-    setisOpen(!isOpenDetailModal);
+  const openModal = (type: string) => {
+    dispatch(setModalType(type));
+    dispatch(setIsModalOpen(true));
   };
 
-  return {
-    isOpenDetailModal,
-    toggleDetail
-  };
-}
+  return { openModal, closeModal };
+};
 
-export  function useModalShare() {
-  const [isOpenShareModal, setisOpen] = useState(false);
-
-  const toggleShare = () => {
-    setisOpen(!isOpenShareModal);
-  };
-
-  return {
-    isOpenShareModal,
-    toggleShare
-  };
-}
-export  function useModalSocial() {
-  const [isOpenSocialModal, setisOpen] = useState(false);
-
-  const toggleSocial = () => {
-    setisOpen(!isOpenSocialModal);
-  };
-
-  return {
-    isOpenSocialModal,
-    toggleSocial
-  };
-}
- 
+export default useModal;

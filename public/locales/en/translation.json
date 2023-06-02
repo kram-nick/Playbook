@@ -354,5 +354,10 @@
     "TAX": "Tax",
     "DISCOUNT": "Discount",
     "TOTAL": "Total"
+  },
+  "MODALS": {
+    "DELETE": "Delete",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Yes, delete"
   }
 }

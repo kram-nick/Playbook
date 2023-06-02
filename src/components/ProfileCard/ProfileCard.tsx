@@ -9,9 +9,11 @@ import useOutside from "../../core/hooks/useOutside";
 import Playbook from "../../core/interface/playbook";
 import { Link } from "react-router-dom";
 import ModalSignup from "../Modals/ModalSignUp";
-import { useModal } from "../../core/hooks/useModal";
+import useModal from "../../core/hooks/useModal";
 import useAuth from "../../core/hooks/useAuth";
 import PlaybookService from "../../core/services/playbook.service";
+import { useAppSelector } from "../../core/hooks/useRedux";
+import { Modal } from "../../core/models/enums";
 
 type CardProps = {
   items?: Array<any>;
@@ -22,13 +24,17 @@ type CardProps = {
 };
 
 const ProfileCard = ({ items, item, index, typeCard, discover }: CardProps) => {
+  let [priority, setPriority] = useState(item.priority);
+  const [playbook]: any = useState(item);
+
   const { t } = useTranslation();
+
   const { ref, isShow, setIsShow } = useOutside(false);
 
-  const [playbook, setPlaybook]: any = useState(item);
-  let { isOpenModal, toggle } = useModal();
-  let [priority, setPriority] = useState(item.priority);
+  const { closeModal, openModal } = useModal();
+
   const { isAuth } = useAuth();
+  const { isModalOpen, modalType } = useAppSelector((state) => state.app);
 
   const handlePriorityClick = () => {
     setPriority(!priority);
@@ -53,13 +59,11 @@ const ProfileCard = ({ items, item, index, typeCard, discover }: CardProps) => {
           "w-[calc(50%-10px)] max-[690px]:w-[100%]": typeCard && !discover,
           "grid bg-white rounded-[8px] border-[1px] border-solid card-border relative p-[18px] gap-y-[16px]":
             true,
-        })}
-      >
+        })}>
         <div className="header">
           <Link
             to="/playbook"
-            className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]"
-          >
+            className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]">
             {playbook.name}
           </Link>
           {!discover && (
@@ -71,8 +75,7 @@ const ProfileCard = ({ items, item, index, typeCard, discover }: CardProps) => {
           {discover && (
             <Link
               to={`/profile`}
-              className="flex items-center gap-[10px] mt-[8px]"
-            >
+              className="flex items-center gap-[10px] mt-[8px]">
               <div className="icon w-[24px] h-[24px] overflow-hidden relative rounded-[50%]">
                 {playbook.profile_image && (
                   <img
@@ -91,8 +94,7 @@ const ProfileCard = ({ items, item, index, typeCard, discover }: CardProps) => {
 
         <div
           className="photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border 
-          w-[100%] h-[240px] rounded-[8px]"
-        >
+          w-[100%] h-[240px] rounded-[8px]">
           {playbook.header_url && (
             <img
               src={playbook.header_url}
@@ -104,21 +106,19 @@ const ProfileCard = ({ items, item, index, typeCard, discover }: CardProps) => {
 
         <div className="flex items-center gap-[8px]">
           <button
-            onClick={() =>
-              !isAuth ? toggle() : createOrder(playbook.listing_id)
-            }
+            // onClick={() =>
+            //   !isAuth ? toggle() : createOrder(playbook.listing_id)
+            // }
             className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
             border-solid shadow-free-trial bg-blue-light text-buttons-bg text-[16px] font-medium flex items-center 
-            text-center justify-center"
-          >
+            text-center justify-center">
             {isAuth
               ? t<string>("PROFILE.GET_FREE")
               : t<string>("PROFILE.GET_FREE")}
           </button>
           <button
             onClick={() => handlePriorityClick()}
-            className="w-[46px] h-[46px] p-[12px] rounded-[6px] border-header-bottom border-[1px] border-solid"
-          >
+            className="w-[46px] h-[46px] p-[12px] rounded-[6px] border-header-bottom border-[1px] border-solid">
             <img
               src={playbook.favorited ? star_active : star}
               alt=""
@@ -127,8 +127,7 @@ const ProfileCard = ({ items, item, index, typeCard, discover }: CardProps) => {
           </button>
         </div>
       </div>
-
-      <ModalSignup isOpen={isOpenModal} toggle={toggle}></ModalSignup>
+      {isModalOpen && modalType === Modal.SIGN_UP && <ModalSignup />}
     </>
   );
 };
