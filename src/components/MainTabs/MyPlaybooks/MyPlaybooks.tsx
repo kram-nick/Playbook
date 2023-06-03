@@ -27,7 +27,6 @@ const MyPlaybooks = () => {
   const handleNewPlaybook = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
-    console.log("open");
   };
 
   return (
@@ -45,7 +44,7 @@ const MyPlaybooks = () => {
                 <AppMainCard
                   key={playbook.id}
                   items={fetchedData?.data?.playbooks}
-                  item={playbook}
+                  playbook={playbook}
                   index={index}
                 />
               )

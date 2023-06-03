@@ -18,86 +18,85 @@ import Playbook from "../../core/interface/playbook";
 import PlaybookService from "../../core/services/playbook.service";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  setIsModalOpen,
-  setModalType,
-  setSelectedData,
-} from "../../core/store/reducers/app/appDataSlice";
+import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { Modal } from "../../core/models/enums";
 import useModal from "../../core/hooks/useModal";
 import {
   setPlaybookType,
+  setReloadChecker,
   setSharedData,
   setSharedId,
 } from "../../core/store/reducers/helpers/helpersDataSlice";
 
 type CardProps = {
   items: Array<Playbook>;
-  item: Playbook;
+  playbook: any;
   index: number;
 };
 
-const AppMainCard = ({ item }: CardProps) => {
-  const [playbook]: any = useState(item);
-  const [favorited, setFavorited] = useState(item.favorited);
-
+const AppMainCard = ({ playbook }: CardProps) => {
   const { t } = useTranslation();
 
   const { ref, isShow, setIsShow } = useOutside(false);
   const navigate = useNavigate();
   const { openModal } = useModal();
 
-  const { listType } = useAppSelector((state) => state.app);
-
   const dispatch = useAppDispatch();
 
-  const handlePriorityClick = async (item: any) => {
-    try {
-      const response = await PlaybookService.Favorite(
-        item.id,
-        item.favorited ? 0 : 1
-      );
+  const { listType } = useAppSelector((state) => state.app);
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
 
-      if (response) {
-        item.favorited = !item.favorited;
-        setFavorited(!favorited);
-      }
+  const SetFavorite = async (id: any, favorited: boolean) => {
+    const favorite = favorited ? 0 : 1;
+    try {
+      await PlaybookService.UpdatePlaybook({
+        ...playbook,
+        favorited: Boolean(favorite),
+      });
+      dispatch(setReloadChecker(!reloadChecker));
+      toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
     } catch (errors: any) {
-      toast.error(errors?.response?.data?.errors);
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+      }
     }
   };
 
-  const handleOpen = () => {
+  const HandleOpen = () => {
     setIsShow(!isShow);
   };
 
-  // const handleDeleteClick = (item: any) => {
-  //   onChangeList(item);
-  // };
-
-  // const handleEditClick = (item: Playbook) => {
-  //   onEditItem(item);
-  // };
-  // const handleShareClick = (item: Playbook) => {
-  //   onShareItem(item);
-  // };
-  // const handleSocialClick = (item: Playbook) => {
-  //   onSocialModal(item);
-  // };
-
-  const handleDelete = () => {
+  const HandleDelete = () => {
     setIsShow(false);
     dispatch(setSharedId(playbook.id));
     dispatch(setPlaybookType("edit"));
     openModal(Modal.PLAYBOOK_DELETE);
   };
 
-  const handleDetails = () => {
+  const HandleDetails = () => {
     setIsShow(false);
     dispatch(setSharedId(playbook.id));
     dispatch(setPlaybookType("edit"));
     openModal(Modal.PLAYBOOK_DETAILS);
+  };
+
+  const HandleShare = () => {
+    openModal(Modal.PLAYBOOK_SHARE);
+  };
+
+  const HandlePublish = async () => {
+    if (playbook.status !== "published") {
+      try {
+        await PlaybookService.PublishPlaybook(playbook.id);
+        dispatch(setReloadChecker(!reloadChecker));
+        toast.success(t<string>("MAIN.PUBLISHED_SUCCESS"));
+      } catch (errors: any) {
+        for (let error in errors?.response?.data?.errors) {
+          toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+        }
+      }
+    }
   };
 
   return (
@@ -112,17 +111,17 @@ const AppMainCard = ({ item }: CardProps) => {
       <p
         onClick={() => {
           const setData = {
-            id: item.id,
+            id: playbook.id,
             selected: true,
             open: true,
-            name: item?.name,
+            name: playbook?.name,
             type: "my",
-            status: item?.status,
+            status: playbook?.status,
           };
 
           dispatch(setSelectedData(setData));
           localStorage.setItem("selected_playbook", JSON.stringify(setData));
-          navigate(`/creating/${item.id}`);
+          navigate(`/creating/${playbook.id}`);
         }}
         className={classNames({
           "w-[100%] h-[180px] rounded-t-[8px] cursor-pointer": listType,
@@ -167,12 +166,12 @@ const AppMainCard = ({ item }: CardProps) => {
           <span
             onClick={() => {
               const setData = {
-                id: item.id,
+                id: playbook.id,
                 selected: true,
                 open: true,
-                name: item?.name,
+                name: playbook?.name,
                 type: "my",
-                status: item?.status,
+                status: playbook?.status,
               };
 
               dispatch(setSelectedData(setData));
@@ -180,7 +179,7 @@ const AppMainCard = ({ item }: CardProps) => {
                 "selected_playbook",
                 JSON.stringify(setData)
               );
-              navigate(`/creating/${item.id}`);
+              navigate(`/creating/${playbook.id}`);
             }}
             className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title cursor-pointer">
             {playbook.name}
@@ -208,7 +207,7 @@ const AppMainCard = ({ item }: CardProps) => {
         {/* • {playbook.edited} */}
 
         <button
-          onClick={() => handlePriorityClick(playbook)}
+          onClick={() => SetFavorite(playbook.id, playbook.favorited)}
           className={classNames({
             "top-[12px] right-[34px] w-[20px] h-[20px] max-lg:hidden": listType,
             "top-[50%] left-[16px] mt-[-12px] w-[24px] h-[24px]": !listType,
@@ -228,7 +227,7 @@ const AppMainCard = ({ item }: CardProps) => {
             "absolute w-[20px] h-[20px] dropdown-menu": true,
           })}>
           <button
-            onClick={handleOpen}
+            onClick={HandleOpen}
             className={classNames({
               "min-[1024px]:bg-card-border": isShow,
               "w-[20px] h-[20px] rounded-[2px]": true,
@@ -247,11 +246,13 @@ const AppMainCard = ({ item }: CardProps) => {
               <div
                 className="title min-[1024px]:hidden border-b-[1px] border-solid border-header-bottom mb-[4px] pb-[12px]
                 text-[16px] font-medium leading-[20px] text-home-title">
-                {item.title}
+                {playbook.title}
               </div>
 
               <ul>
-                <li className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                <li
+                  onClick={HandlePublish}
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img
                     src={icon_preview}
                     alt=""
@@ -262,7 +263,7 @@ const AppMainCard = ({ item }: CardProps) => {
                   </span>
                 </li>
                 <li
-                  onClick={() => {}}
+                  onClick={HandleShare}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
@@ -270,11 +271,11 @@ const AppMainCard = ({ item }: CardProps) => {
                   </span>
                 </li>
                 <li
-                  onClick={() => handlePriorityClick(playbook)}
+                  onClick={() => SetFavorite(playbook.id, playbook.favorited)}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border min-[1024px]:hidden 
                   max-[1024px]:px-[0px]">
                   <img
-                    src={playbook ? star_active : star_mobile}
+                    src={playbook.favorited ? star_active : star_mobile}
                     alt=""
                     className="w-[24px] h-[24px]"
                   />
@@ -283,7 +284,7 @@ const AppMainCard = ({ item }: CardProps) => {
                   </span>
                 </li>
                 <li
-                  onClick={handleDetails}
+                  onClick={HandleDetails}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img
                     src={icon_settings}
@@ -295,7 +296,7 @@ const AppMainCard = ({ item }: CardProps) => {
                   </span>
                 </li>
                 <li
-                  onClick={() => handleDelete()}
+                  onClick={() => HandleDelete()}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img src={icon_delete} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">

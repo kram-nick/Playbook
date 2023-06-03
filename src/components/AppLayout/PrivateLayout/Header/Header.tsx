@@ -24,7 +24,7 @@ const Header = ({ previewState }: HeaderProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const publishPlaybook = () => {
+  const PublishPlaybook = () => {
     let data: any = localStorage.getItem("selected_playbook");
     data = data ? JSON.parse(data) : null;
     if (data) {
@@ -56,8 +56,7 @@ const Header = ({ previewState }: HeaderProps) => {
               "font-poppins font-medium text-[14px] leading-[20px] text-nav-txt-private cursor-pointer":
                 true,
               "max-lg:hidden": data.name,
-            })}
-          >
+            })}>
             Home
           </span>
           {data && data.name && (
@@ -77,8 +76,7 @@ const Header = ({ previewState }: HeaderProps) => {
                   true,
                 "text-home-title": !data.page_title,
                 "text-nav-txt-private max-lg:hidden": data.page_title,
-              })}
-            >
+              })}>
               <img src={divider} alt="" className="max-lg:hidden" />
               <img
                 src={back}
@@ -96,8 +94,7 @@ const Header = ({ previewState }: HeaderProps) => {
           {data && data.page_title && (
             <span
               className="font-poppins flex items-center font-medium text-[14px] leading-[20px] text-home-title 
-              gap-[4px] max-lg:gap-[8px] max-[690px]:w-[100%]"
-            >
+              gap-[4px] max-lg:gap-[8px] max-[690px]:w-[100%]">
               <img src={divider} alt="" className="max-lg:hidden" />
               <img
                 src={back}
@@ -126,17 +123,15 @@ const Header = ({ previewState }: HeaderProps) => {
         </div>
         <div className="flex flex-row gap-[28px] rounded-[5px] items-center max-lg:gap-[12px] max-[690px]:min-w-[60px]">
           <button
-            onClick={publishPlaybook}
-            className="flex flex-row gap-[4px] items-center cursor-pointer"
-          >
+            onClick={PublishPlaybook}
+            className="flex flex-row gap-[4px] items-center cursor-pointer">
             <span
               className={classNames({
                 "font-poppins text-[16px]   font-medium leading-[20.8px] max-lg:hidden":
                   true,
                 "text-buttons-bg": previewState,
                 "text-nav-txt-private": !previewState,
-              })}
-            >
+              })}>
               {t<string>("MAIN.PREVIEW")}
             </span>
             <img

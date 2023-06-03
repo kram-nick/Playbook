@@ -35,7 +35,7 @@ const PurchasedPlaybooks = () => {
                 <AppMainCard
                   key={playbook.id}
                   items={fetchedData?.data?.purchases}
-                  item={playbook}
+                  playbook={playbook}
                   index={index}
                 />
               )

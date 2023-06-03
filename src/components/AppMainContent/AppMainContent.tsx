@@ -39,7 +39,6 @@ const AppMainContent = () => {
   const handleNewPlaybook = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
-    console.log("open");
   };
 
   return (

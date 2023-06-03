@@ -35,7 +35,7 @@ const FavoritePlaybooks = () => {
                 <AppMainCard
                   key={playbook.id}
                   items={fetchedData?.data?.favorites}
-                  item={playbook}
+                  playbook={playbook}
                   index={index}
                 />
               )

@@ -26,13 +26,12 @@ const Listings = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
+            })}>
             {fetchedData?.data?.listings.map((playbook: any, index: number) => (
               <AppMainCard
                 key={playbook.id}
                 items={fetchedData?.data?.listings}
-                item={playbook}
+                playbook={playbook}
                 index={index}
               />
             ))}
@@ -59,8 +58,7 @@ const Listings = () => {
             // }}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>

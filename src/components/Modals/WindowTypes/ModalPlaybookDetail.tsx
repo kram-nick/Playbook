@@ -1,23 +1,23 @@
-import React, { ReactNode } from "react";
-import icon_banner from "../../assets/photos/main/icon-banner.svg";
-import icon_add from "../../assets/photos/main/icon-smiley.svg";
-import icon_close from "../../../assets/photos/main/modal-close.svg";
-import { useTranslation } from "react-i18next";
-import Select from "react-select";
 import { useState, useEffect } from "react";
-
-import useModal from "../../../core/hooks/useModal";
-import { colourStyles } from "../../../core/constants";
+import Select from "react-select";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import PlaybookService from "../../../core/services/playbook.service";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+
+import useModal from "../../../core/hooks/useModal";
+import { colourOptions, colourStyles } from "../../../core/constants";
+import PlaybookService from "../../../core/services/playbook.service";
 import { PrivateUIRoutes } from "../../../core/router";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
+
+import icon_banner from "../../assets/photos/main/icon-banner.svg";
+import icon_add from "../../assets/photos/main/icon-smiley.svg";
+import icon_close from "../../../assets/photos/main/modal-close.svg";
 
 export interface ColourOption {
   readonly value: string;
@@ -27,23 +27,9 @@ export interface ColourOption {
   readonly isDisabled?: boolean;
 }
 
-export const colourOptions: readonly ColourOption[] = [
-  { value: "ocean", label: "Ocean", color: "#00B8D9" },
-  { value: "blue", label: "Blue", color: "#0052CC" },
-  { value: "purple", label: "Purple", color: "#5243AA" },
-  { value: "red", label: "Red", color: "#FF5630" },
-  { value: "orange", label: "Orange", color: "#FF8B00" },
-  { value: "yellow", label: "Yellow", color: "#FFC400" },
-  { value: "green", label: "Green", color: "#36B37E" },
-  { value: "forest", label: "Forest", color: "#00875A" },
-  { value: "slate", label: "Slate", color: "#253858" },
-  { value: "silver", label: "Silver", color: "#666666" },
-  { value: "white", label: "White", color: "#FFFFFF" },
-  { value: "black", label: "Black", color: "#000000" },
-];
-
 export default function ModalPlaybookDetail() {
-  const [activeColor, setActiveColor] = useState<any>(colourOptions[1]);
+  const [activeColor, setActiveColor] = useState<any>(null);
+  const [playbook, setPlaybook] = useState<any>(null);
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -58,17 +44,35 @@ export default function ModalPlaybookDetail() {
     query: {},
     dependencies: [reloadChecker],
     resolve: (repsonse) => {
-      console.log(repsonse);
+      setPlaybook(repsonse?.data);
+      setActiveColor(
+        colourOptions.find(
+          (color) => repsonse?.data?.color_code === color?.color
+        )
+      );
     },
   });
 
+  useEffect(() => {
+    if (playbook && playbookType === "edit") {
+      for (let prop in playbook) {
+        if (playbook[prop] !== null) {
+          formikForm.setFieldValue(prop, playbook[prop]);
+        } else {
+          formikForm.setFieldValue(prop, "");
+        }
+      }
+    }
+  }, [playbook]);
+
   const formikForm = useFormik<{
+    id: string;
     name: string;
     content: string;
     color_code: string;
     header_url: string;
     icon_url: string;
-    favorited: boolean | any;
+    favorited: boolean;
     privacy: boolean | any;
     category_id: number | string;
     status: string;
@@ -76,9 +80,10 @@ export default function ModalPlaybookDetail() {
     url: string;
   }>({
     initialValues: {
+      id: "",
       name: "",
       content: "",
-      color_code: "#0052CC",
+      color_code: "",
       header_url:
         "https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1618602532707-3OAII3QVHYKCW3KJ1HJU/cars_boast.jpg",
       icon_url: "https://cdn-icons-png.flaticon.com/512/4436/4436481.png",
@@ -91,20 +96,24 @@ export default function ModalPlaybookDetail() {
     },
     // validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      if (playbookType === "create") {
-        createPlaybook(values);
-      } else {
-        updatePlaybook(values);
-      }
-      // handleSubmitForm(values);
+      HandleSubmitForm(values);
     },
   });
 
+  const HandleSubmitForm = (values: any) => {
+    if (playbookType === "create") {
+      createPlaybook(values);
+    } else {
+      updatePlaybook(values);
+    }
+  };
+
   const handlePrivate = async () => {
+    const privacy =
+      formikForm.values.privacy === "private" ? "public" : "private";
+
     try {
-      formikForm.setFieldValue("privacy", !formikForm.values.privacy);
-      const privacy = !formikForm.values.privacy ? "private" : "public";
-      await PlaybookService.ChangePrivacy({ privacy: privacy }, sharedData?.id);
+      await PlaybookService.ChangePrivacy({ privacy }, formikForm.values.id);
 
       dispatch(setReloadChecker(!reloadChecker));
       toast.success(t<string>("MAIN.UPDATE_PRIVACY_SUCCESS"));
@@ -116,29 +125,27 @@ export default function ModalPlaybookDetail() {
     }
   };
 
-  useEffect(() => {
-    if (sharedData?.id) {
-      formikForm.setValues(sharedData);
-      formikForm.setFieldValue(
-        "privacy",
-        sharedData.privacy === ("private" || true) ? true : false
-      );
+  // useEffect(() => {
+  //   if (sharedData?.id) {
+  //     formikForm.setValues(sharedData);
+  //     formikForm.setFieldValue(
+  //       "privacy",
+  //       sharedData.privacy === ("private" || true) ? true : false
+  //     );
 
-      if (sharedData?.color_code) {
-        const color = colourOptions.find(
-          (el) => el.color === sharedData.color_code
-        );
-        setActiveColor(color);
-      }
-    } else {
-      setActiveColor(colourOptions[1]);
-    }
-  }, [sharedData]);
+  //     if (sharedData?.color_code) {
+  //       const color = colourOptions.find(
+  //         (el: any) => el.color === sharedData.color_code
+  //       );
+  //       setActiveColor(color);
+  //     }
+  //   } else {
+  //     setActiveColor(colourOptions[1]);
+  //   }
+  // }, [sharedData]);
 
   const updatePlaybook = async (values: any) => {
-    // setLoading(true);
     try {
-      values.privacy = values.privacy ? "private" : "public";
       await PlaybookService.UpdatePlaybook(values);
       dispatch(setReloadChecker(!reloadChecker));
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
@@ -151,13 +158,7 @@ export default function ModalPlaybookDetail() {
   };
 
   const createPlaybook = async (values: any) => {
-    // setLoading(true);
     try {
-      values.privacy = values.privacy ? "private" : "public";
-      // const data = {
-      //   ...values,
-      //   privacy: values.privacy ? 'private' : 'public'
-      // }
       const response = await PlaybookService.CreatePlaybook(values);
       navigate(`/${PrivateUIRoutes.Chapters}/${response.data.data.id}`);
       dispatch(setReloadChecker(!reloadChecker));
@@ -169,8 +170,6 @@ export default function ModalPlaybookDetail() {
       }
     }
   };
-
-  console.log(playbookType);
 
   return (
     <div>
@@ -245,9 +244,10 @@ export default function ModalPlaybookDetail() {
                 defaultValue={activeColor}
                 options={colourOptions}
                 styles={colourStyles}
-                onChange={(option) =>
-                  formikForm.setFieldValue("color_code", option.color)
-                }
+                onChange={(option) => {
+                  formikForm.setFieldValue("color_code", option.color);
+                  setActiveColor(option);
+                }}
               />
             </div>
             {/* <div className="flex items-center rounded-[4px] bg-gray-btn px-[8px] py-[6px] gap-[6px] cursor-pointer">
@@ -273,13 +273,22 @@ export default function ModalPlaybookDetail() {
                 <input
                   type="checkbox"
                   hidden
-                  onChange={formikForm.handleChange}
+                  value={Number(formikForm.values.favorited)}
+                  onChange={(e) => {
+                    if (+e.target.value) {
+                      formikForm.setFieldValue("favorited", false);
+                    } else {
+                      formikForm.setFieldValue("favorited", true);
+                    }
+                  }}
                   checked={formikForm.values.favorited}
                   id="favorited"
-                  name="favorited"></input>
+                  name="favorited"
+                />
                 <span
                   className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
-                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>
+                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
+                />
               </span>
             </label>
             <label className="flex items-center  w-[100%] justify-between">
@@ -288,13 +297,22 @@ export default function ModalPlaybookDetail() {
               </span>
               <span className="switch flex w-[34px] h-[20px]">
                 <input
-                  type="checkbox"
-                  hidden
-                  onChange={handlePrivate}
-                  checked={formikForm.values.privacy}
                   id="privacy"
-                  name="privacy"></input>
-
+                  name="privacy"
+                  type="checkbox"
+                  value={formikForm.values.privacy}
+                  checked={formikForm.values.privacy === "private"}
+                  onChange={(e) => {
+                    if (playbookType === "edit") {
+                      handlePrivate();
+                      closeModal();
+                    }
+                    e.target.value === "private"
+                      ? formikForm.setFieldValue("privacy", "public")
+                      : formikForm.setFieldValue("privacy", "private");
+                  }}
+                  hidden
+                />
                 <span
                   className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
                       bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>

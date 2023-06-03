@@ -1,18 +1,25 @@
 import { useTranslation } from "react-i18next";
 
-import icon_close from "../../assets/photos/main/modal-close.svg";
-import small_banner from "../../assets/photos/purchase/card.svg";
-import avatar from "../../assets/photos/purchase/avatar.svg";
-import big_avatar from "../../assets/photos/purchase/big-avatar.svg";
+import icon_close from "../../../assets/photos/main/modal-close.svg";
+import small_banner from "../../../assets/photos/purchase/card.svg";
+import avatar from "../../../assets/photos/purchase/avatar.svg";
+import big_avatar from "../../../assets/photos/purchase/big-avatar.svg";
+
 import useModal from "../../../core/hooks/useModal";
+import { Data } from "../../../core/models/index";
 
 const ModalPurchase = () => {
   const { closeModal } = useModal();
 
   const { t } = useTranslation();
 
+  const user: Data.UserAccount = JSON.parse(
+    localStorage.getItem("user") || "{}"
+  );
+
   return (
     <div
+      onClick={(e) => e.stopPropagation()}
       className="modal-box relative w-[100%] max-w-[839px] p-[24px] shadow-free-trial rounded-[5px]
           border-[1px] border-solid border-border-btn bg-white font-poppins 
         flex flex-col items-center
@@ -44,9 +51,13 @@ const ModalPurchase = () => {
               Demand Generat...
             </h4>
             <div className="flex flex-row items-center gap-[7.18px]">
-              <img src={avatar} alt="avatar" />
+              <img
+                src={user?.profile_image}
+                alt="avatar"
+                className="w-[17.34px] h-[17.34px] object-cover"
+              />
               <span className="text-[16px] normal font-poppins font-normal leading-[26px] tracking-[-0.1px] text-simple-text">
-                Brooklyn Simmons
+                Brooklyn Simons
               </span>
             </div>
           </div>
@@ -63,7 +74,11 @@ const ModalPurchase = () => {
             </span>
             <div className="flex flex-col gap-[8px]">
               <div className="flex flex-row gap-[12px] items-center ">
-                <img src={big_avatar} alt="big-ava" />
+                <img
+                  src={user?.profile_image}
+                  alt="big-ava"
+                  className="w-[30px] h-[30px] object-cover"
+                />
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
                   Christopher Ragobeer
                 </span>
@@ -71,7 +86,7 @@ const ModalPurchase = () => {
               <span
                 className="text-[16px] leading-[26px] font-normal font-poppins 
                 text-footer-main normal tracking-[-0.1px]">
-                Stay humble. Work hard. Be kind.
+                {user?.bio}
               </span>
             </div>
           </div>
