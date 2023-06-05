@@ -22,6 +22,8 @@ import { setListType } from "../../core/store/reducers/app/appDataSlice";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { setPlaybookType } from "../../core/store/reducers/helpers/helpersDataSlice";
 import useModal from "../../core/hooks/useModal";
+import useHttpGet from "../../core/hooks/useHttpGet";
+import { APIRoutes } from "../../core/http";
 
 const AppMainContent = () => {
   const { t } = useTranslation();
@@ -39,9 +41,18 @@ const AppMainContent = () => {
     openModal(Modal.PLAYBOOK_DETAILS);
   };
 
-  // useEffect(() => {
-  //   openModal(Modal.WELCOME);
-  // }, []);
+  const { fetchedData: count } = useHttpGet<any>(
+    `${APIRoutes.PLAYBOOKS_ONBOARD}`,
+    {
+      dependencies: [],
+    }
+  );
+
+  useEffect(() => {
+    if (count?.data?.count === 0) {
+      openModal(Modal.WELCOME);
+    }
+  }, [count]);
 
   return (
     <div className="px-[24px] py-[24px] max-lg:px-[32px] max-[690px]:px-[16px] max-[690px]:py-[12px]">
