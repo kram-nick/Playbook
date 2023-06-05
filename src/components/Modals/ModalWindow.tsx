@@ -1,13 +1,14 @@
 import ModalDeletePage from "./WindowTypes/ModalDeletePage";
 import ModalDeletePlaybook from "./WindowTypes/ModalDeletePlaybook";
 import ModalSignup from "./WindowTypes/ModalSignUp";
+import ModalPlaybookDetail from "./WindowTypes/ModalPlaybookDetail";
+import ModalPurchase from "./WindowTypes/ModalPurchase";
+import ModalShare from "./WindowTypes/ModalShare";
+import ModalWelcome from "./WindowTypes/ModalWelcome";
 
 import useModal from "../../core/hooks/useModal";
 import { useAppSelector } from "../../core/hooks/useRedux";
 import { Modal } from "../../core/models/enums";
-import ModalPlaybookDetail from "./WindowTypes/ModalPlaybookDetail";
-import ModalPurchase from "./WindowTypes/ModalPurchase";
-import ModalShare from "./WindowTypes/ModalShare";
 
 const ModalWindow = () => {
   const { closeModal } = useModal();
@@ -26,6 +27,7 @@ const ModalWindow = () => {
             <ModalPlaybookDetail />
           )}
           {modalType === Modal.PLAYBOOK_SHARE && <ModalShare />}
+          {modalType === Modal.WELCOME && <ModalWelcome />}
           {/* <ModalShareSocial item={selectedItem}></ModalShareSocial> */}
         </div>
       )}

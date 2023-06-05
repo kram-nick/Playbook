@@ -8,17 +8,27 @@ import star from "../../../assets/photos/main/favorite-star.svg";
 
 import { useTranslation } from "react-i18next";
 import AppMainCard from "../../AppMainCard/AppMainCard";
-import { useAppSelector } from "../../../core/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
+import useModal from "../../../core/hooks/useModal";
+import { Modal } from "../../../core/models/enums";
+import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 const FavoritePlaybooks = () => {
   const { t } = useTranslation();
   const { listType } = useAppSelector((state) => state.app);
   const { reloadChecker } = useAppSelector((state) => state.helpers);
+  const dispatch = useAppDispatch();
+  const { openModal } = useModal();
 
   const { fetchedData } = useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
     query: {},
     dependencies: [reloadChecker],
   });
+
+  const handleNew = () => {
+    openModal(Modal.PLAYBOOK_DETAILS);
+    dispatch(setPlaybookType("create"));
+  };
 
   return (
     <div>
@@ -55,10 +65,7 @@ const FavoritePlaybooks = () => {
             </p>
           </div>
           <button
-            // onClick={() => {
-            //   setItem(null);
-            //   openDetailModal();
-            // }}
+            onClick={handleNew}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
                 ">
