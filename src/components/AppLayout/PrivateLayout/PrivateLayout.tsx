@@ -5,6 +5,7 @@ import ModalWindow from "../../Modals/ModalWindow";
 
 const PrivateLayout = () => {
   const location = useLocation();
+
   return (
     <>
       <div className="bg-create-bg-main flex flex-row min-h-[100vh] max-[680px]:bg-white">

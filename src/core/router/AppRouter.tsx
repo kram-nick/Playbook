@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { IRoute, PrivateUIRoutes, UIRoutes } from "../router";
@@ -25,6 +25,14 @@ import SignLayout from "../../components/AppLayout/SignLayout";
 import PrivateLayout from "../../components/AppLayout/PrivateLayout";
 import Discover from "../../pages/Discover";
 import Payment from "../../pages/Payment/Payment";
+import { useAppDispatch } from "../hooks/useRedux";
+import {
+  setPages,
+  setSelectedPlaybook,
+  setSelectedTab,
+  setSidebarTabs,
+} from "../store/reducers/app/appDataSlice";
+import useClearSidebar from "../hooks/useClearSidebar";
 
 export const privateRoutes: IRoute[] = [
   {

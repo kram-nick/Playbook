@@ -154,11 +154,11 @@ export default class PlaybookService {
     return RequestsService.postMethod<any>(`${APIRoutes.ORDERS}`, order);
   }
 
-  // static async getPages(
-  //   id: string,
-  // ): Promise<AxiosResponse<any>> {
-  //   return RequestsService.getMethod<any>(APIRoutes.PLAYBOOKS + '/' + id +'/pages');
-  // }
+  static async getPages(playbook_id: string): Promise<AxiosResponse<any>> {
+    return RequestsService.getMethod<any>(
+      `${APIRoutes.PLAYBOOKS}/${playbook_id}/pages`
+    );
+  }
 
   // static async getMine(): Promise<AxiosResponse<any>> {
   //   return RequestsService.getMethod<any>(APIRoutes.PLAYBOOKS + '/mine');

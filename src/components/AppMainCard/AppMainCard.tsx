@@ -107,7 +107,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
         "pl-[56px] pr-[12px] py-[12px]": !listType,
         "flex flex-wrap bg-white rounded-[8px] border-[1px] border-solid card-border relative":
           true,
-      })}>
+      })}
+    >
       <p
         onClick={() => {
           const setData = {
@@ -120,7 +121,7 @@ const AppMainCard = ({ playbook }: CardProps) => {
           };
 
           dispatch(setSelectedData(setData));
-          localStorage.setItem("selected_playbook", JSON.stringify(setData));
+          localStorage.setItem("selected_page", JSON.stringify(setData));
           navigate(`/creating/${playbook.id}`);
         }}
         className={classNames({
@@ -128,7 +129,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
           "w-[40px] h-[40px] rounded-[4px]": !listType,
           "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border cursor-pointer":
             true,
-        })}>
+        })}
+      >
         {playbook.header_url && (
           <img
             src={playbook.header_url}
@@ -144,11 +146,13 @@ const AppMainCard = ({ playbook }: CardProps) => {
             listType,
           "w-[calc(100%-40px)]": !listType,
           "item-content flex flex-wrap items-start font-poppins w-[100%]": true,
-        })}>
+        })}
+      >
         {listType && (
           <Link
             to={`/profile`}
-            className="icon w-[28px] h-[28px] overflow-hidden relative rounded-[50%]">
+            className="icon w-[28px] h-[28px] overflow-hidden relative rounded-[50%]"
+          >
             <img
               src={playbook.profile_image ? playbook.profile_image : red_saas}
               alt="saas"
@@ -162,7 +166,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
             "flex flex-col justify-between w-[calc(100%-34px)] h-full":
               listType,
             "text pl-[12px]": true,
-          })}>
+          })}
+        >
           <span
             onClick={() => {
               const setData = {
@@ -175,13 +180,11 @@ const AppMainCard = ({ playbook }: CardProps) => {
               };
 
               dispatch(setSelectedData(setData));
-              localStorage.setItem(
-                "selected_playbook",
-                JSON.stringify(setData)
-              );
+              localStorage.setItem("selected_page", JSON.stringify(setData));
               navigate(`/creating/${playbook.id}`);
             }}
-            className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title cursor-pointer">
+            className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title cursor-pointer"
+          >
             {playbook.name}
           </span>
           <p className="text-[12px] leading-normal text-input-paceholder flex flex-row items-end">
@@ -212,7 +215,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
             "top-[12px] right-[34px] w-[20px] h-[20px] max-lg:hidden": listType,
             "top-[50%] left-[16px] mt-[-12px] w-[24px] h-[24px]": !listType,
             absolute: true,
-          })}>
+          })}
+        >
           <img
             src={playbook.favorited ? star_active : star}
             alt=""
@@ -225,13 +229,15 @@ const AppMainCard = ({ playbook }: CardProps) => {
             "top-[12px] right-[8px]": listType,
             "top-[50%] right-[12px] mt-[-10px]": !listType,
             "absolute w-[20px] h-[20px] dropdown-menu": true,
-          })}>
+          })}
+        >
           <button
             onClick={HandleOpen}
             className={classNames({
               "min-[1024px]:bg-card-border": isShow,
               "w-[20px] h-[20px] rounded-[2px]": true,
-            })}>
+            })}
+          >
             <img src={dots} alt="" />
           </button>
 
@@ -242,17 +248,20 @@ const AppMainCard = ({ playbook }: CardProps) => {
               font-poppins min-w-[150px] z-10 transition-all duration-[300ms] ease-in max-[1024px]:z-[999]
               max-[1024px]:fixed max-[1024px]:left-[0] max-[1024px]:right-[0px] max-[1024px]:bottom-[0px] max-[1024px]:p-[16px]
               max-[1024px]:pb-[32px]"
-              ref={ref}>
+              ref={ref}
+            >
               <div
                 className="title min-[1024px]:hidden border-b-[1px] border-solid border-header-bottom mb-[4px] pb-[12px]
-                text-[16px] font-medium leading-[20px] text-home-title">
+                text-[16px] font-medium leading-[20px] text-home-title"
+              >
                 {playbook.title}
               </div>
 
               <ul>
                 <li
                   onClick={HandlePublish}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"
+                >
                   <img
                     src={icon_preview}
                     alt=""
@@ -264,7 +273,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
                 </li>
                 <li
                   onClick={HandleShare}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"
+                >
                   <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
                     {t<string>("MAIN.SHARE")}
@@ -273,7 +283,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
                 <li
                   onClick={() => SetFavorite(playbook.id, playbook.favorited)}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border min-[1024px]:hidden 
-                  max-[1024px]:px-[0px]">
+                  max-[1024px]:px-[0px]"
+                >
                   <img
                     src={playbook.favorited ? star_active : star_mobile}
                     alt=""
@@ -285,7 +296,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
                 </li>
                 <li
                   onClick={HandleDetails}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"
+                >
                   <img
                     src={icon_settings}
                     alt=""
@@ -297,7 +309,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
                 </li>
                 <li
                   onClick={() => HandleDelete()}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"
+                >
                   <img src={icon_delete} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
                     {t<string>("MAIN.DELETE")}
@@ -313,7 +326,8 @@ const AppMainCard = ({ playbook }: CardProps) => {
                 "side-overlay fixed left-[0px] top-[0px] w-[100%] h-[100vh] bg-side-overlay z-[99] min-[1024px]:hidden transition-all duration-[300ms] ease-in":
                   true,
                 "opacity-0 invisible z-0": !isShow,
-              })}></div>
+              })}
+            ></div>
           )}
         </div>
       </div>
