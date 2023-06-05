@@ -1,8 +1,13 @@
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import AllPlaybooks from "../MainTabs/AllPlaybooks.tsx/AllPlaybooks";
+import MyPlaybooks from "../MainTabs/MyPlaybooks/MyPlaybooks";
+import FavoritePlaybooks from "../MainTabs/FavoritePlaybooks.tsx/FavoritePlaybooks";
+import PurchasedPlaybooks from "../MainTabs/PurchasedPlaybooks.tsx/PurchasedPlaybooks";
+import Listings from "../MainTabs/Listings/Listings";
 
 import icon_plus from "../../assets/photos/main/plus.svg";
 import icon_down_gray from "../../assets/photos/main/arrow-down-gray.svg";
@@ -11,16 +16,9 @@ import icon_grid_default from "../../assets/photos/main/icon-grid-default.svg";
 import icon_row from "../../assets/photos/main/row-vertical.svg";
 import icon_row_default from "../../assets/photos/main/row-vertical-default.svg";
 
-import AllPlaybooks from "../MainTabs/AllPlaybooks.tsx/AllPlaybooks";
-import MyPlaybooks from "../MainTabs/MyPlaybooks/MyPlaybooks";
-import FavoritePlaybooks from "../MainTabs/FavoritePlaybooks.tsx/FavoritePlaybooks";
-import PurchasedPlaybooks from "../MainTabs/PurchasedPlaybooks.tsx/PurchasedPlaybooks";
-import Listings from "../MainTabs/Listings/Listings";
-
 import { MainTabs, Modal } from "../../core/models/enums";
 import { TabsHeadings } from "../../core/constants";
 import { setListType } from "../../core/store/reducers/app/appDataSlice";
-
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { setPlaybookType } from "../../core/store/reducers/helpers/helpersDataSlice";
 import useModal from "../../core/hooks/useModal";
@@ -40,6 +38,10 @@ const AppMainContent = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
   };
+
+  // useEffect(() => {
+  //   openModal(Modal.WELCOME);
+  // }, []);
 
   return (
     <div className="px-[24px] py-[24px] max-lg:px-[32px] max-[690px]:px-[16px] max-[690px]:py-[12px]">

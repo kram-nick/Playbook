@@ -24,12 +24,9 @@ const AllPlaybooks = () => {
   });
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  console.log(fetchedData);
-
   const handleNewPlaybook = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
-    console.log("open");
   };
 
   return (
@@ -47,7 +44,7 @@ const AllPlaybooks = () => {
                 <AppMainCard
                   key={playbook.id}
                   items={fetchedData?.data?.playbooks}
-                  item={playbook}
+                  playbook={playbook}
                   index={index}
                 />
               )

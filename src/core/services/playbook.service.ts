@@ -1,7 +1,9 @@
 import { AxiosResponse } from "axios";
-import $api, { APIRoutes } from "../http";
+
+import { APIRoutes } from "../http";
 import RequestsService from "./request.service";
-import { Data } from "../models/data";
+import { Data } from "../models";
+
 // {"playbook":
 //   {"name":"Sales Playbook",
 //   "url":"https://www.google.com",
@@ -48,7 +50,7 @@ export default class PlaybookService {
   ): Promise<AxiosResponse<any>> {
     const formData = {
       playbook_id: id,
-      favorite: favorite,
+      favorite,
     };
     return RequestsService.putMethod<any>(
       APIRoutes.PLAYBOOKS_FAVORITE,

@@ -23,4 +23,5 @@ export enum Modal {
   ICONS = "ICONS",
   SIGN_UP = "SIGN_UP",
   PURCHASE = "PURCHASE",
+  WELCOME = "WELCOME",
 }

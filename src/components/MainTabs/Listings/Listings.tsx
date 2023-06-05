@@ -1,21 +1,37 @@
+import { useTranslation } from "react-i18next";
 import classNames from "classnames";
+
+import AppMainCard from "../../AppMainCard/AppMainCard";
+
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
+import useModal from "../../../core/hooks/useModal";
+import { Modal } from "../../../core/models/enums";
+import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
 import icon_plus from "../../../assets/photos/main/plus.svg";
-import { useTranslation } from "react-i18next";
-import AppMainCard from "../../AppMainCard/AppMainCard";
-import { useAppSelector } from "../../../core/hooks/useRedux";
 
 const Listings = () => {
   const { t } = useTranslation();
   const { listType } = useAppSelector((state) => state.app);
+
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
+  const { openModal } = useModal();
+
+  const dispatch = useAppDispatch();
+
   const { fetchedData } = useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
     query: {},
-    dependencies: [],
+    dependencies: [reloadChecker],
   });
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  const handleNew = () => {
+    openModal(Modal.PLAYBOOK_DETAILS);
+    dispatch(setPlaybookType("create"));
+  };
 
   return (
     <div>
@@ -26,13 +42,12 @@ const Listings = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
+            })}>
             {fetchedData?.data?.listings.map((playbook: any, index: number) => (
               <AppMainCard
                 key={playbook.id}
                 items={fetchedData?.data?.listings}
-                item={playbook}
+                playbook={playbook}
                 index={index}
               />
             ))}
@@ -53,14 +68,10 @@ const Listings = () => {
             </p>
           </div>
           <button
-            // onClick={() => {
-            //   setItem(null);
-            //   openDetailModal();
-            // }}
+            onClick={handleNew}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>
