@@ -18,7 +18,11 @@ export type AppDataTypes = {
     page_text?: string;
     status?: string;
   };
-  openedPages: string[];
+  sidebarTabs: number[];
+  selectedTab: number | null;
+  selectedPage: null | any;
+  openedPlaybooks: any[];
+  openedPages: any[];
   listType: boolean;
   isModalOpen: boolean;
   modalType: string;
