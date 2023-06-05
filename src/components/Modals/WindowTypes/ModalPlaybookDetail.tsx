@@ -170,22 +170,23 @@ export default function ModalPlaybookDetail() {
     }
   };
 
-  console.log(playbookType);
-
   return (
     <div>
       <div
         className="modal-overlay bg-overlay max-sm:overflow-y-auto max-sm:items-start"
-        onClick={closeModal}>
+        onClick={closeModal}
+      >
         <div
           onClick={(e) => e.stopPropagation()}
           className="modal-box relative w-[100%] max-w-[530px] px-[24px] pt-[24px] shadow-free-trial 
                 border-[1px] border-solid border-border-btn bg-white font-poppins
-                max-sm:min-h-[100vh] max-sm:px-[16px] max-sm:py-[16px] max-sm:pb-[80px] max-sm:max-w-[100%]">
+                max-sm:min-h-[100vh] max-sm:px-[16px] max-sm:py-[16px] max-sm:pb-[80px] max-sm:max-w-[100%]"
+        >
           <div className="flex items-center justify-between mb-[24px]">
             <p
               className="text-[20px] font-medium text-home-title leading-[26px] tracking-[-0.1px]
-                  max-sm:text-[16px] max-sm:leading-[22px] max-sm:pl-[28px]">
+                  max-sm:text-[16px] max-sm:leading-[22px] max-sm:pl-[28px]"
+            >
               {playbookType === "edit" ? "Edit Details" : "Add a Playbook"}
             </p>
             <button className="absolute top-[16px] right-[16px] max-sm:right-[auto] max-sm:top-[6px] max-sm:left-[6px]">
@@ -195,11 +196,13 @@ export default function ModalPlaybookDetail() {
 
           <form
             onSubmit={formikForm.handleSubmit}
-            className="form grid gap-y-[16px] mb-[24px]">
+            className="form grid gap-y-[16px] mb-[24px]"
+          >
             <div className="form-group flex flex-wrap">
               <label
                 htmlFor=""
-                className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+                className="block text-[14px] text-home-title leading-[20px] mb-[6px]"
+              >
                 {t<string>("FIELDS.NAME")}
               </label>
               <input
@@ -220,7 +223,8 @@ export default function ModalPlaybookDetail() {
             <div className="form-group flex flex-wrap">
               <label
                 htmlFor=""
-                className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+                className="block text-[14px] text-home-title leading-[20px] mb-[6px]"
+              >
                 {t<string>("FIELDS.DESCRIPTION")}
               </label>
               <textarea
@@ -231,12 +235,14 @@ export default function ModalPlaybookDetail() {
                 placeholder={t<string>("FIELDS.DESCRIPTION")}
                 className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-border-input
                   border-solid border-[1px] shadow-free-trial min-w-[100%] h-[105px] resize-none
-                  leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"></textarea>
+                  leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+              ></textarea>
             </div>
             <div className="form-group">
               <label
                 htmlFor=""
-                className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+                className="block text-[14px] text-home-title leading-[20px] mb-[6px]"
+              >
                 {t<string>("FIELDS.COLOR")}
               </label>
 
@@ -276,10 +282,12 @@ export default function ModalPlaybookDetail() {
                   onChange={formikForm.handleChange}
                   checked={formikForm.values.favorited}
                   id="favorited"
-                  name="favorited"></input>
+                  name="favorited"
+                ></input>
                 <span
                   className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
-                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>
+                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
+                ></span>
               </span>
             </label>
             <label className="flex items-center  w-[100%] justify-between">
@@ -293,30 +301,35 @@ export default function ModalPlaybookDetail() {
                   onChange={handlePrivate}
                   checked={formikForm.values.privacy}
                   id="privacy"
-                  name="privacy"></input>
+                  name="privacy"
+                ></input>
 
                 <span
                   className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
-                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>
+                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
+                ></span>
               </span>
             </label>
 
             <div
               className="grid grid-cols-2 font-poppins gap-[16px] max-sm:absolute max-sm:bottom-[24px] 
-                  max-sm:left-[16px] max-sm:right-[16px]">
+                  max-sm:left-[16px] max-sm:right-[16px]"
+            >
               <button
                 className="h-[46px] flex items-center justify-center 
                       py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
                       text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
                 title="Cancel"
-                onClick={closeModal}>
+                onClick={closeModal}
+              >
                 Cancel
               </button>
               <button
                 type="submit"
                 className="h-[46px] flex items-center justify-center  
                       py-[8px] px-[15px] bg-buttons-bg rounded-[5px] text-buttons-color 
-                      text-[16px] font-medium leading-[20px] shadow-free-trial ">
+                      text-[16px] font-medium leading-[20px] shadow-free-trial "
+              >
                 {sharedData ? "Save" : "Continue"}
               </button>
             </div>
