@@ -365,6 +365,12 @@
     "DELETE": "Delete",
     "CANCEL": "Cancel",
     "CONFIRM": "Yes, delete",
-    "PAGE_DELETE": "Do you really want to delete the page?"
+    "PAGE_DELETE": "Do you really want to delete the page?",
+    "WELCOME": "Let’s get you started on Playbook!",
+    "WELCOME_BTN": "Let's Get Started",
+    "DISCOVER": "Discover",
+    "CREATE": "Create",
+    "FIND_WELCOME": "Find playbooks that interest you",
+    "WELCOME_OWN": "Create your own playbook"
   }
 }

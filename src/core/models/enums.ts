@@ -25,3 +25,8 @@ export enum Modal {
   PURCHASE = "PURCHASE",
   WELCOME = "WELCOME",
 }
+
+export enum Welcome {
+  CREATE = "CREATE",
+  DISCOVER = "DISCOVER",
+}

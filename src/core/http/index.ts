@@ -6,6 +6,7 @@ export const APIRoutes = {
   AUTH_GOOGLE: "/api/auth/google/token",
   PLAYBOOKS: "/api/playbooks",
   PLAYBOOKS_FAVORITE: "/api/playbooks/favorite",
+  PLAYBOOKS_ONBOARD: "/api/playbooks/count",
   PAGES: "/api/pages",
   SEARCH: "/api/search",
   FILE_UPLOAD: "/api/files/upload",
