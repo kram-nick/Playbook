@@ -4,13 +4,14 @@ export const APIRoutes = {
   AUTH_LOGIN: "/api/users/login",
   AUTH_CREATE: "/api/users/create",
   AUTH_GOOGLE: "/api/auth/google/token",
+  FILE_UPLOAD: "/api/files/upload",
+  ORDERS: "/api/orders",
   PLAYBOOKS: "/api/playbooks",
   PLAYBOOKS_FAVORITE: "/api/playbooks/favorite",
   PLAYBOOKS_ONBOARD: "/api/playbooks/count",
   PAGES: "/api/pages",
   SEARCH: "/api/search",
-  FILE_UPLOAD: "/api/files/upload",
-  ORDERS: "/api/orders",
+  TAGS: "/api/tags",
   USERS_ACCOUNT: "/api/users/account",
 };
 

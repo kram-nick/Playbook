@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useModal from "../../../core/hooks/useModal";
+import { Welcome } from "../../../core/models/enums";
 
 import icon_close from "../../../assets/photos/modals/close-icon.svg";
 import create from "../../../assets/photos/modals/create.svg";
 import discover from "../../../assets/photos/modals/discover.svg";
-import { Welcome } from "../../../core/models/enums";
 
 const ModalWelcome = () => {
   const [active, setActive] = useState("");
@@ -52,9 +52,10 @@ const ModalWelcome = () => {
                   : setActive(Welcome.DISCOVER)
               }
               className={classNames({
-                "p-[14.76px] bg-buttons-color rounded-[16.4px] border-buttons-bg border-[0.82px] border-solid flex flex-col items-center gap-[22.47px]":
+                "p-[14.76px] bg-buttons-color rounded-[16.4px]  border-[0.82px] border-solid flex flex-col items-center gap-[22.47px]":
                   true,
-                " bg-create-bg-main": active === Welcome.DISCOVER,
+                "border-buttons-bg bg-create-bg-main":
+                  active === Welcome.DISCOVER,
               })}>
               <img src={discover} alt="discover" />
               <div className="flex flex-col items-center gap-[6px]">
@@ -73,9 +74,10 @@ const ModalWelcome = () => {
                   : setActive(Welcome.CREATE)
               }
               className={classNames({
-                "p-[14.76px] bg-buttons-color rounded-[16.4px] border-buttons-bg border-[0.82px] border-solid flex flex-col items-center gap-[22.47px]":
+                "p-[14.76px] bg-buttons-color rounded-[16.4px]  border-[0.82px] border-solid flex flex-col items-center gap-[22.47px]":
                   true,
-                " bg-create-bg-main": active === Welcome.CREATE,
+                "border-buttons-bg bg-create-bg-main":
+                  active === Welcome.CREATE,
               })}>
               <img src={create} alt="create" />
               <div className="flex flex-col items-center gap-[6px]">

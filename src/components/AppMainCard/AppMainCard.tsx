@@ -1,6 +1,15 @@
 import classNames from "classnames";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+
+import useOutside from "../../core/hooks/useOutside";
+import Playbook from "../../core/interface/playbook";
+import PlaybookService from "../../core/services/playbook.service";
+import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
+import { Modal } from "../../core/models/enums";
+import useModal from "../../core/hooks/useModal";
 
 import poster from "../../assets/photos/main/image-poster.svg";
 import red_saas from "../../assets/photos/create/red-saas.svg";
@@ -11,23 +20,17 @@ import star_mobile from "../../assets/photos/main/star-mobile.svg";
 import star_active from "../../assets/photos/main/star-active.svg";
 import icon_preview from "../../assets/photos/main/icon-play.svg";
 import icon_share from "../../assets/photos/main/icon-share.svg";
+import icon_sale from "../../assets/photos/main/icon-sale.svg";
+import icon_sale_unactive from "../../assets/photos/main/icon-sale-gray.svg";
 import icon_settings from "../../assets/photos/main/setting.svg";
 import icon_delete from "../../assets/photos/main/delete.svg";
-import useOutside from "../../core/hooks/useOutside";
-import Playbook from "../../core/interface/playbook";
-import PlaybookService from "../../core/services/playbook.service";
-import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import { setSelectedData } from "../../core/store/reducers/app/appDataSlice";
-import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import { Modal } from "../../core/models/enums";
-import useModal from "../../core/hooks/useModal";
+
 import {
   setPlaybookType,
   setReloadChecker,
-  setSharedData,
   setSharedId,
 } from "../../core/store/reducers/helpers/helpersDataSlice";
+import { useState } from "react";
 
 type CardProps = {
   items: Array<Playbook>;
@@ -36,6 +39,8 @@ type CardProps = {
 };
 
 const AppMainCard = ({ playbook }: CardProps) => {
+  const [isSale, setIsSale] = useState(false);
+
   const { t } = useTranslation();
 
   const { ref, isShow, setIsShow } = useOutside(false);
@@ -83,6 +88,11 @@ const AppMainCard = ({ playbook }: CardProps) => {
 
   const HandleShare = () => {
     openModal(Modal.PLAYBOOK_SHARE);
+  };
+
+  const handleSale = () => {
+    openModal(Modal.PLAYBOOK_SALE);
+    dispatch(setSharedId(playbook.id));
   };
 
   const HandlePublish = async () => {
@@ -239,7 +249,7 @@ const AppMainCard = ({ playbook }: CardProps) => {
             <div
               className="menu absolute right-[0] min-[1024px]:top-[calc(100%+9px)] bg-white py-[8px]
               min-[1024px]:rounded-[5px] border-[1px] border-solid border-header-bottom shadow-dropmenu
-              font-poppins min-w-[150px] z-10 transition-all duration-[300ms] ease-in max-[1024px]:z-[999]
+              font-poppins min-w-[162px] z-10 transition-all duration-[300ms] ease-in max-[1024px]:z-[999]
               max-[1024px]:fixed max-[1024px]:left-[0] max-[1024px]:right-[0px] max-[1024px]:bottom-[0px] max-[1024px]:p-[16px]
               max-[1024px]:pb-[32px]"
               ref={ref}>
@@ -260,6 +270,25 @@ const AppMainCard = ({ playbook }: CardProps) => {
                   />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
                     {t<string>("MAIN.PREVIEW")}
+                  </span>
+                </li>
+                <li
+                  onMouseLeave={() => setIsSale(false)}
+                  onMouseOver={() => setIsSale(true)}
+                  onClick={handleSale}
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
+                  <img
+                    src={isSale ? icon_sale_unactive : icon_sale}
+                    alt="icon_sale"
+                    className="w-[24px] h-[24px]"
+                  />
+                  <span
+                    className={classNames({
+                      "text-[16px] text-buttons-bg font-medium  leading-[20px]":
+                        true,
+                      "text-simple-text": isSale,
+                    })}>
+                    {t<string>("MAIN.SALE")}
                   </span>
                 </li>
                 <li

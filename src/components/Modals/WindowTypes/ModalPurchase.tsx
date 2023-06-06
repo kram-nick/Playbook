@@ -2,11 +2,12 @@ import { useTranslation } from "react-i18next";
 
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 import small_banner from "../../../assets/photos/purchase/card.svg";
-import avatar from "../../../assets/photos/purchase/avatar.svg";
-import big_avatar from "../../../assets/photos/purchase/big-avatar.svg";
 
 import useModal from "../../../core/hooks/useModal";
 import { Data } from "../../../core/models/index";
+import useHttpGet from "../../../core/hooks/useHttpGet";
+import { APIRoutes } from "../../../core/http";
+import { useAppSelector } from "../../../core/hooks/useRedux";
 
 const ModalPurchase = () => {
   const { closeModal } = useModal();

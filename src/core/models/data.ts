@@ -28,4 +28,24 @@ export declare namespace Data {
     title: "";
     bio: "";
   }
+  interface Playbook {
+    category_id: number;
+    color_code: string;
+    content: string;
+    favorited: boolean;
+    header_url: string;
+    icon_url: string;
+    id: string;
+    name: string;
+    order: null | string[];
+    privacy: string;
+    slug_url: string;
+    status: string;
+    thumbnail_url: null | string;
+    user_id: string;
+  }
+  interface Tag {
+    id: string;
+    name: string;
+  }
 }

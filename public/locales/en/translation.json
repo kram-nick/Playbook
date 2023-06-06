@@ -237,7 +237,8 @@
     "ALL": "All",
     "MY_PLAYBOOKS": "My Playbooks",
     "PURCHASED": "Purchased",
-    "LISTINGS": "Listings"
+    "LISTINGS": "Listings",
+    "SALE": "List for Sale"
   },
   "EDIT": {
     "SECTION_NAME": "Section Name",
@@ -370,7 +371,27 @@
     "WELCOME_BTN": "Let's Get Started",
     "DISCOVER": "Discover",
     "CREATE": "Create",
+    "LIST_TITLE": "List this playbook for sale in the marketplace",
     "FIND_WELCOME": "Find playbooks that interest you",
-    "WELCOME_OWN": "Create your own playbook"
+    "WELCOME_OWN": "Create your own playbook",
+    "DETAILS": "Details",
+    "THUMBNAIL": "Thumbnail preview",
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "FREE_BTN": "Get for free",
+    "SHARE": "Share for free",
+    "CLEAR": "Clear",
+    "CHANGE_THUMB": "Change thumbnail",
+    "TAGS": "Tags",
+    "MAX_TAG": "(Up to 5 tags)",
+    "VISIBILITY": "Playbook Visibility",
+    "PRICE": "Price",
+    "RETAIL": "Retail Price",
+    "TAX": "Tax",
+    "DISCOUNT": "Discount",
+    "TOTAL": "Total",
+    "SALE_PRICE": "Sale Price",
+    "SALE_BTN": "List for Sale",
+    "SELECT": "Please select"
   }
 }
