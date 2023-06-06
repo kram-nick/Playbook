@@ -231,6 +231,7 @@
     "UPDATE_PRIVACY_SUCCESS": "The Playbook privacy has been successfully updated",
     "DELETE_SUCCESS": "The Playbook has been successfully deleted",
     "DELETE_PAGE_SUCCESS": "The Page has been successfully deleted",
+    "LISTED_SUCCESS": "The Playbook has been successfully listed for a sale",
     "DISCOVER": "Discover",
     "DISCOVER_TITLE": "Discover playbooks that help you execute and get results.",
     "PLEASE_SELECT": "Please select",

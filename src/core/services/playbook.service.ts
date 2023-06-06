@@ -160,6 +160,13 @@ export default class PlaybookService {
     );
   }
 
+  static async AddListing(data: Data.Listing): Promise<AxiosResponse<any>> {
+    const formData = {
+      listing: data,
+    };
+    return RequestsService.postMethod<any>(`${APIRoutes.LISTINGS}`, formData);
+  }
+
   // static async getMine(): Promise<AxiosResponse<any>> {
   //   return RequestsService.getMethod<any>(APIRoutes.PLAYBOOKS + '/mine');
   // }
