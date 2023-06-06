@@ -24,6 +24,8 @@ const Discover = () => {
     dependencies: [],
   });
 
+  console.log(items);
+
   return (
     <>
       <div

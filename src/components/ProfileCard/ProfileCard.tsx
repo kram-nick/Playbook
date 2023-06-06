@@ -14,6 +14,8 @@ import useAuth from "../../core/hooks/useAuth";
 import PlaybookService from "../../core/services/playbook.service";
 
 import { Modal } from "../../core/models/enums";
+import { useAppDispatch } from "../../core/hooks/useRedux";
+import { setSharedId } from "../../core/store/reducers/helpers/helpersDataSlice";
 
 type CardProps = {
   items?: Array<any>;
@@ -27,6 +29,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
   let [priority, setPriority] = useState(item.priority);
   const [playbook]: any = useState(item);
 
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const { openModal } = useModal();
@@ -42,6 +45,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
   };
 
   const createOrder = async (id: string) => {
+    dispatch(setSharedId(id));
     openModal(Modal.PURCHASE);
   };
 

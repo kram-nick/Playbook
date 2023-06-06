@@ -64,8 +64,6 @@ const Sidebar = () => {
     LoadPages(playbook?.id);
   }, []);
 
-  console.log(selectedPlaybook);
-
   const { fetchedData: playbooks } = useHttpGet<any>(
     `${APIRoutes.PLAYBOOKS}/mine`,
     {
@@ -190,8 +188,6 @@ const Sidebar = () => {
       );
     }
   };
-
-  console.log(selectedPlaybook);
 
   return (
     <div

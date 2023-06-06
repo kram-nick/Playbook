@@ -363,27 +363,27 @@ const HomePage = () => {
           {t<string>("HOME.WHAT_IS_DESC")}
         </p>
         <div className="flex gap-[26px] mt-[60px]">
-          <div className="flex flex-col justify-between min-h-[324px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-1 bg-center bg-cover bg-no-repeat">
+          <div className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-1 bg-contain bg-no-repeat">
             <h2 className="text-center max-w-[185px] mx-[auto] font-semibold font-poppins text-review-name">
               {t<string>("HOME.WHAT_IS_TITLE_1")}
             </h2>
-            <span className="font-poppins text-[16px] text-simple-text max-w-[304px]">
+            <span className="font-poppins text-[16px] text-simple-text max-w-[304px] h-[calc(100%-70%)] flex flex-col justify-end">
               {t<string>("HOME.WHAT_IS_TEXT_1")}
             </span>
           </div>
-          <div className="flex flex-col justify-between min-h-[324px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-2 bg-center bg-cover bg-no-repeat">
+          <div className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-2 bg-contain bg-no-repeat">
             <h2 className="text-center max-w-[220px] mx-[auto] font-semibold font-poppins text-review-name">
               {t<string>("HOME.WHAT_IS_TITLE_2")}
             </h2>
-            <span className="font-poppins text-[16px] text-simple-text max-w-[304px]">
+            <span className="font-poppins text-[16px] text-simple-text max-w-[304px] h-[calc(100%-70%)] flex flex-col justify-end">
               {t<string>("HOME.WHAT_IS_TEXT_2")}
             </span>
           </div>
-          <div className="flex flex-col justify-between min-h-[324px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-3 bg-center bg-cover bg-no-repeat">
+          <div className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-3 bg-contain bg-no-repeat">
             <h2 className="text-center max-w-[304px] font-semibold font-poppins text-review-name">
               {t<string>("HOME.WHAT_IS_TITLE_3")}
             </h2>
-            <span className="font-poppins text-[16px] text-simple-text max-w-[304px]">
+            <span className="font-poppins text-[16px] text-simple-text max-w-[304px] h-[calc(100%-70%)] flex flex-col justify-end">
               {t<string>("HOME.WHAT_IS_TEXT_3")}
             </span>
           </div>
