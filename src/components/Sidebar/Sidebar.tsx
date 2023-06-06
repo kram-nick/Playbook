@@ -229,8 +229,8 @@ const Sidebar = () => {
           "z-[20] flex items-center justify-center transition-all duration-[300ms] linear max-[1024px]:hidden":
             true,
           "invisible opacity-0": sideOpen,
-          "right-[-33px]": !sideOpen,
-          "top-[12.35%]": !sideOpen,
+          "right-[-31px]": !sideOpen,
+          "top-[12.42%]": !sideOpen,
         })}
       >
         <img

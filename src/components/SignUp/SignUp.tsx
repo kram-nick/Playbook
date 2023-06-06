@@ -58,7 +58,7 @@ const SignIn = () => {
   const handleGoogleSignIn = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       try {
-        const response = await AuthService.loginGoogle(
+        const response = await AuthService.LoginGoogle(
           codeResponse.access_token
         );
         localStorage.setItem(
@@ -85,7 +85,7 @@ const SignIn = () => {
   const handleSubmitForm = async (values: any) => {
     setLoading(true);
     try {
-      const response = await AuthService.create(
+      const response = await AuthService.Create(
         values.first_name,
         values.last_name,
         values.email,

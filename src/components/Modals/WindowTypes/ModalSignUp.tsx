@@ -61,7 +61,7 @@ export default function ModalSignup(props: ModalType) {
   const HandleGoogleSignIn = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       try {
-        const response = await AuthService.loginGoogle(
+        const response = await AuthService.LoginGoogle(
           codeResponse.access_token
         );
         localStorage.setItem(
@@ -82,7 +82,7 @@ export default function ModalSignup(props: ModalType) {
 
   const HandleSubmitForm = async (values: any) => {
     try {
-      const response = await AuthService.create(
+      const response = await AuthService.Create(
         values.first_name,
         values.last_name,
         values.email,

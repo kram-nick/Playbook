@@ -55,7 +55,7 @@ const SignIn = () => {
   const handleGoogleSignIn = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       try {
-        const response = await AuthService.loginGoogle(
+        const response = await AuthService.LoginGoogle(
           codeResponse.access_token
         );
         localStorage.setItem(
@@ -82,7 +82,7 @@ const SignIn = () => {
   const handleSubmitForm = async (values: any) => {
     setLoading(true);
     try {
-      const response = await AuthService.login(values.email, values.password);
+      const response = await AuthService.Login(values.email, values.password);
 
       localStorage.setItem(
         process.env.REACT_APP_TOKEN_KEY,

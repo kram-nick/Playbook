@@ -113,19 +113,19 @@ export const TabsHeadings: string[] = [
 export const SettingsTabs = [
   {
     id: 1,
-    title: "Profile",
+    title: "SETTINGS.PROFILE",
   },
   {
     id: 2,
-    title: "Password",
+    title: "SETTINGS.PASSWORD",
   },
   {
     id: 3,
-    title: "Plan",
+    title: "SETTINGS.TRANSACTIONS",
   },
   {
     id: 4,
-    title: "Notifications",
+    title: "SETTINGS.NOTIFICATIONS",
   },
 ];
 

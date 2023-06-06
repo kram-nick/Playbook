@@ -267,7 +267,10 @@
     "NOT_UPDATED": "Nothing wasn't updated.",
     "ACCOUNT_UPDATED": "User account successfully updated!",
     "AGREE_TERMS": "You must agree to terms & conditions",
-    "SOMETHING_WRONG": "Something went wrong."
+    "SOMETHING_WRONG": "Something went wrong.",
+    "NOT_MATCH_PASSWORD": "Doesn't match password",
+    "PASSWORD_CHANGED": "Password successfully changed!",
+    "CHANGE_PASSWORD_FAILED": "Unable to change password. Please contact support."
   },
   "FIELDS": {
     "NAME": "Name",
@@ -309,8 +312,18 @@
   },
   "SETTINGS": {
     "TITLE": "Settings",
+    "PROFILE": "Profile",
+    "PASSWORD": "Password",
+    "TRANSACTIONS": "Plan & Transactions",
+    "NOTIFICATIONS": "Notifications",
     "PERSONAL_DATA": "Personal info",
+    "CURRENT_PASSWORD": "Current password",
+    "NEW_PASSWORD": "New password",
+    "CONFIRM_PASSWORD": "Confirm new password",
+    "NEW_PASSWORD_TEXT": "The new password must contain at least 8 characters",
+    "CONFIRM_PASSWORD_TEXT": "The new password must contain at least 8 characters",
     "TAB_1_TEXT": "Update your photo and personal details here.",
+    "TAB_2_TEXT": "Please, enter your current password to change your password",
     "NAME": "Name",
     "EMAIL": "Email address",
     "PHOTO": "Your photo",
