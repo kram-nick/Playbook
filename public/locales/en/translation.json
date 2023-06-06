@@ -368,7 +368,8 @@
     "RETAIL": "Retail Price",
     "TAX": "Tax",
     "DISCOUNT": "Discount",
-    "TOTAL": "Total"
+    "TOTAL": "Total",
+    "GET_FREE": "Get for free"
   },
   "MODALS": {
     "DELETE": "Delete",
