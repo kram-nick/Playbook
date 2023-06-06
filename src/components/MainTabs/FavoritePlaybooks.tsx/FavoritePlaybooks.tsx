@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useModal from "../../../core/hooks/useModal";
-import { Modal } from "../../../core/models/enums";
+import { MainTabs, Modal } from "../../../core/models/enums";
 import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 const FavoritePlaybooks = () => {
@@ -39,7 +39,8 @@ const FavoritePlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}>
+            })}
+          >
             {fetchedData?.data?.favorites.map(
               (playbook: any, index: number) => (
                 <AppMainCard
@@ -47,6 +48,7 @@ const FavoritePlaybooks = () => {
                   items={fetchedData?.data?.favorites}
                   playbook={playbook}
                   index={index}
+                  tabType={MainTabs.Favorite}
                 />
               )
             )}
@@ -68,7 +70,8 @@ const FavoritePlaybooks = () => {
             onClick={handleNew}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                ">
+                "
+          >
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>

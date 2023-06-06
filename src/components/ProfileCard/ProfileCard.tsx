@@ -42,11 +42,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
   };
 
   const createOrder = async (id: string) => {
-    try {
-      await PlaybookService.CreateOrder({ listing_id: id });
-    } catch (errors: any) {
-      console.log(errors);
-    }
+    openModal(Modal.PURCHASE);
   };
 
   return (
@@ -55,11 +51,13 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
         "w-[calc(50%-10px)] max-[690px]:w-[100%]": typeCard && !discover,
         "grid bg-white rounded-[8px] border-[1px] border-solid card-border relative p-[18px] gap-y-[16px]":
           true,
-      })}>
+      })}
+    >
       <div className="header">
         <Link
           to="/playbook"
-          className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]">
+          className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]"
+        >
           {playbook.name}
         </Link>
         {!discover && (
@@ -71,7 +69,8 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
         {discover && (
           <Link
             to={`/profile`}
-            className="flex items-center gap-[10px] mt-[8px]">
+            className="flex items-center gap-[10px] mt-[8px]"
+          >
             <div className="icon w-[24px] h-[24px] overflow-hidden relative rounded-[50%]">
               {playbook.profile_image && (
                 <img
@@ -90,7 +89,8 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
 
       <div
         className="photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border 
-          w-[100%] h-[240px] rounded-[8px]">
+          w-[100%] h-[240px] rounded-[8px]"
+      >
         {playbook.header_url && (
           <img
             src={playbook.header_url}
@@ -107,14 +107,16 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
           }
           className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
             border-solid shadow-free-trial bg-blue-light text-buttons-bg text-[16px] font-medium flex items-center 
-            text-center justify-center">
+            text-center justify-center"
+        >
           {isAuth
             ? t<string>("PROFILE.GET_FREE")
             : t<string>("PROFILE.GET_FREE")}
         </button>
         <button
           onClick={() => handlePriorityClick()}
-          className="w-[46px] h-[46px] p-[12px] rounded-[6px] border-header-bottom border-[1px] border-solid">
+          className="w-[46px] h-[46px] p-[12px] rounded-[6px] border-header-bottom border-[1px] border-solid"
+        >
           <img
             src={playbook.favorited ? star_active : star}
             alt=""

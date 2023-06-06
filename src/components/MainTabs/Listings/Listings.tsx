@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
 import useModal from "../../../core/hooks/useModal";
-import { Modal } from "../../../core/models/enums";
+import { MainTabs, Modal } from "../../../core/models/enums";
 import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
@@ -42,13 +42,15 @@ const Listings = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}>
+            })}
+          >
             {fetchedData?.data?.listings.map((playbook: any, index: number) => (
               <AppMainCard
                 key={playbook.id}
                 items={fetchedData?.data?.listings}
                 playbook={playbook}
                 index={index}
+                tabType={MainTabs.Listings}
               />
             ))}
           </div>
@@ -71,7 +73,8 @@ const Listings = () => {
             onClick={handleNew}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                ">
+                "
+          >
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>

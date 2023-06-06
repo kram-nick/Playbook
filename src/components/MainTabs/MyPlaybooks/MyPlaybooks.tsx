@@ -9,7 +9,7 @@ import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useModal from "../../../core/hooks/useModal";
 import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
-import { Modal } from "../../../core/models/enums";
+import { MainTabs, Modal } from "../../../core/models/enums";
 
 const MyPlaybooks = () => {
   const { t } = useTranslation();
@@ -38,7 +38,8 @@ const MyPlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}>
+            })}
+          >
             {fetchedData?.data?.playbooks.map(
               (playbook: any, index: number) => (
                 <AppMainCard
@@ -46,6 +47,7 @@ const MyPlaybooks = () => {
                   items={fetchedData?.data?.playbooks}
                   playbook={playbook}
                   index={index}
+                  tabType={MainTabs.My}
                 />
               )
             )}
@@ -69,7 +71,8 @@ const MyPlaybooks = () => {
             onClick={handleNewPlaybook}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                ">
+                "
+          >
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>
