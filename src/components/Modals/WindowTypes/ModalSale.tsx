@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import classNames from "classnames";
 
 import useModal from "../../../core/hooks/useModal";
 import { Data } from "../../../core/models";
@@ -13,7 +14,7 @@ import icon_close from "../../../assets/photos/main/modal-close.svg";
 import icon_star from "../../../assets/photos/main/star.svg";
 import check from "../../../assets/photos/main/check.svg";
 import arrowDown from "../../../assets/photos/home/arrow-down.svg";
-import classNames from "classnames";
+import delete_icon from "../../../assets/photos/main/close-cross.svg";
 
 const ModalSale = () => {
   const [playbook, setPlaybook] = useState<Data.Playbook>();
@@ -109,6 +110,16 @@ const ModalSale = () => {
 
   //     setTags([...searchItem]);
   //   };
+
+  const RemoveTag = (selectedTag: any) => {
+    const tagsArr = formikForm.values.tags.filter(
+      (tag: Data.Tag) => tag.id !== selectedTag.id
+    );
+
+    if (tagsArr) {
+      formikForm.setFieldValue("tags", [...tagsArr]);
+    }
+  };
 
   console.log(formikForm.values.tags);
 
@@ -258,7 +269,15 @@ const ModalSale = () => {
                   {t<string>("MODALS.MAX_TAG")}
                 </span>
               </p>
+
               <input
+                className="outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
+                text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]"
+                type="text"
+                value={tagItem.text}
+                onChange={(event) => {
+                  setTagItem({ ...tagItem, text: event.target.value });
+                }}
                 onClick={(event) => {
                   event.stopPropagation();
                   setTagItem({
@@ -266,23 +285,38 @@ const ModalSale = () => {
                     active: true,
                   });
                 }}
-                type="text"
-                value={tagItem.text}
-                onChange={(event) => {
-                  setTagItem({ ...tagItem, text: event.target.value });
-                }}
-                className="outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
-                text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]"
               />
+              <div className="max-w-full overflow-x-auto absolute left-[12px] right-[12px] flex-nowrap top-[40px] flex flex-row items-center gap-[8px]">
+                {formikForm.values.tags.map((tag: Data.Tag) => (
+                  <label
+                    className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px]
+                bg-selected-btn
+                "
+                    key={tag.id}>
+                    <span className="font-poppins normal font-light text-[12px] leading-[16px]">
+                      {tag.name}
+                    </span>
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => RemoveTag(tag)}
+                      src={delete_icon}
+                      alt="delete_icon"
+                    />
+                  </label>
+                ))}
+              </div>
               {tagItem.active && (
                 <ul className="w-full shadow-tags rounded-[4px] border-[1px] border-solid border-header-bottom">
                   {tags.map((tag: Data.Tag) => (
                     <li
                       onClick={() => {
-                        const tagsArr = [...formikForm.values.tags];
-                        tagsArr.push(tag);
-
+                        const tagsArr = [
+                          ...formikForm.values.tags.filter(
+                            (tagCurr) => tag.id !== tagCurr.id
+                          ),
+                        ];
                         if (tagsArr) {
+                          tagsArr.unshift(tag);
                           formikForm.setFieldValue("tags", [...tagsArr]);
                         }
                       }}
@@ -291,7 +325,9 @@ const ModalSale = () => {
                       <span className="font-light text-[14px] normal leading-[20px] font-poppins tracking-[-0.1px] text-home-title">
                         {tag.name}{" "}
                       </span>
-                      <img src={check} alt="selected" />
+                      {formikForm.values.tags.find(
+                        (newTag: Data.Tag) => tag.id === newTag.id
+                      ) && <img src={check} alt="selected" />}
                     </li>
                   ))}
                 </ul>

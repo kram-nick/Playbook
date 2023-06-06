@@ -62,6 +62,7 @@ module.exports = {
         "border-apply": "rgba(43, 113, 247, 0.04);",
         "accent-pay-code": "#47B5FF",
         "order-main": "#272D37",
+        "selected-btn": "rgba(43, 113, 247, 0.16)"
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],

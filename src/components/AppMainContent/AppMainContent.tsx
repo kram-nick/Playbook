@@ -49,9 +49,9 @@ const AppMainContent = () => {
   );
 
   useEffect(() => {
-    if (count?.data?.count === 0) {
-      openModal(Modal.WELCOME);
-    }
+    // if (count?.data?.count === 0) {
+    openModal(Modal.PURCHASE);
+    // }
   }, [count]);
 
   return (

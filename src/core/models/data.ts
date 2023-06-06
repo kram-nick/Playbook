@@ -28,6 +28,7 @@ export declare namespace Data {
     title: "";
     bio: "";
   }
+
   interface Playbook {
     category_id: number;
     color_code: string;
@@ -44,8 +45,21 @@ export declare namespace Data {
     thumbnail_url: null | string;
     user_id: string;
   }
+
   interface Tag {
     id: string;
     name: string;
+  }
+
+  interface Listing {
+    chargeable: boolean;
+    discount_price: string;
+    id: string;
+    playbook_id: string;
+    retail_price: string;
+    sale_price: string;
+    status: string;
+    tags: null | Tag[];
+    user_id: string;
   }
 }
