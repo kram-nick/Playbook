@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppSelector } from "../../../core/hooks/useRedux";
 import { useNavigate } from "react-router-dom";
+import { MainTabs } from "../../../core/models/enums";
 
 const PurchasedPlaybooks = () => {
   const { t } = useTranslation();
@@ -29,7 +30,8 @@ const PurchasedPlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}>
+            })}
+          >
             {fetchedData?.data?.purchases.map(
               (playbook: any, index: number) => (
                 <AppMainCard
@@ -37,6 +39,7 @@ const PurchasedPlaybooks = () => {
                   items={fetchedData?.data?.purchases}
                   playbook={playbook}
                   index={index}
+                  tabType={MainTabs.Purchased}
                 />
               )
             )}
@@ -60,7 +63,8 @@ const PurchasedPlaybooks = () => {
             }}
             className="bg-button-submit-footer flex items-center py-[5px] px-[92px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                ">
+                "
+          >
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.DISCOVER")}
             </span>

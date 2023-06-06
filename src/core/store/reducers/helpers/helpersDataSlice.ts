@@ -14,7 +14,7 @@ const helpersSlice = createSlice({
     setReloadChecker(state, action: PayloadAction<boolean>) {
       state.reloadChecker = action.payload;
     },
-    setSharedId(state, action: PayloadAction<number | null>) {
+    setSharedId(state, action: PayloadAction<number | string | null>) {
       state.sharedId = action.payload;
     },
     setPlaybookType(state, action: PayloadAction<string>) {

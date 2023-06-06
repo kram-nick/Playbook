@@ -20,7 +20,6 @@ import {
 import PlaybookService from "../../../../core/services/playbook.service";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-import useClearSidebar from "../../../../core/hooks/useClearSidebar";
 
 type HeaderProps = {
   previewState?: boolean;

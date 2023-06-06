@@ -1,5 +1,5 @@
 export type HelpersDataTypes = {
   reloadChecker: boolean;
-  sharedId: number | null;
+  sharedId: number | string | null;
   playbookType: string;
 };

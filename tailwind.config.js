@@ -86,7 +86,7 @@ module.exports = {
         pricing: "0 0 0 8px rgba(71, 181, 255, 0.12)",
         "payment-btn": "0px 1px 2px rgba(16, 24, 40, 0.04)",
         get_free: "0px 0.616667px 1.23333px rgba(16, 24, 40, 0.04);",
-        tags: "0px 1px 2px rgba(16, 24, 40, 0.04);"
+        tags: "0px 1px 2px rgba(16, 24, 40, 0.04);",
       },
       backgroundImage: {
         sign: "url('./assets/photos/sign/bg-sign.svg')",
@@ -103,6 +103,9 @@ module.exports = {
         "entrepreneur-bckg":
           "url('./assets/photos/squeeze/entrepreneur-bckg.svg')",
         "without-photo": "url('./assets/photos/main/user.svg')",
+        "what-is-1": "url('./assets/photos/home/what-is-1.svg')",
+        "what-is-2": "url('./assets/photos/home/what-is-2.svg')",
+        "what-is-3": "url('./assets/photos/home/what-is-3.svg')",
       },
       screens: {
         mobile: "480px",
