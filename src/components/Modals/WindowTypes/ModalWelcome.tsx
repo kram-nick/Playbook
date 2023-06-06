@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useModal from "../../../core/hooks/useModal";
-import { Welcome } from "../../../core/models/enums";
+import { Modal, Welcome } from "../../../core/models/enums";
+import { useAppDispatch } from "../../../core/hooks/useRedux";
+import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 import icon_close from "../../../assets/photos/modals/close-icon.svg";
 import create from "../../../assets/photos/modals/create.svg";
@@ -13,16 +15,19 @@ import discover from "../../../assets/photos/modals/discover.svg";
 const ModalWelcome = () => {
   const [active, setActive] = useState("");
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const { closeModal } = useModal();
+  const { closeModal, openModal } = useModal();
 
   const handleNavigate = () => {
-    if (active === "create") {
+    if (active === Welcome.CREATE) {
       navigate("/main");
       closeModal();
-    } else if (active === "discover") {
+      openModal(Modal.PLAYBOOK_DETAILS);
+      dispatch(setPlaybookType("create"));
+    } else if (active === Welcome.DISCOVER) {
       navigate("/discover");
       closeModal();
     }

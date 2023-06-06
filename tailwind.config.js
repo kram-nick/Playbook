@@ -84,7 +84,8 @@ module.exports = {
         review: "-4px -4px 27px rgba(38, 37, 47, 0.05)",
         pricing: "0 0 0 8px rgba(71, 181, 255, 0.12)",
         "payment-btn": "0px 1px 2px rgba(16, 24, 40, 0.04)",
-        get_free: "0px 0.616667px 1.23333px rgba(16, 24, 40, 0.04);"
+        get_free: "0px 0.616667px 1.23333px rgba(16, 24, 40, 0.04);",
+        tags: "0px 1px 2px rgba(16, 24, 40, 0.04);"
       },
       backgroundImage: {
         sign: "url('./assets/photos/sign/bg-sign.svg')",

@@ -11,13 +11,19 @@ import useHttpGet from "../../../core/hooks/useHttpGet";
 
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 import icon_star from "../../../assets/photos/main/star.svg";
+import check from "../../../assets/photos/main/check.svg";
 import arrowDown from "../../../assets/photos/home/arrow-down.svg";
+import classNames from "classnames";
 
 const ModalSale = () => {
   const [playbook, setPlaybook] = useState<Data.Playbook>();
   const [tags, setTags] = useState([]);
   const [showDrop, setShowDrop] = useState(false);
   const [activeTab, setActiveTab] = useState<Data.Tag>();
+  const [tagItem, setTagItem] = useState({
+    text: "",
+    active: false,
+  });
 
   const { closeModal } = useModal();
 
@@ -37,9 +43,15 @@ const ModalSale = () => {
   });
 
   useHttpGet<any>(`${APIRoutes.TAGS}`, {
-    dependencies: [],
+    dependencies: [tagItem],
     resolve: (response) => {
-      setTags(response?.data);
+      setTags(
+        response?.data?.filter((tag: Data.Tag) =>
+          tag.name
+            .toLocaleLowerCase()
+            .includes(tagItem.text.toLocaleLowerCase())
+        )
+      );
     },
   });
 
@@ -58,7 +70,7 @@ const ModalSale = () => {
   const formikForm = useFormik<{
     playbook_id: string;
     status: string;
-    tags: null | string[];
+    tags: Data.Tag[];
     chargeable: boolean;
     discount_price: number;
     retail_price: number;
@@ -67,7 +79,7 @@ const ModalSale = () => {
     initialValues: {
       playbook_id: "",
       status: "Only Users",
-      tags: null,
+      tags: [],
       chargeable: true,
       discount_price: 0,
       retail_price: 0,
@@ -90,9 +102,22 @@ const ModalSale = () => {
     });
   };
 
+  //   const HandleTags = () => {
+  //     const searchItem = tags.filter((tag: Data.Tag) =>
+  //       tag.name.toLocaleLowerCase().startsWith(tagItem.toLocaleLowerCase())
+  //     );
+
+  //     setTags([...searchItem]);
+  //   };
+
+  console.log(formikForm.values.tags);
+
   return (
     <div
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        e.stopPropagation();
+        setTagItem({ ...tagItem, active: false });
+      }}
       className="modal-box relative w-[100%] max-w-[839px] p-[24px] shadow-free-trial rounded-[5px]
                 border-[1px] border-solid border-border-btn bg-white font-poppins 
               flex flex-col items-center
@@ -182,6 +207,14 @@ const ModalSale = () => {
                 type="text"
                 // {...formikForm.getFieldProps("")}
                 value={playbook?.name}
+                onChange={(event) => {
+                  setPlaybook((prev: any) => {
+                    return {
+                      ...prev,
+                      name: event.target.value,
+                    };
+                  });
+                }}
                 className="outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
                 text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]
                 "
@@ -204,11 +237,19 @@ const ModalSale = () => {
                 className="outline-none resize-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
                 text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] h-[132px]
                 "
+                onChange={(event) => {
+                  setPlaybook((prev: any) => {
+                    return {
+                      ...prev,
+                      content: event.target.value,
+                    };
+                  });
+                }}
                 value={playbook?.content}
               />
             </label>
 
-            <label className="flex flex-col gap-[6px]">
+            <label className="relative flex flex-col gap-[6px]">
               <p>
                 <span className="text-[14px] text-home-title font-light leading-[20px]">
                   {t<string>("MODALS.TAGS")}
@@ -218,14 +259,50 @@ const ModalSale = () => {
                 </span>
               </p>
               <input
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setTagItem({
+                    ...tagItem,
+                    active: true,
+                  });
+                }}
                 type="text"
-                {...formikForm.getFieldProps("tags")}
+                value={tagItem.text}
+                onChange={(event) => {
+                  setTagItem({ ...tagItem, text: event.target.value });
+                }}
                 className="outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
                 text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]"
               />
+              {tagItem.active && (
+                <ul className="w-full shadow-tags rounded-[4px] border-[1px] border-solid border-header-bottom">
+                  {tags.map((tag: Data.Tag) => (
+                    <li
+                      onClick={() => {
+                        const tagsArr = [...formikForm.values.tags];
+                        tagsArr.push(tag);
+
+                        if (tagsArr) {
+                          formikForm.setFieldValue("tags", [...tagsArr]);
+                        }
+                      }}
+                      className="flex justify-between px-[16px] py-[10px] hover:bg-chapter-color"
+                      key={tag.id}>
+                      <span className="font-light text-[14px] normal leading-[20px] font-poppins tracking-[-0.1px] text-home-title">
+                        {tag.name}{" "}
+                      </span>
+                      <img src={check} alt="selected" />
+                    </li>
+                  ))}
+                </ul>
+              )}
             </label>
 
-            <label className="flex flex-col gap-[6px]">
+            <label
+              className={classNames({
+                "flex flex-col gap-[6px]": true,
+                "mt-[-100px] z-[-1]": tagItem,
+              })}>
               <span className="text-[14px] text-home-title font-light leading-[20px]">
                 {t<string>("MODALS.VISIBILITY")}
               </span>
@@ -234,7 +311,7 @@ const ModalSale = () => {
                   type="button"
                   className="w-full flex justify-between items-center px-[16px] py-[7px]"
                   onClick={() => {
-                    setShowDrop(!showDrop);
+                    //     setShowDrop(!showDrop);
                   }}>
                   {formikForm.values.status || t<string>("MODALS.SELECT")}
                   <img src={arrowDown} alt="arrowDown" />

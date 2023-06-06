@@ -10,18 +10,24 @@ import { useAppDispatch } from "./useRedux";
 const useClearSidebar = () => {
   const dispatch = useAppDispatch();
 
-  if (
-    !window.location.pathname.split("/").includes("creating") &&
-    !window.location.pathname.split("/").includes("editor")
-  ) {
-    localStorage.removeItem("selected_tabs");
-    localStorage.removeItem("saved_playbook");
-    localStorage.removeItem("selected_page");
-    dispatch(setSelectedTab(null));
-    dispatch(setSidebarTabs([]));
-    dispatch(setSelectedPlaybook(null));
-    dispatch(setPages([]));
-  }
+  const clear = () => {
+    if (
+      !window.location.pathname.split("/").includes("creating") &&
+      !window.location.pathname.split("/").includes("editor")
+    ) {
+      localStorage.removeItem("selected_tabs");
+      localStorage.removeItem("saved_playbook");
+      localStorage.removeItem("selected_page");
+      dispatch(setSelectedTab(null));
+      dispatch(setSidebarTabs([]));
+      dispatch(setSelectedPlaybook(null));
+      dispatch(setPages([]));
+    }
+  };
+
+  return {
+    clear,
+  };
 };
 
 export default useClearSidebar;

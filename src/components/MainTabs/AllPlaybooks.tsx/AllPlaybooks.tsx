@@ -13,8 +13,10 @@ import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDat
 
 const AllPlaybooks = () => {
   const { t } = useTranslation();
-  const { listType } = useAppSelector((state) => state.app);
+
+  const { listType, selectedTab } = useAppSelector((state) => state.app);
   const { reloadChecker } = useAppSelector((state) => state.helpers);
+
   const dispatch = useAppDispatch();
   const { openModal } = useModal();
 
@@ -28,6 +30,8 @@ const AllPlaybooks = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
   };
+
+  console.log(selectedTab);
 
   return (
     <div>

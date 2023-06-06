@@ -55,7 +55,7 @@ const ModalPurchase = () => {
               <img
                 src={user?.profile_image}
                 alt="avatar"
-                className="w-[17.34px] h-[17.34px] object-cover"
+                className="w-[17.34px] h-[17.34px] object-cover rounded-[50px]"
               />
               <span className="text-[16px] normal font-poppins font-normal leading-[26px] tracking-[-0.1px] text-simple-text">
                 Brooklyn Simons
@@ -78,7 +78,7 @@ const ModalPurchase = () => {
                 <img
                   src={user?.profile_image}
                   alt="big-ava"
-                  className="w-[30px] h-[30px] object-cover"
+                  className="w-[30px] h-[30px] object-cover rounded-[50px]"
                 />
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
                   Christopher Ragobeer
