@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
@@ -6,7 +6,9 @@ import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import {
   setOpenedPages,
+  setPages,
   setSelectedData,
+  setSelectedPlaybook,
   setSelectedTab,
   setSidebarTabs,
   setToggleSidebar,
@@ -19,65 +21,65 @@ import plus_blue from "../../assets/photos/main/plus-blue.svg";
 import arrow_blue from "../../assets/photos/main/arrow-down-blue.svg";
 import red_saas from "../../assets/photos/create/red-saas.svg";
 import blue_saas from "../../assets/photos/create/blue-saas.svg";
+import light_blue_saas from "../../assets/photos/create/blue-saas.svg";
 import plus_gray from "../../assets/photos/sidebar/plus-gray.svg";
 import star_active from "../../assets/photos/sidebar/star.svg";
 import star from "../../assets/photos/sidebar/favorite.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
-import { PrivateUIRoutes } from "../../core/router";
 import {
   setPlaybookType,
   setReloadChecker,
 } from "../../core/store/reducers/helpers/helpersDataSlice";
 import { MainTabs, Modal } from "../../core/models/enums";
 import useModal from "../../core/hooks/useModal";
+import PlaybookService from "../../core/services/playbook.service";
 
 const Sidebar = () => {
-  const [playbookItem, selectedPlaybooks] = useState({
-    open: false,
-    selected: false,
-  });
-  const [favoriteItem, selectedFavorite] = useState({
-    open: false,
-    selected: false,
-  });
-
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { openModal } = useModal();
 
-  const { data, sideOpen, sidebarTabs, selectedTab } = useAppSelector(
-    (state) => state.app
-  );
+  const { data, sideOpen, sidebarTabs, selectedTab, selectedPlaybook, pages } =
+    useAppSelector((state) => state.app);
 
   const { reloadChecker } = useAppSelector((state) => state.helpers);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const playbook = JSON.parse(localStorage.getItem("saved_playbook") || "{}");
+    const page = JSON.parse(localStorage.getItem("selected_page") || "{}");
+    if (localStorage.getItem("selected_tabs")) {
+      dispatch(
+        setSidebarTabs(
+          JSON.parse(localStorage.getItem("selected_tabs") || "[]")
+        )
+      );
+    }
+    dispatch(setOpenedPages([page?.page_id]));
+    dispatch(setSelectedPlaybook(playbook));
+    LoadPages(playbook?.id);
+  }, []);
+
   const { fetchedData: playbooks } = useHttpGet<any>(
     `${APIRoutes.PLAYBOOKS}/mine`,
     {
       resolve: (response: any) => {
-        let menuItem: any = localStorage.getItem("selected_playbook");
+        let menuItem: any = localStorage.getItem("selected_page");
+
         if (menuItem) {
           menuItem = JSON.parse(menuItem);
           if (!data.id) {
             dispatch(setSelectedData(menuItem));
-            const menuSectionData = { open: true, selected: false };
-            if (menuItem?.type === "my") {
-              selectedPlaybooks(menuSectionData);
-            }
-            if (menuItem?.type === "favorite") {
-              selectedFavorite(menuSectionData);
-            }
           }
         }
         if (response) {
           response.data.playbooks?.forEach((e: any) => {
             if (menuItem?.id === e.id) {
               e.open = menuItem?.open;
-              console.log(e);
             } else {
               e.open = e.open ? true : false;
             }
@@ -97,39 +99,49 @@ const Sidebar = () => {
     }
   );
 
+  const OpenPlaybook = (playbook: any, type: number) => {
+    if (
+      playbook.id === selectedPlaybook?.id &&
+      type === selectedPlaybook?.tabType
+    ) {
+      dispatch(setSelectedPlaybook(null));
+    } else {
+      dispatch(setSelectedTab(null));
+      dispatch(
+        setSelectedPlaybook({
+          id: playbook.id,
+          tabType: type,
+        })
+      );
+      LoadPages(playbook.id);
+    }
+  };
+
+  async function LoadPages(playbook_id: string) {
+    if (playbook_id) {
+      try {
+        const response = await PlaybookService.getPages(playbook_id);
+        dispatch(setPages(response?.data?.data));
+      } catch (errors: any) {}
+    }
+  }
+
   const HandleNewPlaybook = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
   };
 
-  const SelectedItemMenu = (item?: any, type?: string) => {
-    navigate(`/creating/${item.id}`);
-    const data = { open: true, selected: false };
-    if (type === "my") {
-      selectedPlaybooks(data);
-      playbooks?.forEach((element: any) => {
-        if (element.id === item.id) {
-          element.open = !element.open;
-        } else {
-          element.open = false;
-        }
-      });
-    } else if (type === "favorite") {
-      selectedFavorite(data);
-    }
-
-    const setData = {
-      id: item.id,
-      selected: true,
-      open: item.open,
-      name: item.name,
-      type: type,
-    };
-    dispatch(setSelectedData(setData));
-    localStorage.setItem("selected_playbook", JSON.stringify(setData));
-  };
-
-  const selectPageMenu = (item?: any, page?: any, type?: string) => {
+  const selectPageMenu = (
+    item?: any,
+    page?: any,
+    type?: string,
+    tab?: number
+  ) => {
+    localStorage.setItem(
+      "saved_playbook",
+      JSON.stringify({ id: item.id, tabType: tab })
+    );
+    dispatch(setSelectedPlaybook({ id: item.id, tabType: Number(tab) }));
     navigate(`/creating/${item?.id}`);
     dispatch(setOpenedPages([page.id]));
     const setData = {
@@ -142,19 +154,7 @@ const Sidebar = () => {
       type: type,
     };
     dispatch(setSelectedData(setData));
-    localStorage.setItem("selected_playbook", JSON.stringify(setData));
-  };
-
-  const openSubMenu = (e: any, item?: any) => {
-    e.stopPropagation();
-
-    // playbooks?.forEach((element: any) => {
-    //   if (element.id === item.id) {
-    //     element.open = true;
-    //   } else {
-    //     element.open = false;
-    //   }
-    // });
+    localStorage.setItem("selected_page", JSON.stringify(setData));
   };
 
   const setPriorityItem = (e: any, item: any) => {
@@ -174,8 +174,18 @@ const Sidebar = () => {
           sidebarTabs.filter((addedType: number) => addedType !== type)
         )
       );
+      localStorage.setItem(
+        "selected_tabs",
+        JSON.stringify(
+          sidebarTabs.filter((addedType: number) => addedType !== type)
+        )
+      );
     } else {
       dispatch(setSidebarTabs([...sidebarTabs, type]));
+      localStorage.setItem(
+        "selected_tabs",
+        JSON.stringify([...sidebarTabs, type])
+      );
     }
   };
 
@@ -208,12 +218,13 @@ const Sidebar = () => {
       </button>
       <div
         className={classNames({
-          "bg-list-title w-[280px] h-[100%] px-[12px] border-solid border-r-[1px] left-[0px] border-r-header-bottom gap-[21.4px] max-lg:left-[-350px] ":
+          "bg-list-title w-[280px] h-[100%] px-[12px] border-solid border-r-[1px] left-[0px] border-r-header-bottom gap-[21.4px] max-lg:left-[-350px]":
             true,
-          "fixed top-[0] min-h-[100%] max-lg:z-[100] transition-all duration-[200ms] ease-in  overflow-y-auto box-border":
+          "fixed top-[0] min-h-[100%] max-lg:z-[100] transition-all duration-[200ms] ease-in box-border overflow-y-hidden":
             true,
           "max-lg:left-[0px!important]": !sideOpen,
           "min-[1024px]:w-[25px]": !sideOpen,
+          "px-[0px]": sideOpen,
         })}
       >
         <Link
@@ -244,7 +255,7 @@ const Sidebar = () => {
             "  delay-[100ms] min-[1024px]:opacity-0 ": !sideOpen,
           })}
         >
-          <button
+          <div
             onClick={() => dispatch(setSelectedTab(MainTabs.My))}
             className={classNames({
               "bg-active-playbook  border-top-engineering rounded-[4px] ":
@@ -285,106 +296,139 @@ const Sidebar = () => {
                 className="w-[16px] h-[16px] absolute right-[8px] top-[50%] mt-[-8px]"
               />
             </button>
-          </button>
+          </div>
 
           {sidebarTabs.includes(MainTabs.My) && (
             <ul className="flex flex-col gap-[4px]  w-full">
-              {playbooks?.data?.playbooks.map((item: any, index: number) => (
-                <li key={item.id} className="w-[100%]">
-                  <div
-                    onClick={() => {
-                      SelectedItemMenu(item, "my");
-                    }}
-                    className={classNames({
-                      "cursor-pointer sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
-                        true,
-                      "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px]":
-                        item.id === data.id,
-                    })}
-                  >
-                    <img
-                      // onClick={(e) => openSubMenu(e, item)}
-                      src={item.id === data.id ? arrow_blue : to_arrow}
-                      alt="arrow"
+              {playbooks?.data?.playbooks.map(
+                (playbook: any, index: number) => (
+                  <li key={playbook.id} className="w-[100%]">
+                    <div
+                      onClick={() => OpenPlaybook(playbook, MainTabs.My)}
                       className={classNames({
-                        "rotate-[90deg]": item.open,
-                        "transition duration-200 ease": true,
-                      })}
-                    />
-                    <img
-                      src={item.privacy === "private" ? red_saas : blue_saas}
-                      alt="saas"
-                    />
-                    <span
-                      className={classNames({
-                        "text-buttons-bg": item.id === data.id,
-                        "text-top-sub-secondary": item.id !== data.id,
-                        "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
+                        "cursor-pointer sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
+                          true,
+                        "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px] outline-none":
+                          playbook.id === selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType === MainTabs.My,
+                        "focus:bg-active-playbook focus:border-l-[2px]  focus:border-top-engineering focus:rounded-[4px] focus:pl-[6px] focus:outline-none":
                           true,
                       })}
                     >
-                      {item.name}
-                    </span>
-                    <div
-                      className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
+                      <img
+                        // onClick={(e) => openSubMenu(e, item)}
+                        src={
+                          playbook.id === selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType === MainTabs.My
+                            ? arrow_blue
+                            : to_arrow
+                        }
+                        alt="arrow"
+                        className={classNames({
+                          "rotate-[90deg]":
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.My,
+                          "transition duration-200 ease": true,
+                        })}
+                      />
+                      <img src={red_saas} alt="saas" />
+                      <span
+                        className={classNames({
+                          "text-buttons-bg":
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.My,
+                          "text-top-sub-secondary":
+                            playbook.id !== selectedPlaybook?.id ||
+                            selectedPlaybook?.tabType !== MainTabs.My,
+                          "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
+                            true,
+                        })}
+                      >
+                        {playbook.name}
+                      </span>
+                      <div
+                        className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
                       transition duration-200 ease invisible opacity-0"
-                    >
-                      <span
-                        onClick={(e) => setPriorityItem(e, item)}
-                        className={classNames({
-                          "hover:bg-active-playbook": item.id === data.id,
-                          "hover:bg-option-btn": item.id !== data.id,
-                          "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer":
-                            true,
-                        })}
                       >
-                        <img
-                          src={item.favorited ? star_active : star}
-                          alt="add to favorite"
-                        />
-                      </span>
-                      <span
-                        onClick={(e) => e.stopPropagation()}
-                        className={classNames({
-                          "hover:bg-active-playbook": item.id === data.id,
-                          "hover:bg-option-btn": item.id !== data.id,
-                          "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer":
-                            true,
-                        })}
-                      >
-                        <img
-                          src={item.id === data.id ? plus_blue : plus_gray}
-                          alt="add"
-                        />
-                      </span>
-                    </div>
-                  </div>
-
-                  {item.pages && item.open && (
-                    <>
-                      {item.pages.map((page: any, indexChapter: number) => (
-                        <button
-                          key={page.id}
-                          onClick={() => {
-                            selectPageMenu(item, page, "my");
-                          }}
+                        <span
+                          onClick={(e) => setPriorityItem(e, playbook)}
                           className={classNames({
-                            "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
+                            "hover:bg-active-playbook":
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.My,
+                            "hover:bg-option-btn":
+                              playbook.id !== selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType !== MainTabs.My,
+                            "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer":
                               true,
-                            "text-top-sub-secondary": page.id !== data.page_id,
-                            "text-buttons-bg":
-                              item.id === data.id && page.id === data.page_id,
                           })}
                         >
-                          <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
-                            #{indexChapter + 1} {page.title}
-                          </p>
-                        </button>
-                      ))}
-                    </>
-                  )}
-                </li>
-              ))}
+                          <img
+                            src={playbook.favorited ? star_active : star}
+                            alt="add to favorite"
+                          />
+                        </span>
+                        <span
+                          onClick={(e) => e.stopPropagation()}
+                          className={classNames({
+                            "hover:bg-active-playbook":
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.My,
+                            "hover:bg-option-btn":
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType !== MainTabs.My,
+                            "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer":
+                              true,
+                          })}
+                        >
+                          <img
+                            src={
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.My
+                                ? plus_blue
+                                : plus_gray
+                            }
+                            alt="add"
+                          />
+                        </span>
+                      </div>
+                    </div>
+
+                    {playbook.id === selectedPlaybook?.id &&
+                      selectedPlaybook?.tabType === MainTabs.My && (
+                        <>
+                          {pages.map((page: any, indexChapter: number) => (
+                            <button
+                              key={page?.id}
+                              onClick={() => {
+                                selectPageMenu(
+                                  playbook,
+                                  page,
+                                  "my",
+                                  MainTabs.My
+                                );
+                              }}
+                              className={classNames({
+                                "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
+                                  true,
+                                "text-top-sub-secondary":
+                                  page?.id !== data.page_id,
+                                "text-buttons-bg":
+                                  playbook.id === data.id &&
+                                  page?.id === data.page_id &&
+                                  data.type === "my",
+                              })}
+                            >
+                              <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
+                                #{indexChapter + 1} {page?.title}
+                              </p>
+                            </button>
+                          ))}
+                        </>
+                      )}
+                  </li>
+                )
+              )}
             </ul>
           )}
           <hr className="my-[16px]" />
@@ -433,28 +477,39 @@ const Sidebar = () => {
                 (playbook: any, index: number) => (
                   <li key={playbook.id} className="w-[100%]">
                     <button
-                      onClick={() => SelectedItemMenu(playbook, "favorite")}
+                      onClick={() => OpenPlaybook(playbook, MainTabs.Favorite)}
                       className={classNames({
                         "sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
                           true,
-                        "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px]":
-                          playbook.id === data.id,
+                        "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px] outline-nine":
+                          playbook.id === selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType === MainTabs.Favorite,
                       })}
                     >
                       <img
-                        onClick={(e) => openSubMenu(e, playbook)}
-                        src={playbook.id === data.id ? arrow_blue : to_arrow}
+                        src={
+                          playbook.id === selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType === MainTabs.Favorite
+                            ? arrow_blue
+                            : to_arrow
+                        }
                         alt="arrow"
                         className={classNames({
-                          "rotate-[90deg]": playbook.open,
+                          "rotate-[90deg]":
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.Favorite,
                           "transition duration-200 ease": true,
                         })}
                       />
-                      <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
+                      <img src={blue_saas} alt="saas" />
                       <span
                         className={classNames({
-                          "text-buttons-bg": playbook.id === data.id,
-                          "text-top-sub-secondary": playbook.id !== data.id,
+                          "text-buttons-bg":
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.Favorite,
+                          "text-top-sub-secondary":
+                            playbook.id !== selectedPlaybook?.id ||
+                            selectedPlaybook?.tabType !== MainTabs.Favorite,
                           "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                             true,
                         })}
@@ -468,8 +523,12 @@ const Sidebar = () => {
                         <span
                           onClick={(e) => removeFromFavorite(e, playbook)}
                           className={classNames({
-                            "hover:bg-active-playbook": playbook.id === data.id,
-                            "hover:bg-option-btn": playbook.id !== data.id,
+                            "hover:bg-active-playbook":
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.Favorite,
+                            "hover:bg-option-btn":
+                              playbook.id !== selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType !== MainTabs.Favorite,
                             "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]":
                               true,
                           })}
@@ -482,48 +541,60 @@ const Sidebar = () => {
                         <span
                           onClick={(e) => e.stopPropagation()}
                           className={classNames({
-                            "hover:bg-active-playbook": playbook.id === data.id,
-                            "hover:bg-option-btn": playbook.id !== data.id,
+                            "hover:bg-active-playbook":
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.Favorite,
+                            "hover:bg-option-btn":
+                              playbook.id !== selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType !== MainTabs.Favorite,
                             "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]":
                               true,
                           })}
                         >
                           <img
                             src={
-                              playbook.id === data.id ? plus_blue : plus_gray
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.Favorite
+                                ? plus_blue
+                                : plus_gray
                             }
                             alt="add"
                           />
                         </span>
                       </div>
                     </button>
-                    {playbook.pages && playbook.open && (
-                      <>
-                        {playbook.pages.map(
-                          (page: any, indexChapter: number) => (
+                    {playbook.id === selectedPlaybook?.id &&
+                      selectedPlaybook?.tabType === MainTabs.Favorite && (
+                        <>
+                          {pages.map((page: any) => (
                             <button
-                              key={page.id}
+                              key={page?.id}
                               onClick={() => {
-                                selectPageMenu(playbook, page, "favorite");
+                                selectPageMenu(
+                                  playbook,
+                                  page,
+                                  "favorite",
+                                  MainTabs.Favorite
+                                );
                               }}
                               className={classNames({
                                 "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
                                   true,
                                 "text-top-sub-secondary":
-                                  page.id !== data.page_id,
+                                  page?.id !== data.page_id,
                                 "text-buttons-bg":
                                   playbook.id === data.id &&
-                                  page.id === data.page_id,
+                                  page?.id === data.page_id &&
+                                  data.type === "favorite",
                               })}
                             >
                               <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
-                                {page.title}
+                                {page?.title}
                               </p>
                             </button>
-                          )
-                        )}
-                      </>
-                    )}
+                          ))}
+                        </>
+                      )}
                   </li>
                 )
               )}
@@ -575,28 +646,41 @@ const Sidebar = () => {
                 (playbook: any, index: number) => (
                   <li key={playbook.id} className="w-[100%]">
                     <button
-                      onClick={() => SelectedItemMenu(playbook, "favorite")}
+                      onClick={() => OpenPlaybook(playbook, MainTabs.Purchased)}
                       className={classNames({
                         "sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
                           true,
-                        "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px]":
-                          playbook.id === data.id,
+                        "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px] outline-nine":
+                          playbook.id === selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType === MainTabs.Purchased,
+                        "focus:bg-active-playbook focus:border-l-[2px]  focus:border-top-engineering focus:rounded-[4px] focus:pl-[6px] focus:outline-none":
+                          true,
                       })}
                     >
                       <img
-                        onClick={(e) => openSubMenu(e, playbook)}
-                        src={playbook.id === data.id ? arrow_blue : to_arrow}
+                        src={
+                          playbook.id === selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType === MainTabs.Purchased
+                            ? arrow_blue
+                            : to_arrow
+                        }
                         alt="arrow"
                         className={classNames({
-                          "rotate-[90deg]": playbook.open,
+                          "rotate-[90deg]":
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.Purchased,
                           "transition duration-200 ease": true,
                         })}
                       />
-                      <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
+                      <img src={light_blue_saas} alt="saas" />
                       <span
                         className={classNames({
-                          "text-buttons-bg": playbook.id === data.id,
-                          "text-top-sub-secondary": playbook.id !== data.id,
+                          "text-buttons-bg":
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.Purchased,
+                          "text-top-sub-secondary":
+                            playbook.id !== selectedPlaybook?.id ||
+                            selectedPlaybook?.tabType !== MainTabs.Purchased,
                           "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                             true,
                         })}
@@ -610,8 +694,12 @@ const Sidebar = () => {
                         <span
                           onClick={(e) => removeFromFavorite(e, playbook)}
                           className={classNames({
-                            "hover:bg-active-playbook": playbook.id === data.id,
-                            "hover:bg-option-btn": playbook.id !== data.id,
+                            "hover:bg-active-playbook":
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.Purchased,
+                            "hover:bg-option-btn":
+                              playbook.id !== selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType !== MainTabs.Purchased,
                             "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]":
                               true,
                           })}
@@ -624,48 +712,60 @@ const Sidebar = () => {
                         <span
                           onClick={(e) => e.stopPropagation()}
                           className={classNames({
-                            "hover:bg-active-playbook": playbook.id === data.id,
-                            "hover:bg-option-btn": playbook.id !== data.id,
+                            "hover:bg-active-playbook":
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.Purchased,
+                            "hover:bg-option-btn":
+                              playbook.id !== selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType !== MainTabs.Purchased,
                             "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]":
                               true,
                           })}
                         >
                           <img
                             src={
-                              playbook.id === data.id ? plus_blue : plus_gray
+                              playbook.id === selectedPlaybook?.id &&
+                              selectedPlaybook?.tabType === MainTabs.Purchased
+                                ? plus_blue
+                                : plus_gray
                             }
                             alt="add"
                           />
                         </span>
                       </div>
                     </button>
-                    {playbook.pages && playbook.open && (
-                      <>
-                        {playbook.pages.map(
-                          (page: any, indexChapter: number) => (
+                    {playbook.id === selectedPlaybook?.id &&
+                      selectedPlaybook?.tabType === MainTabs.Purchased && (
+                        <>
+                          {pages.map((page: any, indexChapter: number) => (
                             <button
-                              key={page.id}
+                              key={page?.id}
                               onClick={() => {
-                                selectPageMenu(playbook, page, "favorite");
+                                selectPageMenu(
+                                  playbook,
+                                  page,
+                                  "purchased",
+                                  MainTabs.Purchased
+                                );
                               }}
                               className={classNames({
                                 "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
                                   true,
                                 "text-top-sub-secondary":
-                                  page.id !== data.page_id,
+                                  page?.id !== data.page_id,
                                 "text-buttons-bg":
                                   playbook.id === data.id &&
-                                  page.id === data.page_id,
+                                  page?.id === data.page_id &&
+                                  data.type === "purchased",
                               })}
                             >
                               <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
-                                {page.title}
+                                {page?.title}
                               </p>
                             </button>
-                          )
-                        )}
-                      </>
-                    )}
+                          ))}
+                        </>
+                      )}
                   </li>
                 )
               )}
@@ -716,28 +816,39 @@ const Sidebar = () => {
               {playbooks?.data?.listings.map((playbook: any, index: number) => (
                 <li key={playbook.id} className="w-[100%]">
                   <button
-                    onClick={() => SelectedItemMenu(playbook, "favorite")}
+                    onClick={() => OpenPlaybook(playbook, MainTabs.Listings)}
                     className={classNames({
                       "sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
                         true,
-                      "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px]":
-                        playbook.id === data.id,
+                      "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px] outline-none":
+                        playbook.id === selectedPlaybook?.id &&
+                        selectedPlaybook?.tabType === MainTabs.Listings,
                     })}
                   >
                     <img
-                      onClick={(e) => openSubMenu(e, playbook)}
-                      src={playbook.id === data.id ? arrow_blue : to_arrow}
+                      src={
+                        playbook.id === selectedPlaybook?.id &&
+                        selectedPlaybook?.tabType === MainTabs.Listings
+                          ? arrow_blue
+                          : to_arrow
+                      }
                       alt="arrow"
                       className={classNames({
-                        "rotate-[90deg]": playbook.open,
+                        "rotate-[90deg]":
+                          playbook.id === selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType === MainTabs.Listings,
                         "transition duration-200 ease": true,
                       })}
                     />
-                    <img src={index > 2 ? red_saas : blue_saas} alt="saas" />
+                    <img src={blue_saas} alt="saas" />
                     <span
                       className={classNames({
-                        "text-buttons-bg": playbook.id === data.id,
-                        "text-top-sub-secondary": playbook.id !== data.id,
+                        "text-buttons-bg":
+                          playbook.id === selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType === MainTabs.Listings,
+                        "text-top-sub-secondary":
+                          playbook.id !== selectedPlaybook?.id &&
+                          selectedPlaybook?.tabType !== MainTabs.Listings,
                         "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                           true,
                       })}
@@ -751,8 +862,12 @@ const Sidebar = () => {
                       <span
                         onClick={(e) => removeFromFavorite(e, playbook)}
                         className={classNames({
-                          "hover:bg-active-playbook": playbook.id === data.id,
-                          "hover:bg-option-btn": playbook.id !== data.id,
+                          "hover:bg-active-playbook":
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.Listings,
+                          "hover:bg-option-btn":
+                            playbook.id !== selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType !== MainTabs.Listings,
                           "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]":
                             true,
                         })}
@@ -765,43 +880,60 @@ const Sidebar = () => {
                       <span
                         onClick={(e) => e.stopPropagation()}
                         className={classNames({
-                          "hover:bg-active-playbook": playbook.id === data.id,
-                          "hover:bg-option-btn": playbook.id !== data.id,
+                          "hover:bg-active-playbook":
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.Listings,
+                          "hover:bg-option-btn":
+                            playbook.id !== selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType !== MainTabs.Listings,
                           "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]":
                             true,
                         })}
                       >
                         <img
-                          src={playbook.id === data.id ? plus_blue : plus_gray}
+                          src={
+                            playbook.id === selectedPlaybook?.id &&
+                            selectedPlaybook?.tabType === MainTabs.Listings
+                              ? plus_blue
+                              : plus_gray
+                          }
                           alt="add"
                         />
                       </span>
                     </div>
                   </button>
-                  {playbook.pages && playbook.open && (
-                    <>
-                      {playbook.pages.map((page: any, indexChapter: number) => (
-                        <button
-                          key={page.id}
-                          onClick={() => {
-                            selectPageMenu(playbook, page, "favorite");
-                          }}
-                          className={classNames({
-                            "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
-                              true,
-                            "text-top-sub-secondary": page.id !== data.page_id,
-                            "text-buttons-bg":
-                              playbook.id === data.id &&
-                              page.id === data.page_id,
-                          })}
-                        >
-                          <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
-                            {page.title}
-                          </p>
-                        </button>
-                      ))}
-                    </>
-                  )}
+                  {playbook.id === selectedPlaybook?.id &&
+                    selectedPlaybook?.tabType === MainTabs.Listings && (
+                      <>
+                        {pages.map((page: any) => (
+                          <button
+                            key={page?.id}
+                            onClick={() => {
+                              selectPageMenu(
+                                playbook,
+                                page,
+                                "listings",
+                                MainTabs.Listings
+                              );
+                            }}
+                            className={classNames({
+                              "flex flex-row pr-[8px] py-[8px] pl-[38px] gap-[8px] items-center w-[100%]":
+                                true,
+                              "text-top-sub-secondary":
+                                page?.id !== data.page_id,
+                              "text-buttons-bg":
+                                playbook.id === data.id &&
+                                page?.id === data.page_id &&
+                                data.type === "listings",
+                            })}
+                          >
+                            <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
+                              {page?.title}
+                            </p>
+                          </button>
+                        ))}
+                      </>
+                    )}
                 </li>
               ))}
             </ul>

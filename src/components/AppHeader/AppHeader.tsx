@@ -62,24 +62,28 @@ const AppHeader = ({ profile }: HeaderProps) => {
   return (
     <header
       className="py-[14px] px-[24px]   border-b-[1px] bg-tools-block  
-      max-lg:py-[8px] max-lg:px-[32px]  max-sm:px-[16px] max-sm:gap-[12px]">
+      max-lg:py-[8px] max-lg:px-[32px]  max-sm:px-[16px] max-sm:gap-[12px]"
+    >
       <div
         className={classNames({
           "flex items-center justify-between mx-[auto]": true,
           "max-w-[1200px]": profile,
-        })}>
+        })}
+      >
         <div className="flex items-center max-[690px]:w-[calc(100%-60px)]">
           {profile ? (
             <Link
               to="/home"
-              className="mr-[32px] min-w-[160px] block max-[690px]:hidden">
+              className="mr-[32px] min-w-[160px] block max-[690px]:hidden"
+            >
               <img src={playbookLogo} alt="playbookLogo" />
             </Link>
           ) : (
             <div
               onClick={() => dispatch(setToggleSidebar(!sideOpen))}
               className="absolute flex items-center justify-center w-[32px] h-[32px] 
-              top-[14px] left-[28px] min-[1024px]:hidden cursor-pointer max-sm:left-[12px]">
+              top-[14px] left-[28px] min-[1024px]:hidden cursor-pointer max-sm:left-[12px]"
+            >
               <img src={icon_burger} alt="" />
             </div>
           )}
@@ -90,10 +94,12 @@ const AppHeader = ({ profile }: HeaderProps) => {
               "max-w-[350px] w-[100%] relative": true,
               "max-[690px]:ml-[0px]": profile,
               "max-lg:ml-[48px]": !profile,
-            })}>
+            })}
+          >
             <button
               type="submit"
-              className="absolute left-[12px] top-[11px] w-[24px]">
+              className="absolute left-[12px] top-[11px] w-[24px]"
+            >
               <img src={search_icon} alt="" />
             </button>
 
@@ -113,7 +119,8 @@ const AppHeader = ({ profile }: HeaderProps) => {
                 type="button"
                 onClick={(e) => reset(e)}
                 className="absolute right-[5px] mt-[-15px] top-[50%] w-[30px] h-[30px] rounded-[50%] 
-                transition-all duration-[300ms] ease-out hover:ease-in">
+                transition-all duration-[300ms] ease-out hover:ease-in"
+              >
                 <img src={icon_close} alt="" />
               </button>
             )}

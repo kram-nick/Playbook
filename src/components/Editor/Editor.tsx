@@ -197,8 +197,6 @@ const Editor = () => {
     // value.textContent = formikForm.values.content;
   };
 
-  // console.log(formikForm.values.content);
-
   return (
     <form
       className="flex flex-col gap-[30px]"
@@ -259,7 +257,7 @@ const Editor = () => {
                   };
                   dispatch(setSelectedData(setData));
                   localStorage.setItem(
-                    "selected_playbook",
+                    "selected_page",
                     JSON.stringify(setData)
                   );
                   navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);

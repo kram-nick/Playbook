@@ -20,7 +20,8 @@ export type AppDataTypes = {
   };
   sidebarTabs: number[];
   selectedTab: number | null;
-  selectedPage: null | any;
+  selectedPlaybook: { id: string; tabType: number } | null;
+  pages: any;
   openedPlaybooks: any[];
   openedPages: any[];
   listType: boolean;

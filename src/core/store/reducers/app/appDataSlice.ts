@@ -23,7 +23,8 @@ const initialState: AppDataTypes = {
   },
   sidebarTabs: [],
   selectedTab: null,
-  selectedPage: null,
+  selectedPlaybook: null,
+  pages: [],
   openedPlaybooks: [],
   openedPages: [],
   listType: true,
@@ -62,8 +63,17 @@ const appSlice = createSlice({
     setSidebarTabs(state, action: PayloadAction<number[]>) {
       state.sidebarTabs = action.payload;
     },
-    setSelectedTab(state, action: PayloadAction<number>) {
+    setSelectedTab(state, action: PayloadAction<number | null>) {
       state.selectedTab = action.payload;
+    },
+    setSelectedPlaybook(
+      state,
+      action: PayloadAction<{ id: string; tabType: number } | null>
+    ) {
+      state.selectedPlaybook = action.payload;
+    },
+    setPages(state, action: PayloadAction<any[]>) {
+      state.pages = action.payload;
     },
   },
 });
@@ -80,4 +90,6 @@ export const {
   setModalType,
   setSidebarTabs,
   setSelectedTab,
+  setSelectedPlaybook,
+  setPages,
 } = appSlice.actions;

@@ -24,7 +24,8 @@ const Header = () => {
               <div>
                 <Link
                   to="/main"
-                  className="font-poppins font-medium text-header-links text-[15px]">
+                  className="font-poppins font-medium text-header-links text-[15px]"
+                >
                   {t<string>("HOME.HOME")}
                 </Link>
               </div>
@@ -33,13 +34,15 @@ const Header = () => {
                 <div>
                   <a
                     href="#pricing"
-                    className="font-poppins font-medium text-header-links text-[15px]">
+                    className="font-poppins font-medium text-header-links text-[15px]"
+                  >
                     {t<string>("COMMON.PRICING")}
                   </a>
                 </div>
                 <Link
                   to="/discover"
-                  className="font-poppins font-medium text-header-links text-[15px]">
+                  className="font-poppins font-medium text-header-links text-[15px]"
+                >
                   {t<string>("MAIN.DISCOVER")}
                 </Link>
                 <div>
@@ -76,7 +79,8 @@ const Header = () => {
           </Link>
           <Link
             to="/sign-up"
-            className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color">
+            className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color"
+          >
             <span className="font-semibold font-poppins leading-[22px]">
               {t<string>("COMMON.GET_STARTED")}
             </span>
