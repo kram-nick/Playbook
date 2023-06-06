@@ -11,7 +11,10 @@ import { colourOptions, colourStyles } from "../../../core/constants";
 import PlaybookService from "../../../core/services/playbook.service";
 import { PrivateUIRoutes } from "../../../core/router";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
-import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
+import {
+  setReloadChecker,
+  setSharedId,
+} from "../../../core/store/reducers/helpers/helpersDataSlice";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
 
@@ -111,12 +114,11 @@ export default function ModalPlaybookDetail() {
   const handlePrivate = async () => {
     const privacy =
       formikForm.values.privacy === "private" ? "public" : "private";
-
     try {
       await PlaybookService.ChangePrivacy({ privacy }, formikForm.values.id);
 
       dispatch(setReloadChecker(!reloadChecker));
-      toast.success(t<string>("MAIN.UPDATE_PRIVACY_SUCCESS"));
+      toast.success(t<string>("MAIN.LISTED_SUCCESS"));
     } catch (errors: any) {
       formikForm.setFieldValue("privacy", !formikForm.values.privacy);
       for (let error in errors?.response?.data?.errors) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -6,7 +6,7 @@ import classNames from "classnames";
 
 import useModal from "../../../core/hooks/useModal";
 import { Data } from "../../../core/models";
-import { useAppSelector } from "../../../core/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import { APIRoutes } from "../../../core/http";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 
@@ -15,6 +15,12 @@ import icon_star from "../../../assets/photos/main/star.svg";
 import check from "../../../assets/photos/main/check.svg";
 import arrowDown from "../../../assets/photos/home/arrow-down.svg";
 import delete_icon from "../../../assets/photos/main/close-cross.svg";
+import { toast } from "react-toastify";
+import PlaybookService from "../../../core/services/playbook.service";
+import {
+  setReloadChecker,
+  setSharedId,
+} from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 const ModalSale = () => {
   const [playbook, setPlaybook] = useState<Data.Playbook>();
@@ -27,14 +33,19 @@ const ModalSale = () => {
   });
 
   const { closeModal } = useModal();
+  const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
-  const { sharedId } = useAppSelector((state) => state.helpers);
+  const { sharedId, reloadChecker } = useAppSelector((state) => state.helpers);
 
   const user: Data.UserAccount = JSON.parse(
     localStorage.getItem("user") || "{}"
   );
+
+  useEffect(() => {
+    formikForm.setFieldValue("playbook_id", playbook?.id);
+  }, [sharedId]);
 
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${sharedId}`, {
     dependencies: [],
@@ -56,8 +67,6 @@ const ModalSale = () => {
     },
   });
 
-  //   console.log(tags);
-
   const valueFormValidationSchema = Yup.object().shape({
     discount_price: Yup.number().min(0, t<string>("ERRORS.MIN_4")),
     retail_price: Yup.number().min(0, t<string>("ERRORS.MIN_4")),
@@ -73,7 +82,7 @@ const ModalSale = () => {
     status: string;
     tags: Data.Tag[];
     chargeable: boolean;
-    discount_price: number;
+    discount_price: number | string;
     retail_price: number;
     sale_price: number;
   }>({
@@ -86,13 +95,31 @@ const ModalSale = () => {
       retail_price: 0,
       sale_price: 0,
     },
-    validationSchema: valueFormValidationSchema,
+    //     validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      HandleSubmitForm(values);
+      AddListing(values);
     },
   });
 
-  const HandleSubmitForm = async (values: any) => {};
+  const AddListing = async (values: any) => {
+    const tags_ids = values.tags.map((tag: Data.Tag) => tag.id);
+
+    try {
+      await PlaybookService.AddListing({
+        ...values,
+        playbook_id: playbook?.id,
+        tags: tags_ids,
+      });
+      dispatch(setSharedId(0));
+      dispatch(setReloadChecker(!reloadChecker));
+      closeModal();
+      toast.success(t<string>("MAIN.UPDATE_PRIVACY_SUCCESS"));
+    } catch (errors: any) {
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+      }
+    }
+  };
 
   const ClearDescription = () => {
     setPlaybook((prev: any) => {
@@ -102,14 +129,6 @@ const ModalSale = () => {
       };
     });
   };
-
-  //   const HandleTags = () => {
-  //     const searchItem = tags.filter((tag: Data.Tag) =>
-  //       tag.name.toLocaleLowerCase().startsWith(tagItem.toLocaleLowerCase())
-  //     );
-
-  //     setTags([...searchItem]);
-  //   };
 
   const RemoveTag = (selectedTag: any) => {
     const tagsArr = formikForm.values.tags.filter(
@@ -121,7 +140,29 @@ const ModalSale = () => {
     }
   };
 
-  console.log(formikForm.values.tags);
+  const FreeOfCharge = () => {
+    formikForm.setFieldValue("discount_price", 0);
+    formikForm.setFieldValue("retail_price", 0);
+    formikForm.setFieldValue("sale_price", 0);
+  };
+
+  const countValidation = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    type: string
+  ) => {
+    const value = +event.target.value;
+    const regex = /^\d+$/;
+
+    if (!regex.test(event.target.value)) {
+      formikForm.setFieldValue(type, 0);
+    } else {
+      if (value === 0 || value < 0) {
+        formikForm.setFieldValue(type, 0);
+      } else {
+        formikForm.setFieldValue(type, value);
+      }
+    }
+  };
 
   return (
     <div
@@ -216,7 +257,6 @@ const ModalSale = () => {
               </span>
               <input
                 type="text"
-                // {...formikForm.getFieldProps("")}
                 value={playbook?.name}
                 onChange={(event) => {
                   setPlaybook((prev: any) => {
@@ -271,8 +311,14 @@ const ModalSale = () => {
               </p>
 
               <input
-                className="outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
-                text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]"
+                className={classNames({
+                  "max-w-full overflow-x-auto outline-none border-[1px] border-solid border-border-input rounded-[4px] pr-[16px] py-[7px] text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]":
+                    true,
+                  "pl-[12px]": formikForm.values.tags.length === 0,
+                  "pl-[185px]": formikForm.values.tags.length === 1,
+                  "pl-[320px]": formikForm.values.tags.length === 2,
+                  "pl-[75%]": formikForm.values.tags.length >= 3,
+                })}
                 type="text"
                 value={tagItem.text}
                 onChange={(event) => {
@@ -286,30 +332,34 @@ const ModalSale = () => {
                   });
                 }}
               />
-              <div className="max-w-full overflow-x-auto absolute left-[12px] right-[12px] flex-nowrap top-[40px] flex flex-row items-center gap-[8px]">
-                {formikForm.values.tags.map((tag: Data.Tag) => (
-                  <label
-                    className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px]
-                bg-selected-btn
-                "
-                    key={tag.id}>
-                    <span className="font-poppins normal font-light text-[12px] leading-[16px]">
-                      {tag.name}
-                    </span>
-                    <img
-                      className="cursor-pointer"
-                      onClick={() => RemoveTag(tag)}
-                      src={delete_icon}
-                      alt="delete_icon"
-                    />
-                  </label>
-                ))}
+              <div className="max-w-[70%] overflow-x-auto absolute left-[12px] right-[12px] flex-nowrap top-[40px] flex flex-row items-center gap-[8px]">
+                {formikForm.values.tags.map((tag: Data.Tag, index: number) => {
+                  return (
+                    <label
+                      className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px] bg-selected-btn"
+                      key={tag.id}>
+                      <span className="font-poppins normal font-light text-[12px] leading-[16px]">
+                        {tag.name}
+                      </span>
+                      <img
+                        className="cursor-pointer"
+                        onClick={() => RemoveTag(tag)}
+                        src={delete_icon}
+                        alt="delete_icon"
+                      />
+                    </label>
+                  );
+                })}
               </div>
               {tagItem.active && (
                 <ul className="w-full shadow-tags rounded-[4px] border-[1px] border-solid border-header-bottom">
                   {tags.map((tag: Data.Tag) => (
                     <li
                       onClick={() => {
+                        const sameTag = formikForm.values.tags.find(
+                          (currTag) => currTag.id === tag.id
+                        );
+
                         const tagsArr = [
                           ...formikForm.values.tags.filter(
                             (tagCurr) => tag.id !== tagCurr.id
@@ -318,6 +368,9 @@ const ModalSale = () => {
                         if (tagsArr) {
                           tagsArr.unshift(tag);
                           formikForm.setFieldValue("tags", [...tagsArr]);
+                        }
+                        if (sameTag) {
+                          RemoveTag(sameTag);
                         }
                       }}
                       className="flex justify-between px-[16px] py-[10px] hover:bg-chapter-color"
@@ -337,7 +390,7 @@ const ModalSale = () => {
             <label
               className={classNames({
                 "flex flex-col gap-[6px]": true,
-                "mt-[-100px] z-[-1]": tagItem,
+                "mt-[-100px] z-[-1]": tagItem.active,
               })}>
               <span className="text-[14px] text-home-title font-light leading-[20px]">
                 {t<string>("MODALS.VISIBILITY")}
@@ -389,11 +442,14 @@ const ModalSale = () => {
                 <span className="switch flex w-[34px] h-[20px]">
                   <input
                     type="checkbox"
-                    checked={formikForm.values.chargeable}
+                    checked={!formikForm.values.chargeable}
                     onChange={(event) => {
-                      event.target.checked
-                        ? formikForm.setFieldValue("chargeable", true)
-                        : formikForm.setFieldValue("chargeable", false);
+                      if (event.target.checked) {
+                        formikForm.setFieldValue("chargeable", false);
+                        FreeOfCharge();
+                      } else {
+                        formikForm.setFieldValue("chargeable", true);
+                      }
                     }}
                     hidden
                   />
@@ -412,12 +468,15 @@ const ModalSale = () => {
                     </span>
                     <label className="relative w-full">
                       <input
-                        type="number"
-                        {...formikForm.getFieldProps("retail_price")}
+                        type="text"
+                        value={formikForm.values.retail_price}
+                        onChange={(event) => {
+                          countValidation(event, "retail_price");
+                        }}
                         className="w-full outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
                   text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]"
                       />
-                      <span className="absolute left-[8px] top-[9px] font-poppins font-light text-[16px]">
+                      <span className="absolute left-[7px] top-[9px] font-poppins font-light text-[16px]">
                         $
                       </span>
                     </label>
@@ -428,8 +487,11 @@ const ModalSale = () => {
                     </span>
                     <label className="w-full relative">
                       <input
-                        type="number"
-                        {...formikForm.getFieldProps("discount_price")}
+                        type="text"
+                        value={formikForm.values.discount_price}
+                        onChange={(event) => {
+                          countValidation(event, "discount_price");
+                        }}
                         className="w-full outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
                   text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] pr-[84%]"
                       />
@@ -446,13 +508,16 @@ const ModalSale = () => {
                     </span>
                     <label className="relative">
                       <input
-                        type="number"
-                        {...formikForm.getFieldProps("sale_price")}
+                        type="text"
+                        value={formikForm.values.sale_price}
+                        onChange={(event) => {
+                          countValidation(event, "sale_price");
+                        }}
                         className="w-full outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
                   text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]
                   "
                       />
-                      <span className="absolute left-[8px] top-[9px] font-poppins font-light text-[16px]">
+                      <span className="absolute left-[7px] top-[9px] font-poppins font-light text-[16px]">
                         $
                       </span>
                     </label>
