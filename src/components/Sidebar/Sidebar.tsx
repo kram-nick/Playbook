@@ -105,7 +105,31 @@ const Sidebar = () => {
       type === selectedPlaybook?.tabType
     ) {
       dispatch(setSelectedPlaybook(null));
+      localStorage.removeItem("saved_playbook");
+      localStorage.removeItem("selected_page");
+      dispatch(
+        setSelectedData({
+          selected: false,
+          open: false,
+          id: null,
+          type: "",
+          title: "",
+          page_title: "",
+          page_id: 0,
+          chapters: [],
+          status: "",
+        })
+      );
     } else {
+      if (!localStorage.getItem("selected_page")) {
+        localStorage.setItem(
+          "saved_playbook",
+          JSON.stringify({
+            id: playbook.id,
+            tabType: type,
+          })
+        );
+      }
       dispatch(setSelectedTab(null));
       dispatch(
         setSelectedPlaybook({
