@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useModal from "../../../core/hooks/useModal";
-import { Modal } from "../../../core/models/enums";
+import { MainTabs, Modal } from "../../../core/models/enums";
 import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 const AllPlaybooks = () => {
@@ -16,6 +16,7 @@ const AllPlaybooks = () => {
 
   const { listType, selectedTab } = useAppSelector((state) => state.app);
   const { reloadChecker } = useAppSelector((state) => state.helpers);
+  const { user } = useAppSelector((state) => state.account);
 
   const dispatch = useAppDispatch();
   const { openModal } = useModal();
@@ -24,11 +25,31 @@ const AllPlaybooks = () => {
     query: {},
     dependencies: [reloadChecker],
   });
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const handleNewPlaybook = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
+  };
+
+  const SelectTabType = (playbook: any) => {
+    let type = null;
+
+    switch (playbook) {
+      case playbook.favorited:
+        type = MainTabs.Favorite;
+        break;
+      case playbook.user_id === user.id:
+        type = MainTabs.My;
+        break;
+      case playbook.user_id !== user.id:
+        type = MainTabs.Purchased;
+        break;
+      default:
+        type = MainTabs.My;
+        break;
+    }
+
+    return type;
   };
 
   return (
@@ -49,6 +70,7 @@ const AllPlaybooks = () => {
                   items={fetchedData?.data?.playbooks}
                   playbook={playbook}
                   index={index}
+                  tabType={SelectTabType(playbook)}
                 />
               )
             )}

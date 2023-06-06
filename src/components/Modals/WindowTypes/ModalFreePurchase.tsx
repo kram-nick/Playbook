@@ -30,8 +30,6 @@ const ModalFreePurchase = () => {
     },
   });
 
-  console.log(playbook);
-
   return (
     <div
       onClick={(e) => e.stopPropagation()}

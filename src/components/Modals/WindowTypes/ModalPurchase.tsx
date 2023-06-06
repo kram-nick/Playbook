@@ -9,6 +9,9 @@ import { useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { useState } from "react";
 import { APIRoutes } from "../../../core/http";
+import PlaybookService from "../../../core/services/playbook.service";
+import { shallowEqual } from "react-redux";
+import { toast } from "react-toastify";
 
 const ModalPurchase = () => {
   const [playbook, setPlaybook] = useState<Data.Playbook>();
@@ -37,6 +40,17 @@ const ModalPurchase = () => {
       setListingItem(response?.data);
     },
   });
+
+  const CreateOrder = async () => {
+    try {
+      const response = await PlaybookService.CreateOrder({
+        listing_id: String(sharedId),
+      });
+      console.log(response);
+    } catch (errors: any) {
+      toast.error(t<string>("ERRORS.SOMETHING_WRONG"));
+    }
+  };
 
   return (
     <div
@@ -162,7 +176,7 @@ const ModalPurchase = () => {
                   {t<string>("PURCHASE.TOTAL")}
                 </span>
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
-                  $120.00
+                  {`$${listingItem?.sale_price}0`}
                 </span>
               </div>
             </div>
@@ -178,6 +192,7 @@ const ModalPurchase = () => {
           {t<string>("PURCHASE.CANCEL")}
         </button>
         <button
+          onClick={CreateOrder}
           className="text-[16px] text-buttons-color bg-buttons-bg font-poppins font-medium leading-[21px]
           px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn"
         >

@@ -4,6 +4,7 @@ export const APIRoutes = {
   AUTH_LOGIN: "/api/users/login",
   AUTH_CREATE: "/api/users/create",
   AUTH_GOOGLE: "/api/auth/google/token",
+  DISCOVER: "/api/playbooks/discover",
   FILE_UPLOAD: "/api/files/upload",
   LISTINGS: "/api/listings",
   ORDERS: "/api/orders",

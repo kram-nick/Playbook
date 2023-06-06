@@ -15,7 +15,7 @@ const Discover = () => {
   const [activeTab, setActiveTab] = useState(1);
   const [items, setItems] = useState([]);
 
-  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/discover`, {
+  useHttpGet<any>(`${APIRoutes.DISCOVER}`, {
     resolve: (response: any) => {
       if (response) {
         setItems(response?.data);

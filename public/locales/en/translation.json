@@ -265,7 +265,8 @@
     "NOT_EMPTY": "This field can't be empty",
     "NOT_UPDATED": "Nothing wasn't updated.",
     "ACCOUNT_UPDATED": "User account successfully updated!",
-    "AGREE_TERMS": "You must agree to terms & conditions"
+    "AGREE_TERMS": "You must agree to terms & conditions",
+    "SOMETHING_WRONG": "Something went wrong."
   },
   "FIELDS": {
     "NAME": "Name",
