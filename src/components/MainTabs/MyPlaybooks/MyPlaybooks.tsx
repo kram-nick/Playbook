@@ -62,9 +62,7 @@ const MyPlaybooks = () => {
               {t<string>("MAIN.EMPTY_TITLE")}
             </p>
             <p className="tracking-[-0.1px] text-[16px] leading-[26px] text-simple-text">
-              {`${t<string>("MAIN.EMPTY_TEXT_1")} ${
-                user.first_name
-              }! ${t<string>("MAIN.EMPTY_TEXT_2")}`}
+              {t<string>("MAIN.EMPTY_TEXT")}
             </p>
           </div>
           <button

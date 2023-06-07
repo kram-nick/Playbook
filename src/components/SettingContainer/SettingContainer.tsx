@@ -18,7 +18,7 @@ const MainContent = () => {
       <div
         className="flex items-end gap-[24px] border-b-[1px] border-solid border-header-bottom mb-[32px]
         max-[690px]:overflow-x-auto max-[690px]:whitespace-nowrap max-[690px]:ml-[-16px] max-[690px]:mr-[-16px]
-        max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px]"
+        max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px] w-[max-content]"
       >
         {SettingsTabs.map((item: any, index: number) => (
           <div

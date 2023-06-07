@@ -31,31 +31,32 @@ const Footer = () => {
           max-lg:flex-wrap
         "
         >
-          <div className="flex gap-[40px] flex-col flex-1 min-w-max ">
-            <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
-              {t<string>("COMMON.SOLUTIONS")}
-            </span>
-            <ul
-              className="flex flex-col gap-[12px]
+          <div className="flex flex-row gap-[79px]">
+            <div className="flex gap-[40px] flex-col flex-1 w-[max-content] ">
+              <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
+                {t<string>("COMMON.SOLUTIONS")}
+              </span>
+              <ul
+                className="flex flex-col gap-[12px]
             max-sm:gap-[8px]
             "
-            >
-              <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                <Link to={`/${UIRoutes.DISCOVER}`}>
-                  {t<string>("COMMON.DISCOVER")}
-                </Link>
-              </li>
-              {isAuth && (
-                <li
-                  className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] cursor-pointer"
-                  onClick={() => {
-                    openModal(Modal.PLAYBOOK_DETAILS);
-                  }}
-                >
-                  {t<string>("COMMON.CREATE")}
+              >
+                <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+                  <Link to={`/${UIRoutes.DISCOVER}`}>
+                    {t<string>("COMMON.DISCOVER")}
+                  </Link>
                 </li>
-              )}
-              {/* <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+                {isAuth && (
+                  <li
+                    className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] cursor-pointer"
+                    onClick={() => {
+                      openModal(Modal.PLAYBOOK_DETAILS);
+                    }}
+                  >
+                    {t<string>("COMMON.CREATE")}
+                  </li>
+                )}
+                {/* <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.READLINES")}
               </li>
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
@@ -64,21 +65,22 @@ const Footer = () => {
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.AGENCIES")}
               </li> */}
-            </ul>
-          </div>
+              </ul>
+            </div>
 
-          <div className="flex gap-[40px] flex-col flex-1 min-w-max ">
-            <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
-              {t<string>("COMMON.RESOURCES")}
-            </span>
-            <ul className="flex flex-col gap-[12px] max-sm:gap-[8px]">
-              <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                <Link to="/sign-in">{t<string>("COMMON.LOGIN")}</Link>
-              </li>
-              <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                <Link to="/sign-up">{t<string>("COMMON.SIGN_UP")}</Link>
-              </li>
-              {/* <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+            {!isAuth && (
+              <div className="flex gap-[40px] flex-col w-[max-content]">
+                <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
+                  {t<string>("COMMON.RESOURCES")}
+                </span>
+                <ul className="flex flex-col gap-[12px] max-sm:gap-[8px]">
+                  <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+                    <Link to="/sign-in">{t<string>("COMMON.LOGIN")}</Link>
+                  </li>
+                  <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+                    <Link to="/sign-up">{t<string>("COMMON.SIGN_UP")}</Link>
+                  </li>
+                  {/* <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.NEWSLETTER")}
               </li>
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
@@ -90,29 +92,31 @@ const Footer = () => {
               <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.CONVOS")}
               </li> */}
-            </ul>
-          </div>
-          <div className="flex gap-[40px] flex-col flex-1 min-w-max ">
-            <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
-              {t<string>("COMMON.LEGAL")}
-            </span>
-            <ul
-              className="flex flex-col gap-[12px]
+                </ul>
+              </div>
+            )}
+            <div className="flex gap-[40px] flex-col w-[max-content]">
+              <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
+                {t<string>("COMMON.LEGAL")}
+              </span>
+              <ul
+                className="flex flex-col gap-[12px]
             max-sm:gap-[8px]
             "
-            >
-              <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                {t<string>("COMMON.PRIVACY_POLICY")}
-              </li>
-              <Link
-                to="/term-of-use"
-                className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] "
               >
-                {t<string>("COMMON.TERMS_OF_USE")}
-              </Link>
-            </ul>
+                <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+                  {t<string>("COMMON.PRIVACY_POLICY")}
+                </li>
+                <Link
+                  to="/term-of-use"
+                  className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] "
+                >
+                  {t<string>("COMMON.TERMS_OF_USE")}
+                </Link>
+              </ul>
+            </div>
           </div>
-          <div className="flex gap-[40px] flex-col flex-2 max-w-[375px]">
+          <div className="flex gap-[40px] flex-col max-w-[375px]">
             <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
               {t<string>("COMMON.SUBSCRIBE")}
             </span>

@@ -119,14 +119,14 @@ export const SettingsTabs = [
     id: 2,
     title: "SETTINGS.PASSWORD",
   },
-  {
-    id: 3,
-    title: "SETTINGS.TRANSACTIONS",
-  },
-  {
-    id: 4,
-    title: "SETTINGS.NOTIFICATIONS",
-  },
+  // {
+  //   id: 3,
+  //   title: "SETTINGS.TRANSACTIONS",
+  // },
+  // {
+  //   id: 4,
+  //   title: "SETTINGS.NOTIFICATIONS",
+  // },
 ];
 
 export const DiscoverTabs = [
