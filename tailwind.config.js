@@ -87,6 +87,7 @@ module.exports = {
         "payment-btn": "0px 1px 2px rgba(16, 24, 40, 0.04)",
         get_free: "0px 0.616667px 1.23333px rgba(16, 24, 40, 0.04);",
         tags: "0px 1px 2px rgba(16, 24, 40, 0.04);",
+        cookies: "0px -5px 47px rgba(0, 0, 0, 0.04), 7px 13px 60px rgba(51, 51, 65, 0.08);"
       },
       backgroundImage: {
         sign: "url('./assets/photos/sign/bg-sign.svg')",

@@ -1,26 +1,26 @@
-import { createRef, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import classNames from "classnames";
+import { toast } from "react-toastify";
 
 import useModal from "../../../core/hooks/useModal";
 import { Data } from "../../../core/models";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import { APIRoutes } from "../../../core/http";
 import useHttpGet from "../../../core/hooks/useHttpGet";
+import PlaybookService from "../../../core/services/playbook.service";
+import {
+  setReloadChecker,
+  setSharedId,
+} from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 import icon_star from "../../../assets/photos/main/star.svg";
 import check from "../../../assets/photos/main/check.svg";
 import arrowDown from "../../../assets/photos/home/arrow-down.svg";
 import delete_icon from "../../../assets/photos/main/close-cross.svg";
-import { toast } from "react-toastify";
-import PlaybookService from "../../../core/services/playbook.service";
-import {
-  setReloadChecker,
-  setSharedId,
-} from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 const ModalSale = () => {
   const [playbook, setPlaybook] = useState<Data.Playbook>();
@@ -249,6 +249,7 @@ const ModalSale = () => {
           className="flex flex-col gap-[24px] justify-between min-w-[486px] w-full
         max-md:flex-col
         max-md:mb-[19px]
+        max-sm:min-w-[325px]
         ">
           <div className="flex flex-col gap-[16px]">
             <label className="flex flex-col gap-[6px]">
@@ -312,12 +313,12 @@ const ModalSale = () => {
 
               <input
                 className={classNames({
-                  "max-w-full overflow-x-auto outline-none border-[1px] border-solid border-border-input rounded-[4px] pr-[16px] py-[7px] text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]":
+                  "max-w-full pl-[12px] overflow-x-auto outline-none border-[1px] border-solid border-border-input rounded-[4px] pr-[16px] py-[7px] text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]":
                     true,
-                  "pl-[12px]": formikForm.values.tags.length === 0,
-                  "pl-[185px]": formikForm.values.tags.length === 1,
-                  "pl-[320px]": formikForm.values.tags.length === 2,
-                  "pl-[75%]": formikForm.values.tags.length >= 3,
+                  //   "pl-[12px]": formikForm.values.tags.length === 0,
+                  //   "pl-[185px]": formikForm.values.tags.length === 1,
+                  //   "pl-[320px]": formikForm.values.tags.length === 2,
+                  //   "pl-[75%]": formikForm.values.tags.length >= 3,
                 })}
                 type="text"
                 value={tagItem.text}
@@ -332,7 +333,7 @@ const ModalSale = () => {
                   });
                 }}
               />
-              <div className="max-w-[70%] overflow-x-auto absolute left-[12px] right-[12px] flex-nowrap top-[40px] flex flex-row items-center gap-[8px]">
+              <div className="scroll-visible max-w-[95%] overflow-x-scroll absolute left-[18px] right-[12px] flex-nowrap top-[40px] flex flex-row items-center gap-[8px]">
                 {formikForm.values.tags.map((tag: Data.Tag, index: number) => {
                   return (
                     <label
@@ -493,9 +494,17 @@ const ModalSale = () => {
                           countValidation(event, "discount_price");
                         }}
                         className="w-full outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
-                  text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] pr-[84%]"
+                  text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] pr-[82%]"
                       />
-                      <span className="absolute left-[40px] top-[9px] font-poppins font-light text-[16px]">
+                      <span
+                        className={classNames({
+                          "absolute top-[9px] font-poppins font-light text-[16px]":
+                            true,
+                          "left-[32px]":
+                            +formikForm.values.discount_price >= 0 &&
+                            +formikForm.values.discount_price <= 99,
+                          "left-[42px]": +formikForm.values.discount_price > 99,
+                        })}>
                         %
                       </span>
                     </label>
@@ -526,7 +535,10 @@ const ModalSale = () => {
               </>
             )}
           </div>
-          <div className="w-full flex items-center justify-end gap-[16px]">
+          <div
+            className="w-full flex items-center justify-end gap-[16px]
+          max-sm:justify-between
+          ">
             <button
               onClick={closeModal}
               className="text-[16px] text-top-playbook-title font-poppins font-medium leading-[21px] 
@@ -536,7 +548,9 @@ const ModalSale = () => {
             <button
               type="submit"
               className="text-[16px] text-buttons-color bg-buttons-bg font-poppins font-medium leading-[21px]
-                px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn">
+                px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn
+                max-sm:px-[36.5px]
+                ">
               {t<string>("MODALS.SALE_BTN")}
             </button>
           </div>

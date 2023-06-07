@@ -26,6 +26,7 @@ export enum Modal {
   PURCHASE = "PURCHASE",
   FREE_PURCHASE = "FREE_PURCHASE",
   WELCOME = "WELCOME",
+  PRIVACY = "PRIVACY",
 }
 
 export enum Welcome {

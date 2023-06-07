@@ -251,3 +251,11 @@ input:checked+.switch-check:after {
   width: 100%;
   border: none !important;
 }
+
+.scroll-visible::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+.scroll-visible::-webkit-scrollbar-track {
+  display: none;
+}

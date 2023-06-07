@@ -416,6 +416,20 @@
     "TOTAL": "Total",
     "SALE_PRICE": "Sale Price",
     "SALE_BTN": "List for Sale",
-    "SELECT": "Please select"
+    "SELECT": "Please select",
+    "FULL_COOKIES": "See full Cookie Policy",
+    "PRIVACY_TITLE": "Your Privacy Choices",
+    "PRIVACY_CONTENT_FIRST": "In this panel you can express some preferences related to the processing of your personal information.You may review and change expressed choices at any time by resurfacing this panel via the provided link.To deny your consent to the specific processing activities described below, switch the toggles to off or use the “Reject all” button and confirm you want to save your choices.",
+    "PRIVACY_SUBTITLE": "Your consent preferences for tracking technologies",
+    "PRIVACY_CONTENT_SECOND": "The options provided in this section allow you to customize your consent preferences for any tracking technology used for the purposes described below. To learn more about how these trackers help us and how they work, refer to the cookie policy. Please be aware that denying consent for a particular purpose may make",
+    "PRIVACY_NECESSARY": "Necessary",
+    "PRIVACY_EXPERIENCE": "Experience",
+    "PRIVACY_MEAUSERMENT": "Measurement",
+    "PRIVACY_PREFERENCES": "Save Preferences",
+    "PRIVACY_ACCEPT": "Accept All",
+    "COOKIE": "Cookie policy",
+    "COOKIE_CONTENT": "By clicking “Accept Cookies”, you agree to the storing of cookies on your device to enhance site navigation, analyze site usage, and assist in our marketing efforts. View our Cookie Policy for more information.",
+    "COOKIE_SETTINGS": "Cookie Settings",
+    "COOKIE_ACCEPT": "Accept Cookies"
   }
 }
