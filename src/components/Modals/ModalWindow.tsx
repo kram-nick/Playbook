@@ -7,6 +7,7 @@ import ModalShare from "./WindowTypes/ModalShare";
 import ModalWelcome from "./WindowTypes/ModalWelcome";
 import ModalSale from "./WindowTypes/ModalSale";
 import ModalFreePurchase from "./WindowTypes/ModalFreePurchase";
+import ModalPrivacy from "./WindowTypes/ModalPrivacy";
 
 import useModal from "../../core/hooks/useModal";
 import { useAppSelector } from "../../core/hooks/useRedux";
@@ -32,6 +33,7 @@ const ModalWindow = () => {
           {modalType === Modal.WELCOME && <ModalWelcome />}
           {modalType === Modal.PLAYBOOK_SALE && <ModalSale />}
           {modalType === Modal.FREE_PURCHASE && <ModalFreePurchase />}
+          {modalType === Modal.PRIVACY && <ModalPrivacy />}
           {/* <ModalShareSocial item={selectedItem}></ModalShareSocial> */}
         </div>
       )}

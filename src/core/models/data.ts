@@ -62,4 +62,10 @@ export declare namespace Data {
     tags: null | Tag[];
     user_id: string;
   }
+
+  interface Cookie {
+    necessary: boolean;
+    experienced: boolean;
+    measured: boolean;
+  }
 }

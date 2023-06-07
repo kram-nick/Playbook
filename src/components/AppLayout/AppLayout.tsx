@@ -6,6 +6,7 @@ import Footer from "./Common/Footer/Footer";
 import TermsHeader from "../TermsHeader/TermsHeader";
 import { ToastContainer } from "react-toastify";
 import ModalWindow from "../Modals/ModalWindow";
+import CookiesPopup from "../CookiesPopup/CookiesPopup";
 
 const AppLayout = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const AppLayout = () => {
         <Header />
       )}
       <Mobile />
+
       <Outlet />
       {location.pathname.slice(1) !== "payment" && <Footer />}
       <ModalWindow />
