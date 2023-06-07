@@ -21,7 +21,9 @@ const ModalWindow = () => {
   return (
     <>
       {isModalOpen && (
-        <div className="modal-overlay bg-overlay" onClick={closeModal}>
+        <div
+          className="modal-overlay bg-overlay"
+          onClick={() => modalType !== Modal.PRIVACY && closeModal()}>
           {modalType === Modal.PLAYBOOK_DELETE && <ModalDeletePlaybook />}
           {modalType === Modal.PAGE_DELETE && <ModalDeletePage />}
           {modalType === Modal.SIGN_UP && <ModalSignup />}
