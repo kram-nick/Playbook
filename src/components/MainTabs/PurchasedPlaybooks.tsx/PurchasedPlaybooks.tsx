@@ -9,6 +9,7 @@ import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppSelector } from "../../../core/hooks/useRedux";
 import { useNavigate } from "react-router-dom";
 import { MainTabs } from "../../../core/models/enums";
+import { UIRoutes } from "../../../core/router";
 
 const PurchasedPlaybooks = () => {
   const { t } = useTranslation();
@@ -59,7 +60,7 @@ const PurchasedPlaybooks = () => {
           </div>
           <button
             onClick={() => {
-              navigate("/discover");
+              navigate(`/${UIRoutes.DISCOVER}`);
             }}
             className="bg-button-submit-footer flex items-center py-[5px] px-[92px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]

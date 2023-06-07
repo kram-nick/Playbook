@@ -36,7 +36,7 @@ const HeaderProfile = () => {
   const logout = () => {
     localStorage.clear();
     setTimeout(() => {
-      navigate("/" + UIRoutes.HOME);
+      navigate(`/${UIRoutes.HOME}`);
     }, 100);
   };
 

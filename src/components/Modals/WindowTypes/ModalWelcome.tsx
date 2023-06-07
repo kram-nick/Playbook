@@ -11,6 +11,7 @@ import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDat
 import icon_close from "../../../assets/photos/modals/close-icon.svg";
 import create from "../../../assets/photos/modals/create.svg";
 import discover from "../../../assets/photos/modals/discover.svg";
+import { PrivateUIRoutes, UIRoutes } from "../../../core/router";
 
 const ModalWelcome = () => {
   const [active, setActive] = useState("");
@@ -23,12 +24,12 @@ const ModalWelcome = () => {
 
   const handleNavigate = () => {
     if (active === Welcome.CREATE) {
-      navigate("/main");
+      navigate(`/${PrivateUIRoutes.Main}`);
       closeModal();
       openModal(Modal.PLAYBOOK_DETAILS);
       dispatch(setPlaybookType("create"));
     } else if (active === Welcome.DISCOVER) {
-      navigate("/discover");
+      navigate(`/${UIRoutes.DISCOVER}`);
       closeModal();
     }
   };
@@ -38,7 +39,8 @@ const ModalWelcome = () => {
       onClick={(e) => e.stopPropagation()}
       className="modal-box relative w-[100%] max-w-[851px] p-[14px] shadow-free-trial 
             border-[1px] border-solid border-border-btn bg-white font-poppins
-            max-sm:min-h-[100vh] max-sm:px-[16px] max-sm:py-[16px] max-sm:pb-[80px] max-sm:max-w-[100%]">
+            max-sm:min-h-[100vh] max-sm:px-[16px] max-sm:py-[16px] max-sm:pb-[80px] max-sm:max-w-[100%]"
+    >
       <div className="flex items-center flex-col justify-between ">
         <div className="w-full flex items-center justify-end mb-[-10px]">
           <button className=" w-[24px] h-[24px]">
@@ -61,7 +63,8 @@ const ModalWelcome = () => {
                   true,
                 "border-buttons-bg bg-create-bg-main":
                   active === Welcome.DISCOVER,
-              })}>
+              })}
+            >
               <img src={discover} alt="discover" />
               <div className="flex flex-col items-center gap-[6px]">
                 <h6 className="font-poppins font-semibold normal leading-[36px] text-[24px] text-footer-main">
@@ -83,7 +86,8 @@ const ModalWelcome = () => {
                   true,
                 "border-buttons-bg bg-create-bg-main":
                   active === Welcome.CREATE,
-              })}>
+              })}
+            >
               <img src={create} alt="create" />
               <div className="flex flex-col items-center gap-[6px]">
                 <h6 className="font-poppins font-semibold normal leading-[36px] text-[24px] text-footer-main">
@@ -98,7 +102,8 @@ const ModalWelcome = () => {
           <button
             onClick={handleNavigate}
             className="font-poppins text-[16px] leading-[21px] font-medium normal 
-          px-[18px] py-[12px] bg-buttons-bg text-buttons-color rounded-[6px] shadow-payment-btn">
+          px-[18px] py-[12px] bg-buttons-bg text-buttons-color rounded-[6px] shadow-payment-btn"
+          >
             {t<string>("MODALS.WELCOME_BTN")}
           </button>
         </div>

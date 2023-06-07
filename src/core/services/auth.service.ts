@@ -41,4 +41,17 @@ export default class AuthService {
   }): Promise<AxiosResponse<any>> {
     return RequestsService.putMethod<any>(APIRoutes.USER_CHANGE_PASSWORD, data);
   }
+
+  static async ResetPassword(data: any): Promise<AxiosResponse<any>> {
+    return RequestsService.postMethod<any>(APIRoutes.RESET_PASSWORD, data);
+  }
+  static async NewPassword(data: any): Promise<AxiosResponse<any>> {
+    const formData = {
+      password_reset: data,
+    };
+    return RequestsService.postMethod<any>(
+      `${APIRoutes.RESET_PASSWORD}/reset`,
+      formData
+    );
+  }
 }

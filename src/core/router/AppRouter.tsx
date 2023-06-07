@@ -33,6 +33,8 @@ import {
   setSidebarTabs,
 } from "../store/reducers/app/appDataSlice";
 import useClearSidebar from "../hooks/useClearSidebar";
+import AuthGuard from "./AuthGuard";
+import NotAuthGuard from "./NotAuthGuard";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -115,7 +117,7 @@ export const singRoutes: IRoute[] = [
     element: <SignUp />,
   },
   {
-    path: UIRoutes.NEW_PASSWORD,
+    path: `${UIRoutes.NEW_PASSWORD}/:token`,
     element: <NewPassword />,
   },
   {
@@ -146,23 +148,27 @@ const AppRouter: FC = () => {
             element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
           />
         </Route>
-        <Route path="/*" element={<PrivateLayout />}>
-          {privateRoutes.map((route, index) => (
-            <Route key={`${route.path}${index}`} {...route} />
-          ))}
-          <Route
-            path="*"
-            element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
-          />
+        <Route element={<AuthGuard />}>
+          <Route path="/*" element={<PrivateLayout />}>
+            {privateRoutes.map((route, index) => (
+              <Route key={`${route.path}${index}`} {...route} />
+            ))}
+            <Route
+              path="*"
+              element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
+            />
+          </Route>
         </Route>
-        <Route path="/*" element={<SignLayout />}>
-          {singRoutes.map((route, index) => (
-            <Route key={`${route.path}${index}`} {...route} />
-          ))}
-          <Route
-            path="*"
-            element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
-          />
+        <Route element={<NotAuthGuard />}>
+          <Route path="/*" element={<SignLayout />}>
+            {singRoutes.map((route, index) => (
+              <Route key={`${route.path}${index}`} {...route} />
+            ))}
+            <Route
+              path="*"
+              element={<Navigate to={`/${UIRoutes.HOME}`} replace />}
+            />
+          </Route>
         </Route>
       </Routes>
     </ScrollTop>

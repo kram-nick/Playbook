@@ -69,7 +69,7 @@ const SignIn = () => {
         if (response.data.data.token) {
           setTimeout(() => {
             setLoading(false);
-            navigate("/" + PrivateUIRoutes.Main);
+            navigate(`/${PrivateUIRoutes.Main}`);
           }, 300);
         }
       } catch (errors: any) {
@@ -100,7 +100,7 @@ const SignIn = () => {
       if (response.data.data.token) {
         setTimeout(() => {
           setLoading(false);
-          navigate("/" + PrivateUIRoutes.Main);
+          navigate(`/${PrivateUIRoutes.Main}`);
         }, 300);
       }
       // if(
