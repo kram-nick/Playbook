@@ -4,31 +4,33 @@ import logo from "../../assets/photos/sign/logo.svg";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
 import { useNavigate, useParams } from "react-router-dom";
-import { resolve } from "path";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import AuthService from "../../core/services/auth.service";
 import { UIRoutes } from "../../core/router";
+import useSearchParams from "../../core/hooks/useSearchParams";
 
 const NewPassword = () => {
   const { t } = useTranslation();
 
-  const { token } = useParams();
   const navigate = useNavigate();
+  const { searchedParam } = useSearchParams();
 
-  useHttpGet<any>(`${APIRoutes.RESET_PASSWORD}/validate?token=${token}`, {
-    resolve: (response) => {
-      if (response && new Date() > new Date(response?.data?.data?.status)) {
+  useHttpGet<any>(
+    `${APIRoutes.RESET_PASSWORD}/validate?token=${searchedParam("token")}`,
+    {
+      resolve: (response) => {
+        if (response && new Date() > new Date(response?.data?.data?.status)) {
+          navigate(`/${UIRoutes.RESET_PASSWORD}`);
+        }
+      },
+      reject: (response) => {
         navigate(`/${UIRoutes.RESET_PASSWORD}`);
-      }
-    },
-    reject: (response) => {
-      navigate(`/${UIRoutes.RESET_PASSWORD}`);
-      toast.error(response?.response?.data?.errors);
-    },
-    condition: Boolean(token),
-    dependencies: [],
-  });
+        toast.error(response?.response?.data?.errors);
+      },
+      dependencies: [],
+    }
+  );
 
   const valueFormValidationSchema = Yup.object().shape({
     password: Yup.string()
@@ -36,16 +38,19 @@ const NewPassword = () => {
       .min(8, t<string>("ERRORS.MIN_8")),
     confirm_password: Yup.string()
       .required(t<string>("ERRORS.NOT_EMPTY"))
-      .oneOf([Yup.ref("new_password")], t<string>("ERRORS.NOT_MATCH_PASSWORD")),
+      .oneOf([Yup.ref("password")], t<string>("ERRORS.NOT_MATCH_PASSWORD")),
+    agree: Yup.boolean().isTrue(t<string>("ERRORS.AGREE_TERMS")),
   });
 
   const formikForm = useFormik<{
     password: string;
     confirm_password: string;
+    agree: boolean;
   }>({
     initialValues: {
       password: "",
       confirm_password: "",
+      agree: false,
     },
     validationSchema: valueFormValidationSchema,
     onSubmit: (values: any) => {
@@ -56,11 +61,11 @@ const NewPassword = () => {
   const HandleSubmit = async (values: any) => {
     try {
       const response = await AuthService.NewPassword({
-        token,
+        token: searchedParam("token"),
         password: values.password,
       });
       toast.success(response?.data?.received);
-      navigate(`${UIRoutes.SIGN_IN}`);
+      navigate(`/${UIRoutes.SIGN_IN}`);
     } catch (errors: any) {
       toast.error(errors?.response?.data?.errors);
     }
@@ -73,6 +78,7 @@ const NewPassword = () => {
         py-[50px] px-[100px] max-sm:px-[16px] max-sm:py-[24px]"
       >
         <form
+          onSubmit={formikForm.handleSubmit}
           className="self-center w-full max-w-[425px] max-lg:bg-white 
           max-lg:px-[48px] max-lg:py-[60px] max-[690px]:px-[16px] max-[690px]:py-[32px] max-[690px]:rounded-[8px]
           max-[690px]:min-h-[calc(100vh-140px)]"
@@ -99,6 +105,7 @@ const NewPassword = () => {
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
               border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+              {...formikForm.getFieldProps("password")}
             />
             {formikForm.errors.password && formikForm.touched.password && (
               <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">
@@ -115,11 +122,11 @@ const NewPassword = () => {
             </label>
             <input
               placeholder={t<string>("SIGN.PASSWORD_PLACEHOLDER")}
-              id="password"
               type="text"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
               border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
+              {...formikForm.getFieldProps("confirm_password")}
             />
             {formikForm.errors.confirm_password &&
               formikForm.touched.confirm_password && (
@@ -130,39 +137,50 @@ const NewPassword = () => {
           </div>
 
           <div className="flex justify-between items-center mb-[32px]">
-            <div className="flex">
-              <input
-                type="checkbox"
-                id="remember-me"
-                className="opacity-0 absolute h-[20px] w-[20px]"
-              />
-              <div
-                className="bg-white border-[1px] border-input w-[20px] h-[20px] mr-[8px] rounded-[5px] cursor-pointer flex 
+            <div>
+              <div className="flex">
+                <input
+                  type="checkbox"
+                  id="remember-me"
+                  className="opacity-0 absolute h-[20px] w-[20px] cursor-pointer"
+                  checked={formikForm.values.agree}
+                  onChange={(event: any) =>
+                    formikForm.setFieldValue("agree", event.target.checked)
+                  }
+                />
+                <div
+                  className="bg-white border-[1px] border-input w-[20px] h-[20px] mr-[8px] rounded-[5px] cursor-pointer flex 
                 flex-shrink-0 justify-center items-center focus-within:border-blue-500"
-              >
-                <svg
-                  className="fill-current hidden w-[20px] h-[20px] p-[4px] rounded-[5px] pointer-events-none"
-                  version="1.1"
-                  viewBox="0 0 17 12"
-                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <g fill="none" fillRule="evenodd">
-                    <g
-                      transform="translate(-9 -11)"
-                      fill="#fff"
-                      fillRule="nonzero"
-                    >
-                      <path d="m25.576 11.414c0.56558 0.55188 0.56558 1.4439 0 1.9961l-9.404 9.176c-0.28213 0.27529-0.65247 0.41385-1.0228 0.41385-0.37034 0-0.74068-0.13855-1.0228-0.41385l-4.7019-4.588c-0.56584-0.55188-0.56584-1.4442 0-1.9961 0.56558-0.55214 1.4798-0.55214 2.0456 0l3.679 3.5899 8.3812-8.1779c0.56558-0.55214 1.4798-0.55214 2.0456 0z" />
+                  <svg
+                    className="fill-current hidden w-[20px] h-[20px] p-[4px] rounded-[5px] pointer-events-none"
+                    version="1.1"
+                    viewBox="0 0 17 12"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g fill="none" fillRule="evenodd">
+                      <g
+                        transform="translate(-9 -11)"
+                        fill="#fff"
+                        fillRule="nonzero"
+                      >
+                        <path d="m25.576 11.414c0.56558 0.55188 0.56558 1.4439 0 1.9961l-9.404 9.176c-0.28213 0.27529-0.65247 0.41385-1.0228 0.41385-0.37034 0-0.74068-0.13855-1.0228-0.41385l-4.7019-4.588c-0.56584-0.55188-0.56584-1.4442 0-1.9961 0.56558-0.55214 1.4798-0.55214 2.0456 0l3.679 3.5899 8.3812-8.1779c0.56558-0.55214 1.4798-0.55214 2.0456 0z" />
+                      </g>
                     </g>
-                  </g>
-                </svg>
+                  </svg>
+                </div>
+                <label
+                  htmlFor="remember-me"
+                  className="text-[16px] leading-[20px] tracking-[-0.1px] cursor-pointer"
+                >
+                  {t<string>("SIGN.AGREE")}
+                </label>
               </div>
-              <label
-                htmlFor="remember-me"
-                className="text-[16px] leading-[20px] tracking-[-0.1px] cursor-pointer"
-              >
-                {t<string>("SIGN.AGREE")}
-              </label>
+              {formikForm.errors.agree && formikForm.touched.agree && (
+                <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">
+                  {formikForm.errors.agree}
+                </p>
+              )}
             </div>
           </div>
 

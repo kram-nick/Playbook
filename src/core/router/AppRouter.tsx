@@ -32,7 +32,6 @@ import {
   setSelectedTab,
   setSidebarTabs,
 } from "../store/reducers/app/appDataSlice";
-import useClearSidebar from "../hooks/useClearSidebar";
 import AuthGuard from "./AuthGuard";
 import NotAuthGuard from "./NotAuthGuard";
 
@@ -117,7 +116,7 @@ export const singRoutes: IRoute[] = [
     element: <SignUp />,
   },
   {
-    path: `${UIRoutes.NEW_PASSWORD}/:token`,
+    path: `${UIRoutes.NEW_PASSWORD}/token`,
     element: <NewPassword />,
   },
   {
