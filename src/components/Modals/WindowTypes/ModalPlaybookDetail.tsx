@@ -91,7 +91,7 @@ export default function ModalPlaybookDetail() {
         "https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1618602532707-3OAII3QVHYKCW3KJ1HJU/cars_boast.jpg",
       icon_url: "https://cdn-icons-png.flaticon.com/512/4436/4436481.png",
       favorited: false,
-      privacy: false,
+      privacy: "public",
       category_id: 0,
       status: "",
       order: "",
@@ -172,6 +172,8 @@ export default function ModalPlaybookDetail() {
       }
     }
   };
+
+  console.log(formikForm.values);
 
   return (
     <div
