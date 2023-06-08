@@ -6,6 +6,8 @@ import arrowDown from "../../../../assets/photos/home/arrow-down.svg";
 
 import HeaderProfile from "../../../HeaderProfile";
 import useAuth from "../../../../core/hooks/useAuth";
+import { LogEvent } from "../../../../core/constants/functions";
+import { hotjar } from "react-hotjar";
 
 const Header = () => {
   const { t } = useTranslation();
@@ -72,12 +74,23 @@ const Header = () => {
               {t<string>("COMMON.SIGN_IN")}
             </span>
           </button> */}
-          <Link to="/sign-in" className="flex text-buttons-bg">
+          <Link
+            onClick={() => {
+              hotjar.event("SplashPage-SignInLink");
+              LogEvent("splash-page", "sign-in-link");
+            }}
+            to="/sign-in"
+            className="flex text-buttons-bg"
+          >
             <span className="self-center font-semibold font-poppins leading-[22px]">
               {t<string>("COMMON.SIGN_IN")}
             </span>
           </Link>
           <Link
+            onClick={() => {
+              hotjar.event("SplashPage-GetStarted");
+              LogEvent("splash-page", "get-started");
+            }}
             to="/sign-up"
             className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color"
           >

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { useGoogleLogin } from "@react-oauth/google";
 import { PrivateUIRoutes } from "../../core/router";
+import { hotjar } from "react-hotjar";
 
 import * as Yup from "yup";
 import classNames from "classnames";
@@ -16,6 +17,7 @@ import icon_google from "../../assets/photos/sign/g_logo.svg";
 import icon_show from "../../assets/icon-show.svg";
 
 import AuthService from "../../core/services/auth.service";
+import { LogEvent } from "../../core/constants/functions";
 
 const SignIn = () => {
   const { t } = useTranslation();
@@ -48,11 +50,11 @@ const SignIn = () => {
     },
     validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      handleSubmitForm(values);
+      HandleSubmitForm(values);
     },
   });
 
-  const handleGoogleSignIn = useGoogleLogin({
+  const HandleGoogleSignIn = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       try {
         const response = await AuthService.LoginGoogle(
@@ -65,6 +67,8 @@ const SignIn = () => {
 
         const user = response.data.data.user;
         localStorage.setItem("user", JSON.stringify(user));
+        LogEvent("login", "google-sign-up");
+        hotjar.event("google-sign-up");
 
         if (response.data.data.token) {
           setTimeout(() => {
@@ -79,7 +83,7 @@ const SignIn = () => {
     flow: "implicit",
   });
 
-  const handleSubmitForm = async (values: any) => {
+  const HandleSubmitForm = async (values: any) => {
     setLoading(true);
     try {
       const response = await AuthService.Login(values.email, values.password);
@@ -91,45 +95,22 @@ const SignIn = () => {
 
       const user = response.data.data.user;
       localStorage.setItem("user", JSON.stringify(user));
+      LogEvent("login", "simple-sign-in");
+      hotjar.event("sign-in");
 
-      // dispatch(setIsAuth(true));
-
-      // document.body.style.overflowY = "scroll";
-      // dispatch(setModal(false));
-      // toast.success(t<string>("SIGN.LOGIN_SUCCESS"));
       if (response.data.data.token) {
         setTimeout(() => {
           setLoading(false);
           navigate(`/${PrivateUIRoutes.Main}`);
         }, 300);
       }
-      // if(
-      //   response?.data?.payload.role === "admin" ||
-      //   response?.data?.payload.role === "super_admin"
-      // ) {
-      //   if (
-      //     !location.pathname.split("/").includes("banks-rating") &&
-      //     !location.pathname.split("/").includes("calculator")
-      //   ) {
-      //     navigate(/${UIRoutes.ADMIN}/${PrivateUIRoutes.ADMIN_PANEL});
-      //   }
-      // } else {
-      //   if (
-      //     !location.pathname.split("/").includes("banks-rating") &&
-      //     !location.pathname.split("/").includes("calculator")
-      //   ) {
-      //     navigate(/${UIRoutes.ACCOUNT}/${UIRoutes.PROFILE});
-      //   }
-      // }
     } catch (errors: any) {
       console.log(errors);
       setLoading(false);
-      //     CommonService.showErrors(errors?.response?.data?.payload);
-      // toast.error(errors?.response?.data?.errors);
+
       toast.error(errors?.response?.data?.errors);
     }
   };
-  // {...formikForm.getFieldProps("comment")}
 
   return (
     <div className="flex mx-auto  min-h-[calc(100vh-102px)] font-poppins max-lg:min-h-[calc(100vh-61px)]">
@@ -147,7 +128,7 @@ const SignIn = () => {
           </h1>
 
           <button
-            onClick={() => handleGoogleSignIn()}
+            onClick={() => HandleGoogleSignIn()}
             type="button"
             className="flex justify-center w-full mb-[32px] py-[10px] px-[26px] 
             rounded-[5px] shadow-free-trial
@@ -269,6 +250,10 @@ const SignIn = () => {
             </div>
 
             <Link
+              onClick={() => {
+                LogEvent("forgot-password", "forgot-password");
+                hotjar.event("forgot-password");
+              }}
               to="/reset-password"
               className="text-[14px] leading-[18px] text-buttons-bg font-medium"
             >

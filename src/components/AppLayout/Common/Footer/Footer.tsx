@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { hotjar } from "react-hotjar";
 
 import logo from "../../../../assets/photos/common/logo-footer.svg";
 import mail_icon from "../../../../assets/photos/footer/mail-icon.svg";
@@ -13,6 +14,7 @@ import { UIRoutes } from "../../../../core/router";
 import useModal from "../../../../core/hooks/useModal";
 import { Modal } from "../../../../core/models/enums";
 import useAuth from "../../../../core/hooks/useAuth";
+import { LogEvent } from "../../../../core/constants/functions";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -75,10 +77,26 @@ const Footer = () => {
                 </span>
                 <ul className="flex flex-col gap-[12px] max-sm:gap-[8px]">
                   <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                    <Link to="/sign-in">{t<string>("COMMON.LOGIN")}</Link>
+                    <Link
+                      onClick={() => {
+                        hotjar.event("SplashPage-SignInLink");
+                        LogEvent("splash-page", "sign-in-link");
+                      }}
+                      to={`/${UIRoutes.SIGN_IN}`}
+                    >
+                      {t<string>("COMMON.LOGIN")}
+                    </Link>
                   </li>
                   <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
-                    <Link to="/sign-up">{t<string>("COMMON.SIGN_UP")}</Link>
+                    <Link
+                      onClick={() => {
+                        hotjar.event("SplashPage-SignUpLink");
+                        LogEvent("splash-page", "sign-up-link");
+                      }}
+                      to={`/${UIRoutes.SIGN_UP}`}
+                    >
+                      {t<string>("COMMON.SIGN_UP")}
+                    </Link>
                   </li>
                   {/* <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                 {t<string>("COMMON.NEWSLETTER")}
@@ -177,7 +195,14 @@ const Footer = () => {
                   </button>
                 </li> */}
                 <li>
-                  <a href="https://twitter.com/playbookwork" target="blank">
+                  <Link
+                    onClick={() => {
+                      hotjar.event("twitter-link");
+                      LogEvent("social-networks", "twitter");
+                    }}
+                    to="https://twitter.com/playbookwork"
+                    target="blank"
+                  >
                     <img
                       src={twitter}
                       alt="twitter"
@@ -188,7 +213,7 @@ const Footer = () => {
                       alt="twitter"
                       className="max-lg:block hidden"
                     />
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

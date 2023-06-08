@@ -28,6 +28,9 @@ import highlight from "../../assets/photos/collection/highlight.svg";
 import chart0 from "../../assets/photos/home/many_job.svg";
 import Testimonials from "../../components/Testimonials";
 import Pricing from "../../components/Pricing";
+import { UIRoutes } from "../../core/router";
+import { LogEvent } from "../../core/constants/functions";
+import { hotjar } from "react-hotjar";
 
 const read_lg = require("../../assets/photos/home-tabs/read-lg.png");
 const read_md = require("../../assets/photos/home-tabs/read-md.png");
@@ -100,14 +103,22 @@ const HomePage = () => {
           "
           >
             <Link
-              to="/sign-up"
+              onClick={() => {
+                hotjar.event("SplashPage-GetStarted");
+                LogEvent("splash-page", "get-started");
+              }}
+              to={`/${UIRoutes.SIGN_UP}`}
               className="text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial"
             >
               {t<string>("HOME.FREE_START")}
             </Link>
             <div className="flex items-center">
               <button
-                onClick={handleClickScroll}
+                onClick={() => {
+                  LogEvent("splash-page", "learn-more");
+                  hotjar.event("SplashPage-LearnMore");
+                  handleClickScroll();
+                }}
                 className="text-buttons-bg text-[16px] font-semibold leading-[21px] min-w-[90px]"
               >
                 {t<string>("HOME.LEARN")}
@@ -157,8 +168,12 @@ const HomePage = () => {
                 {t<string>("HOME.YOUTUBE")}
               </span>
             </button> */}
-            <a
-              href="https://twitter.com/playbookwork"
+            <Link
+              onClick={() => {
+                hotjar.event("twitter-link");
+                LogEvent("social-networks", "twitter");
+              }}
+              to="https://twitter.com/playbookwork"
               target="blank"
               className="flex items-center gap-[12px]"
             >
@@ -166,7 +181,7 @@ const HomePage = () => {
               <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
                 {t<string>("HOME.TWITTER")}
               </span>
-            </a>
+            </Link>
           </div>
         </div>
         <div>
@@ -260,8 +275,12 @@ const HomePage = () => {
               {t<string>("HOME.YOUTUBE")}
             </span>
           </button> */}
-          <a
-            href="https://twitter.com/playbookwork"
+          <Link
+            onClick={() => {
+              hotjar.event("twitter-link");
+              LogEvent("social-networks", "twitter");
+            }}
+            to="https://twitter.com/playbookwork"
             target="blank"
             className="flex items-center gap-[12px] max-sm:flex-1 
             max-sm:gap-[4px]
@@ -272,7 +291,7 @@ const HomePage = () => {
             <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
               {t<string>("HOME.TWITTER")}
             </span>
-          </a>
+          </Link>
         </div>
       </div>
       {/* <div className="bg-tools-bg  mt-[104px]">
@@ -537,7 +556,11 @@ const HomePage = () => {
                 </p>
 
                 <Link
-                  to="/sign-up"
+                  onClick={() => {
+                    hotjar.event("SplashPage-GetStarted");
+                    LogEvent("splash-page", "get-started");
+                  }}
+                  to={`/${UIRoutes.SIGN_UP}`}
                   className="table text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial"
                 >
                   {t<string>("HOME.FREE_START")}

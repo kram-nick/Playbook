@@ -21,5 +21,6 @@ declare namespace NodeJS {
     readonly REACT_APP_TOKEN_KEY: string;
     readonly REACT_APP_API_URL: string;
     readonly REACT_APP_GOOGLE_KEY: string;
+    readonly REACT_APP_ANALYTICS_ID: string;
   }
 }

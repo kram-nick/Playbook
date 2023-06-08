@@ -1,5 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { UIRoutes } from "../../core/router";
+import { LogEvent } from "../../core/constants/functions";
+import { hotjar } from "react-hotjar";
 
 const Banner = () => {
   const { t } = useTranslation();
@@ -9,20 +12,23 @@ const Banner = () => {
       className="px-[7vw]
       max-sm:px-[16px]
     max-lg:px-[32px]
-    ">
+    "
+    >
       <div className="mx-auto max-w-[1880px] bg-banner-back bg-no-repeat bg-cover my-[100px] rounded-[20px] max-[650px]:py-[80px]">
         <div
           className=" flex flex-col items-center py-[66px] 
         max-sm:px-[24px]
         max-sm:py-[104px]
         max-lg:px-[80px]
-        ">
+        "
+        >
           <h1
             className="text-banner-txt text-[40px] leading-[52px] font-bold font-poppins
           max-sm:text-center
           max-lg:text-[32px]
           max-lg:leading-[41.6px]
-          ">
+          "
+          >
             {t<string>("HOME.BEST_PLAYBOOK")}
           </h1>
           <p
@@ -31,16 +37,23 @@ const Banner = () => {
           max-sm:leading-[26px]
           max-sm:tracking-[-0.1px]
           max-sm:text-[16px]
-          ">
+          "
+          >
             {t<string>("HOME.TELL_US")}
           </p>
-          <Link  to="/sign-up"
+          <Link
+            onClick={() => {
+              hotjar.event("SplashPage-SignUpLink");
+              LogEvent("splash-page", "sign-up-link");
+            }}
+            to={`/${UIRoutes.SIGN_UP}`}
             className="mt-[50px] bg-banner-btn font-bold py-[17px] px-[32px] text-buttons-color rounded-[8px] font-poppins
           max-sm:text-[16px]
           max-sm:font-semibold
           lg:font-bold
           max-lg:mt-[40px]
-          ">
+          "
+          >
             {t<string>("HOME.TOUCH")}
           </Link>
         </div>

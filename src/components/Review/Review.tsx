@@ -3,6 +3,7 @@ import person_tab from "../../assets/photos/review/person-tab.svg";
 import person_mob from "../../assets/photos/review/person-mob.svg";
 import quote from "../../assets/photos/review/quote.svg";
 import { useTranslation } from "react-i18next";
+import { hotjar } from "react-hotjar";
 
 import twitter from "../../assets/photos/review/twitter.svg";
 import envelope from "../../assets/photos/review/envelope.svg";
@@ -12,6 +13,7 @@ import icon_envelope from "../../assets/photos/review/icon-envelope.svg";
 import sparkles from "../../assets/photos/review/sparkles.svg";
 import rocket from "../../assets/photos/review/rocket.svg";
 import { Link } from "react-router-dom";
+import { LogEvent } from "../../core/constants/functions";
 
 const Review = () => {
   const { t } = useTranslation();
@@ -63,7 +65,15 @@ const Review = () => {
           </div>
 
           <div className="flex items-center justify-center gap-[16px]">
-            <Link to="" className="w-[36px] flex">
+            <Link
+              onClick={() => {
+                hotjar.event("twitter-link");
+                LogEvent("social-networks", "twitter");
+              }}
+              to="https://twitter.com/playbookwork"
+              target="blank"
+              className="w-[36px] flex"
+            >
               <img src={twitter} alt="" />
             </Link>
             <Link to="" className="w-[36px] flex">

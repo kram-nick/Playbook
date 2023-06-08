@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
+import { hotjar } from "react-hotjar";
 
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
@@ -15,6 +16,7 @@ import logo from "../../assets/photos/sign/logo.svg";
 import icon_google from "../../assets/photos/sign/g_logo.svg";
 import icon_hide from "../../assets/icon-hide.svg";
 import icon_show from "../../assets/icon-show.svg";
+import { LogEvent } from "../../core/constants/functions";
 
 const SignIn = () => {
   const { t } = useTranslation();
@@ -51,11 +53,11 @@ const SignIn = () => {
     },
     validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      handleSubmitForm(values);
+      HandleSubmitForm(values);
     },
   });
 
-  const handleGoogleSignIn = useGoogleLogin({
+  const HandleGoogleSignIn = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       try {
         const response = await AuthService.LoginGoogle(
@@ -68,6 +70,8 @@ const SignIn = () => {
 
         const user = response.data.data.user;
         localStorage.setItem("user", JSON.stringify(user));
+        LogEvent("registration", "google-sign-up");
+        hotjar.event("google-sign-up");
 
         if (response.data.data.token) {
           setTimeout(() => {
@@ -82,7 +86,7 @@ const SignIn = () => {
     flow: "implicit",
   });
 
-  const handleSubmitForm = async (values: any) => {
+  const HandleSubmitForm = async (values: any) => {
     setLoading(true);
     try {
       const response = await AuthService.Create(
@@ -100,6 +104,8 @@ const SignIn = () => {
 
         const user = response.data.data.user;
         localStorage.setItem("user", JSON.stringify(user));
+        LogEvent("registration", "simple-sign-up");
+        hotjar.event("sign-up");
         toast.success(t<string>("SIGN.CREATE_SUCCESS"));
         setTimeout(() => {
           setLoading(false);
@@ -129,7 +135,7 @@ const SignIn = () => {
           </h1>
 
           <button
-            onClick={() => handleGoogleSignIn()}
+            onClick={() => HandleGoogleSignIn()}
             className="flex justify-center w-full mb-[32px] py-[10px] px-[26px] 
             rounded-[5px] shadow-free-trial
             border-solid border-[1px]  border-r-header-bottom

@@ -7,10 +7,12 @@ import { useGoogleLogin } from "@react-oauth/google";
 import useModal from "../../../core/hooks/useModal";
 import AuthService from "../../../core/services/auth.service";
 import { toast } from "react-toastify";
+import { hotjar } from "react-hotjar";
 
 import icon_google from "../../../assets/photos/sign/g_logo.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 import classNames from "classnames";
+import { LogEvent } from "../../../core/constants/functions";
 
 interface ModalType {
   children?: ReactNode;
@@ -71,6 +73,8 @@ export default function ModalSignup(props: ModalType) {
 
         const user = response.data.data.user;
         localStorage.setItem("user", JSON.stringify(user));
+        LogEvent("registration", "google-sign-up");
+        hotjar.event("google-sign-up");
         window.location.reload();
         closeModal();
       } catch (errors: any) {
@@ -97,6 +101,8 @@ export default function ModalSignup(props: ModalType) {
 
         const user = response.data.data.user;
         localStorage.setItem("user", JSON.stringify(user));
+        LogEvent("registration", "simple-sign-up");
+        hotjar.event("sign-up");
         toast.success(t<string>("SIGN.CREATE_SUCCESS"));
       }
     } catch (errors: any) {

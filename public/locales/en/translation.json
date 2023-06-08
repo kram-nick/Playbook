@@ -274,7 +274,10 @@
     "NOT_MATCH_PASSWORD": "Doesn't match password",
     "PASSWORD_CHANGED": "Password successfully changed!",
     "CHANGE_PASSWORD_FAILED": "Unable to change password. Please contact support.",
-    "PASSWORD_RESET_FAILED": "No password reset request exists"
+    "PASSWORD_RESET_FAILED": "No password reset request exists",
+    "RETAIL_PRICE": "Please, enter retail price",
+    "SALE_PRICE": "Please, enter sale price",
+    "TAGS": "Array must have at least 1 element"
   },
   "FIELDS": {
     "NAME": "Name",
