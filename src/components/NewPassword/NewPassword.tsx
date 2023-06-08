@@ -101,7 +101,7 @@ const NewPassword = () => {
             <input
               placeholder={t<string>("SIGN.PASSWORD_PLACEHOLDER")}
               id="password"
-              type="text"
+              type="password"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
               border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
@@ -121,8 +121,8 @@ const NewPassword = () => {
               {t<string>("SIGN.REPEAT_PASSWORD")}
             </label>
             <input
-              placeholder={t<string>("SIGN.PASSWORD_PLACEHOLDER")}
-              type="text"
+              placeholder={t<string>("SIGN.CONFIRM_PASSWORD_PLACEHOLDER")}
+              type="password"
               className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
               border-solid border-[1px] shadow-free-trial w-[100%]
               leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"

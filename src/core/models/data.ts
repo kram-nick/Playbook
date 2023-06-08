@@ -52,15 +52,23 @@ export declare namespace Data {
   }
 
   interface Listing {
-    chargeable: boolean;
+    chargeable: false;
     discount_price: string;
+    header_url: string;
     id: string;
+    name: string;
     playbook_id: string;
-    retail_price: string;
-    sale_price: string;
-    status: string;
+    profile_first_name: string;
+    profile_image: string;
+    profile_last_name: string;
+    retail_price: string | null;
+    sale_price: string | null;
     tags: null | Tag[];
+    status: string;
     user_id: string;
+    thumbnail_url: null | string;
+    content: string;
+    bio: string;
   }
 
   interface Cookie {

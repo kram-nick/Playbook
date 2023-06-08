@@ -30,6 +30,7 @@ const initialState: AppDataTypes = {
   listType: true,
   modalType: "",
   isModalOpen: false,
+  mainTab: MainTabs.All,
 };
 
 const appSlice = createSlice({
@@ -75,6 +76,9 @@ const appSlice = createSlice({
     setPages(state, action: PayloadAction<any[]>) {
       state.pages = action.payload;
     },
+    setMainTab(state, action: PayloadAction<number>) {
+      state.mainTab = action.payload;
+    },
   },
 });
 
@@ -92,4 +96,5 @@ export const {
   setSelectedTab,
   setSelectedPlaybook,
   setPages,
+  setMainTab,
 } = appSlice.actions;

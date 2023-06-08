@@ -5,39 +5,27 @@ import small_banner from "../../../assets/photos/purchase/card.svg";
 
 import useModal from "../../../core/hooks/useModal";
 import { Data } from "../../../core/models/index";
-import { useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { useState } from "react";
 import { APIRoutes } from "../../../core/http";
 import PlaybookService from "../../../core/services/playbook.service";
-import { shallowEqual } from "react-redux";
 import { toast } from "react-toastify";
+import { useAppSelector } from "../../../core/hooks/useRedux";
 
 const ModalPurchase = () => {
   const [playbook, setPlaybook] = useState<Data.Playbook>();
-  const [listingItem, setListingItem] = useState<Data.Listing>();
+  const [listedPlaybook, setListedPlaybook] = useState<Data.Listing>();
 
   const { closeModal } = useModal();
 
   const { t } = useTranslation();
 
-  const user: Data.UserAccount = JSON.parse(
-    localStorage.getItem("user") || "{}"
-  );
-
   const { sharedId } = useAppSelector((state) => state.helpers);
-
-  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${sharedId}`, {
-    dependencies: [],
-    resolve: (response) => {
-      setPlaybook(response?.data);
-    },
-  });
 
   useHttpGet<any>(`${APIRoutes.LISTINGS}/${sharedId}`, {
     dependencies: [],
     resolve: (response) => {
-      setListingItem(response?.data);
+      setListedPlaybook(response?.data);
     },
   });
 
@@ -87,16 +75,19 @@ const ModalPurchase = () => {
         >
           <div className="flex flex-col items-start gap-[2.87px] w-full">
             <h4 className="text-[24px] font-semibold normal leading-[36px] text-footer-main font-poppins">
-              {`${playbook?.name.slice(0, 15)}...`}
+              {String(listedPlaybook?.name).length > 15
+                ? `${listedPlaybook?.name.slice(0, 15)}...`
+                : listedPlaybook?.name}
             </h4>
             <div className="flex flex-row items-center gap-[7.18px]">
               <img
-                src={user?.profile_image}
+                src={listedPlaybook?.profile_image}
                 alt="avatar"
                 className="w-[17.34px] h-[17.34px] object-cover rounded-[50px]"
               />
               <span className="text-[16px] normal font-poppins font-normal leading-[26px] tracking-[-0.1px] text-simple-text">
-                {user?.first_name} {user?.last_name}
+                {listedPlaybook?.profile_first_name}{" "}
+                {listedPlaybook?.profile_last_name}
               </span>
             </div>
           </div>
@@ -114,19 +105,20 @@ const ModalPurchase = () => {
             <div className="flex flex-col gap-[8px]">
               <div className="flex flex-row gap-[12px] items-center ">
                 <img
-                  src={user?.profile_image}
+                  src={listedPlaybook?.profile_image}
                   alt="big-ava"
                   className="w-[30px] h-[30px] object-cover rounded-[50px]"
                 />
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
-                  {user?.first_name} {user?.last_name}
+                  {listedPlaybook?.profile_first_name}{" "}
+                  {listedPlaybook?.profile_last_name}
                 </span>
               </div>
               <span
                 className="text-[16px] leading-[26px] font-normal font-poppins 
                 text-footer-main normal tracking-[-0.1px]"
               >
-                {user?.bio}
+                {listedPlaybook?.bio}
               </span>
             </div>
           </div>
@@ -135,7 +127,7 @@ const ModalPurchase = () => {
               {t<string>("PURCHASE.DESC")}
             </span>
             <p className="text-[16px] normal font-poppins font-normal text-footer-main leading-[26px] tracking-[-0.1px]">
-              {playbook?.content}
+              {listedPlaybook?.content}
             </p>
           </div>
           <div className="flex flex-col gap-[16px] w-full">
@@ -148,7 +140,7 @@ const ModalPurchase = () => {
                   {t<string>("PURCHASE.RETAIL")}
                 </span>
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
-                  {`$${listingItem?.retail_price}0`}
+                  {`$${listedPlaybook?.retail_price}0`}
                 </span>
               </div>
               <div className="flex justify-between flex-row pt-[10px] pb-[11px]">
@@ -164,9 +156,9 @@ const ModalPurchase = () => {
                   {t<string>("PURCHASE.DISCOUNT")}
                 </span>
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
-                  {listingItem?.discount_price.slice(
+                  {listedPlaybook?.discount_price.slice(
                     0,
-                    listingItem?.discount_price.indexOf(".")
+                    listedPlaybook?.discount_price.indexOf(".")
                   )}
                   %
                 </span>
@@ -176,7 +168,7 @@ const ModalPurchase = () => {
                   {t<string>("PURCHASE.TOTAL")}
                 </span>
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
-                  {`$${listingItem?.sale_price}0`}
+                  {`$${listedPlaybook?.sale_price}0`}
                 </span>
               </div>
             </div>
