@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
+import Cookies from "js-cookie";
 
 import cookie from "../../assets/photos/main/cookie.svg";
 import close from "../../assets/photos/main/close-circle.svg";
 import useModal from "../../core/hooks/useModal";
 import { Modal } from "../../core/models/enums";
-import { boolean } from "yup";
 
 const CookiesPopup = () => {
   const [animate, setAnimate] = useState(false);
@@ -45,6 +45,7 @@ const CookiesPopup = () => {
       })
     );
     setAnimate(false);
+    Cookies.set("cookieAcception", "agreed", { expires: 365 });
   };
 
   //   if (!Object.keys(agree).length) {

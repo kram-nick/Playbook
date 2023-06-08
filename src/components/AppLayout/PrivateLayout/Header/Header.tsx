@@ -26,6 +26,8 @@ import { useEffect } from "react";
 import { setSharedId } from "../../../../core/store/reducers/helpers/helpersDataSlice";
 import { APIRoutes } from "../../../../core/http";
 import edit from "../../../../assets/photos/chapter/edit.svg";
+import useModal from "../../../../core/hooks/useModal";
+import { Modal } from "../../../../core/models/enums";
 
 type HeaderProps = {
   previewState?: boolean;
@@ -35,6 +37,7 @@ const Header = ({ previewState }: HeaderProps) => {
   const { t } = useTranslation();
   const { data } = useAppSelector((state) => state.app);
 
+  const { openModal } = useModal();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { playbook_id } = useParams();
@@ -47,9 +50,9 @@ const Header = ({ previewState }: HeaderProps) => {
     if (data) {
       if (data?.status !== "published") {
         try {
-          await PlaybookService.PublishPlaybook(data?.id).then((resp) => {
-            toast.success(t<string>("MAIN.PUBLISHED_SUCCESS"));
-          });
+          await PlaybookService.PublishPlaybook(data?.id);
+          toast.success(t<string>("MAIN.PUBLISHED_SUCCESS"));
+          openModal(Modal.PLAYBOOK_SHARE);
         } catch (errors: any) {
           toast.error(errors?.response?.data?.errors);
         }

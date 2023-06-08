@@ -75,7 +75,7 @@ export default function ModalShare() {
                     bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>
           </span>
         </label>
-        <div className="flex items-center w-[100%] justify-between">
+        {/* <div className="flex items-center w-[100%] justify-between">
           <span className="flex items-center gap-[6px] text-[16px] text-home-title leading-[20px]">
             <img src={icon_link} alt="" />
             {t<string>("FIELDS.PRIVATE_LINK")}
@@ -101,7 +101,7 @@ export default function ModalShare() {
             title="Copy">
             {t<string>("FIELDS.EXPORT")}
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
