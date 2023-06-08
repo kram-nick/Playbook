@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
@@ -11,13 +12,18 @@ import PlaybookService from "../../../core/services/playbook.service";
 import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 export default function ModalDeletePlaybook() {
+  const [agreement, setAgreement] = useState<string>("");
   const { t } = useTranslation();
   const { closeModal } = useModal();
 
   const dispatch = useAppDispatch();
   const { reloadChecker, sharedId } = useAppSelector((state) => state.helpers);
 
-  const deleteItem = async () => {
+  const DeleteItem = async () => {
+    if (agreement !== "DELETE") {
+      return;
+    }
+
     try {
       await PlaybookService.Delete(sharedId);
       toast.success(t<string>("MAIN.DELETE_SUCCESS"));
@@ -35,7 +41,8 @@ export default function ModalDeletePlaybook() {
     <div
       onClick={(e) => e.stopPropagation()}
       className="modal-box relative w-[100%] max-w-[400px] px-[24px] py-[24px] shadow-free-trial rounded-[5px]
-              border-[1px] border-solid border-border-btn bg-white font-poppins max-[690px]:w-[calc(100%-32px)]">
+              border-[1px] border-solid border-border-btn bg-white font-poppins max-[690px]:w-[calc(100%-32px)]"
+    >
       <div className="flex items-center justify-between mb-[24px]">
         <img src={icon_delete} alt="" />
         <button className="absolute top-[16px] right-[16px]">
@@ -45,8 +52,21 @@ export default function ModalDeletePlaybook() {
       <div className="text mb-[24px]">
         <div className="title text-[20px] font-medium mb-[8px] text-home-title leading-normal tracking-[-0.1px]">
           <p className="text-[16px] leading-normal text-simple-text tracking-[-0.1px]">
-            {t<string>("MODALS.DELETE")}
+            {t<string>("MODALS.PLAYBOOK_DELETE_TITLE")}
           </p>
+          <p className="text-[13px] leading-normal text-simple-text tracking-[-0.1px] mt-[7px]">
+            {`${t<string>("MODALS.TYPE")} `}
+            <span className="font-bold text-home-title">
+              {t<string>("MODALS.DELETE_UPPERCASED")}
+            </span>
+            {` ${t<string>("MODALS.PLAYBOOK_DELETE_TEXT")}`}
+          </p>
+          <input
+            className="w-full box-border mt-[5px] border-[1px] rounded-[8px] outline-none pl-[8px] text-[14px] py-[5px]"
+            type="text"
+            value={agreement}
+            onChange={(event: any) => setAgreement(event.target.value)}
+          />
         </div>
       </div>
       <div className="grid grid-cols-2 font-poppins gap-[16px]">
@@ -55,15 +75,17 @@ export default function ModalDeletePlaybook() {
                   py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
                   text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
           title="Cancel"
-          onClick={closeModal}>
+          onClick={closeModal}
+        >
           {t<string>("MODALS.CANCEL")}
         </button>
         <button
           className="h-[46px] flex items-center justify-center  
                   py-[8px] px-[15px] bg-danger rounded-[5px] text-buttons-color 
                   text-[16px] font-medium leading-[20px] shadow-free-trial "
-          onClick={deleteItem}
-          title="Delete">
+          onClick={DeleteItem}
+          title="Delete"
+        >
           {t<string>("MODALS.CONFIRM")}
         </button>
       </div>
