@@ -18,7 +18,10 @@ import icon_row_default from "../../assets/photos/main/row-vertical-default.svg"
 
 import { MainTabs, Modal } from "../../core/models/enums";
 import { TabsHeadings } from "../../core/constants";
-import { setListType } from "../../core/store/reducers/app/appDataSlice";
+import {
+  setListType,
+  setMainTab,
+} from "../../core/store/reducers/app/appDataSlice";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import { setPlaybookType } from "../../core/store/reducers/helpers/helpersDataSlice";
 import useModal from "../../core/hooks/useModal";
@@ -29,8 +32,9 @@ import { UIRoutes } from "../../core/router";
 const AppMainContent = () => {
   const { t } = useTranslation();
 
-  const [activeTab, setActiveTab] = useState(0);
-  const { searchData, listType } = useAppSelector((state) => state.app);
+  const { searchData, listType, mainTab } = useAppSelector(
+    (state) => state.app
+  );
 
   const { openModal } = useModal();
 
@@ -109,11 +113,11 @@ const AppMainContent = () => {
               >
                 {TabsHeadings.map((item: string, index: number) => (
                   <div
-                    onClick={() => setActiveTab(index)}
+                    onClick={() => dispatch(setMainTab(index))}
                     key={index}
                     className={classNames({
-                      "text-buttons-bg": activeTab === index,
-                      "text-nav-txt-private": activeTab !== index,
+                      "text-buttons-bg": mainTab === index,
+                      "text-nav-txt-private": mainTab !== index,
                       "tracking-[-0.1px] relative transition duration-150 ease-in text-[16px] leading-[24px] cursor-pointer pt-[7px] pb-[11px]":
                         true,
                     })}
@@ -121,8 +125,8 @@ const AppMainContent = () => {
                     {t<string>(`${item}`)}
                     <div
                       className={classNames({
-                        "w-[100%]": activeTab === index,
-                        "w-[0%]": activeTab !== index,
+                        "w-[100%]": mainTab === index,
+                        "w-[0%]": mainTab !== index,
                         "absolute bottom-[-1px] left-[-1px] h-[2px] transition duration-300 ease-in bg-buttons-bg":
                           true,
                       })}
@@ -184,11 +188,11 @@ const AppMainContent = () => {
             </div>
           </div>
         </div>
-        {activeTab === MainTabs.All && <AllPlaybooks />}
-        {activeTab === MainTabs.My && <MyPlaybooks />}
-        {activeTab === MainTabs.Favorite && <FavoritePlaybooks />}
-        {activeTab === MainTabs.Purchased && <PurchasedPlaybooks />}
-        {activeTab === MainTabs.Listings && <Listings />}
+        {mainTab === MainTabs.All && <AllPlaybooks />}
+        {mainTab === MainTabs.My && <MyPlaybooks />}
+        {mainTab === MainTabs.Favorite && <FavoritePlaybooks />}
+        {mainTab === MainTabs.Purchased && <PurchasedPlaybooks />}
+        {mainTab === MainTabs.Listings && <Listings />}
       </div>
     </div>
   );

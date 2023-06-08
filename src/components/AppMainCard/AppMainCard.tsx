@@ -13,7 +13,7 @@ import {
   setSidebarTabs,
 } from "../../core/store/reducers/app/appDataSlice";
 import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import { Modal } from "../../core/models/enums";
+import { MainTabs, Modal } from "../../core/models/enums";
 import useModal from "../../core/hooks/useModal";
 
 import poster from "../../assets/photos/main/image-poster.svg";
@@ -284,27 +284,30 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                     {t<string>("MAIN.PREVIEW")}
                   </span>
                 </li>
-                <li
-                  onMouseLeave={() => setIsSale(false)}
-                  onMouseOver={() => setIsSale(true)}
-                  onClick={handleSale}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"
-                >
-                  <img
-                    src={isSale ? icon_sale_unactive : icon_sale}
-                    alt="icon_sale"
-                    className="w-[24px] h-[24px]"
-                  />
-                  <span
-                    className={classNames({
-                      "text-[16px] text-buttons-bg font-medium  leading-[20px]":
-                        true,
-                      "text-simple-text": isSale,
-                    })}
-                  >
-                    {t<string>("MAIN.SALE")}
-                  </span>
-                </li>
+                {tabType !== MainTabs.Purchased &&
+                  tabType !== MainTabs.Listings && (
+                    <li
+                      onMouseLeave={() => setIsSale(false)}
+                      onMouseOver={() => setIsSale(true)}
+                      onClick={handleSale}
+                      className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"
+                    >
+                      <img
+                        src={isSale ? icon_sale_unactive : icon_sale}
+                        alt="icon_sale"
+                        className="w-[24px] h-[24px]"
+                      />
+                      <span
+                        className={classNames({
+                          "text-[16px] text-buttons-bg font-medium  leading-[20px]":
+                            true,
+                          "text-simple-text": isSale,
+                        })}
+                      >
+                        {t<string>("MAIN.SALE")}
+                      </span>
+                    </li>
+                  )}
                 <li
                   onClick={HandleShare}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"

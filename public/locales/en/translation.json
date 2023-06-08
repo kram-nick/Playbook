@@ -187,6 +187,7 @@
     "EMAIL_PLACEHOLDER": "Insert your email",
     "PASSWORD": "Password",
     "PASSWORD_PLACEHOLDER": "Insert your password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm your password",
     "KEEP_ME": "Keep me logged in",
     "FORGOT": "Forgot password?",
     "REGISTER": "Register",
@@ -308,7 +309,8 @@
   "PROFILE": {
     "EMPTY": "This author has no playbooks yet",
     "VIEW_OTHER": "View profiles of other authors",
-    "GET_FREE": "Get for free"
+    "GET_FREE": "Get for free",
+    "BUY_NOW": "Buy now"
   },
   "SETTINGS": {
     "TITLE": "Settings",

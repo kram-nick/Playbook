@@ -52,6 +52,8 @@ const ContentChapters = () => {
     list.insertBefore(draggingItem, nextSibling);
   };
 
+  console.log(playbook);
+
   return (
     <div className="w-full flex-1">
       <Header />
@@ -65,15 +67,20 @@ const ContentChapters = () => {
             "opacity-50": !playbook?.data?.name,
             "text-[32px] font-poppins font-bold text-home-title mb-[24px]":
               true,
-          })}>
+          })}
+        >
           {playbook?.data?.name
             ? playbook?.data?.name
             : t<string>("CREATE.UNTITLED")}
         </h1>
+        <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]  max-[690px]:text-[16px] max-[690px]:leading-[26px] mb-[16px]">
+          {playbook?.data?.content}
+        </p>
         <div
           onDragOver={handleDragOver}
           onDragEnter={(e) => e.preventDefault()}
-          className="list">
+          className="list"
+        >
           {data?.map((chapter: any, index: number) => (
             <BookChapters
               dataContent={chapter ? chapter : null}
@@ -87,7 +94,8 @@ const ContentChapters = () => {
           className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg"
           onClick={() => {
             navigate(`/${PrivateUIRoutes.Create}/${playbook_id}`);
-          }}>
+          }}
+        >
           <img src={plus} alt="" />
           {t<string>("BTNS.ADD_PAGE")}
         </button>

@@ -44,9 +44,11 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
     openModal(Modal.SIGN_UP);
   };
 
-  const createOrder = async (id: string) => {
-    dispatch(setSharedId(id));
-    openModal(Modal.PURCHASE);
+  const createOrder = (playbook: any) => {
+    dispatch(setSharedId(playbook.listing_id));
+    playbook?.chargeable
+      ? openModal(Modal.PURCHASE)
+      : openModal(Modal.FREE_PURCHASE);
   };
 
   return (
@@ -106,15 +108,13 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
 
       <div className="flex items-center gap-[8px]">
         <button
-          onClick={() =>
-            !isAuth ? handleSignUp() : createOrder(playbook.listing_id)
-          }
+          onClick={() => (!isAuth ? handleSignUp() : createOrder(playbook))}
           className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
             border-solid shadow-free-trial bg-blue-light text-buttons-bg text-[16px] font-medium flex items-center 
             text-center justify-center"
         >
-          {isAuth
-            ? t<string>("PROFILE.GET_FREE")
+          {playbook?.chargeable
+            ? t<string>("PROFILE.BUY_NOW")
             : t<string>("PROFILE.GET_FREE")}
         </button>
         <button

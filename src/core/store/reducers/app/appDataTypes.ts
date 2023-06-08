@@ -27,4 +27,5 @@ export type AppDataTypes = {
   listType: boolean;
   isModalOpen: boolean;
   modalType: string;
+  mainTab: number;
 };

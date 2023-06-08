@@ -19,6 +19,7 @@ import useModal from "../../core/hooks/useModal";
 import arrow from "../../assets/photos/chapter/arrow-right.svg";
 import edit from "../../assets/photos/chapter/edit.svg";
 import icon_delete from "../../assets/photos/chapter/delete.svg";
+import { setSharedId } from "../../core/store/reducers/helpers/helpersDataSlice";
 
 type pagesProps = {
   dataContent?: any;
@@ -139,7 +140,10 @@ const BookChapters: React.FC<pagesProps> = ({ dataContent, index }) => {
               {t<string>("BTNS.EDIT")}
             </button>
             <div
-              onClick={() => openModal(Modal.PAGE_DELETE)}
+              onClick={() => {
+                dispatch(setSharedId(dataContent.id));
+                openModal(Modal.PAGE_DELETE);
+              }}
               className="rounded-r-[5px] h-[38px]  flex items-center 
                 px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
                 hover:bg-people-bg transition duration-300 linear"
