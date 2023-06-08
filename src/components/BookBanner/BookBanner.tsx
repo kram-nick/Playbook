@@ -43,7 +43,7 @@ const BookBanner = ({ preview, data }: BookBannerProps) => {
     <div className="relative rounded-t-[8px] bg-header-bottom h-[218px] mb-[52px] font-poppins max-[1024px]:rounded-t-[0px]">
       <div className="absolute w-[73px] h-[73px] left-[50px] bottom-[-24px] z-[10]">
         <label>
-          <img src={data?.icon_url ? data?.icon_url : icon} alt="" />
+          <img src={data?.icon_url} alt="" />
           <input
             type="file"
             className="hidden"
@@ -66,7 +66,6 @@ const BookBanner = ({ preview, data }: BookBannerProps) => {
           />
         </div>
       )}
-
       {data?.header_url && !preview && (
         <div className="absolute border-solid border-[1px] rounded-[5px] flex items-center right-[8px] bottom-[8px] z-[10] bg-white">
           <label
@@ -88,7 +87,6 @@ const BookBanner = ({ preview, data }: BookBannerProps) => {
               type="file"
             />
           </label>
-
           <div
             onClick={handleBanner}
             className="rounded-r-[5px] h-[38px] flex items-center 

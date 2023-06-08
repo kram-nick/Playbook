@@ -67,8 +67,7 @@ const ContentChapters = () => {
             "opacity-50": !playbook?.data?.name,
             "text-[32px] font-poppins font-bold text-home-title mb-[24px]":
               true,
-          })}
-        >
+          })}>
           {playbook?.data?.name
             ? playbook?.data?.name
             : t<string>("CREATE.UNTITLED")}
@@ -79,8 +78,7 @@ const ContentChapters = () => {
         <div
           onDragOver={handleDragOver}
           onDragEnter={(e) => e.preventDefault()}
-          className="list"
-        >
+          className="list">
           {data?.map((chapter: any, index: number) => (
             <BookChapters
               dataContent={chapter ? chapter : null}
@@ -94,8 +92,7 @@ const ContentChapters = () => {
           className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg"
           onClick={() => {
             navigate(`/${PrivateUIRoutes.Create}/${playbook_id}`);
-          }}
-        >
+          }}>
           <img src={plus} alt="" />
           {t<string>("BTNS.ADD_PAGE")}
         </button>
