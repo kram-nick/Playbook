@@ -135,6 +135,13 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
     );
     dispatch(setSelectedData(setData));
     localStorage.setItem("selected_page", JSON.stringify(setData));
+    localStorage.setItem(
+      "saved_playbook",
+      JSON.stringify({
+        id: playbook.id,
+        tabType: Number(tabType),
+      })
+    );
     navigate(`/creating/${playbook.id}`);
   };
 

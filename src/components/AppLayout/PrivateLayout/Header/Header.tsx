@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import classNames from "classnames";
 
 import {
@@ -24,6 +24,8 @@ import PlaybookService from "../../../../core/services/playbook.service";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { setSharedId } from "../../../../core/store/reducers/helpers/helpersDataSlice";
+import { APIRoutes } from "../../../../core/http";
+import edit from "../../../../assets/photos/chapter/edit.svg";
 
 type HeaderProps = {
   previewState?: boolean;
@@ -37,34 +39,41 @@ const Header = ({ previewState }: HeaderProps) => {
   const navigate = useNavigate();
   const { playbook_id } = useParams();
 
-  console.log(playbook_id);
+  const location = useLocation();
 
-  // const PublishPlaybook = () => {
-  //   let data: any = localStorage.getItem("selected_page");
-  //   data = data ? JSON.parse(data) : null;
-
-  //   if (data) {
-  //     if (data?.status !== "published") {
-  //       try {
-  //         PlaybookService.PublishPlaybook(data?.id).then((resp) => {
-  //           toast.success(t<string>("MAIN.PUBLISHED_SUCCESS"));
-  //           navigate(`/preview/${data ? data?.id : ""}`);
-  //         });
-  //       } catch (errors: any) {
-  //         toast.error(errors?.response?.data?.errors);
-  //       }
-  //     } else {
-  //       navigate(`/preview/${data ? data?.id : ""}`);
-  //     }
-  //   }
-  // };
+  const PublishPlaybook = async () => {
+    let data: any = localStorage.getItem("selected_page");
+    data = data ? JSON.parse(data) : null;
+    if (data) {
+      if (data?.status !== "published") {
+        try {
+          await PlaybookService.PublishPlaybook(data?.id).then((resp) => {
+            toast.success(t<string>("MAIN.PUBLISHED_SUCCESS"));
+          });
+        } catch (errors: any) {
+          toast.error(errors?.response?.data?.errors);
+        }
+      } else {
+        toast.error(t<string>("MAIN.PUBLISHED_ALREADY"));
+      }
+    }
+  };
 
   const HandlePreview = () => {
     navigate(`/${PrivateUIRoutes.CardDetail}`);
     if (playbook_id) {
       dispatch(setSharedId(playbook_id));
+      localStorage.setItem("playbook_id", JSON.stringify(playbook_id));
     }
   };
+
+  const storage_playbook_id = JSON.parse(
+    localStorage.getItem("playbook_id") || "{}"
+  );
+
+  const saved_playbook = JSON.parse(
+    localStorage.getItem("saved_playbook") || "{}"
+  );
 
   return (
     <header className="h-[74px] bg-white flex items-center border-b-[1px] max-lg:h-[60px]">
@@ -146,8 +155,42 @@ const Header = ({ previewState }: HeaderProps) => {
           </span> */}
         </div>
         <div className="flex flex-row gap-[28px] rounded-[5px] items-center max-lg:gap-[12px] max-[690px]:min-w-[60px]">
+          {location.pathname === "/playbook" && (
+            <button
+              onClick={() => {
+                navigate(
+                  `/${PrivateUIRoutes.Chapters}/${
+                    playbook_id ? playbook_id : storage_playbook_id
+                  }`
+                );
+                dispatch(setSelectedPlaybook(saved_playbook));
+              }}
+              className="flex flex-row gap-[4px] items-center cursor-pointer">
+              <span
+                className={classNames({
+                  "font-poppins text-[16px]   font-medium leading-[20.8px] max-lg:hidden":
+                    true,
+                  "text-buttons-bg": previewState,
+                  "text-nav-txt-private": !previewState,
+                })}>
+                {t<string>("MAIN.BACK_EDIT")}
+              </span>
+              <img
+                src={edit}
+                alt="preview"
+                className="max-lg:w-[24px] max-lg:h-[24px]"
+              />
+            </button>
+          )}
+
           <button
-            onClick={HandlePreview}
+            onClick={() => {
+              if (location?.pathname === "/playbook") {
+                PublishPlaybook();
+              } else {
+                HandlePreview();
+              }
+            }}
             className="flex flex-row gap-[4px] items-center cursor-pointer">
             <span
               className={classNames({
@@ -156,7 +199,9 @@ const Header = ({ previewState }: HeaderProps) => {
                 "text-buttons-bg": previewState,
                 "text-nav-txt-private": !previewState,
               })}>
-              {t<string>("MAIN.PREVIEW")}
+              {location?.pathname === "/playbook"
+                ? t<string>("MAIN.PUBLISH")
+                : t<string>("MAIN.PREVIEW")}
             </span>
             <img
               src={previewState ? play_active : preview}
@@ -164,6 +209,7 @@ const Header = ({ previewState }: HeaderProps) => {
               className="max-lg:w-[24px] max-lg:h-[24px]"
             />
           </button>
+
           {/* <button className="flex flex-row gap-[4px] items-center cursor-pointer">
             <span className={classNames({
               "font-poppins text-[16px] text-nav-txt-private font-medium leading-[20.8px]":true

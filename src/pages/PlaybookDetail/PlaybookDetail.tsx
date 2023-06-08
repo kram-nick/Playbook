@@ -3,7 +3,6 @@ import { useState } from "react";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
-import AppHeader from "../../components/AppHeader";
 import BookBanner from "../../components/BookBanner";
 
 import { useAppSelector } from "../../core/hooks/useRedux";
@@ -16,6 +15,7 @@ import arrow_bread from "../../assets/photos/profile/right.svg";
 import lock from "../../assets/photos/profile/lock.svg";
 import back from "../../assets/photos/profile/back.svg";
 import star from "../../assets/photos/profile/star.svg";
+import Header from "../../components/AppLayout/PrivateLayout/Header";
 
 const PlaybookDetail = () => {
   const { t } = useTranslation();
@@ -25,30 +25,36 @@ const PlaybookDetail = () => {
 
   const { sharedId, reloadChecker } = useAppSelector((state) => state.helpers);
 
+  const storage_playbook_id = JSON.parse(
+    localStorage.getItem("playbook_id") || "{}"
+  );
+
   const handleViewDetail = (open: boolean | any) => {
     if (open) {
       handleView(!showDetail);
     }
   };
 
-  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${sharedId}`, {
+  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${sharedId || storage_playbook_id}`, {
     dependencies: [],
     resolve: (response) => {
       setPlaybook(response?.data);
     },
   });
 
-  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${sharedId}/pages`, {
-    resolve: (response: any) => {
-      setPages(response?.data);
-    },
-    dependencies: [sharedId, reloadChecker],
-  });
+  useHttpGet<any>(
+    `${APIRoutes.PLAYBOOKS}/${sharedId || storage_playbook_id}/pages`,
+    {
+      resolve: (response: any) => {
+        setPages(response?.data);
+      },
+      dependencies: [sharedId || storage_playbook_id, reloadChecker],
+    }
+  );
 
   return (
     <div className="bg-create-bg-main min-h-[100vh] w-[100%]">
-      <AppHeader profile={true} />
-
+      <Header />
       <div className="max-w-[1230px] px-[15px] mx-[auto] pb-[40px]">
         <ul className="breadcrumb flex items-center flex-wrap font-poppins pt-[24px] pb-[36px]">
           <li className="flex items-center gap-[4px]  mb-[4px]">
@@ -73,7 +79,7 @@ const PlaybookDetail = () => {
         </ul>
 
         <div className="max-w-[790px] mx-[auto]">
-          {showDetail ? (
+          {!showDetail ? (
             <div
               className="rounded-[8px] bg-white max-[1024px]:rounded-t-[0] shadow-free-trial 
             border-[1px] border-solid border-header-bottom mb-[16px]">
@@ -82,11 +88,14 @@ const PlaybookDetail = () => {
                 <h1 className="text-[32px] font-poppins font-bold text-home-title max-[690px]:text-[26px] max-[690px]:leading-[32px]">
                   {playbook?.name}
                 </h1>
+                <p className="font-poppins normal font-normal text-[20px] leading-[32px] text-top-subtitle-playbook tracking-[-0.1px]">
+                  {playbook?.content}
+                </p>
                 {pages.map((chapter: Data.Page, index: number) => (
                   <button
                     key={index}
                     onClick={() =>
-                      handleViewDetail(chapter.privacy === "private")
+                      handleViewDetail(chapter.privacy === "public")
                     }
                     className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
                           border-[1px] border-solid border-card-border gap-[30px] max-[690px]:p-[12px]">

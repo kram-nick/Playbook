@@ -248,7 +248,9 @@
     "MY_PLAYBOOKS": "My Playbooks",
     "PURCHASED": "Purchased",
     "LISTINGS": "Listings",
-    "SALE": "List for Sale"
+    "SALE": "List for Sale",
+    "PUBLISHED_ALREADY": "This playbook already published",
+    "BACK_EDIT": "Back to edit"
   },
   "EDIT": {
     "SECTION_NAME": "Section Name",
