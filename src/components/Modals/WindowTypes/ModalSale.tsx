@@ -45,6 +45,8 @@ const ModalSale = () => {
 
   useEffect(() => {
     formikForm.setFieldValue("playbook_id", playbook?.id);
+    formikForm.setFieldValue("name", playbook?.name);
+    formikForm.setFieldValue("content", playbook?.content);
   }, [sharedId]);
 
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${sharedId}`, {
@@ -68,15 +70,26 @@ const ModalSale = () => {
   });
 
   const valueFormValidationSchema = Yup.object().shape({
+    chargeable: Yup.boolean(),
+    name: Yup.string().required(t<string>("ERRORS.NAME_REQUIRED")),
+    content: Yup.string().required(t<string>("ERRORS.CONTENT_REQUIRED")),
+    sale_price: Yup.number().when("chargeable", {
+      is: true,
+      then: (schema) => schema.min(1, t<string>("ERRORS.SALE_PRICE")),
+    }),
+    retail_price: Yup.number().when("chargeable", {
+      is: true,
+      then: (schema) => schema.min(1, t<string>("ERRORS.RETAIL_PRICE")),
+    }),
     discount_price: Yup.number(),
-    retail_price: Yup.number().min(0, t<string>("ERRORS.RETAIL_PRICE")),
-    sale_price: Yup.number().min(0, t<string>("ERRORS.SALE_PRICE")),
     tags: Yup.array().min(1, t<string>("ERRORS.TAGS")),
     agree: Yup.boolean().isTrue(t<string>("ERRORS.AGREE_TERMS")),
   });
 
   const formikForm = useFormik<{
     playbook_id: string;
+    name: string;
+    content: string;
     status: string;
     tags: Data.Tag[];
     chargeable: boolean;
@@ -86,14 +99,16 @@ const ModalSale = () => {
   }>({
     initialValues: {
       playbook_id: "",
+      name: "",
+      content: "",
       status: "live",
       tags: [],
-      chargeable: true,
+      chargeable: false,
       discount_price: 0,
       retail_price: 0,
       sale_price: 0,
     },
-    //     validationSchema: valueFormValidationSchema,
+    validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
       AddListing(values);
     },
@@ -101,6 +116,12 @@ const ModalSale = () => {
 
   const AddListing = async (values: any) => {
     const tags_ids = values.tags.map((tag: Data.Tag) => tag.id);
+
+    if (!values.chargeable) {
+      delete values.discount_price;
+      delete values.retail_price;
+      delete values.sale_price;
+    }
 
     try {
       await PlaybookService.AddListing({
@@ -182,7 +203,7 @@ const ModalSale = () => {
         <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-normal font-poppins text-footer-main">
           {t<string>("MODALS.LIST_TITLE")}
         </span>
-        <button onClick={closeModal}>
+        <button type="button" onClick={closeModal}>
           <img src={icon_close} alt="close" />
         </button>
       </div>
@@ -228,6 +249,7 @@ const ModalSale = () => {
           />
           <div className="flex flex-row items-center gap-[4.93px] max-md:w-full">
             <button
+              type="button"
               className="flex justify-center min-w-[188.7px]  
              bg-blue-light shadow-get_free rounded-[3.7px] border-[0.62px] h-[28.37px] text-[14px] font-poppins font-normal items-center self-stretch not-italic leading-[21px] text-buttons-bg 
              max-md:min-w-[90%]
@@ -236,6 +258,7 @@ const ModalSale = () => {
               {t<string>("MODALS.FREE_BTN")}
             </button>
             <button
+              type="button"
               className="min-w-[28.37px] min-h-[28.37px] p-[7.4px] sahdow-payment-btn border-[0.62px] rounded-[3.7px] border-header-bottom flex items-center justify-center
             max-md:min-w-[10%]
             max-md:h-[28.37px]
@@ -244,7 +267,10 @@ const ModalSale = () => {
               <img src={icon_star} alt="icon_star" />
             </button>
           </div>
-          <button className="absolute left-0 bottom-[-28px] text-[16px] text-buttons-bg font-medium tracking-[-0.1px] leading-[18px]">
+          <button
+            type="button"
+            className="absolute left-0 bottom-[-28px] text-[16px] text-buttons-bg font-medium tracking-[-0.1px] leading-[18px]"
+          >
             {t<string>("MODALS.CHANGE_THUMB")}
           </button>
         </div>
@@ -276,6 +302,11 @@ const ModalSale = () => {
                 text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]
                 "
               />
+              {formikForm.errors.name && formikForm.touched.name && (
+                <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[4px]">
+                  {formikForm.errors.name}
+                </p>
+              )}
             </label>
 
             <label className="flex flex-col gap-[6px]">
@@ -284,6 +315,7 @@ const ModalSale = () => {
                   {t<string>("MODALS.DESCRIPTION")}
                 </span>
                 <button
+                  type="button"
                   onClick={ClearDescription}
                   className="text-[14px] text-input-paceholder font-medium leading-[20px]"
                 >
@@ -305,6 +337,11 @@ const ModalSale = () => {
                 }}
                 value={playbook?.content}
               />
+              {formikForm.errors.content && formikForm.touched.content && (
+                <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[4px]">
+                  {formikForm.errors.content}
+                </p>
+              )}
             </label>
 
             <label className="relative flex flex-col gap-[6px]">
@@ -393,6 +430,11 @@ const ModalSale = () => {
                     </li>
                   ))}
                 </ul>
+              )}
+              {formikForm.errors.tags && formikForm.touched.tags && (
+                <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[4px]">
+                  {t<string>("ERRORS.TAGS")}
+                </p>
               )}
             </label>
 
@@ -493,6 +535,12 @@ const ModalSale = () => {
                         $
                       </span>
                     </label>
+                    {formikForm.errors.retail_price &&
+                      formikForm.touched.retail_price && (
+                        <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[4px]">
+                          {formikForm.errors.retail_price}
+                        </p>
+                      )}
                   </label>
                   <label className="flex flex-col gap-[6px] flex-1">
                     <span className="text-[14px] text-home-title font-light leading-[20px]">
@@ -543,6 +591,12 @@ const ModalSale = () => {
                         $
                       </span>
                     </label>
+                    {formikForm.errors.sale_price &&
+                      formikForm.touched.sale_price && (
+                        <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[4px]">
+                          {formikForm.errors.sale_price}
+                        </p>
+                      )}
                   </label>
                 </div>
               </>
@@ -554,6 +608,7 @@ const ModalSale = () => {
           "
           >
             <button
+              type="button"
               onClick={closeModal}
               className="text-[16px] text-top-playbook-title font-poppins font-medium leading-[21px] 
                 px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom"
@@ -561,6 +616,7 @@ const ModalSale = () => {
               {t<string>("MODALS.CANCEL")}
             </button>
             <button
+              onClick={(e) => e.stopPropagation()}
               type="submit"
               className="text-[16px] text-buttons-color bg-buttons-bg font-poppins font-medium leading-[21px]
                 px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn
