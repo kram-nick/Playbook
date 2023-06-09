@@ -122,7 +122,7 @@ const ModalFreePurchase = () => {
                 className="text-[16px] leading-[26px] font-normal font-poppins 
             text-footer-main normal tracking-[-0.1px]"
               >
-                {listedPlaybook?.bio}
+                {listedPlaybook?.profile_bio}
               </span>
             </div>
           </div>

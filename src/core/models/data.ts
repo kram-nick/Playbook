@@ -68,7 +68,7 @@ export declare namespace Data {
     user_id: string;
     thumbnail_url: null | string;
     content: string;
-    bio: string;
+    profile_bio: string;
   }
 
   interface Cookie {
