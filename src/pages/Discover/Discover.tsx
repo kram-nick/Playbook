@@ -78,7 +78,7 @@ const Discover = () => {
           <div className="grid min-[1024px]:grid-cols-3 gap-[28px] max-[1023px]:grid-cols-2 max-[650px]:grid-cols-1">
             {items.map((playbook: any, index: number) => (
               <ProfileCard
-                key={playbook.id}
+                key={playbook.id + String(index)}
                 item={playbook}
                 index={index}
                 typeCard={true}

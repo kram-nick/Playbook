@@ -96,7 +96,7 @@ const ModalFreePurchase = () => {
             </div>
           </div>
           <img
-            src={listedPlaybook?.header_url}
+            src={listedPlaybook?.thumbnail_url || listedPlaybook?.header_url}
             alt="banner"
             className="max-md:w-full max-h-[172px]"
           />

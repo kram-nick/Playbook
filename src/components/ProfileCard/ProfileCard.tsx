@@ -16,6 +16,7 @@ import PlaybookService from "../../core/services/playbook.service";
 import { Modal } from "../../core/models/enums";
 import { useAppDispatch } from "../../core/hooks/useRedux";
 import { setSharedId } from "../../core/store/reducers/helpers/helpersDataSlice";
+import { PrivateUIRoutes, UIRoutes } from "../../core/router";
 
 type CardProps = {
   items?: Array<any>;
@@ -61,10 +62,12 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
     >
       <div className="header">
         <Link
-          to="/playbook"
+          to={`/${PrivateUIRoutes.Profile}`}
           className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]"
         >
-          {playbook.name}
+          {playbook?.name?.length > 36
+            ? `${playbook?.name.slice(0, 36)}...`
+            : playbook?.name}
         </Link>
         {!discover && (
           <p className="text-[16px] text-input-paceholder leading-[26px] max-[690px]:text-[14px]">
@@ -74,16 +77,22 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
 
         {discover && (
           <Link
-            to={`/profile`}
+            to={`/${PrivateUIRoutes.Profile}`}
             className="flex items-center gap-[10px] mt-[8px]"
           >
             <div className="icon w-[24px] h-[24px] overflow-hidden relative rounded-[50%]">
-              {playbook.profile_image && (
+              {playbook?.profile_image ? (
                 <img
                   src={playbook.profile_image}
                   alt="Profile avatar"
                   className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]"
                 />
+              ) : (
+                <div className="flex items-center justify-center w-[100%] h-[100%] bg-top-entrepreneur">
+                  <span className="text-banner-txt font-poppins">
+                    {playbook?.profile_first_name.slice(0, 1).toUpperCase()}
+                  </span>
+                </div>
               )}
             </div>
             <span className="text-input-paceholder text-[16px] tracking-[-0.1px] max-w-[calc(100%-34px)]">
@@ -97,13 +106,11 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
         className="photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border 
           w-[100%] h-[240px] rounded-[8px]"
       >
-        {playbook.header_url && (
-          <img
-            src={playbook.header_url}
-            alt=""
-            className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]"
-          />
-        )}
+        <img
+          src={playbook.thumbnail_url || playbook.header_url}
+          alt=""
+          className="absolute object-cover object-center left-[0] top-[0] w-[100%] h-[100%]"
+        />
       </div>
 
       <div className="flex items-center gap-[8px]">

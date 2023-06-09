@@ -11,13 +11,13 @@ import { APIRoutes } from "../../../core/http";
 import PlaybookService from "../../../core/services/playbook.service";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../../../core/hooks/useRedux";
+import { useNavigate } from "react-router-dom";
 
 const ModalPurchase = () => {
-  const [playbook, setPlaybook] = useState<Data.Playbook>();
   const [listedPlaybook, setListedPlaybook] = useState<Data.Listing>();
 
   const { closeModal } = useModal();
-
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const { sharedId } = useAppSelector((state) => state.helpers);
@@ -34,6 +34,7 @@ const ModalPurchase = () => {
       const response = await PlaybookService.CreateOrder({
         listing_id: String(sharedId),
       });
+      window.open(response?.data?.data?.checkout, "_blank");
       console.log(response);
     } catch (errors: any) {
       toast.error(t<string>("ERRORS.SOMETHING_WRONG"));
@@ -80,11 +81,21 @@ const ModalPurchase = () => {
                 : listedPlaybook?.name}
             </h4>
             <div className="flex flex-row items-center gap-[7.18px]">
-              <img
-                src={listedPlaybook?.profile_image}
-                alt="avatar"
-                className="w-[17.34px] h-[17.34px] object-cover rounded-[50px]"
-              />
+              {listedPlaybook?.profile_image ? (
+                <img
+                  src={listedPlaybook?.profile_image}
+                  alt="avatar"
+                  className="w-[17.34px] h-[17.34px] object-cover rounded-[50px]"
+                />
+              ) : (
+                <div className="flex items-center justify-center w-[17.34px] h-[17.34px] bg-top-entrepreneur rounded-[50px]">
+                  <span className="text-banner-txt font-poppins text-[12px]">
+                    {listedPlaybook?.profile_first_name
+                      .slice(0, 1)
+                      .toUpperCase()}
+                  </span>
+                </div>
+              )}
               <span className="text-[16px] normal font-poppins font-normal leading-[26px] tracking-[-0.1px] text-simple-text">
                 {listedPlaybook?.profile_first_name}{" "}
                 {listedPlaybook?.profile_last_name}
@@ -92,7 +103,7 @@ const ModalPurchase = () => {
             </div>
           </div>
           <img
-            src={playbook?.header_url}
+            src={listedPlaybook?.thumbnail_url || listedPlaybook?.header_url}
             alt="banner"
             className="max-md:w-full max-h-[172px]"
           />
@@ -104,11 +115,21 @@ const ModalPurchase = () => {
             </span>
             <div className="flex flex-col gap-[8px]">
               <div className="flex flex-row gap-[12px] items-center ">
-                <img
-                  src={listedPlaybook?.profile_image}
-                  alt="big-ava"
-                  className="w-[30px] h-[30px] object-cover rounded-[50px]"
-                />
+                {listedPlaybook?.profile_image ? (
+                  <img
+                    src={listedPlaybook?.profile_image}
+                    alt="big-ava"
+                    className="w-[30px] h-[30px] object-cover rounded-[50px]"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center w-[30px] h-[30px] bg-top-entrepreneur rounded-[50px]">
+                    <span className="text-banner-txt font-poppins text-[14px]">
+                      {listedPlaybook?.profile_first_name
+                        .slice(0, 1)
+                        .toUpperCase()}
+                    </span>
+                  </div>
+                )}
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
                   {listedPlaybook?.profile_first_name}{" "}
                   {listedPlaybook?.profile_last_name}
@@ -140,7 +161,7 @@ const ModalPurchase = () => {
                   {t<string>("PURCHASE.RETAIL")}
                 </span>
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
-                  {`$${listedPlaybook?.retail_price}0`}
+                  {`$${listedPlaybook?.retail_price}.00`}
                 </span>
               </div>
               <div className="flex justify-between flex-row pt-[10px] pb-[11px]">
@@ -151,24 +172,27 @@ const ModalPurchase = () => {
                   $12.00
                 </span>
               </div>
-              <div className="flex justify-between flex-row pt-[10px] pb-[11px]">
-                <span className="text-[14px] normal font-poppins font-normal text-footer-main leading-[20px] tracking-[-0.1px]">
-                  {t<string>("PURCHASE.DISCOUNT")}
-                </span>
-                <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
-                  {listedPlaybook?.discount_price.slice(
-                    0,
-                    listedPlaybook?.discount_price.indexOf(".")
-                  )}
-                  %
-                </span>
-              </div>
+              {listedPlaybook?.discount_price &&
+                listedPlaybook.discount_price !== "0" && (
+                  <div className="flex justify-between flex-row pt-[10px] pb-[11px]">
+                    <span className="text-[14px] normal font-poppins font-normal text-footer-main leading-[20px] tracking-[-0.1px]">
+                      {t<string>("PURCHASE.DISCOUNT")}
+                    </span>
+                    <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
+                      {listedPlaybook?.discount_price.slice(
+                        0,
+                        listedPlaybook?.discount_price.indexOf(".")
+                      )}
+                      %
+                    </span>
+                  </div>
+                )}
               <div className="flex justify-between flex-row pt-[10px] pb-[11px] border-t-[1px] border-solid border-header-bottom">
                 <span className="text-[14px] normal font-poppins font-normal text-footer-main leading-[20px] tracking-[-0.1px]">
                   {t<string>("PURCHASE.TOTAL")}
                 </span>
                 <span className="text-[16px] normal font-poppins font-medium text-footer-main leading-[21px]">
-                  {`$${listedPlaybook?.sale_price}0`}
+                  {`$${listedPlaybook?.sale_price}.00`}
                 </span>
               </div>
             </div>

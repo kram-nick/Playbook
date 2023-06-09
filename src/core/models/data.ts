@@ -66,7 +66,7 @@ export declare namespace Data {
     tags: null | Tag[];
     status: string;
     user_id: string;
-    thumbnail_url: null | string;
+    thumbnail_url: any;
     content: string;
     profile_bio: string;
   }
