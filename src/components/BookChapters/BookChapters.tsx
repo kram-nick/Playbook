@@ -28,7 +28,7 @@ type pagesProps = {
 
 const BookChapters: React.FC<pagesProps> = ({ dataContent, index }) => {
   const [dragging, setDragging] = useState(false);
-
+  const [innerHeight, setInnerHeight] = useState();
   const { playbook_id } = useParams();
 
   const { t } = useTranslation();
@@ -46,9 +46,8 @@ const BookChapters: React.FC<pagesProps> = ({ dataContent, index }) => {
   const innerRef: any = useRef();
 
   useEffect(() => {
-    if (blockRef.current) {
-      const blockHeight = blockRef.current.offsetHeight;
-      console.log("Block height:", blockHeight);
+    if (innerRef.current) {
+      setInnerHeight(innerRef.current.offsetHeight);
     }
   });
 
@@ -85,6 +84,8 @@ const BookChapters: React.FC<pagesProps> = ({ dataContent, index }) => {
     } catch (error) {}
   };
 
+  console.log(innerHeight);
+
   return (
     <Reorder.Item
       className="--reorder-item"
@@ -95,7 +96,9 @@ const BookChapters: React.FC<pagesProps> = ({ dataContent, index }) => {
       id={dataContent?.id}
       style={{
         height: "72px",
-        marginBottom: openedPages.includes(dataContent.id) ? `150px` : "0px",
+        marginBottom: openedPages.includes(dataContent.id)
+          ? `calc(${innerHeight}px + 24px)`
+          : "0px",
       }}>
       <div
         className={classNames({

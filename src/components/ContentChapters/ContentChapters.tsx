@@ -62,7 +62,7 @@ const ContentChapters = () => {
     //   await PlaybookService.UpdatePlaybookOrder(String(playbook_id), data);
     // } catch (error) {}
   };
-  console.log(data);
+
   return (
     <div className="w-full flex-1">
       <Header />
