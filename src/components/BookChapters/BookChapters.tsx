@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
-
+import { useMotionValue, Reorder } from "framer-motion";
 import ModalDeletePage from "../Modals/WindowTypes/ModalDeletePage";
 
 import PlaybookService from "../../core/services/playbook.service";
@@ -20,7 +20,7 @@ import arrow from "../../assets/photos/chapter/arrow-right.svg";
 import edit from "../../assets/photos/chapter/edit.svg";
 import icon_delete from "../../assets/photos/chapter/delete.svg";
 import { setSharedId } from "../../core/store/reducers/helpers/helpersDataSlice";
-
+import { useRaisedShadow } from "../../core/hooks/useRaisedShadow";
 type pagesProps = {
   dataContent?: any;
   index: number;
@@ -37,6 +37,20 @@ const BookChapters: React.FC<pagesProps> = ({ dataContent, index }) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const y = useMotionValue(0);
+
+  const boxShadow = useRaisedShadow(y);
+
+  const blockRef: any = useRef();
+  const innerRef: any = useRef();
+
+  useEffect(() => {
+    if (blockRef.current) {
+      const blockHeight = blockRef.current.offsetHeight;
+      console.log("Block height:", blockHeight);
+    }
+  });
 
   const toggleSection = (clickedPage: Data.Page) => {
     if (openedPages.includes(clickedPage.id)) {
@@ -72,90 +86,105 @@ const BookChapters: React.FC<pagesProps> = ({ dataContent, index }) => {
   };
 
   return (
-    <div
-      className={classNames({
-        "relative font-poppins pb-[12px] item": true,
-        "dragging opacity-90": dragging,
-      })}
-      id={dataContent.id}
-      draggable={true}
-      onDragStart={dragStart}
-      onDragEnd={dragEnd}>
+    <Reorder.Item
+      className="--reorder-item"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 20 }}
+      exit={{ opacity: 0 }}
+      value={dataContent}
+      id={dataContent?.id}
+      style={{
+        height: "72px",
+        marginBottom: openedPages.includes(dataContent.id) ? `150px` : "0px",
+      }}>
       <div
-        className="rounded-[8px] bg-white mb-[12px] border-[1px] border-solid border-header-bottom"
-        key={index}>
+        className={classNames({
+          "relative font-poppins item my-[24px] ": true,
+        })}
+        id={dataContent.id}>
         <div
           className={classNames({
-            "bg-chapter-color border-b-[1px] border-b-solid border-header-bottom":
-              dataContent?.open,
-            "flex items-center justify-between relative pl-[48px] px-[16px] py-[15px] rounded-t-[8px] cursor-pointer":
+            "rounded-[8px] bg-white border-[1px] border-solid border-header-bottom ":
               true,
-          })}>
+          })}
+          style={{}}
+          key={index}>
           <div
             onClick={() => toggleSection(dataContent)}
-            className="absolute z-[1] left-[0] right-[0] bottom-[0] top-[0]"></div>
-          <img
             className={classNames({
-              "origin-center rotate-90": openedPages.includes(dataContent.id),
-              "w-[24px] h-[24px] absolute top-[50%] left-[16px] mt-[-12px]":
+              "bg-chapter-color ": dataContent?.open,
+              "flex items-center justify-between relative pl-[48px] px-[16px] py-[15px] rounded-t-[8px] cursor-pointer":
                 true,
-            })}
-            src={arrow}
-            alt=""
-          />
+            })}>
+            {/* <div
+              onClick={() => toggleSection(dataContent)}
+              className="absolute z-[1] left-[0] right-[0] bottom-[0] top-[0]"></div> */}
+            <img
+              className={classNames({
+                "origin-center rotate-90": openedPages.includes(dataContent.id),
+                "w-[24px] h-[24px] absolute top-[50%] left-[16px] mt-[-12px]":
+                  true,
+              })}
+              src={arrow}
+              alt=""
+            />
 
-          <div
-            className="text-[20px] text-home-title leading-[28px] tracking-[-0.1px] font-medium
-              max-w-[calc(100%-210px)]">
-            <span> #{index + 1}</span> {dataContent?.title}
-          </div>
-          <div className="border-solid border-[1px] rounded-[5px] flex items-center bg-white relative z-[5]">
-            <button
-              type="button"
-              onClick={() => {
-                const setData = {
-                  ...data,
-                  page_id: dataContent.id,
-                  page_title: dataContent.title,
-                  open: data?.open ? data?.open : true,
-                  type: data?.type ? data?.type : "my",
-                  status: dataContent?.status,
-                };
-                dispatch(setSelectedData(setData));
-                localStorage.setItem("selected_page", JSON.stringify(setData));
-                navigate(
-                  `/editor/${dataContent?.playbook_id}/${dataContent?.id}`
-                );
-              }}
-              className="rounded-l-[5px] h-[38px] border-solid border-r-[1px] flex items-center border-header-bottom
-                px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
-                hover:bg-people-bg transition duration-300 linear">
-              <img src={edit} alt="" />
-              {t<string>("BTNS.EDIT")}
-            </button>
             <div
-              onClick={() => {
-                dispatch(setSharedId(dataContent.id));
-                openModal(Modal.PAGE_DELETE);
-              }}
-              className="rounded-r-[5px] h-[38px]  flex items-center 
+              className="text-[20px] text-home-title leading-[28px] tracking-[-0.1px] font-medium
+              max-w-[calc(100%-210px)]">
+              <span> #{index + 1}</span> {dataContent?.title}
+            </div>
+            <div className="border-solid border-[1px] rounded-[5px] flex items-center bg-white relative">
+              <button
+                type="button"
+                onClick={() => {
+                  const setData = {
+                    ...data,
+                    page_id: dataContent.id,
+                    page_title: dataContent.title,
+                    open: data?.open ? data?.open : true,
+                    type: data?.type ? data?.type : "my",
+                    status: dataContent?.status,
+                  };
+                  dispatch(setSelectedData(setData));
+                  localStorage.setItem(
+                    "selected_page",
+                    JSON.stringify(setData)
+                  );
+                  navigate(
+                    `/editor/${dataContent?.playbook_id}/${dataContent?.id}`
+                  );
+                }}
+                className="rounded-l-[5px] h-[38px] border-solid border-r-[1px] flex items-center border-header-bottom
                 px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
                 hover:bg-people-bg transition duration-300 linear">
-              <img src={icon_delete} alt="" />
-              {t<string>("BTNS.DELETE")}
+                <img src={edit} alt="" />
+                {t<string>("BTNS.EDIT")}
+              </button>
+              <div
+                onClick={() => {
+                  dispatch(setSharedId(dataContent.id));
+                  openModal(Modal.PAGE_DELETE);
+                }}
+                className="rounded-r-[5px] h-[38px]  flex items-center 
+                px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
+                hover:bg-people-bg transition duration-300 linear">
+                <img src={icon_delete} alt="" />
+                {t<string>("BTNS.DELETE")}
+              </div>
             </div>
           </div>
+          {openedPages.includes(dataContent.id) && (
+            <div className="p-[16px] pb-[24px]" ref={innerRef}>
+              <div
+                dangerouslySetInnerHTML={{ __html: dataContent?.content }}
+                className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]"
+              />
+            </div>
+          )}
         </div>
-        {openedPages.includes(dataContent.id) && (
-          <div className="p-[16px] pb-[24px]">
-            <div
-              dangerouslySetInnerHTML={{ __html: dataContent?.content }}
-              className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]"
-            />
-          </div>
-        )}
       </div>
-    </div>
+    </Reorder.Item>
   );
 };
 
