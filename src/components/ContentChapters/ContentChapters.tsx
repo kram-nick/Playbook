@@ -1,19 +1,23 @@
-import Header from "../AppLayout/PrivateLayout/Header";
-import plus from "../../assets/photos/chapter/icon-plus.svg";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import BookBanner from "../BookBanner";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
+import { animate, MotionValue, useMotionValue, Reorder } from "framer-motion";
+
+import Header from "../AppLayout/PrivateLayout/Header";
+import plus from "../../assets/photos/chapter/icon-plus.svg";
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
+import BookBanner from "../BookBanner";
+
 import BookChapters from "../BookChapters";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
-import { useNavigate, useParams } from "react-router-dom";
 import { PrivateUIRoutes } from "../../core/router";
+import PlaybookService from "../../core/services/playbook.service";
 
 const ContentChapters = () => {
   const { t } = useTranslation();
-  const [data, setData]: any = useState(null);
+  const [data, setData] = useState<any>();
 
   const { playbook_id } = useParams();
 
@@ -37,23 +41,28 @@ const ContentChapters = () => {
     dependencies: [playbook_id, reloadChecker],
   });
 
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
+  // let arr: any = [];
 
-    const list: any = document.querySelector(".list");
-    const draggingItem = document.querySelector(".dragging");
+  // data.forEach((elem: any) => {
+  //   arr.push(elem.id);
+  // });
 
-    const siblings = [...list?.querySelectorAll(".item:not(.dragging)")];
+  // console.log(arr);
 
-    const nextSibling = siblings.find((sibling) => {
-      return event.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+  const handleOrder = (newdata: any) => {
+    let arr: any = [];
+
+    newdata.forEach((elem: any) => {
+      arr.push(elem.id);
     });
 
-    list.insertBefore(draggingItem, nextSibling);
+    console.log(arr);
+
+    // try {
+    //   await PlaybookService.UpdatePlaybookOrder(String(playbook_id), data);
+    // } catch (error) {}
   };
-
-  console.log(playbook);
-
+  console.log(data);
   return (
     <div className="w-full flex-1">
       <Header />
@@ -75,17 +84,16 @@ const ContentChapters = () => {
         <p className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]  max-[690px]:text-[16px] max-[690px]:leading-[26px] mb-[16px]">
           {playbook?.data?.content}
         </p>
-        <div
-          onDragOver={handleDragOver}
-          onDragEnter={(e) => e.preventDefault()}
-          className="list">
-          {data?.map((chapter: any, index: number) => (
-            <BookChapters
-              dataContent={chapter ? chapter : null}
-              index={index}
-              key={chapter?.id}
-            />
-          ))}
+        <div className="flex flex-col mb-[12px]">
+          <Reorder.Group axis="y" onReorder={setData} values={data || []}>
+            {data?.map((chapter: any, index: number) => (
+              <BookChapters
+                dataContent={chapter ? chapter : null}
+                index={index}
+                key={chapter?.id}
+              />
+            ))}
+          </Reorder.Group>
         </div>
 
         <button
