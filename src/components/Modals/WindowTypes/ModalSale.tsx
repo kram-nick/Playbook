@@ -103,7 +103,7 @@ const ModalSale = () => {
       content: "",
       status: "live",
       tags: [],
-      chargeable: false,
+      chargeable: true,
       discount_price: 0,
       retail_price: 0,
       sale_price: 0,
