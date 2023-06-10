@@ -35,6 +35,7 @@ import {
 import { MainTabs, Modal } from "../../core/models/enums";
 import useModal from "../../core/hooks/useModal";
 import PlaybookService from "../../core/services/playbook.service";
+import { UIRoutes } from "../../core/router";
 
 const Sidebar = () => {
   const { t } = useTranslation();
@@ -218,7 +219,7 @@ const Sidebar = () => {
       className={classNames({
         "sidebar w-[280px]  min-h-[100%] max-lg:min-w-[0%] relative transition-[width] duration-[200ms] ease-in max-[1024px]:w-[0px]":
           true,
-        "min-[1024px]:w-[0px]": !sideOpen,
+        "min-[1024px]:w-[25px]": !sideOpen,
       })}
     >
       <button
@@ -229,7 +230,7 @@ const Sidebar = () => {
           "z-[20] flex items-center justify-center transition-all duration-[300ms] linear max-[1024px]:hidden":
             true,
           "invisible opacity-0": sideOpen,
-          "right-[-31px]": !sideOpen,
+          "right-[-16px]": !sideOpen,
           "top-[12.42%]": !sideOpen,
         })}
       >
@@ -248,9 +249,9 @@ const Sidebar = () => {
             true,
           "fixed top-[0] min-h-[100%] max-lg:z-[100] transition-all duration-[200ms] ease-in box-border overflow-y-auto":
             true,
+          "overflow-y-hidden": !sideOpen,
           "max-lg:left-[0px!important]": !sideOpen,
           "min-[1024px]:w-[0px]": !sideOpen,
-          "min-[1024px]:hidden": !sideOpen,
           "px-[0px]": sideOpen,
         })}
       >
@@ -259,16 +260,19 @@ const Sidebar = () => {
           className={classNames({
             "py-[16px] w-[160px] max-w-[160px] transition-[opacity] duration-[150ms] ease-in table":
               true,
-            "min-[1024px]:opacity-0 delay-150": !sideOpen,
+            "min-[1024px]:opacity-0 delay-150 hidden": !sideOpen,
           })}
         >
           <img src={playbookLogo} alt="playbookLogo" />
         </Link>
 
         <Link
-          to="/discover"
-          className="bg-button-submit-footer flex items-center justify-center w-[100%] py-[4px] px-[16px] rounded-[5px]
-            shadow-free-trial h-[38px] gap-[6px] mb-[10px] mt-[30px]"
+          to={`/${UIRoutes.DISCOVER}`}
+          className={classNames({
+            "bg-button-submit-footer flex items-center justify-center w-[100%] py-[4px] px-[16px] rounded-[5px] shadow-free-trial h-[38px] gap-[6px] mb-[10px] mt-[30px]":
+              true,
+            hidden: !sideOpen,
+          })}
         >
           <span className="text-list-title text-[16px] font-medium">
             {t<string>("MAIN.DISCOVER")}
@@ -279,7 +283,8 @@ const Sidebar = () => {
           className={classNames({
             "flex flex-col w-[255px] transition-[opacity] duration-[150ms] ease-in":
               true,
-            "  delay-[100ms] min-[1024px]:opacity-0 ": !sideOpen,
+            "delay-[100ms] min-[1024px]:opacity-0 ": !sideOpen,
+            hidden: !sideOpen,
           })}
         >
           <div
