@@ -315,6 +315,7 @@ const Account = () => {
             <input
               className="hidden"
               type="file"
+              accept=".svg, .png, .jpg, .gif"
               onChange={(event: any) => PhotoUploader(event.target.files[0])}
             />
           </label>
@@ -326,6 +327,7 @@ const Account = () => {
             <input
               className="hidden"
               type="file"
+              accept=".svg, .png, .jpg, .gif"
               onChange={(event: any) => PhotoUploader(event.target.files[0])}
             />
             <img src={upload} alt="" />
