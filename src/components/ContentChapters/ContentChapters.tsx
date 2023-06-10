@@ -2,29 +2,30 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
-import { animate, MotionValue, useMotionValue, Reorder } from "framer-motion";
+import { Reorder } from "framer-motion";
 
 import Header from "../AppLayout/PrivateLayout/Header";
-import plus from "../../assets/photos/chapter/icon-plus.svg";
-import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import BookBanner from "../BookBanner";
-
 import BookChapters from "../BookChapters";
+
+import { useAppSelector } from "../../core/hooks/useRedux";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
 import { PrivateUIRoutes } from "../../core/router";
-import PlaybookService from "../../core/services/playbook.service";
+
+import plus from "../../assets/photos/chapter/icon-plus.svg";
 
 const ContentChapters = () => {
-  const { t } = useTranslation();
   const [data, setData] = useState<any>();
+
+  const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const { playbook_id } = useParams();
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
   const { reloadChecker } = useAppSelector((state) => state.helpers);
+
   const { fetchedData: playbook } = useHttpGet<any>(
     `${APIRoutes.PLAYBOOKS}/${playbook_id}`,
     {
@@ -40,28 +41,6 @@ const ContentChapters = () => {
     },
     dependencies: [playbook_id, reloadChecker],
   });
-
-  // let arr: any = [];
-
-  // data.forEach((elem: any) => {
-  //   arr.push(elem.id);
-  // });
-
-  // console.log(arr);
-
-  const handleOrder = (newdata: any) => {
-    let arr: any = [];
-
-    newdata.forEach((elem: any) => {
-      arr.push(elem.id);
-    });
-
-    console.log(arr);
-
-    // try {
-    //   await PlaybookService.UpdatePlaybookOrder(String(playbook_id), data);
-    // } catch (error) {}
-  };
 
   return (
     <div className="w-full flex-1">
@@ -91,11 +70,11 @@ const ContentChapters = () => {
                 dataContent={chapter ? chapter : null}
                 index={index}
                 key={chapter?.id}
+                pages={data}
               />
             ))}
           </Reorder.Group>
         </div>
-
         <button
           className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg"
           onClick={() => {
