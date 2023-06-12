@@ -26,25 +26,23 @@ const Header = () => {
               <div>
                 <Link
                   to="/main"
-                  className="font-poppins font-medium text-header-links text-[15px]"
-                >
+                  className="font-poppins font-medium text-header-links text-[15px]">
                   {t<string>("HOME.HOME")}
                 </Link>
               </div>
             ) : (
               <>
-                <div>
+                {/* <div>
                   <a
                     href="#pricing"
                     className="font-poppins font-medium text-header-links text-[15px]"
                   >
                     {t<string>("COMMON.PRICING")}
                   </a>
-                </div>
+                </div> */}
                 <Link
                   to="/discover"
-                  className="font-poppins font-medium text-header-links text-[15px]"
-                >
+                  className="font-poppins font-medium text-header-links text-[15px]">
                   {t<string>("MAIN.DISCOVER")}
                 </Link>
                 <div>
@@ -80,8 +78,7 @@ const Header = () => {
               LogEvent("splash-page", "sign-in-link");
             }}
             to="/sign-in"
-            className="flex text-buttons-bg"
-          >
+            className="flex text-buttons-bg">
             <span className="self-center font-semibold font-poppins leading-[22px]">
               {t<string>("COMMON.SIGN_IN")}
             </span>
@@ -92,8 +89,7 @@ const Header = () => {
               LogEvent("splash-page", "get-started");
             }}
             to="/sign-up"
-            className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color"
-          >
+            className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color">
             <span className="font-semibold font-poppins leading-[22px]">
               {t<string>("COMMON.GET_STARTED")}
             </span>

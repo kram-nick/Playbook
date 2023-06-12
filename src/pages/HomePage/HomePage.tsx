@@ -73,22 +73,19 @@ const HomePage = () => {
       max-lg:pr-[20px]
       max-lg:gap-[12px]
       max-lg:items-center
-      "
-      >
+      ">
         <div
           className="mt-[46px]
           max-sm:w-full
           max-md:w-full
           max-lg:mt-0
         max-lg:w-[368px]
-        "
-        >
+        ">
           <h1
             className="max-w-[511px] font-poppins  text-[56px] leading-[60px] font-bold text-home-title tracking-[-0.01em]
           max-lg:text-[38px]
           max-lg:leading-[53px]
-          "
-          >
+          ">
             {t<string>("HOME.TITLE")}
           </h1>
           <div className="flex flex-col gap-[16px] mt-[24px]">
@@ -100,16 +97,14 @@ const HomePage = () => {
             className="flex items-center gap-[32px] mt-[48px]
           max-sm:gap-[16px]
           max-sm:mt-[36px]
-          "
-          >
+          ">
             <Link
               onClick={() => {
                 hotjar.event("SplashPage-GetStarted");
                 LogEvent("splash-page", "get-started");
               }}
               to={`/${UIRoutes.SIGN_UP}`}
-              className="text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial"
-            >
+              className="text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial">
               {t<string>("HOME.FREE_START")}
             </Link>
             <div className="flex items-center">
@@ -119,8 +114,7 @@ const HomePage = () => {
                   hotjar.event("SplashPage-LearnMore");
                   handleClickScroll();
                 }}
-                className="text-buttons-bg text-[16px] font-semibold leading-[21px] min-w-[90px]"
-              >
+                className="text-buttons-bg text-[16px] font-semibold leading-[21px] min-w-[90px]">
                 {t<string>("HOME.LEARN")}
               </button>
               <img
@@ -134,16 +128,14 @@ const HomePage = () => {
           <div
             className="flex items-center gap-[16px] mt-[80px] bg-people-bg p-[16px] rounded-[8px]
             max-lg:hidden
-          "
-          >
+          ">
             <div>
               <img src={people} alt="people" />
             </div>
             <p
               className="text-simple-text max-w-[256px] leading-[23px] tracking-[-0.1px] text-[16px] font-poppins font-normal
             max-sm:text-center
-            "
-            >
+            ">
               {t<string>("HOME.JOIN").split(" ")[0]}{" "}
               <span className="font-semibold">
                 {t<string>("HOME.JOIN").split(" ")[1]}{" "}
@@ -154,8 +146,7 @@ const HomePage = () => {
           <div
             className="flex gap-[85.5px]  mt-[15px]
           max-lg:hidden
-          "
-          >
+          ">
             {/* <button className="flex items-center gap-[12px]">
               <img src={facebook} alt="facebook" />
               <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
@@ -175,8 +166,7 @@ const HomePage = () => {
               }}
               to="https://twitter.com/playbookwork"
               target="blank"
-              className="flex items-center gap-[12px]"
-            >
+              className="flex items-center gap-[12px]">
               <img src={twitter} alt="twitter" />
               <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
                 {t<string>("HOME.TWITTER")}
@@ -214,15 +204,13 @@ const HomePage = () => {
         className="hidden  items-center justify-center flex-col
         max-sm:px-[16px]
       max-lg:flex
-      "
-      >
+      ">
         <div
           className="items-center gap-[16px] mt-[36px] bg-people-bg p-[16px] rounded-[8px]
           max-sm:w-full
           max-sm:flex-col
       max-lg:flex
-      "
-        >
+      ">
           <div>
             <img
               src={people}
@@ -236,8 +224,7 @@ const HomePage = () => {
             className="text-simple-text max-w-[256px] leading-[23px] tracking-[-0.1px] text-[16px] font-poppins font-normal
           max-sm:w-full
           max-sm:text-center
-          "
-          >
+          ">
             {t<string>("HOME.JOIN").split(" ")[0]}{" "}
             <span className="font-semibold">
               {t<string>("HOME.JOIN").split(" ")[1]}{" "}
@@ -253,8 +240,7 @@ const HomePage = () => {
           max-sm:gap-[25.45px]
           max-lg:flex
           max-[1024px]:mb-[50px]
-        "
-        >
+        ">
           {/* <button
             className="flex items-center gap-[12px] max-sm:flex-1 
           max-sm:gap-[4px]
@@ -285,8 +271,7 @@ const HomePage = () => {
             className="flex items-center gap-[12px] max-sm:flex-1 
             max-sm:gap-[4px]
             max-sm:justify-between
-            "
-          >
+            ">
             <img src={twitter} alt="twitter" />
             <span className="font-poppins not-italic text-[14px] uppercase leading-[26px] font-medium tracking-[2px]">
               {t<string>("HOME.TWITTER")}
@@ -373,8 +358,7 @@ const HomePage = () => {
       </div> */}
       <div
         id="what-is-playbook"
-        className="flex flex-col items-center max-w-[1204px] mx-[auto] pb-[140px] text-home-title px-[32px]"
-      >
+        className="flex flex-col items-center max-w-[1204px] mx-[auto] pb-[140px] text-home-title px-[32px]">
         <h2 className="mt-[24px] font-poppins font-bold text-[40px] ">
           {t<string>("HOME.WHAT_IS_PLAYBOOK")}
         </h2>
@@ -411,28 +395,23 @@ const HomePage = () => {
 
       <div
         className="bg-tools-bg  min-[1024px]:pt-[90px] pb-[100px] max-[1024px]:pt-[80px] max-[650px]:pb-[50px]"
-        id="section-why"
-      >
+        id="section-why">
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2
             className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px]
-              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[60px] max-[650px]:mb-[40px]"
-          >
+              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[60px] max-[650px]:mb-[40px]">
             {t<string>("HOME.WHY_PB")}
           </h2>
 
           <div
             className="rounded-[20px] bg-white shadow-review-card pt-[28px] min-[1024px]:pl-[36px] relative
-            max-[1024px]:px-[40px] max-[1024px]:pb-[60px] max-[650px]:pt-[12px] max-[650px]:px-[16px] max-[650px]:pb-[40px]"
-          >
+            max-[1024px]:px-[40px] max-[1024px]:pb-[60px] max-[650px]:pt-[12px] max-[650px]:px-[16px] max-[650px]:pb-[40px]">
             <div
               className="overflow-auto mb-[14px] max-[1024px]:mb-[0px] max-[1024px]:px-[40px] max-[1024px]:mx-[-40px] max-[650px]:mx-[-16px]
-              max-[1024px]:px-[16px]"
-            >
+              max-[1024px]:px-[16px]">
               <div
                 className="inline-flex items-end gap-[24px] pt-[5px] pb-[15px] border-b-[1px] border-solid
-                  "
-              >
+                  ">
                 <div
                   onClick={() => setActiveTab(1)}
                   className={classNames({
@@ -440,8 +419,7 @@ const HomePage = () => {
                     "text-home-title": activeTab !== 1,
                     "tracking-[-0.1px] relative transition duration-150 ease-in text-[15px] leading-[22px] cursor-pointer":
                       true,
-                  })}
-                >
+                  })}>
                   {t<string>("HOME.WHY_TAB_1")}
                   <div
                     className={classNames({
@@ -449,8 +427,7 @@ const HomePage = () => {
                       "w-[0%]": activeTab !== 1,
                       "absolute bottom-[-15px] left-[-1px] h-[1px] transition-all duration-300 ease-in bg-buttons-bg":
                         true,
-                    })}
-                  ></div>
+                    })}></div>
                 </div>
                 <div
                   onClick={() => setActiveTab(2)}
@@ -459,8 +436,7 @@ const HomePage = () => {
                     "text-home-title": activeTab !== 2,
                     "tracking-[-0.1px] relative transition duration-150 ease-in text-[15px] leading-[22px] cursor-pointer":
                       true,
-                  })}
-                >
+                  })}>
                   {t<string>("HOME.WHY_TAB_2")}
                   <div
                     className={classNames({
@@ -468,8 +444,7 @@ const HomePage = () => {
                       "w-[0%]": activeTab !== 2,
                       "absolute bottom-[-15px] left-[-1px] h-[1px] transition-all duration-300 ease-in bg-buttons-bg":
                         true,
-                    })}
-                  ></div>
+                    })}></div>
                 </div>
                 <div
                   onClick={() => setActiveTab(3)}
@@ -478,8 +453,7 @@ const HomePage = () => {
                     "text-home-title": activeTab !== 3,
                     "tracking-[-0.1px] relative transition duration-150 ease-in text-[15px] leading-[22px] cursor-pointer":
                       true,
-                  })}
-                >
+                  })}>
                   {t<string>("HOME.WHY_TAB_3")}
                   <div
                     className={classNames({
@@ -487,8 +461,7 @@ const HomePage = () => {
                       "w-[0%]": activeTab !== 3,
                       "absolute bottom-[-15px] left-[-1px] h-[1px] transition-all duration-300 ease-in bg-buttons-bg":
                         true,
-                    })}
-                  ></div>
+                    })}></div>
                 </div>
                 <div
                   onClick={() => setActiveTab(4)}
@@ -497,8 +470,7 @@ const HomePage = () => {
                     "text-home-title": activeTab !== 4,
                     "tracking-[-0.1px] relative transition duration-150 ease-in text-[15px] leading-[22px] cursor-pointer":
                       true,
-                  })}
-                >
+                  })}>
                   {t<string>("HOME.WHY_TAB_4")}
                   <div
                     className={classNames({
@@ -506,8 +478,7 @@ const HomePage = () => {
                       "w-[0%]": activeTab !== 4,
                       "absolute bottom-[-15px] left-[-1px] h-[1px] transition-all duration-300 ease-in bg-buttons-bg":
                         true,
-                    })}
-                  ></div>
+                    })}></div>
                 </div>
                 <div
                   onClick={() => setActiveTab(5)}
@@ -516,8 +487,7 @@ const HomePage = () => {
                     "text-home-title": activeTab !== 5,
                     "tracking-[-0.1px] relative transition duration-150 ease-in text-[15px] leading-[22px] cursor-pointer":
                       true,
-                  })}
-                >
+                  })}>
                   {t<string>("HOME.WHY_TAB_5")}
                   <div
                     className={classNames({
@@ -525,8 +495,7 @@ const HomePage = () => {
                       "w-[0%]": activeTab !== 5,
                       "absolute bottom-[-15px] left-[-1px] h-[1px] transition-all duration-300 ease-in bg-buttons-bg":
                         true,
-                    })}
-                  ></div>
+                    })}></div>
                 </div>
               </div>
             </div>
@@ -534,13 +503,11 @@ const HomePage = () => {
             <div className="flex justify-between items-end max-[1024px]:flex-wrap max-[1024px]:flex-col-reverse ">
               <div
                 className="min-[1024px]:max-w-[40%] pt-[80px] min-[1024px]:pb-[95px] max-[1024px]:w-[100%] max-[1024px]:pt-[50px]
-                max-[650px]:pt-[40px]"
-              >
+                max-[650px]:pt-[40px]">
                 <h3
                   className="font-bold text-[32px] leading-[42px] text-home-title mb-[24px] max-w-[390px] max-[1024px]:max-w-[100%] 
                   max-[650px]:text-[24px]
-                  max-[650px]:leading-normal max-[650px]:mb-[18px]"
-                >
+                  max-[650px]:leading-normal max-[650px]:mb-[18px]">
                   {activeTab === 1 && <>{t<string>("HOME.WHY_TITLE_1")}</>}
                   {activeTab === 2 && <>{t<string>("HOME.WHY_TITLE_2")}</>}
                   {activeTab === 3 && <>{t<string>("HOME.WHY_TITLE_3")}</>}
@@ -561,8 +528,7 @@ const HomePage = () => {
                     LogEvent("splash-page", "get-started");
                   }}
                   to={`/${UIRoutes.SIGN_UP}`}
-                  className="table text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial"
-                >
+                  className="table text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial">
                   {t<string>("HOME.FREE_START")}
                 </Link>
               </div>
@@ -589,12 +555,10 @@ const HomePage = () => {
                 <div
                   className="min-[1024px]:max-w-[50%] relative max-[1024px]:max-w-[92%] max-[1024px]:right-[-40px]
                   max-[1024px]:mt-[45px] 
-                  max-[650px]:right-[-16px]"
-                >
+                  max-[650px]:right-[-16px]">
                   <div
                     className="image border-[8px] border-b-[0px] border-r-[0px] border-create-bg-main rounded-tl-[16px] relative z-[2]
-                    max-[650px]:border-t-[4px] max-[650px]:border-l-[4px]"
-                  >
+                    max-[650px]:border-t-[4px] max-[650px]:border-l-[4px]">
                     <img src={why_image} alt="" className="w-[100%]" />
                   </div>
                   <img
@@ -681,19 +645,16 @@ const HomePage = () => {
 
       <div
         className="bg-tools-bg  min-[1024px]:pb-[140px] max-[1024px]:pt-[20px] max-[1024px]:pb-[100px]
-        max-[650px]:pt-[40px] max-[650px]:pb-[80px]"
-      >
+        max-[650px]:pt-[40px] max-[650px]:pb-[80px]">
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2
             className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px] max-w-[770px] mx-[auto]
-              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]"
-          >
+              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]">
             {t<string>("HOME.JOB_TITLE")}
           </h2>
           <p
             className="text-center text-[16px] leading-[26px] text-simple-text max-w-[534px] mx-[auto] mb-[80px] 
-            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]"
-          >
+            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
             {t<string>("HOME.JOB_TEXT")}
           </p>
 
@@ -703,19 +664,16 @@ const HomePage = () => {
 
       <div
         className="bg-white  min-[1024px]:pt-[140px] min-[1024px]:pb-[150px] max-[1024px]:pt-[110px] max-[1024px]:pb-[110px]
-        max-[650px]:pt-[70px] max-[650px]:pb-[95px]"
-      >
+        max-[650px]:pt-[70px] max-[650px]:pb-[95px]">
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2
             className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px]
-              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]"
-          >
+              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]">
             {t<string>("HOME.CHART_TITLE")}
           </h2>
           <p
             className="text-center text-[16px] leading-[26px] text-simple-text max-w-[534px] mx-[auto] mb-[90px] 
-            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]"
-          >
+            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
             {t<string>("HOME.CHART_TEXT")}
           </p>
 
@@ -737,19 +695,16 @@ const HomePage = () => {
 
       <div
         className="bg-tools-bg  min-[1024px]:pt-[120px] min-[1024px]:pb-[150px] max-[1024px]:pt-[110px] max-[1024px]:pb-[110px]
-        max-[650px]:pt-[70px] max-[650px]:pb-[95px]"
-      >
+        max-[650px]:pt-[70px] max-[650px]:pb-[95px]">
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2
             className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px] max-w-[670px] mx-[auto]
-              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]"
-          >
+              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]">
             {t<string>("HOME.CHART2_TITLE")}
           </h2>
           <p
             className="text-center text-[16px] leading-[26px] text-simple-text max-w-[534px] mx-[auto] mb-[90px] 
-            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]"
-          >
+            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
             {t<string>("HOME.CHART2_TEXT")}
           </p>
 
@@ -766,85 +721,72 @@ const HomePage = () => {
 
       <div
         className="bg-tools-bg  min-[1024px]:pb-[150px]  max-[1024px]:pb-[110px]
-         max-[650px]:pb-[80px]"
-      >
+         max-[650px]:pb-[80px]">
         <div className="w-[100%] max-w-[1264px] px-[32px] mx-[auto] font-poppins max-[650px]:px-[16px]">
           <h2
             className="text-center font-bold text-[40px] leading-[52px] text-home-title tracking-[-0.1px] max-w-[770px] mx-[auto]
-              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]"
-          >
+              max-lg:text-[28px] max-lg:leading-[36.4px] mb-[24px]">
             {t<string>("HOME.APP_TITLE")}
           </h2>
           <p
             className="text-center text-[16px] leading-[26px] text-simple-text max-w-[534px] mx-[auto] mb-[90px] 
-            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]"
-          >
+            max-[1024px]:mb-[54px] max-[650px]:mb-[40px]">
             {t<string>("HOME.APP_DESC")}
           </p>
 
           <div
             className="rounded-[20px] bg-white shadow-review-card pt-[28px] min-[1024px]:pl-[50px] min-[1024px]:pt-[50px] 
-            max-[1024px]:pl-[40px] max-[1024px]:pt-[50px] max-[650px]:px-[16px]  overflow-hidden max-[650px]:pt-[20px]"
-          >
+            max-[1024px]:pl-[40px] max-[1024px]:pt-[50px] max-[650px]:px-[16px]  overflow-hidden max-[650px]:pt-[20px]">
             <div className="flex justify-between items-end max-[650px]:flex-wrap max-[650px]:flex-col-reverse">
               <div
                 className="max-w-[344px] gap-[60px] grid pb-[43px] max-[1024px]:max-w-[50%] max-[650px]:max-w-[100%]
-                max-[650px]:gap-[40px]"
-              >
+                max-[650px]:gap-[40px]">
                 <div className="">
                   <span
                     className="table text-[12px] leading-[1] bg-chart-color text-white rounded-[100px] px-[12px] py-[6px]
-                      mb-[16px]"
-                  >
+                      mb-[16px]">
                     {t<string>("HOME.APP_POS_1")}
                   </span>
                   <h3 className="font-semibold text-[24px] leading-normal text-home-title mb-[8px]">
                     {t<string>("HOME.APP_TITLE_1")}
                   </h3>
                   <p className="text-[16px] leading-[26px] text-simple-text">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-                    do eiusmod tempor
+                    {t<string>("HOME.APP_DESC_1")}
                   </p>
                 </div>
                 <div className="">
                   <span
                     className="table text-[12px] leading-[1] bg-top-entrepreneur text-white rounded-[100px] px-[12px] py-[6px]
-                      mb-[16px]"
-                  >
+                      mb-[16px]">
                     {t<string>("HOME.APP_POS_2")}
                   </span>
                   <h3 className="font-semibold text-[24px] leading-normal text-home-title mb-[8px]">
                     {t<string>("HOME.APP_TITLE_2")}
                   </h3>
                   <p className="text-[16px] leading-[26px] text-simple-text">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-                    do eiusmod tempor
+                    {t<string>("HOME.APP_DESC_2")}
                   </p>
                 </div>
                 <div className="">
                   <span
                     className="table text-[12px] leading-[1] bg-top-ceo text-white rounded-[100px] px-[12px] py-[6px]
-                      mb-[16px]"
-                  >
+                      mb-[16px]">
                     {t<string>("HOME.APP_POS_3")}
                   </span>
                   <h3 className="font-semibold text-[24px] leading-normal text-home-title mb-[8px]">
                     {t<string>("HOME.APP_TITLE_3")}
                   </h3>
                   <p className="text-[16px] leading-[26px] text-simple-text">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-                    do eiusmod tempor
+                    {t<string>("HOME.APP_DESC_3")}
                   </p>
                 </div>
               </div>
               <div
                 className="min-[1024px]:max-w-[56%] relative max-[1024px]:w-[100%] max-[650px]:max-w-[450px] max-[650px]:mx-[auto]
-                max-[650px]:mb-[40px]"
-              >
+                max-[650px]:mb-[40px]">
                 <div
                   className="image px-[110px] z-[5] relative max-[1024px]:pr-[0] max-[1024px]:pl-[60px]
-                  max-[650px]:px-[60px]"
-                >
+                  max-[650px]:px-[60px]">
                   <img
                     src={playbook_lg}
                     alt=""
@@ -890,7 +832,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <Pricing />
+      {/* <Pricing /> */}
       <Testimonials />
       {/* <TopFeatures /> */}
       <Review />
