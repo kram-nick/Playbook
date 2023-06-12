@@ -25,17 +25,14 @@ const Review = () => {
     max-lg:py-[60px]
     max-[650px]:px-[16px]
     max-[650px]:py-[80px]
-    "
-    >
+    ">
       <div
         className="mx-auto max-w-[1880px] flex flex-row gap-[80px] rounded-[20px] shadow-review-card p-[50px]
         max-[1024px]:p-[30px] max-[1024px]:gap-[30px] max-[650px]:flex-wrap max-[650px]:px-[16px]
-      "
-      >
+      ">
         <div
           className="w-[320px] gap-[20px] grid flex-wrap max-[1024px]:w-[233px] max-[650px]:w-[100%] max-[650px]:text-center
-          max-[650px]:flex max-[650px]:justify-center"
-        >
+          max-[650px]:flex max-[650px]:justify-center">
           {/* <img
             src={quote}
             alt="person"
@@ -72,8 +69,7 @@ const Review = () => {
               }}
               to="https://twitter.com/playbookwork"
               target="blank"
-              className="w-[36px] flex"
-            >
+              className="w-[36px] flex">
               <img src={twitter} alt="" />
             </Link>
             <Link to="" className="w-[36px] flex">
@@ -97,19 +93,18 @@ const Review = () => {
           <div className="flex flex-col">
             <h6
               className="text-[20px] self-stretch font-bold leading-[28px] text-review-name mb-[24px]
-              max-[1024px]:text-[16px] max-[1024px]:leading-[21px] max-[1024px]:font-medium"
-            >
+              max-[1024px]:text-[16px] max-[1024px]:leading-[21px] max-[1024px]:font-medium">
               {t<string>("HOME.IMPROVEMENT")}
             </h6>
 
             <div className="gap-[12px] grid">
               <p className="leading-[26px] text-[16px] font-poppins font-normal tracking-[-0.1px] text-simple-text">
-                <img src={rocket} alt="" className="inline-block mr-[10px]" />
-                {t<string>("HOME.TEXT_1")}
-              </p>
-              <p className="leading-[26px] text-[16px] font-poppins font-normal tracking-[-0.1px] text-simple-text">
                 <img src={sparkles} alt="" className="inline-block mr-[10px]" />
                 {t<string>("HOME.TEXT_2")}
+              </p>
+              <p className="leading-[26px] text-[16px] font-poppins font-normal tracking-[-0.1px] text-simple-text">
+                <img src={rocket} alt="" className="inline-block mr-[10px]" />
+                {t<string>("HOME.TEXT_1")}
               </p>
               <p className="leading-[26px] text-[16px] font-poppins font-normal tracking-[-0.1px] text-simple-text">
                 <img
