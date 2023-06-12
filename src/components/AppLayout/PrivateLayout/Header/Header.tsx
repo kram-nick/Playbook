@@ -1,33 +1,29 @@
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import classNames from "classnames";
+import { toast } from "react-toastify";
 
+import { setSharedId } from "../../../../core/store/reducers/helpers/helpersDataSlice";
+import useModal from "../../../../core/hooks/useModal";
+import { Modal } from "../../../../core/models/enums";
+import PlaybookService from "../../../../core/services/playbook.service";
+import { PrivateUIRoutes } from "../../../../core/router";
 import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../core/hooks/useRedux";
-import { PrivateUIRoutes } from "../../../../core/router";
+import {
+  setOpenedPages,
+  setSelectedData,
+  setSelectedPlaybook,
+} from "../../../../core/store/reducers/app/appDataSlice";
 
 import back from "../../../../assets/photos/main/arrow-back.svg";
 import divider from "../../../../assets/photos/create/divider.svg";
 import preview from "../../../../assets/photos/create/preview.svg";
 import play_active from "../../../../assets/photos/main/play-active.svg";
 import add_user from "../../../../assets/photos/create/add-user.svg";
-import {
-  setOpenedPages,
-  setPages,
-  setSelectedData,
-  setSelectedPlaybook,
-  setSidebarTabs,
-} from "../../../../core/store/reducers/app/appDataSlice";
-import PlaybookService from "../../../../core/services/playbook.service";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
-import { setSharedId } from "../../../../core/store/reducers/helpers/helpersDataSlice";
-import { APIRoutes } from "../../../../core/http";
 import edit from "../../../../assets/photos/chapter/edit.svg";
-import useModal from "../../../../core/hooks/useModal";
-import { Modal } from "../../../../core/models/enums";
 
 type HeaderProps = {
   previewState?: boolean;
@@ -42,10 +38,13 @@ const Header = ({ previewState }: HeaderProps) => {
   const navigate = useNavigate();
   const { playbook_id } = useParams();
 
+  const { status } = JSON.parse(localStorage.getItem("selected_page") || "{}");
+
   const location = useLocation();
 
   const PublishPlaybook = async () => {
     let data: any = localStorage.getItem("selected_page");
+
     data = data ? JSON.parse(data) : null;
     if (data) {
       if (data?.status !== "published") {
@@ -221,16 +220,18 @@ const Header = ({ previewState }: HeaderProps) => {
             </span>
             <img src={preview} alt="preview" />
           </button> */}
-          <button className="flex flex-row gap-[4px] items-center cursor-pointer">
-            <span className="font-poppins text-[16px] text-nav-txt-private font-medium leading-[20.8px] max-lg:hidden">
-              {t<string>("COMMON.SHARE")}
-            </span>
-            <img
-              src={add_user}
-              alt="add-user"
-              className="max-lg:w-[24px] max-lg:h-[24px]"
-            />
-          </button>
+          {status === "published" && (
+            <button className="flex flex-row gap-[4px] items-center cursor-pointer">
+              <span className="font-poppins text-[16px] text-nav-txt-private font-medium leading-[20.8px] max-lg:hidden">
+                {t<string>("COMMON.SHARE")}
+              </span>
+              <img
+                src={add_user}
+                alt="add-user"
+                className="max-lg:w-[24px] max-lg:h-[24px]"
+              />
+            </button>
+          )}
         </div>
       </nav>
     </header>

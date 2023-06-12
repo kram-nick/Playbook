@@ -21,6 +21,7 @@ import { APIRoutes } from "../../../core/http";
 import icon_banner from "../../assets/photos/main/icon-banner.svg";
 import icon_add from "../../assets/photos/main/icon-smiley.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
+import { setSelectedData } from "../../../core/store/reducers/app/appDataSlice";
 
 export interface ColourOption {
   readonly value: string;
@@ -164,6 +165,7 @@ export default function ModalPlaybookDetail() {
       const response = await PlaybookService.CreatePlaybook(values);
       navigate(`/${PrivateUIRoutes.Chapters}/${response.data.data.id}`);
       dispatch(setReloadChecker(!reloadChecker));
+      dispatch(setSelectedData(response?.data?.data));
       toast.success(t<string>("MAIN.CREATE_SUCCESS"));
       closeModal();
     } catch (errors: any) {
@@ -172,8 +174,6 @@ export default function ModalPlaybookDetail() {
       }
     }
   };
-
-  console.log(formikForm.values);
 
   return (
     <div
