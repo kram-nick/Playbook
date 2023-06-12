@@ -1,9 +1,25 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import failure from "../../assets/photos/payment/failure.svg";
+import { PrivateUIRoutes, UIRoutes } from "../../core/router";
 
 const FailurePayment = () => {
   const { t } = useTranslation();
+
+  const payment_privacy = JSON.parse(
+    sessionStorage.getItem("payment_privacy") || "false"
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!payment_privacy) {
+      navigate(`/${PrivateUIRoutes.Main}`);
+    }
+  }, []);
+
   return (
     <div
       className="min-h-[90vh] flex justify-center items-center w-full
@@ -72,6 +88,7 @@ max-sm:px-[16px]
         </div>
 
         <button
+          onClick={() => navigate(`/${UIRoutes.DISCOVER}`)}
           className="min-w-full bg-buttons-bg px-[134px] py-[12px] shadow-payment-btn rounded-[6px]
     max-md:px-[62.5px]
     max-md:py-[12px]
