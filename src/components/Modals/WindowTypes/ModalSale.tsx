@@ -327,12 +327,12 @@ const ModalSale = () => {
                     <span className="text-[14px] text-home-title font-light leading-[20px]">
                       {t<string>("MODALS.DESCRIPTION")}
                     </span>
-                    <button
+                    {/* <button
                       type="button"
                       onClick={ClearDescription}
                       className="text-[14px] text-input-paceholder font-medium leading-[20px]">
                       {t<string>("MODALS.CLEAR")}
-                    </button>
+                    </button> */}
                   </p>
 
                   <textarea
