@@ -34,8 +34,8 @@ const ModalPurchase = () => {
       const response = await PlaybookService.CreateOrder({
         listing_id: String(sharedId),
       });
-      window.open(response?.data?.data?.checkout, "_blank");
-      console.log(response);
+      window.location.replace(response?.data?.data?.checkout);
+      sessionStorage.setItem("payment_privacy", JSON.stringify(true));
     } catch (errors: any) {
       toast.error(t<string>("ERRORS.SOMETHING_WRONG"));
     }
@@ -48,13 +48,11 @@ const ModalPurchase = () => {
           border-[1px] border-solid border-border-btn bg-white font-poppins 
         flex flex-col items-center
           max-md:m-[12px]
-          "
-    >
+          ">
       <div
         className="w-full flex justify-between items-center mb-[20px]
         max-md:mb-[15px]
-        "
-      >
+        ">
         <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-normal font-poppins text-footer-main">
           {t<string>("PURCHASE.TITLE")}
         </span>
@@ -66,14 +64,12 @@ const ModalPurchase = () => {
         className="mb-[24px] flex flex-row items-start gap-[32px] justify-between w-full
           max-md:flex-col
           max-md:mb-[19px]
-        "
-      >
+        ">
         <div
           className="rounded-[5px] border-[0.718421px] border-solid border-header-bottom flex flex-col gap-[11.49px]
           items-start p-[12.93px] min-w-[273px]
           max-md:w-full
-          "
-        >
+          ">
           <div className="flex flex-col items-start gap-[2.87px] w-full">
             <h4 className="text-[24px] font-semibold normal leading-[36px] text-footer-main font-poppins">
               {String(listedPlaybook?.name).length > 15
@@ -137,8 +133,7 @@ const ModalPurchase = () => {
               </div>
               <span
                 className="text-[16px] leading-[26px] font-normal font-poppins 
-                text-footer-main normal tracking-[-0.1px]"
-              >
+                text-footer-main normal tracking-[-0.1px]">
                 {listedPlaybook?.profile_bio}
               </span>
             </div>
@@ -203,15 +198,13 @@ const ModalPurchase = () => {
         <button
           onClick={closeModal}
           className="text-[16px] text-top-playbook-title font-poppins font-medium leading-[21px] 
-          px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom"
-        >
+          px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom">
           {t<string>("PURCHASE.CANCEL")}
         </button>
         <button
           onClick={CreateOrder}
           className="text-[16px] text-buttons-color bg-buttons-bg font-poppins font-medium leading-[21px]
-          px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn"
-        >
+          px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn">
           {t<string>("PURCHASE.BUY")}
         </button>
       </div>

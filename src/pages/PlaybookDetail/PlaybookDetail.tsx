@@ -95,7 +95,10 @@ const PlaybookDetail = () => {
                   <button
                     key={index}
                     onClick={() =>
-                      handleViewDetail(chapter.privacy === "public")
+                      handleViewDetail(
+                        chapter.privacy === "public" ||
+                          chapter.privacy === "private"
+                      )
                     }
                     className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
                           border-[1px] border-solid border-card-border gap-[30px] max-[690px]:p-[12px]">
@@ -105,7 +108,12 @@ const PlaybookDetail = () => {
                       {chapter.title}
                     </span>
                     <img
-                      src={chapter.privacy === "public" ? arrow : lock}
+                      src={
+                        chapter.privacy === "public" ||
+                        chapter.privacy === "private"
+                          ? arrow
+                          : lock
+                      }
                       alt="show"
                     />
                     {/* <div
