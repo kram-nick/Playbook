@@ -27,4 +27,6 @@ export enum PrivateUIRoutes {
   Profile = "profile",
   CardDetail = "playbook",
   Settings = "settings",
+  Success = "success",
+  Cancel = "cancel",
 }

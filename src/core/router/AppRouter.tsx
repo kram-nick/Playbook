@@ -34,6 +34,8 @@ import {
 } from "../store/reducers/app/appDataSlice";
 import AuthGuard from "./AuthGuard";
 import NotAuthGuard from "./NotAuthGuard";
+import SuccessPayment from "../../components/SuccessPayment/SuccessPayment";
+import FailurePayment from "../../components/FailurePayment/FailurePayment";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -71,6 +73,14 @@ export const privateRoutes: IRoute[] = [
   {
     path: PrivateUIRoutes.Settings,
     element: <Settings />,
+  },
+  {
+    path: PrivateUIRoutes.Success,
+    element: <SuccessPayment />,
+  },
+  {
+    path: PrivateUIRoutes.Cancel,
+    element: <FailurePayment />,
   },
 ];
 
