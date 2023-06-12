@@ -16,6 +16,7 @@ export enum UIRoutes {
   NEW_PASSWORD = "create-password",
   RESET_PASSWORD = "reset-password",
   PAYMENT = "payment",
+  PRIVACY_POLICY = "pricacy-policy",
 }
 
 export enum PrivateUIRoutes {

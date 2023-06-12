@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import Header from "./Common/Header/Header";
 import Mobile from "./Common/Header/Mobile/Mobile";
@@ -6,7 +6,6 @@ import Footer from "./Common/Footer/Footer";
 import TermsHeader from "../TermsHeader/TermsHeader";
 import { ToastContainer } from "react-toastify";
 import ModalWindow from "../Modals/ModalWindow";
-import CookiesPopup from "../CookiesPopup/CookiesPopup";
 
 const AppLayout = () => {
   const location = useLocation();

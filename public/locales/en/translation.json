@@ -443,8 +443,9 @@
     "PRIVACY_MEAUSERMENT": "Measurement",
     "PRIVACY_PREFERENCES": "Save Preferences",
     "PRIVACY_ACCEPT": "Accept All",
-    "COOKIE": "Cookie policy",
-    "COOKIE_CONTENT": "By clicking “Accept Cookies”, you agree to the storing of cookies on your device to enhance site navigation, analyze site usage, and assist in our marketing efforts. View our Cookie Policy for more information.",
+    "COOKIE": "This site uses cookies",
+    "COOKIE_CONTENT": "By continuing to use this site, you are agreeing to our use of cookies.",
+    "SEE_PRIVACY_POLICY": "See Privacy Policy",
     "COOKIE_SETTINGS": "Cookie Settings",
     "COOKIE_ACCEPT": "Accept Cookies"
   }
