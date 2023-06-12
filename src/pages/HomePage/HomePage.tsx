@@ -365,8 +365,16 @@ const HomePage = () => {
         <p className="text-center text-simple-text leading-[26px] max-w-[620px] mt-[24px] text-[16px] font-poppins">
           {t<string>("HOME.WHAT_IS_DESC")}
         </p>
-        <div className="flex gap-[26px] mt-[60px]">
-          <div className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-1 bg-contain bg-no-repeat">
+        <div
+          className="flex gap-[26px] mt-[60px]
+        max-md:flex-col
+        
+        ">
+          <div
+            className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-1 bg-contain bg-no-repeat
+          max-md:bg-center
+            max-lg:bg-top-bottom
+          ">
             <h2 className="text-center max-w-[185px] mx-[auto] font-semibold font-poppins text-review-name">
               {t<string>("HOME.WHAT_IS_TITLE_1")}
             </h2>
@@ -374,7 +382,11 @@ const HomePage = () => {
               {t<string>("HOME.WHAT_IS_TEXT_1")}
             </span>
           </div>
-          <div className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-2 bg-contain bg-no-repeat">
+          <div
+            className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-2 bg-contain bg-no-repeat
+          max-md:bg-center
+            max-lg:bg-top-bottom
+          ">
             <h2 className="text-center max-w-[220px] mx-[auto] font-semibold font-poppins text-review-name">
               {t<string>("HOME.WHAT_IS_TITLE_2")}
             </h2>
@@ -382,7 +394,11 @@ const HomePage = () => {
               {t<string>("HOME.WHAT_IS_TEXT_2")}
             </span>
           </div>
-          <div className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-3 bg-contain bg-no-repeat">
+          <div
+            className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-3 bg-contain bg-no-repeat
+          max-md:bg-center
+            max-lg:bg-top-bottom
+          ">
             <h2 className="text-center max-w-[304px] font-semibold font-poppins text-review-name">
               {t<string>("HOME.WHAT_IS_TITLE_3")}
             </h2>

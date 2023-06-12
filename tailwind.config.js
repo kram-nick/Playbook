@@ -64,6 +64,9 @@ module.exports = {
         "order-main": "#272D37",
         "selected-btn": "rgba(43, 113, 247, 0.16)",
       },
+      backgroundPosition: {
+        "top-bottom": "right 60px "
+      },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
         inter: ["Inter , sans-serif"],
