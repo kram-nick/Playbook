@@ -35,7 +35,7 @@ const ModalPurchase = () => {
         listing_id: String(sharedId),
       });
       window.location.replace(response?.data?.data?.checkout);
-      localStorage.setItem("payment_privacy", JSON.stringify(true));
+      sessionStorage.setItem("payment_privacy", JSON.stringify(true));
     } catch (errors: any) {
       toast.error(t<string>("ERRORS.SOMETHING_WRONG"));
     }
