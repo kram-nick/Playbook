@@ -104,11 +104,7 @@ const Review = () => {
 
             <div className="gap-[12px] grid">
               <p className="leading-[26px] text-[16px] font-poppins font-normal tracking-[-0.1px] text-simple-text">
-                <img
-                  src={icon_envelope}
-                  alt=""
-                  className="inline-block mr-[10px]"
-                />
+                <img src={rocket} alt="" className="inline-block mr-[10px]" />
                 {t<string>("HOME.TEXT_1")}
               </p>
               <p className="leading-[26px] text-[16px] font-poppins font-normal tracking-[-0.1px] text-simple-text">
@@ -116,7 +112,11 @@ const Review = () => {
                 {t<string>("HOME.TEXT_2")}
               </p>
               <p className="leading-[26px] text-[16px] font-poppins font-normal tracking-[-0.1px] text-simple-text">
-                <img src={rocket} alt="" className="inline-block mr-[10px]" />
+                <img
+                  src={icon_envelope}
+                  alt=""
+                  className="inline-block mr-[10px]"
+                />
                 {t<string>("HOME.TEXT_3")}
               </p>
             </div>

@@ -309,6 +309,7 @@ const ModalSale = () => {
                   </span>
                   <input
                     type="text"
+                    disabled
                     value={playbook?.name}
                     onChange={(event) => {
                       setPlaybook((prev: any) => {
@@ -319,7 +320,7 @@ const ModalSale = () => {
                       });
                     }}
                     className="outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
-                text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px]
+                text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] bg-tools-block
                 "
                   />
                   {formikForm.errors.name && formikForm.touched.name && (
@@ -345,8 +346,9 @@ const ModalSale = () => {
 
                   <textarea
                     className="outline-none resize-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
-                text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] h-[132px]
+                text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] h-[132px] bg-tools-block
                 "
+                    disabled
                     onChange={(event) => {
                       setPlaybook((prev: any) => {
                         return {
