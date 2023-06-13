@@ -197,9 +197,7 @@ const Editor = () => {
     formikForm.setFieldValue("content", value);
   };
 
-  const setNode = (value: HTMLElement) => {
-    // value.textContent = formikForm.values.content;
-  };
+  console.log("formik: ", formikForm.values.content);
 
   return (
     <form
@@ -224,7 +222,6 @@ const Editor = () => {
             <ToolbarPlugin
               content={page?.data?.content}
               setContent={setContent}
-              setNode={setNode}
             />
             <div className="relative min-h-[50vh]">
               <RichTextPlugin

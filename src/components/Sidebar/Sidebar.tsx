@@ -214,8 +214,6 @@ const Sidebar = () => {
     }
   };
 
-  console.log(playbooks);
-
   return (
     <div
       className={classNames({

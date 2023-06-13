@@ -124,7 +124,6 @@ const SignIn = () => {
   };
 
   const onChange = (value: any) => {
-    console.log("Captcha value:", value);
     setIsCaptchaDone(true);
   };
 
