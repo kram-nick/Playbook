@@ -14,6 +14,8 @@ import { UIRoutes } from "./core/router";
 ReactGA.initialize(process.env.REACT_APP_ANALYTICS_ID);
 hotjar.initialize(3510959, 6);
 
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
+
 if (localStorage.getItem(process.env.REACT_APP_TOKEN_KEY)) {
   const expiration: any = jwtDecode(
     String(localStorage.getItem(process.env.REACT_APP_TOKEN_KEY))
