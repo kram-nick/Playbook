@@ -49,7 +49,6 @@ const Listings = () => {
                 items={fetchedData?.data?.listings}
                 playbook={playbook}
                 index={index}
-                tabType={MainTabs.Listings}
               />
             ))}
           </div>

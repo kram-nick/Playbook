@@ -632,7 +632,7 @@ const Sidebar = () => {
               )}
             </ul>
           )}
-          <hr className="my-[16px]" />
+          {/* <hr className="my-[16px]" />
           <button
             onClick={() => dispatch(setSelectedTab(MainTabs.Purchased))}
             className={classNames({
@@ -978,7 +978,7 @@ const Sidebar = () => {
                 </li>
               ))}
             </ul>
-          )}
+          )} */}
         </nav>
       </div>
 

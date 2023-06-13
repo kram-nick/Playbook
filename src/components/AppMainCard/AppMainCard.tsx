@@ -127,13 +127,19 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
     };
     if (!sidebarTabs.includes(Number(tabType))) {
       dispatch(setSidebarTabs([...sidebarTabs, Number(tabType)]));
+      localStorage.setItem(
+        "selected_tabs",
+        JSON.stringify([...sidebarTabs, Number(tabType)])
+      );
     }
-    dispatch(
-      setSelectedPlaybook({
-        id: playbook.id,
-        tabType: Number(tabType),
-      })
-    );
+    if (tabType) {
+      dispatch(
+        setSelectedPlaybook({
+          id: playbook.id,
+          tabType: Number(tabType),
+        })
+      );
+    }
     dispatch(setSelectedData(setData));
     localStorage.setItem("selected_page", JSON.stringify(setData));
     localStorage.setItem(

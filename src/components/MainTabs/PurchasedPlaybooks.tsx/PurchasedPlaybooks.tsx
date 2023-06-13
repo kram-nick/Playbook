@@ -40,7 +40,6 @@ const PurchasedPlaybooks = () => {
                   items={fetchedData?.data?.purchases}
                   playbook={playbook}
                   index={index}
-                  tabType={MainTabs.Purchased}
                 />
               )
             )}
