@@ -34,20 +34,10 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { username } = useParams();
 
   const { openModal } = useModal();
 
   const { isAuth } = useAuth();
-
-  useHttpGet<any>(`${APIRoutes.USERS_PUBLIC_PROFILE}?username=${username}`, {
-    resolve: (response: any) => {
-      if (response) {
-        console.log(response);
-      }
-    },
-    dependencies: [],
-  });
 
   const handlePriorityClick = () => {
     setPriority(!priority);
@@ -64,8 +54,6 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
       : openModal(Modal.FREE_PURCHASE);
   };
 
-  console.log(playbook);
-
   return (
     <div
       className={classNames({
@@ -76,7 +64,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
     >
       <div className="header">
         <Link
-          to={`/${PrivateUIRoutes.Profile}`}
+          to={`/${PrivateUIRoutes.Profile}/${playbook?.profile_username}`}
           className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]"
         >
           {playbook?.name?.length > 36
@@ -91,7 +79,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
 
         {discover && (
           <Link
-            to={`/${PrivateUIRoutes.Profile}`}
+            to={`/${PrivateUIRoutes.Profile}/${playbook?.profile_username}`}
             className="flex items-center gap-[10px] mt-[8px]"
           >
             <div className="icon w-[24px] h-[24px] overflow-hidden relative rounded-[50%]">

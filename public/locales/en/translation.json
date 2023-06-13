@@ -320,7 +320,8 @@
     "EMPTY": "This author has no playbooks yet",
     "VIEW_OTHER": "View profiles of other authors",
     "GET_FREE": "Get for free",
-    "BUY_NOW": "Buy now"
+    "BUY_NOW": "Buy now",
+    "PLAYBOOKS": "Playbooks"
   },
   "SETTINGS": {
     "TITLE": "Settings",
