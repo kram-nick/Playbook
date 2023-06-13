@@ -21,9 +21,7 @@ const ModalPrivacy = () => {
       measured: false,
     },
     //     validationSchema: valueFormValidationSchema,
-    onSubmit: async (values: any) => {
-      console.log(values);
-    },
+    onSubmit: async (values: any) => {},
   });
 
   return (
