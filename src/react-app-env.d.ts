@@ -13,6 +13,8 @@
 //     readonly REACT_APP_GOOGLE_KEY: string;
 //     readonly REACT_APP_LOGO_NAME: string;
 //     readonly REACT_APP_ANALYTICS_NAME: string;
+//     readonly REACT_APP_CAPTCHA_SITE_KEY: string;
+//     readonly REACT_APP_CAPTCHA_SITE_SECRET: string;
 //   }
 // }
 declare namespace NodeJS {
@@ -22,5 +24,7 @@ declare namespace NodeJS {
     readonly REACT_APP_API_URL: string;
     readonly REACT_APP_GOOGLE_KEY: string;
     readonly REACT_APP_ANALYTICS_ID: string;
+    readonly REACT_APP_CAPTCHA_SITE_KEY: string;
+    readonly REACT_APP_CAPTCHA_SITE_SECRET: string;
   }
 }
