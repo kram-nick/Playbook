@@ -4,6 +4,7 @@ export const APIRoutes = {
   AUTH_LOGIN: "/api/users/login",
   AUTH_CREATE: "/api/users/create",
   AUTH_GOOGLE: "/api/auth/google/token",
+  USERS_PUBLIC_PROFILE: "/api/users/public",
   RESET_PASSWORD: "/api/passwordresets",
   USER_CHANGE_PASSWORD: "/api/users/password/change",
   DISCOVER: "/api/playbooks/discover",

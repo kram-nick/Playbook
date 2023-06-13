@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import poster from "../../assets/photos/main/image-poster.svg";
@@ -7,7 +7,7 @@ import star from "../../assets/photos/profile/star.svg";
 import star_active from "../../assets/photos/main/star-active.svg";
 import useOutside from "../../core/hooks/useOutside";
 import Playbook from "../../core/interface/playbook";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import useModal from "../../core/hooks/useModal";
 import useAuth from "../../core/hooks/useAuth";
@@ -17,6 +17,8 @@ import { Modal } from "../../core/models/enums";
 import { useAppDispatch } from "../../core/hooks/useRedux";
 import { setSharedId } from "../../core/store/reducers/helpers/helpersDataSlice";
 import { PrivateUIRoutes, UIRoutes } from "../../core/router";
+import useHttpGet from "../../core/hooks/useHttpGet";
+import { APIRoutes } from "../../core/http";
 
 type CardProps = {
   items?: Array<any>;
@@ -32,10 +34,20 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { username } = useParams();
 
   const { openModal } = useModal();
 
   const { isAuth } = useAuth();
+
+  useHttpGet<any>(`${APIRoutes.USERS_PUBLIC_PROFILE}?username=${username}`, {
+    resolve: (response: any) => {
+      if (response) {
+        console.log(response);
+      }
+    },
+    dependencies: [],
+  });
 
   const handlePriorityClick = () => {
     setPriority(!priority);
@@ -51,6 +63,8 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
       ? openModal(Modal.PURCHASE)
       : openModal(Modal.FREE_PURCHASE);
   };
+
+  console.log(playbook);
 
   return (
     <div

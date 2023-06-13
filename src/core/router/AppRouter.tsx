@@ -63,7 +63,7 @@ export const privateRoutes: IRoute[] = [
     element: <PreviewDetail />,
   },
   {
-    path: PrivateUIRoutes.Profile,
+    path: `${PrivateUIRoutes.Profile}/:username`,
     element: <Profile />,
   },
   {

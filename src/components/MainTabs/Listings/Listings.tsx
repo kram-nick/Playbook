@@ -26,7 +26,6 @@ const Listings = () => {
     query: {},
     dependencies: [reloadChecker],
   });
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const handleNew = () => {
     openModal(Modal.PLAYBOOK_DETAILS);
