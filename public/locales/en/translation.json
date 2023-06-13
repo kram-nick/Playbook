@@ -34,7 +34,8 @@
     "LISTINGS": "Listings",
     "DRAFT": "DRAFT",
     "PREVIEW": "Preview",
-    "SHARE": "Share"
+    "SHARE": "Share",
+    "CAPTCHA": "Captcha error"
   },
   "HOME": {
     "HOME": "Home",
