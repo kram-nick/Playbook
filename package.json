@@ -1,7 +1,6 @@
 {
   "name": "playbook",
   "version": "0.1.0",
-  "homepage": "https://playbook-pi.vercel.app/",
   "private": true,
   "dependencies": {
     "@lexical/react": "^0.10.0",
