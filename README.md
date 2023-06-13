@@ -29,3 +29,7 @@ Once Image will be created , you should run the following command to create app 
 After your container was created and stopped, you can run it again with command:
 
 - docker-compose up
+
+# UPDATES
+
+- 11-Jun-2023 - Updates to Github Action and Docker file
