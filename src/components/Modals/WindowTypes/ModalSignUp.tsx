@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,7 @@ import icon_google from "../../../assets/photos/sign/g_logo.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 import classNames from "classnames";
 import { LogEvent } from "../../../core/constants/functions";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface ModalType {
   children?: ReactNode;
@@ -20,6 +21,7 @@ interface ModalType {
 }
 
 export default function ModalSignup(props: ModalType) {
+  const [isCaptchaDone, setIsCaptchaDone] = useState(false);
   const { t } = useTranslation();
 
   const { closeModal } = useModal();
@@ -110,6 +112,10 @@ export default function ModalSignup(props: ModalType) {
     }
   };
 
+  const onChange = (value: any) => {
+    setIsCaptchaDone(true);
+  };
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -117,7 +123,7 @@ export default function ModalSignup(props: ModalType) {
               border-[1px] border-solid border-border-btn bg-white font-poppins max-[690px]:px-[16px] max-[690px]:h-[100vh]
               max-[690px]:flex"
     >
-      <button className="absolute top-[16px] right-[8px] w-[40px] h-[40px] flex items-center">
+      <button className="absolute top-[35px] right-[8px] w-[40px] h-[40px] flex items-center">
         <img src={icon_close} alt="" onClick={closeModal} />
       </button>
 
@@ -283,11 +289,17 @@ export default function ModalSignup(props: ModalType) {
             )}
           </div>
         </div>
+        <ReCAPTCHA
+          style={{
+            zIndex: 20,
+          }}
+          sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY}
+          onChange={onChange}
+        />
         <button
           type="submit"
           className="bg-button-submit-footer py-[10px] px-[26px] rounded-[6px] 
-              w-full mb-[24px]
-              "
+              w-full mb-[24px] mt-[20px]"
         >
           <span className="text-list-title">{t<string>("SIGN.UP_BTN")}</span>
         </button>
