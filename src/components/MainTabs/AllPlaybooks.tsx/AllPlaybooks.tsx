@@ -1,17 +1,25 @@
 import classNames from "classnames";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import AppMainCard from "../../AppMainCard/AppMainCard";
+
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
-
-import icon_empty from "../../../assets/photos/main/empty.svg";
-import icon_plus from "../../../assets/photos/main/plus.svg";
-import { useTranslation } from "react-i18next";
-import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useModal from "../../../core/hooks/useModal";
 import { MainTabs, Modal } from "../../../core/models/enums";
 import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
+import icon_empty from "../../../assets/photos/main/empty.svg";
+import icon_plus from "../../../assets/photos/main/plus.svg";
+import { Data } from "../../../core/models";
+import SkeletonPlaybook from "../../SkeletonPlaybook/SkeletonPlaybook";
+
 const AllPlaybooks = () => {
+  const [loading, setLoading] = useState(false);
+  const [playbooks, setPlaybooks] = useState<Data.Playbook[] | null>(null);
+
   const { t } = useTranslation();
 
   const { listType, selectedTab } = useAppSelector((state) => state.app);
@@ -21,9 +29,21 @@ const AllPlaybooks = () => {
   const dispatch = useAppDispatch();
   const { openModal } = useModal();
 
-  const { fetchedData } = useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
+  useEffect(() => {
+    setLoading(true);
+    if (playbooks) {
+      setTimeout(() => setLoading(false), 500);
+    }
+  }, [playbooks]);
+
+  useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
     query: {},
     dependencies: [reloadChecker],
+    resolve: (response: any) => {
+      if (response) {
+        setPlaybooks(response?.data?.playbooks);
+      }
+    },
   });
 
   const handleNewPlaybook = () => {
@@ -54,20 +74,21 @@ const AllPlaybooks = () => {
 
   return (
     <div>
-      {fetchedData?.data?.playbooks?.length !== 0 ? (
+      {playbooks?.length !== 0 ? (
         <div className="content">
           <div
             className={classNames({
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
-            {fetchedData?.data?.playbooks.map(
-              (playbook: any, index: number) => (
+            })}>
+            {playbooks?.map((playbook: any, index: number) =>
+              loading ? (
+                <SkeletonPlaybook key={playbook.id} />
+              ) : (
                 <AppMainCard
                   key={playbook.id}
-                  items={fetchedData?.data?.playbooks}
+                  items={playbooks}
                   playbook={playbook}
                   index={index}
                   tabType={SelectTabType(playbook)}
@@ -92,8 +113,7 @@ const AllPlaybooks = () => {
             onClick={handleNewPlaybook}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>
