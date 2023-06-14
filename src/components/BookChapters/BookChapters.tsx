@@ -21,6 +21,8 @@ import arrow from "../../assets/photos/chapter/arrow-right.svg";
 import edit from "../../assets/photos/chapter/edit.svg";
 import icon_delete from "../../assets/photos/chapter/delete.svg";
 import { string } from "yup";
+import SkeletonPagePlaybook from "../Skeleton/SkeletonPagePlaybook/SkeletonPagePlaybook";
+import SkeletonPageItem from "../Skeleton/SkeletonPageItem/SkeletonPageItem";
 
 type pagesProps = {
   dataContent?: any;
@@ -35,6 +37,8 @@ const BookChapters: React.FC<pagesProps> = ({
 }): JSX.Element => {
   const [dragging, setDragging] = useState(false);
   const [innerHeight, setInnerHeight] = useState();
+  const [loading, setLoading] = useState(false);
+
   const { playbook_id } = useParams();
 
   const { t } = useTranslation();
@@ -79,6 +83,17 @@ const BookChapters: React.FC<pagesProps> = ({
     } catch (error) {}
   };
 
+  useEffect(() => {
+    setLoading(true);
+    if (dataContent) {
+      setTimeout(() => setLoading(false), 850);
+    }
+  }, [dataContent]);
+
+  if (loading) {
+    return <SkeletonPageItem key={dataContent.id} />;
+  }
+
   return (
     <Reorder.Item
       className="--reorder-item"
@@ -93,30 +108,26 @@ const BookChapters: React.FC<pagesProps> = ({
           ? `calc(${innerHeight}px + 24px)`
           : "0px",
       }}
-      onDragEnd={handleOrder}
-    >
+      onDragEnd={handleOrder}>
       <div
         className={classNames({
           "relative font-poppins item my-[24px] ": true,
         })}
-        id={dataContent.id}
-      >
+        id={dataContent.id}>
         <div
           className={classNames({
             "rounded-[8px] bg-white border-[1px] border-solid border-header-bottom ":
               true,
           })}
           style={{}}
-          key={index}
-        >
+          key={index}>
           <div
             onClick={() => toggleSection(dataContent)}
             className={classNames({
               "bg-chapter-color ": dataContent?.open,
               "flex items-center justify-between relative pl-[48px] px-[16px] py-[15px] rounded-t-[8px] cursor-pointer":
                 true,
-            })}
-          >
+            })}>
             {/* <div
               onClick={() => toggleSection(dataContent)}
               className="absolute z-[1] left-[0] right-[0] bottom-[0] top-[0]"></div> */}
@@ -132,8 +143,7 @@ const BookChapters: React.FC<pagesProps> = ({
 
             <div
               className="lg:text-[20px] text-home-title leading-[28px] tracking-[-0.1px] font-medium
-              max-w-[calc(100%-210px)] sm:text-[14px]"
-            >
+              max-w-[calc(100%-210px)] sm:text-[14px]">
               <span> #{index + 1}</span> {dataContent?.title}
             </div>
             <div className="border-solid border-[1px] rounded-[5px] flex items-center bg-white relative">
@@ -159,8 +169,7 @@ const BookChapters: React.FC<pagesProps> = ({
                 }}
                 className="rounded-l-[5px] h-[38px] border-solid border-r-[1px] flex items-center border-header-bottom
                 px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
-                hover:bg-people-bg transition duration-300 linear"
-              >
+                hover:bg-people-bg transition duration-300 linear">
                 <img src={edit} alt="" />
                 {t<string>("BTNS.EDIT")}
               </button>
@@ -171,8 +180,7 @@ const BookChapters: React.FC<pagesProps> = ({
                 }}
                 className="rounded-r-[5px] h-[38px]  flex items-center 
                 px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
-                hover:bg-people-bg transition duration-300 linear"
-              >
+                hover:bg-people-bg transition duration-300 linear">
                 <img src={icon_delete} alt="" />
                 {t<string>("BTNS.DELETE")}
               </div>

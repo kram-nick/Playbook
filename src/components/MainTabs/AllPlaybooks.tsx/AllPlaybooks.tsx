@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import AppMainCard from "../../AppMainCard/AppMainCard";
-import SkeletonPlaybook from "../../SkeletonPlaybook/SkeletonPlaybook";
+import SkeletonPlaybook from "../../Skeleton/SkeletonPlaybookList/SkeletonPlaybookList";
 
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";

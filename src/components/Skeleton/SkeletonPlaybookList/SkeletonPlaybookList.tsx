@@ -1,11 +1,11 @@
 import classNames from "classnames";
-import { SkeletonTypes } from "../../core/models/enums";
+import { SkeletonTypes } from "../../../core/models/enums";
 
-type SkeletonPlaybookProps = {
+type SkeletonPlaybookList = {
   type: string;
 };
 
-const SkeletonPlaybook: React.FC<SkeletonPlaybookProps> = ({ type }) => {
+const SkeletonPlaybookList: React.FC<SkeletonPlaybookList> = ({ type }) => {
   return (
     <div
       className={classNames({
@@ -37,4 +37,4 @@ const SkeletonPlaybook: React.FC<SkeletonPlaybookProps> = ({ type }) => {
   );
 };
 
-export default SkeletonPlaybook;
+export default SkeletonPlaybookList;

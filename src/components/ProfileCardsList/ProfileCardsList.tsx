@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import ProfileCard from "../ProfileCard/ProfileCard";
-import SkeletonPlaybook from "../SkeletonPlaybook/SkeletonPlaybook";
+import SkeletonPlaybook from "../Skeleton/SkeletonPlaybookList/SkeletonPlaybookList";
 
 import icon_grid from "../../assets/photos/main/icon-grid.svg";
 import icon_grid_default from "../../assets/photos/main/icon-grid-default.svg";

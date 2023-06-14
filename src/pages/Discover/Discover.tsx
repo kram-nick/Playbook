@@ -9,7 +9,7 @@ import { DiscoverTabs } from "../../core/constants";
 import ProfileCard from "../../components/ProfileCard";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
-import SkeletonPlaybook from "../../components/SkeletonPlaybook/SkeletonPlaybook";
+import SkeletonPlaybook from "../../components/Skeleton/SkeletonPlaybookList/SkeletonPlaybookList";
 import { SkeletonTypes } from "../../core/models/enums";
 
 const Discover = () => {

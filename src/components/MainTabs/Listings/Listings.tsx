@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 
 import AppMainCard from "../../AppMainCard/AppMainCard";
-import SkeletonPlaybook from "../../SkeletonPlaybook/SkeletonPlaybook";
+import SkeletonPlaybook from "../../Skeleton/SkeletonPlaybookList/SkeletonPlaybookList";
 
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";

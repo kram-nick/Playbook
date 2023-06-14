@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,7 @@ import add_banner from "../../assets/photos/chapter/add-banner.svg";
 import PlaybookService from "../../core/services/playbook.service";
 
 import { FileMode } from "../../core/models/enums";
+import SkeletonPagePlaybook from "../Skeleton/SkeletonPagePlaybook/SkeletonPagePlaybook";
 
 type BookBannerProps = {
   preview?: boolean;
@@ -16,8 +17,11 @@ type BookBannerProps = {
 };
 
 const BookBanner = ({ preview, data }: BookBannerProps) => {
-  const { t } = useTranslation();
   const [isBanner, setIsBanner] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const { t } = useTranslation();
+
   const { playbook_id } = useParams();
 
   const handleUpload = async (file: any, mode: string) => {
@@ -38,6 +42,17 @@ const BookBanner = ({ preview, data }: BookBannerProps) => {
     setIsBanner(!isBanner);
     data.header_url = null;
   };
+
+  useEffect(() => {
+    setLoading(true);
+    if (data) {
+      setTimeout(() => setLoading(false), 850);
+    }
+  }, [data]);
+
+  if (loading) {
+    return <SkeletonPagePlaybook />;
+  }
 
   return (
     <div className="relative rounded-t-[8px] bg-header-bottom h-[218px] mb-[52px] font-poppins max-[1024px]:rounded-t-[0px]">

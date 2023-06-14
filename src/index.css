@@ -263,3 +263,11 @@ input:checked+.switch-check:after {
 .ph-item::before {
   animation-duration: 1500ms;
 }
+
+.ph-item {
+  border-radius: 8px;
+}
+
+.ph-picture {
+  height: 180px;
+}
