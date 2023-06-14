@@ -259,3 +259,7 @@ input:checked+.switch-check:after {
 .scroll-visible::-webkit-scrollbar-track {
   display: none;
 }
+
+.ph-item::before {
+  animation-duration: 1500ms;
+}

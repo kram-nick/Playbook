@@ -83,7 +83,7 @@ const AllPlaybooks = () => {
               "grid gap-y-[12px]": !listType,
             })}>
             {playbooks?.map((playbook: any, index: number) =>
-              loading ? (
+              !loading ? (
                 <SkeletonPlaybook key={playbook.id} />
               ) : (
                 <AppMainCard

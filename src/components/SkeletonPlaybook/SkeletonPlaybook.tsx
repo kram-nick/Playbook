@@ -1,10 +1,10 @@
-import React from "react";
-
 const SkeletonPlaybook = () => {
   return (
     <div
       className="ph-item 
-w-[calc(25%-15px)] max-xl:w-[calc(33.33%-16px)] max-[690px]:w-[100%]">
+w-[calc(25%-15px)] max-xl:w-[calc(33.33%-16px)] max-[690px]:w-[100%]
+
+">
       <div className="ph-col-12">
         <div className="ph-picture"></div>
         <div className="ph-row">
