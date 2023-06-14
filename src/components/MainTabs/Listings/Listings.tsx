@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
 import useModal from "../../../core/hooks/useModal";
-import { MainTabs, Modal } from "../../../core/models/enums";
+import { Modal, SkeletonTypes } from "../../../core/models/enums";
 import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
@@ -55,7 +55,10 @@ const Listings = () => {
             })}>
             {fetchedData?.data?.listings.map((playbook: any, index: number) =>
               loading ? (
-                <SkeletonPlaybook />
+                <SkeletonPlaybook
+                  type={SkeletonTypes.PUBLIC}
+                  key={playbook.id}
+                />
               ) : (
                 <AppMainCard
                   key={playbook.id}

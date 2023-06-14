@@ -51,7 +51,7 @@ const PlaybookDetail = () => {
   });
 
   return (
-    <div className="bg-create-bg-main min-h-[100vh] w-[100%]">
+    <div className="bg-create-bg-main min-h-[100vh] w-full">
       <Header />
       <div className="max-w-[1230px] px-[15px] mx-[auto] pb-[40px]">
         <ul className="breadcrumb flex items-center flex-wrap font-poppins pt-[24px] pb-[36px]">

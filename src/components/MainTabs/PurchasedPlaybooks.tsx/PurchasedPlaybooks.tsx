@@ -12,6 +12,7 @@ import { useAppSelector } from "../../../core/hooks/useRedux";
 import { UIRoutes } from "../../../core/router";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
+import { SkeletonTypes } from "../../../core/models/enums";
 
 const PurchasedPlaybooks = () => {
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,10 @@ const PurchasedPlaybooks = () => {
             })}>
             {fetchedData?.data?.purchases.map((playbook: any, index: number) =>
               loading ? (
-                <SkeletonPlaybook />
+                <SkeletonPlaybook
+                  type={SkeletonTypes.PUBLIC}
+                  key={playbook.id}
+                />
               ) : (
                 <AppMainCard
                   key={playbook.id}

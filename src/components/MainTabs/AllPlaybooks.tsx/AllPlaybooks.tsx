@@ -9,7 +9,7 @@ import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useModal from "../../../core/hooks/useModal";
-import { MainTabs, Modal } from "../../../core/models/enums";
+import { MainTabs, Modal, SkeletonTypes } from "../../../core/models/enums";
 import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 import { Data } from "../../../core/models";
 
@@ -84,7 +84,10 @@ const AllPlaybooks = () => {
             })}>
             {playbooks?.map((playbook: any, index: number) =>
               loading ? (
-                <SkeletonPlaybook key={playbook.id} />
+                <SkeletonPlaybook
+                  type={SkeletonTypes.PUBLIC}
+                  key={playbook.id}
+                />
               ) : (
                 <AppMainCard
                   key={playbook.id}
