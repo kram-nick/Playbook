@@ -33,3 +33,9 @@ export enum Welcome {
   CREATE = "CREATE",
   DISCOVER = "DISCOVER",
 }
+
+export enum SkeletonTypes {
+  PUBLIC = "PUBLIC",
+  DISCOVER = "DISCOVER",
+  PROFILE = "PROFILE",
+}

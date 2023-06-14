@@ -1,10 +1,21 @@
-import React from "react";
+import classNames from "classnames";
+import { SkeletonTypes } from "../../../core/models/enums";
 
-const SkeletonPlaybook = () => {
+type SkeletonPlaybookList = {
+  type: string;
+};
+
+const SkeletonPlaybookList: React.FC<SkeletonPlaybookList> = ({ type }) => {
   return (
     <div
-      className="ph-item 
-w-[calc(25%-15px)] max-xl:w-[calc(33.33%-16px)] max-[690px]:w-[100%]">
+      className={classNames({
+        "ph-item": true,
+        "w-[calc(25%-15px)] max-xl:w-[calc(33.33%-16px)] max-[690px]:w-[100%]":
+          type === SkeletonTypes.PUBLIC,
+        "": type === SkeletonTypes.DISCOVER,
+        "w-[calc(50%-10px)] max-[690px]:w-[100%]":
+          type === SkeletonTypes.PROFILE,
+      })}>
       <div className="ph-col-12">
         <div className="ph-picture"></div>
         <div className="ph-row">
@@ -26,4 +37,4 @@ w-[calc(25%-15px)] max-xl:w-[calc(33.33%-16px)] max-[690px]:w-[100%]">
   );
 };
 
-export default SkeletonPlaybook;
+export default SkeletonPlaybookList;

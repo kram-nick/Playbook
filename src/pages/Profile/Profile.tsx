@@ -1,14 +1,16 @@
 import { Link, useParams } from "react-router-dom";
-import AppHeader from "../../components/AppHeader";
+import { useTranslation } from "react-i18next";
 
-import arrow_bread from "../../assets/photos/profile/right.svg";
+import AppHeader from "../../components/AppHeader";
+import ProfileTop from "../../components/ProfileTop";
 import ProfileEmpty from "../../components/ProfileEmpty";
 import ProfileCardsList from "../../components/ProfileCardsList";
-import ProfileTop from "../../components/ProfileTop";
+
 import { playbooks } from "../../core/constants/sidebar";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
-import { useTranslation } from "react-i18next";
+
+import arrow_bread from "../../assets/photos/profile/right.svg";
 
 const Profile = () => {
   const { username } = useParams();
@@ -17,17 +19,12 @@ const Profile = () => {
   const { fetchedData: profile } = useHttpGet<any>(
     `${APIRoutes.USERS_PUBLIC_PROFILE}?username=${username}`,
     {
-      resolve: (response: any) => {
-        if (response) {
-          console.log(response);
-        }
-      },
       dependencies: [],
     }
   );
 
   return (
-    <div className="bg-create-bg-main min-h-[100vh] w-[100%]">
+    <div className="bg-create-bg-main min-h-[100vh] w-full">
       <AppHeader profile={true} />
 
       <div className="max-w-[1230px] px-[15px] mx-[auto]">
@@ -35,8 +32,7 @@ const Profile = () => {
           <li className="flex items-center gap-[4px]  mb-[4px]">
             <Link
               to="/main"
-              className="text-[14px] leading-[20px] tracking-[-0.1px] text-nav-txt-private"
-            >
+              className="text-[14px] leading-[20px] tracking-[-0.1px] text-nav-txt-private">
               Main Page
             </Link>
             <img src={arrow_bread} alt="" />

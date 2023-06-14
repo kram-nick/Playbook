@@ -61,37 +61,34 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
         "w-[calc(50%-10px)] max-[690px]:w-[100%]": typeCard && !discover,
         "grid bg-white rounded-[8px] border-[1px] border-solid card-border relative p-[18px] gap-y-[16px]":
           true,
-      })}
-    >
+      })}>
       <div className="header">
         <button
           onClick={() => {
             if (window.location.pathname.split("/").includes("profile")) {
               localStorage.setItem("playbook_id", JSON.stringify(playbook?.id));
-              navigate(`/${PrivateUIRoutes.Preview}`);
+              navigate(`/${PrivateUIRoutes.CardDetail}`);
             } else {
               navigate(
                 `/${PrivateUIRoutes.Profile}/${playbook?.profile_username}`
               );
             }
           }}
-          className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]"
-        >
+          className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]">
           {playbook?.name?.length > 36
             ? `${playbook?.name.slice(0, 36)}...`
             : playbook?.name}
         </button>
         {!discover && (
           <p className="text-[16px] text-input-paceholder leading-[26px] max-[690px]:text-[14px]">
-            Viewed 1235 times
+            {/* Viewed 1235 times */}
           </p>
         )}
 
         {discover && (
           <Link
             to={`/${PrivateUIRoutes.Profile}/${playbook?.profile_username}`}
-            className="flex items-center gap-[10px] mt-[8px]"
-          >
+            className="flex items-center gap-[10px] mt-[8px]">
             <div className="icon w-[24px] h-[24px] overflow-hidden relative rounded-[50%]">
               {playbook?.profile_image ? (
                 <img
@@ -118,7 +115,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
         onClick={() => {
           if (window.location.pathname.split("/").includes("profile")) {
             localStorage.setItem("playbook_id", JSON.stringify(playbook?.id));
-            navigate(`/${PrivateUIRoutes.Preview}`);
+            navigate(`/${PrivateUIRoutes.CardDetail}`);
           } else {
             navigate(
               `/${PrivateUIRoutes.Profile}/${playbook?.profile_username}`
@@ -126,8 +123,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
           }
         }}
         className="photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border 
-          w-[100%] h-[240px] rounded-[8px] cursor-pointer"
-      >
+          w-[100%] h-[240px] rounded-[8px] cursor-pointer">
         <img
           src={playbook.thumbnail_url || playbook.header_url}
           alt=""
@@ -140,16 +136,14 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
           onClick={() => (!isAuth ? handleSignUp() : createOrder(playbook))}
           className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
             border-solid shadow-free-trial bg-blue-light text-buttons-bg text-[16px] font-medium flex items-center 
-            text-center justify-center"
-        >
+            text-center justify-center">
           {playbook?.chargeable
             ? t<string>("PROFILE.BUY_NOW")
             : t<string>("PROFILE.GET_FREE")}
         </button>
         <button
           onClick={() => handlePriorityClick()}
-          className="w-[46px] h-[46px] p-[12px] rounded-[6px] border-header-bottom border-[1px] border-solid"
-        >
+          className="w-[46px] h-[46px] p-[12px] rounded-[6px] border-header-bottom border-[1px] border-solid">
           <img
             src={playbook.favorited ? star_active : star}
             alt=""

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 
@@ -16,6 +16,7 @@ import lock from "../../assets/photos/profile/lock.svg";
 import back from "../../assets/photos/profile/back.svg";
 import star from "../../assets/photos/profile/star.svg";
 import Header from "../../components/AppLayout/PrivateLayout/Header";
+import SkeletonPageItem from "../../components/Skeleton/SkeletonPageItem/SkeletonPageItem";
 
 const PlaybookDetail = () => {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ const PlaybookDetail = () => {
   const [playbook, setPlaybook] = useState<Data.Playbook>();
   const [pages, setPages] = useState<Data.Page[]>([]);
   const [pageId, setPageId] = useState<string>();
+  const [loading, setLoading] = useState(false);
 
   const { sharedId, reloadChecker } = useAppSelector((state) => state.helpers);
 
@@ -50,8 +52,15 @@ const PlaybookDetail = () => {
     dependencies: [storage_playbook_id, reloadChecker],
   });
 
+  useEffect(() => {
+    setLoading(true);
+    if (pages) {
+      setTimeout(() => setLoading(false), 850);
+    }
+  }, [pages]);
+
   return (
-    <div className="bg-create-bg-main min-h-[100vh] w-[100%]">
+    <div className="bg-create-bg-main min-h-[100vh] w-full">
       <Header />
       <div className="max-w-[1230px] px-[15px] mx-[auto] pb-[40px]">
         <ul className="breadcrumb flex items-center flex-wrap font-poppins pt-[24px] pb-[36px]">
@@ -89,39 +98,43 @@ const PlaybookDetail = () => {
                 <p className="font-poppins normal font-normal text-[20px] leading-[32px] text-top-subtitle-playbook tracking-[-0.1px]">
                   {playbook?.content}
                 </p>
-                {pages.map((chapter: Data.Page, index: number) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      handleViewDetail(
-                        chapter.privacy === "public" ||
-                          chapter.privacy === "private"
-                      );
-                      setPageId(chapter?.id);
-                    }}
-                    className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
+                {pages.map((chapter: Data.Page, index: number) =>
+                  loading ? (
+                    <SkeletonPageItem key={chapter.id} />
+                  ) : (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        handleViewDetail(
+                          chapter.privacy === "public" ||
+                            chapter.privacy === "private"
+                        );
+                        setPageId(chapter?.id);
+                      }}
+                      className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
                           border-[1px] border-solid border-card-border gap-[30px] max-[690px]:p-[12px]">
-                    <span
-                      className="font-poppins text-[20px] text-home-title  font-medium leading-[28px] text-left 
+                      <span
+                        className="font-poppins text-[20px] text-home-title  font-medium leading-[28px] text-left 
                           max-[690px]:text-[16px] max-[690px]:leading-[24px]">
-                      {chapter.title}
-                    </span>
-                    <img
-                      src={
-                        chapter.privacy === "public" ||
-                        chapter.privacy === "private"
-                          ? arrow
-                          : lock
-                      }
-                      alt="show"
-                    />
-                    {/* <div
+                        {chapter.title}
+                      </span>
+                      <img
+                        src={
+                          chapter.privacy === "public" ||
+                          chapter.privacy === "private"
+                            ? arrow
+                            : lock
+                        }
+                        alt="show"
+                      />
+                      {/* <div
                       dangerouslySetInnerHTML={{ __html: chapter?.content }}
                       className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px] 
                     max-[690px]:text-[16px] max-[690px]:leading-[26px]"
                     /> */}
-                  </button>
-                ))}
+                    </button>
+                  )
+                )}
               </div>
             </div>
           ) : (

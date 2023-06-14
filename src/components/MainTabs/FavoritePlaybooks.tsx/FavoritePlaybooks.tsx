@@ -1,19 +1,24 @@
 import classNames from "classnames";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import SkeletonPlaybook from "../../Skeleton/SkeletonPlaybookList/SkeletonPlaybookList";
+import AppMainCard from "../../AppMainCard/AppMainCard";
+
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
+import useModal from "../../../core/hooks/useModal";
+import { MainTabs, Modal, SkeletonTypes } from "../../../core/models/enums";
+import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
 import icon_plus from "../../../assets/photos/main/plus.svg";
 import star from "../../../assets/photos/main/favorite-star.svg";
 
-import { useTranslation } from "react-i18next";
-import AppMainCard from "../../AppMainCard/AppMainCard";
-import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
-import useModal from "../../../core/hooks/useModal";
-import { MainTabs, Modal } from "../../../core/models/enums";
-import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
-
 const FavoritePlaybooks = () => {
+  const [loading, setLoading] = useState(false);
+
   const { t } = useTranslation();
   const { listType } = useAppSelector((state) => state.app);
   const { reloadChecker } = useAppSelector((state) => state.helpers);
@@ -30,6 +35,13 @@ const FavoritePlaybooks = () => {
     dispatch(setPlaybookType("create"));
   };
 
+  useEffect(() => {
+    setLoading(true);
+    if (fetchedData?.data?.playbooks) {
+      setTimeout(() => setLoading(false), 850);
+    }
+  }, [fetchedData?.data?.playbooks]);
+
   return (
     <div>
       {fetchedData?.data?.favorites?.length !== 0 ? (
@@ -39,10 +51,14 @@ const FavoritePlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
-            {fetchedData?.data?.favorites.map(
-              (playbook: any, index: number) => (
+            })}>
+            {fetchedData?.data?.favorites.map((playbook: any, index: number) =>
+              loading ? (
+                <SkeletonPlaybook
+                  type={SkeletonTypes.PUBLIC}
+                  key={playbook.id}
+                />
+              ) : (
                 <AppMainCard
                   key={playbook.id}
                   items={fetchedData?.data?.favorites}
@@ -70,8 +86,7 @@ const FavoritePlaybooks = () => {
             onClick={handleNew}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>
