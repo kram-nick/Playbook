@@ -48,6 +48,7 @@ import {
 } from "../../core/store/reducers/app/appDataSlice";
 import { Data } from "../../core/models/data";
 import { setReloadChecker } from "../../core/store/reducers/helpers/helpersDataSlice";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 const Placeholder = () => {
   const { t } = useTranslation();
@@ -83,18 +84,10 @@ const editorConfig = {
   ],
 };
 
-function onChange(editorState: any) {
-  editorState.read(() => {
-    // Read the contents of the EditorState here.
-    const root = $getRoot();
-    const selection = $getSelection();
-  });
-}
-
 const Editor = () => {
   const [savedData, setSavedData] = useState<Data.Page | any>();
+  const [content, setContent] = useState<any>(null);
   const [update, setUpdate] = useState<boolean>(false);
-
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -104,30 +97,20 @@ const Editor = () => {
 
   const { reloadChecker } = useAppSelector((state) => state.helpers);
 
-  const initialEditorState = (editor: LexicalEditor): void => {
-    const root = $getRoot();
-    const paragraph = $createParagraphNode();
-    const text = $createTextNode("Welcome to collab!");
-    paragraph.append(text);
-    root.append(paragraph);
-  };
+  useHttpGet<any>(`${APIRoutes.PAGES}/${page_id}`, {
+    resolve: (response: any) => {
+      if (response) {
+        formikForm.setFieldValue("title", response?.data?.title);
 
-  const { fetchedData: page } = useHttpGet<any>(
-    `${APIRoutes.PAGES}/${page_id}`,
-    {
-      resolve: (response: any) => {
-        if (response) {
-          formikForm.setFieldValue("title", response?.data?.title);
+        formikForm.setFieldValue("content", response?.data?.content);
+        setContent(response?.data?.content);
 
-          formikForm.setFieldValue("content", response?.data?.content);
-
-          setSavedData(response?.data);
-        }
-      },
-      condition: Boolean(page_id),
-      dependencies: [page_id, update],
-    }
-  );
+        setSavedData(response?.data);
+      }
+    },
+    condition: Boolean(page_id),
+    dependencies: [page_id, update],
+  });
 
   const valueFormValidationSchema = Yup.object().shape({
     title: Yup.string().required(t<string>("ERRORS.NAME_REQUIRED")),
@@ -193,16 +176,16 @@ const Editor = () => {
     }
   };
 
-  const setContent = (value: string) => {
-    formikForm.setFieldValue("content", value);
-  };
-
-  console.log("formik: ", formikForm.values.content);
+  function onChange(editorState: any) {
+    const stringifiedEditorState = JSON.stringify(editorState.toJSON());
+    formikForm.setFieldValue("content", stringifiedEditorState);
+  }
 
   return (
     <form
       className="flex flex-col gap-[30px]"
-      onSubmit={formikForm.handleSubmit}>
+      onSubmit={formikForm.handleSubmit}
+    >
       <div>
         <input
           className="outline-none pl-4 rounded-[8px] h-[40px] w-[100%] border-[1px] border-header-bottom text-[20px] font-medium font-poppins"
@@ -219,10 +202,7 @@ const Editor = () => {
       <div>
         <LexicalComposer initialConfig={editorConfig}>
           <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
-            <ToolbarPlugin
-              content={page?.data?.content}
-              setContent={setContent}
-            />
+            <ToolbarPlugin content={content} />
             <div className="relative min-h-[50vh]">
               <RichTextPlugin
                 contentEditable={
@@ -232,6 +212,7 @@ const Editor = () => {
                 ErrorBoundary={() => null}
               />
 
+              <OnChangePlugin onChange={onChange} />
               <AutoFocusPlugin />
               <ImagePlugin />
               <ListPlugin />
@@ -261,7 +242,8 @@ const Editor = () => {
                     JSON.stringify(setData)
                   );
                   navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
-                }}>
+                }}
+              >
                 {t<string>("BTNS.CANCEL")}
               </button>
               <button
@@ -269,7 +251,8 @@ const Editor = () => {
           text-[16px] font-medium leading-[20px] shadow-free-trial "
                 title={t<string>("BTNS.SAVE")}
                 aria-label={t<string>("BTNS.SAVE")}
-                type="submit">
+                type="submit"
+              >
                 {t<string>("BTNS.SAVE")}
               </button>
             </div>
