@@ -7,7 +7,7 @@ import star from "../../assets/photos/profile/star.svg";
 import star_active from "../../assets/photos/main/star-active.svg";
 import useOutside from "../../core/hooks/useOutside";
 import Playbook from "../../core/interface/playbook";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import useModal from "../../core/hooks/useModal";
 import useAuth from "../../core/hooks/useAuth";
@@ -32,6 +32,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
   let [priority, setPriority] = useState(item.priority);
   const [playbook]: any = useState(item);
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -63,14 +64,23 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
       })}
     >
       <div className="header">
-        <Link
-          to={`/${PrivateUIRoutes.Profile}/${playbook?.profile_username}`}
+        <button
+          onClick={() => {
+            if (window.location.pathname.split("/").includes("profile")) {
+              localStorage.setItem("playbook_id", JSON.stringify(playbook?.id));
+              navigate(`/${PrivateUIRoutes.Preview}`);
+            } else {
+              navigate(
+                `/${PrivateUIRoutes.Profile}/${playbook?.profile_username}`
+              );
+            }
+          }}
           className="text-[24px] font-bold text-home-title leading-normal mb-[4px] max-[690px]:text-[20px]"
         >
           {playbook?.name?.length > 36
             ? `${playbook?.name.slice(0, 36)}...`
             : playbook?.name}
-        </Link>
+        </button>
         {!discover && (
           <p className="text-[16px] text-input-paceholder leading-[26px] max-[690px]:text-[14px]">
             Viewed 1235 times
@@ -105,8 +115,18 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
       </div>
 
       <div
+        onClick={() => {
+          if (window.location.pathname.split("/").includes("profile")) {
+            localStorage.setItem("playbook_id", JSON.stringify(playbook?.id));
+            navigate(`/${PrivateUIRoutes.Preview}`);
+          } else {
+            navigate(
+              `/${PrivateUIRoutes.Profile}/${playbook?.profile_username}`
+            );
+          }
+        }}
         className="photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border 
-          w-[100%] h-[240px] rounded-[8px]"
+          w-[100%] h-[240px] rounded-[8px] cursor-pointer"
       >
         <img
           src={playbook.thumbnail_url || playbook.header_url}
