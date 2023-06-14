@@ -22,6 +22,7 @@ import {
   $getRoot,
   $getSelection,
   $getTextContent,
+  $isRangeSelection,
   $setSelection,
   LexicalEditor,
 } from "lexical";
@@ -87,6 +88,7 @@ const editorConfig = {
 const Editor = () => {
   const [savedData, setSavedData] = useState<Data.Page | any>();
   const [content, setContent] = useState<any>(null);
+  const [element, setElement] = useState<string>("");
   const [update, setUpdate] = useState<boolean>(false);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -142,7 +144,10 @@ const Editor = () => {
   const addPage = async (values: any) => {
     try {
       values.privacy = values.privacy ? "private" : "public";
-      const response = await PlaybookService.AddPage(values);
+      const response = await PlaybookService.AddPage({
+        ...values,
+        content: { state: values.content, element },
+      });
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
       dispatch(setReloadChecker(true));
       dispatch(setOpenedPages([response?.data?.data?.id]));
@@ -166,7 +171,10 @@ const Editor = () => {
 
       delete values.playbook_id;
 
-      await PlaybookService.UpdatePage(String(page_id), values);
+      await PlaybookService.UpdatePage(String(page_id), {
+        ...values,
+        content: { state: values.content, element },
+      });
       setUpdate(!update);
 
       dispatch(setReloadChecker(!reloadChecker));
@@ -202,7 +210,7 @@ const Editor = () => {
       <div>
         <LexicalComposer initialConfig={editorConfig}>
           <div className="w-full rounded-[8px] border-[1px] border-header-bottom flex flex-col justify-between bg-white">
-            <ToolbarPlugin content={content} />
+            <ToolbarPlugin content={content} setElement={setElement} />
             <div className="relative min-h-[50vh]">
               <RichTextPlugin
                 contentEditable={

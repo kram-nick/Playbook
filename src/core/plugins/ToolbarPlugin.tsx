@@ -565,7 +565,10 @@ function InsertImageUploadedDialogBody({
     </>
   );
 }
-const ToolbarPlugin: React.FC<{ content: string }> = ({ content }) => {
+const ToolbarPlugin: React.FC<{
+  content: string;
+  setElement: (value: any) => void;
+}> = ({ content, setElement }) => {
   const [editor] = useLexicalComposerContext();
   const toolbarRef = useRef(null);
   const [blockType, setBlockType] = useState<string>("paragraph");
@@ -603,11 +606,7 @@ const ToolbarPlugin: React.FC<{ content: string }> = ({ content }) => {
       const elementDOM = editor.getElementByKey(elementKey);
 
       if (elementDOM !== null) {
-        console.log(isBold, ": bold");
-        console.log(isBold, ": italic");
-        console.log(isBold, ": undeline");
-        console.log(isBold, ": font-family");
-
+        setElement(JSON.stringify(elementDOM?.outerHTML));
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType(anchorNode, ListNode);
           const type = parentList ? parentList.getTag() : element.getTag();
