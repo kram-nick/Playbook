@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import classNames from "classnames";
+
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
 import icon_plus from "../../../assets/photos/main/plus.svg";
-import { useTranslation } from "react-i18next";
 import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useModal from "../../../core/hooks/useModal";
@@ -12,6 +14,8 @@ import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDat
 import { MainTabs, Modal } from "../../../core/models/enums";
 
 const MyPlaybooks = () => {
+  const [loading, setLoading] = useState(false);
+
   const { t } = useTranslation();
   const { listType } = useAppSelector((state) => state.app);
   const { reloadChecker } = useAppSelector((state) => state.helpers);
@@ -22,12 +26,18 @@ const MyPlaybooks = () => {
     query: {},
     dependencies: [reloadChecker],
   });
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const handleNewPlaybook = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
   };
+
+  useEffect(() => {
+    setLoading(true);
+    if (fetchedData?.data?.playbooks) {
+      setTimeout(() => setLoading(false), 850);
+    }
+  }, [fetchedData?.data?.playbooks]);
 
   return (
     <div>
@@ -38,8 +48,7 @@ const MyPlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
+            })}>
             {fetchedData?.data?.playbooks.map(
               (playbook: any, index: number) => (
                 <AppMainCard
@@ -69,8 +78,7 @@ const MyPlaybooks = () => {
             onClick={handleNewPlaybook}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>

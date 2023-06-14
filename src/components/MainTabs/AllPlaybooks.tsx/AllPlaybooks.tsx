@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import AppMainCard from "../../AppMainCard/AppMainCard";
+import SkeletonPlaybook from "../../SkeletonPlaybook/SkeletonPlaybook";
 
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
@@ -10,11 +11,10 @@ import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useModal from "../../../core/hooks/useModal";
 import { MainTabs, Modal } from "../../../core/models/enums";
 import { setPlaybookType } from "../../../core/store/reducers/helpers/helpersDataSlice";
+import { Data } from "../../../core/models";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
 import icon_plus from "../../../assets/photos/main/plus.svg";
-import { Data } from "../../../core/models";
-import SkeletonPlaybook from "../../SkeletonPlaybook/SkeletonPlaybook";
 
 const AllPlaybooks = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const AllPlaybooks = () => {
 
   const { t } = useTranslation();
 
-  const { listType, selectedTab } = useAppSelector((state) => state.app);
+  const { listType } = useAppSelector((state) => state.app);
   const { reloadChecker } = useAppSelector((state) => state.helpers);
   const { user } = useAppSelector((state) => state.account);
 
@@ -32,7 +32,7 @@ const AllPlaybooks = () => {
   useEffect(() => {
     setLoading(true);
     if (playbooks) {
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => setLoading(false), 850);
     }
   }, [playbooks]);
 
@@ -83,7 +83,7 @@ const AllPlaybooks = () => {
               "grid gap-y-[12px]": !listType,
             })}>
             {playbooks?.map((playbook: any, index: number) =>
-              !loading ? (
+              loading ? (
                 <SkeletonPlaybook key={playbook.id} />
               ) : (
                 <AppMainCard

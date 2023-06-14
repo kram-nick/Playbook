@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 
 import AppMainCard from "../../AppMainCard/AppMainCard";
+import SkeletonPlaybook from "../../SkeletonPlaybook/SkeletonPlaybook";
 
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";
@@ -14,6 +16,8 @@ import icon_empty from "../../../assets/photos/main/empty.svg";
 import icon_plus from "../../../assets/photos/main/plus.svg";
 
 const Listings = () => {
+  const [loading, setLoading] = useState(false);
+
   const { t } = useTranslation();
   const { listType } = useAppSelector((state) => state.app);
 
@@ -32,6 +36,13 @@ const Listings = () => {
     dispatch(setPlaybookType("create"));
   };
 
+  useEffect(() => {
+    setLoading(true);
+    if (fetchedData?.data?.listings) {
+      setTimeout(() => setLoading(false), 850);
+    }
+  }, [fetchedData?.data?.listings]);
+
   return (
     <div>
       {fetchedData?.data?.listings?.length !== 0 ? (
@@ -41,16 +52,19 @@ const Listings = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
-            {fetchedData?.data?.listings.map((playbook: any, index: number) => (
-              <AppMainCard
-                key={playbook.id}
-                items={fetchedData?.data?.listings}
-                playbook={playbook}
-                index={index}
-              />
-            ))}
+            })}>
+            {fetchedData?.data?.listings.map((playbook: any, index: number) =>
+              loading ? (
+                <SkeletonPlaybook />
+              ) : (
+                <AppMainCard
+                  key={playbook.id}
+                  items={fetchedData?.data?.listings}
+                  playbook={playbook}
+                  index={index}
+                />
+              )
+            )}
           </div>
         </div>
       ) : (
@@ -69,8 +83,7 @@ const Listings = () => {
             onClick={handleNew}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>

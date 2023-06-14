@@ -1,17 +1,21 @@
+import { useState, useEffect } from "react";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
+import AppMainCard from "../../AppMainCard/AppMainCard";
+import SkeletonPlaybook from "../../SkeletonPlaybook/SkeletonPlaybook";
+
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../../core/http";
-
-import icon_empty from "../../../assets/photos/main/empty.svg";
-import icon_plus from "../../../assets/photos/main/plus.svg";
-import { useTranslation } from "react-i18next";
-import AppMainCard from "../../AppMainCard/AppMainCard";
 import { useAppSelector } from "../../../core/hooks/useRedux";
-import { useNavigate } from "react-router-dom";
-import { MainTabs } from "../../../core/models/enums";
 import { UIRoutes } from "../../../core/router";
 
+import icon_empty from "../../../assets/photos/main/empty.svg";
+
 const PurchasedPlaybooks = () => {
+  const [loading, setLoading] = useState(false);
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { listType } = useAppSelector((state) => state.app);
@@ -22,6 +26,13 @@ const PurchasedPlaybooks = () => {
     dependencies: [reloadChecker],
   });
 
+  useEffect(() => {
+    setLoading(true);
+    if (fetchedData?.data?.purchases) {
+      setTimeout(() => setLoading(false), 850);
+    }
+  }, [fetchedData?.data?.purchases]);
+
   return (
     <div>
       {fetchedData?.data?.purchases?.length !== 0 ? (
@@ -31,10 +42,11 @@ const PurchasedPlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
-            {fetchedData?.data?.purchases.map(
-              (playbook: any, index: number) => (
+            })}>
+            {fetchedData?.data?.purchases.map((playbook: any, index: number) =>
+              loading ? (
+                <SkeletonPlaybook />
+              ) : (
                 <AppMainCard
                   key={playbook.id}
                   items={fetchedData?.data?.purchases}
@@ -63,8 +75,7 @@ const PurchasedPlaybooks = () => {
             }}
             className="bg-button-submit-footer flex items-center py-[5px] px-[92px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.DISCOVER")}
             </span>
