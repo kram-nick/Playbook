@@ -585,13 +585,13 @@ const ToolbarPlugin: React.FC<{
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
 
-  useEffect(() => {
-    editor.update(() => {
-      if (content) {
-        editor.setEditorState(editor.parseEditorState(content));
-      }
-    });
-  }, [content]);
+  // useEffect(() => {
+  //   editor.update(() => {
+  //     if (content) {
+  //       editor.setEditorState(editor.parseEditorState(content));
+  //     }
+  //   });
+  // }, [content]);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();

@@ -146,7 +146,7 @@ const Editor = () => {
       values.privacy = values.privacy ? "private" : "public";
       const response = await PlaybookService.AddPage({
         ...values,
-        content: { state: values.content, element },
+        content: { editor_state: values.content, element },
       });
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
       dispatch(setReloadChecker(true));
@@ -173,7 +173,7 @@ const Editor = () => {
 
       await PlaybookService.UpdatePage(String(page_id), {
         ...values,
-        content: { state: values.content, element },
+        content: { editor_state: values.content, element },
       });
       setUpdate(!update);
 
