@@ -52,8 +52,7 @@ const Password = () => {
   return (
     <form
       className="form font-poppins relative max-[1024px]:pb-[60px]"
-      onSubmit={formikForm.handleSubmit}
-    >
+      onSubmit={formikForm.handleSubmit}>
       <div className="flex items-start justify-between pb-[20px] border-b-[1px] border-solid border-header-bottom gap-[20px] mb-[24px]">
         <div className="">
           <h3 className="text-[20px] leading-[28px] font-medium text-home-title mb-[4px]">
@@ -66,18 +65,22 @@ const Password = () => {
         <div className="flex items-center gap-[16px]  max-[1024px]:absolute right-[0] bottom-[0px]">
           <button
             className="min-w-[130px] h-[38px] flex items-center justify-center px-[15px] bg-white rounded-[5px] text-home-title
-            text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
+            text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]
+            hover:bg-secondary-hover
+      active:bg-secondary-active
+            "
             onClick={() => {
               navigate("/");
-            }}
-          >
+            }}>
             {t<string>("BTNS.CANCEL")}
           </button>
           <button
             type="submit"
             className="min-w-[130px] h-[38px] flex items-center justify-center px-[15px] bg-buttons-bg rounded-[5px] text-buttons-color 
-              text-[16px] font-medium leading-[20px] shadow-free-trial "
-          >
+              text-[16px] font-medium leading-[20px] shadow-free-trial 
+              hover:bg-buttons-bg-hover
+                active:bg-buttons-bg-active
+              ">
             {t<string>("BTNS.SAVE")}
           </button>
         </div>
@@ -86,8 +89,7 @@ const Password = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-        max-[690px]:mb-[6px] max-[690px]:font-normal"
-        >
+        max-[690px]:mb-[6px] max-[690px]:font-normal">
           {t<string>("SETTINGS.CURRENT_PASSWORD")}
         </div>
 
@@ -112,8 +114,7 @@ const Password = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-        max-[690px]:mb-[6px] max-[690px]:font-normal"
-        >
+        max-[690px]:mb-[6px] max-[690px]:font-normal">
           {t<string>("SETTINGS.NEW_PASSWORD")}
         </div>
 
@@ -142,8 +143,7 @@ const Password = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-        max-[690px]:mb-[6px] max-[690px]:font-normal"
-        >
+        max-[690px]:mb-[6px] max-[690px]:font-normal">
           {t<string>("SETTINGS.CONFIRM_PASSWORD")}
         </div>
 

@@ -169,7 +169,7 @@ const BookChapters: React.FC<pagesProps> = ({
                 }}
                 className="rounded-l-[5px] h-[38px] border-solid border-r-[1px] flex items-center border-header-bottom
                 px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
-                hover:bg-people-bg transition duration-300 linear">
+                hover:bg-secondary-hover active:bg-secondary-active transition duration-300 linear">
                 <img src={edit} alt="" />
                 {t<string>("BTNS.EDIT")}
               </button>
@@ -180,7 +180,7 @@ const BookChapters: React.FC<pagesProps> = ({
                 }}
                 className="rounded-r-[5px] h-[38px]  flex items-center 
                 px-[12px] text-[14px] cursor-pointer leading-[18px] tracking-[-0.1px] font-medium text-simple-text gap-[8px]
-                hover:bg-people-bg transition duration-300 linear">
+                hover:bg-secondary-hover active:bg-secondary-active transition duration-300 linear">
                 <img src={icon_delete} alt="" />
                 {t<string>("BTNS.DELETE")}
               </div>

@@ -275,6 +275,7 @@ const Sidebar = () => {
           className={classNames({
             "bg-button-submit-footer flex items-center justify-center w-[100%] py-[4px] px-[16px] rounded-[5px] shadow-free-trial h-[38px] gap-[6px] mb-[10px] mt-[30px]":
               true,
+            "hover:bg-buttons-bg-hover active:bg-buttons-bg-active": true,
             hidden: !sideOpen,
           })}
         >

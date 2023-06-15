@@ -6,6 +6,8 @@ module.exports = {
       colors: {
         "footer-main": "#242428",
         "buttons-bg": "#2B71F7",
+        "buttons-bg-hover": "#5390F8",
+        "buttons-bg-active": "#3761DE",
         "buttons-color": "#FFF",
         "header-links": "#4F4C68",
         "home-title": "#242428",
@@ -63,6 +65,8 @@ module.exports = {
         "accent-pay-code": "#47B5FF",
         "order-main": "#272D37",
         "selected-btn": "rgba(43, 113, 247, 0.16)",
+        "secondary-hover": "#F7F7F8",
+        "secondary-active": "#EFEFF1"
       },
       backgroundPosition: {
         "top-bottom": "right 60px ",
