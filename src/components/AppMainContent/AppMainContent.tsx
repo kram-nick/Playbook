@@ -81,7 +81,10 @@ const AppMainContent = () => {
         <div className="flex flex-row items-center gap-[12px]">
           <button
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
-            shadow-free-trial h-[40px] gap-[6px]"
+            shadow-free-trial h-[40px] gap-[6px]
+            hover:bg-buttons-bg-hover
+            active:bg-buttons-bg-active
+            "
             onClick={HandleNewPlaybook}>
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.ADD_BTN")}
