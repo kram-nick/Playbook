@@ -214,12 +214,16 @@ const Sidebar = () => {
     }
   };
 
+  console.log(!sideOpen);
+
   return (
     <div
       className={classNames({
-        "sidebar w-[280px]  min-h-[100%] max-lg:min-w-[0%] relative transition-[width] duration-[200ms] ease-in max-[1024px]:w-[0px] max-[2064px]:min-w-[280px]":
+        "sidebar w-[280px]  min-h-[100%] max-lg:min-w-[0%] relative transition-[width] duration-[200ms] ease-in max-[1024px]:w-[0px]":
           true,
         "min-[1024px]:w-[25px]": !sideOpen,
+        "max-[2064px]:min-w-[280px]": sideOpen,
+        "min-w-[0px]": !sideOpen,
       })}>
       <button
         onClick={() => dispatch(setToggleSidebar(!sideOpen))}
