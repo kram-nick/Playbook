@@ -104,7 +104,10 @@ const HomePage = () => {
                 LogEvent("splash-page", "get-started");
               }}
               to={`/${UIRoutes.SIGN_UP}`}
-              className="text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial">
+              className="text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial
+              hover:bg-buttons-bg-hover
+                active:bg-buttons-bg-active
+              ">
               {t<string>("HOME.FREE_START")}
             </Link>
             <div className="flex items-center">
@@ -114,7 +117,10 @@ const HomePage = () => {
                   hotjar.event("SplashPage-LearnMore");
                   handleClickScroll();
                 }}
-                className="text-buttons-bg text-[16px] font-semibold leading-[21px] min-w-[90px]">
+                className="text-buttons-bg text-[16px] font-semibold leading-[21px] min-w-[90px]
+                hover:text-buttons-bg-hover
+                active:text-buttons-bg-active
+                ">
                 {t<string>("HOME.LEARN")}
               </button>
               <img
@@ -544,7 +550,10 @@ const HomePage = () => {
                     LogEvent("splash-page", "get-started");
                   }}
                   to={`/${UIRoutes.SIGN_UP}`}
-                  className="table text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial">
+                  className="table text-[16px] font-semibold leading-[21px] py-[17px] px-[20px] bg-buttons-bg rounded-[8px] text-buttons-color shadow-free-trial
+                  hover:bg-buttons-bg-hover
+                active:bg-buttons-bg-active
+                  ">
                   {t<string>("HOME.FREE_START")}
                 </Link>
               </div>

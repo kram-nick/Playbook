@@ -73,7 +73,10 @@ export default function ModalDeletePlaybook() {
         <button
           className="h-[46px] flex items-center justify-center 
                   py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
-                  text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
+                  text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]
+                  hover:bg-secondary-hover
+                  active:bg-secondary-active
+                  "
           title="Cancel"
           onClick={closeModal}>
           {t<string>("MODALS.CANCEL")}

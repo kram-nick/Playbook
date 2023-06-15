@@ -147,7 +147,7 @@ const PlaybookDetail = () => {
               border-solid border-header-bottom font-poppins max-[690px]:px-[16px]">
                   <button
                     onClick={handleViewDetail}
-                    className="flex items-center text-[16px] leading-[20px] font-medium text-buttons-bg gap-[4px]">
+                    className="flex items-center text-[16px] leading-[20px] font-medium text-buttons-bg hover:text-buttons-bg-hover active:text-buttons-bg-active gap-[4px]">
                     <img src={back} alt="" /> {t<string>("BTNS.BACK")}
                   </button>
                   <h1
@@ -171,7 +171,7 @@ const PlaybookDetail = () => {
             </button>
             <button
               className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
-                border-solid shadow-free-trial bg-buttons-bg text-white text-[16px] font-medium">
+                border-solid shadow-free-trial bg-buttons-bg hover:bg-buttons-bg-hover active:bg-buttons-bg-active text-white text-[16px] font-medium">
               {t<string>("PROFILE.GET_FREE")}
             </button>
           </div>

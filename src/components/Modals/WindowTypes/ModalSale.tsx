@@ -210,15 +210,13 @@ const ModalSale = () => {
                 border-[1px] border-solid border-border-btn bg-white font-poppins 
               flex flex-col items-center
                 max-md:m-[12px]
-                "
-    >
+                ">
       {selectedType ? (
         <div>
           <div
             className="w-full flex justify-between items-center mb-[20px]
               max-md:mb-[15px]
-              "
-          >
+              ">
             <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-normal font-poppins text-footer-main">
               {t<string>("MODALS.LIST_TITLE")}
             </span>
@@ -238,14 +236,12 @@ const ModalSale = () => {
             className="mb-[24px] flex flex-row items-start gap-[24px] justify-between w-full
                 max-md:flex-col
                 max-md:mb-[19px]
-              "
-          >
+              ">
             <div
               className="relative rounded-[5px] border-[0.718421px] border-solid border-header-bottom flex flex-col gap-[11.49px]
                 items-start p-[11.1px] min-w-[244px]
                 max-md:w-full
-                "
-            >
+                ">
               <div className="flex flex-col items-start gap-[2.87px] w-full">
                 <h4 className="text-[16px] font-semibold normal leading-[21px] text-footer-main font-poppins">
                   {`${playbook?.name.slice(0, 15)}...`}
@@ -272,8 +268,7 @@ const ModalSale = () => {
                   className="flex justify-center min-w-[188.7px]  
              bg-blue-light shadow-get_free rounded-[3.7px] border-[0.62px] h-[28.37px] text-[14px] font-poppins font-normal items-center self-stretch not-italic leading-[21px] text-buttons-bg 
              max-md:min-w-[90%]
-             "
-                >
+             ">
                   {t<string>("MODALS.FREE_BTN")}
                 </button>
                 <button
@@ -281,16 +276,14 @@ const ModalSale = () => {
                   className="min-w-[28.37px] min-h-[28.37px] p-[7.4px] sahdow-payment-btn border-[0.62px] rounded-[3.7px] border-header-bottom flex items-center justify-center
             max-md:min-w-[10%]
             max-md:h-[28.37px]
-            "
-                >
+            ">
                   <img src={icon_star} alt="icon_star" />
                 </button>
               </div>
               <button
                 onClick={() => setSelectedType(false)}
                 type="button"
-                className="absolute left-0 bottom-[-28px] text-[16px] text-buttons-bg font-medium tracking-[-0.1px] leading-[18px]"
-              >
+                className="absolute left-0 bottom-[-28px] text-[16px] text-buttons-bg font-medium tracking-[-0.1px] leading-[18px]">
                 {t<string>("MODALS.CHANGE_THUMB")}
               </button>
             </div>
@@ -300,8 +293,7 @@ const ModalSale = () => {
         max-md:flex-col
         max-md:mb-[19px]
         max-sm:min-w-[325px]
-        "
-            >
+        ">
               <div className="flex flex-col gap-[16px]">
                 <label className="flex flex-col gap-[6px]">
                   <span className="text-[14px] text-home-title font-light leading-[24px]">
@@ -403,8 +395,7 @@ const ModalSale = () => {
                         return (
                           <label
                             className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px] bg-selected-btn"
-                            key={tag.id}
-                          >
+                            key={tag.id}>
                             <span className="font-poppins normal font-light text-[12px] leading-[16px]">
                               {tag.name}
                             </span>
@@ -442,8 +433,7 @@ const ModalSale = () => {
                             }
                           }}
                           className="flex justify-between px-[16px] py-[10px] hover:bg-chapter-color"
-                          key={tag.id}
-                        >
+                          key={tag.id}>
                           <span className="font-light text-[14px] normal leading-[20px] font-poppins tracking-[-0.1px] text-home-title">
                             {tag.name}{" "}
                           </span>
@@ -465,8 +455,7 @@ const ModalSale = () => {
                   className={classNames({
                     "flex flex-col gap-[6px]": true,
                     "mt-[-100px] z-[-1]": tagItem.active,
-                  })}
-                >
+                  })}>
                   <span className="text-[14px] text-home-title font-light leading-[20px]">
                     {t<string>("MODALS.VISIBILITY")}
                   </span>
@@ -476,8 +465,7 @@ const ModalSale = () => {
                       className="w-full flex justify-between items-center px-[16px] py-[7px]"
                       onClick={() => {
                         //     setShowDrop(!showDrop);
-                      }}
-                    >
+                      }}>
                       {formikForm.values.status || t<string>("MODALS.SELECT")}
                       <img src={arrowDown} alt="arrowDown" />
                     </button>
@@ -487,8 +475,7 @@ const ModalSale = () => {
                         onClick={() => {
                           setShowDrop(!showDrop);
                         }}
-                        className="cursor-pointer absolute left-[0px] bottom-[-30px] w-[520px] bg-blue-600 z-20 flex flex-col items-start"
-                      >
+                        className="cursor-pointer absolute left-[0px] bottom-[-30px] w-[520px] bg-blue-600 z-20 flex flex-col items-start">
                         {/* {tags.map((tag: Data.Tag) => ( */}
                         <span className="px-[16px] py-[7px] text-[14px] text-home-title font-light leading-[20px]">
                           {formikForm.values.status}
@@ -532,8 +519,7 @@ const ModalSale = () => {
                       />
                       <span
                         className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
-                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
-                      ></span>
+                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>
                     </span>
                   </label>
                 </div>
@@ -588,8 +574,7 @@ const ModalSale = () => {
                                 +formikForm.values.discount_price <= 99,
                               "left-[42px]":
                                 +formikForm.values.discount_price > 99,
-                            })}
-                          >
+                            })}>
                             %
                           </span>
                         </label>
@@ -629,14 +614,15 @@ const ModalSale = () => {
               <div
                 className="w-full flex items-center justify-end gap-[16px]
           max-sm:justify-between
-          "
-              >
+          ">
                 <button
                   type="button"
                   onClick={closeModal}
                   className="text-[16px] text-top-playbook-title font-poppins font-medium leading-[21px] 
-                px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom"
-                >
+                px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom
+                hover:bg-secondary-hover
+                active:bg-secondary-active
+                ">
                   {t<string>("MODALS.CANCEL")}
                 </button>
                 <button
@@ -645,8 +631,9 @@ const ModalSale = () => {
                   className="text-[16px] text-buttons-color bg-buttons-bg font-poppins font-medium leading-[21px]
                 px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn
                 max-sm:px-[36.5px]
-                "
-                >
+                hover:bg-buttons-bg-hover
+                active:bg-buttons-bg-active
+                ">
                   {t<string>("MODALS.SALE_BTN")}
                 </button>
               </div>
@@ -694,16 +681,20 @@ const ModalSale = () => {
               }}
               type="button"
               className="text-[16px] text-top-playbook-title font-poppins font-medium leading-[21px] 
-                px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom"
-            >
+                px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom
+                hover:bg-secondary-hover
+                active:bg-secondary-active
+                ">
               {t<string>("MODALS.CANCEL")}
             </button>
             <button
               onClick={() => setSelectedType(true)}
               type="button"
               className="text-[16px] font-poppins font-medium leading-[21px] 
-                px-[50px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] text-buttons-color bg-buttons-bg"
-            >
+                px-[50px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] text-buttons-color bg-buttons-bg
+                hover:bg-buttons-bg-hover
+                active:bg-buttons-bg-active
+                ">
               {t<string>("MODALS.SAVE")}
             </button>
           </div>

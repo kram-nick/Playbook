@@ -198,13 +198,19 @@ const ModalPurchase = () => {
         <button
           onClick={closeModal}
           className="text-[16px] text-top-playbook-title font-poppins font-medium leading-[21px] 
-          px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom">
+          px-[41px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom
+          hover:bg-secondary-hover
+      active:bg-secondary-active
+          ">
           {t<string>("PURCHASE.CANCEL")}
         </button>
         <button
           onClick={CreateOrder}
           className="text-[16px] text-buttons-color bg-buttons-bg font-poppins font-medium leading-[21px]
-          px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn">
+          px-[70.5px] py-[12px] rounded-[6px] shadow-purchase_btn
+          hover:bg-buttons-bg-hover
+                active:bg-buttons-bg-active
+          ">
           {t<string>("PURCHASE.BUY")}
         </button>
       </div>

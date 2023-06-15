@@ -101,7 +101,7 @@ const HeaderProfile = () => {
           border-[1px] border-solid border-header-bottom shadow-dropmenu rounded-[8px] min-w-[196px]">
           <Link
             to="/settings"
-            className="menu-item flex items-center p-[12px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border">
+            className="menu-item flex items-center p-[12px] gap-[8px] cursor-pointer hover:bg-secondary-hover bg-buttons-color active:bg-secondary-active">
             <img src={icon_settings} alt="" className="w-[24px] h-[24px]" />
             <span className="text-[16px] font-medium text-simple-text leading-[20px]">
               {t<string>("MAIN.ACC_SETTINGS")}
@@ -109,7 +109,7 @@ const HeaderProfile = () => {
           </Link>
           <li
             onClick={logout}
-            className="menu-item flex items-center p-[12px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border">
+            className="menu-item flex items-center p-[12px] gap-[8px] cursor-pointer hover:bg-secondary-hover bg-buttons-color active:bg-secondary-active">
             <img src={icon_logout} alt="" className="w-[24px] h-[24px]" />
             <span className="text-[16px] font-medium text-simple-text leading-[20px]">
               {t<string>("MAIN.LOGOUT")}

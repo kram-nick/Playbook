@@ -135,7 +135,7 @@ const ProfileCard = ({ item, typeCard, discover }: CardProps) => {
         <button
           onClick={() => (!isAuth ? handleSignUp() : createOrder(playbook))}
           className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
-            border-solid shadow-free-trial bg-blue-light text-buttons-bg text-[16px] font-medium flex items-center 
+            border-solid shadow-free-trial bg-blue-light text-buttons-bg hover:text-buttons-bg-hover active:text-buttons-bg-active text-[16px] font-medium flex items-center 
             text-center justify-center">
           {playbook?.chargeable
             ? t<string>("PROFILE.BUY_NOW")

@@ -31,8 +31,7 @@ export default function ModalDeletePage() {
     <div
       onClick={(e) => e.stopPropagation()}
       className="modal-box relative w-[100%] max-w-[400px] px-[24px] py-[24px] shadow-free-trial rounded-[5px]
-              border-[1px] border-solid border-border-btn bg-white font-poppins max-[690px]:w-[calc(100%-32px)]"
-    >
+              border-[1px] border-solid border-border-btn bg-white font-poppins max-[690px]:w-[calc(100%-32px)]">
       <div className="flex items-center justify-between mb-[24px]">
         <img src={icon_delete} alt="" />
         <button className="absolute top-[16px] right-[16px]">
@@ -51,10 +50,12 @@ export default function ModalDeletePage() {
         <button
           className="h-[46px] flex items-center justify-center 
                   py-[8px] px-[15px] bg-white rounded-[5px] text-home-title
-                  text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]"
+                  text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px]
+                  hover:bg-secondary-hover
+                  active:bg-secondary-active
+                  "
           title="Cancel"
-          onClick={closeModal}
-        >
+          onClick={closeModal}>
           {t<string>("MODALS.CANCEL")}
         </button>
         <button
@@ -62,8 +63,7 @@ export default function ModalDeletePage() {
                   py-[8px] px-[15px] bg-danger rounded-[5px] text-buttons-color 
                   text-[16px] font-medium leading-[20px] shadow-free-trial "
           onClick={deleteItem}
-          title="Delete"
-        >
+          title="Delete">
           {t<string>("MODALS.CONFIRM")}
         </button>
       </div>
