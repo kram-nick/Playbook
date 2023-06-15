@@ -7,6 +7,7 @@ import useOutside from "../../core/hooks/useOutside";
 import Playbook from "../../core/interface/playbook";
 import PlaybookService from "../../core/services/playbook.service";
 import {
+  setPages,
   setSelectedData,
   setSelectedPlaybook,
   setSelectedTab,
@@ -120,6 +121,15 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
   //   }
   // };
 
+  async function LoadPages(playbook_id: string) {
+    if (playbook_id) {
+      try {
+        const response = await PlaybookService.getPages(playbook_id);
+        dispatch(setPages(response?.data?.data));
+      } catch (errors: any) {}
+    }
+  }
+
   const OpenPlaybook = () => {
     const setData = {
       id: playbook.id,
@@ -136,6 +146,7 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
         JSON.stringify([...sidebarTabs, Number(tabType)])
       );
     }
+    console.log(tabType);
     if (tabType) {
       dispatch(
         setSelectedPlaybook({
@@ -153,6 +164,7 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
         tabType: Number(tabType),
       })
     );
+    LoadPages(playbook.id);
     navigate(`/creating/${playbook.id}`);
   };
 
@@ -311,7 +323,7 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                       onMouseLeave={() => setIsSale(false)}
                       onMouseOver={() => setIsSale(true)}
                       onClick={handleSale}
-                      className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active ac max-[1024px]:px-[0px]">
+                      className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                       <img
                         src={isSale ? icon_sale_unactive : icon_sale}
                         alt="icon_sale"
@@ -329,7 +341,7 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                   )}
                 <li
                   onClick={HandleShare}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active ac max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
                     {t<string>("MAIN.SHARE")}
@@ -337,7 +349,7 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                 </li>
                 <li
                   onClick={() => SetFavorite(playbook.id, playbook.favorited)}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active ac min-[1024px]:hidden 
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border min-[1024px]:hidden 
                   max-[1024px]:px-[0px]">
                   <img
                     src={playbook.favorited ? star_active : star_mobile}
@@ -350,7 +362,7 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                 </li>
                 <li
                   onClick={HandleDetails}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active ac max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img
                     src={icon_settings}
                     alt=""
@@ -362,7 +374,7 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                 </li>
                 <li
                   onClick={() => HandleDelete()}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active ac max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]">
                   <img src={icon_delete} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
                     {t<string>("MAIN.DELETE")}

@@ -33,6 +33,12 @@ const ContentChapters = () => {
     }
   );
 
+  useEffect(() => {
+    if (!localStorage.getItem("saved_playbook")) {
+      navigate(`/${PrivateUIRoutes.Main}`);
+    }
+  }, []);
+
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${playbook_id}/pages`, {
     resolve: (response: any) => {
       if (response) {
@@ -55,7 +61,8 @@ const ContentChapters = () => {
             "opacity-50": !playbook?.data?.name,
             "text-[32px] font-poppins font-bold text-home-title mb-[24px]":
               true,
-          })}>
+          })}
+        >
           {playbook?.data?.name
             ? playbook?.data?.name
             : t<string>("CREATE.UNTITLED")}
@@ -79,7 +86,8 @@ const ContentChapters = () => {
           className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg"
           onClick={() => {
             navigate(`/${PrivateUIRoutes.Create}/${playbook_id}`);
-          }}>
+          }}
+        >
           <img src={plus} alt="" />
           {t<string>("BTNS.ADD_PAGE")}
         </button>

@@ -69,7 +69,7 @@ module.exports = {
         "secondary-active": "#EFEFF1"
       },
       backgroundPosition: {
-        "top-bottom": "right 60px "
+        "top-bottom": "right 60px ",
       },
       fontFamily: {
         poppins: ["Poppins, sans-serif"],
