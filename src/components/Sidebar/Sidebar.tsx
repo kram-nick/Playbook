@@ -220,7 +220,8 @@ const Sidebar = () => {
         "sidebar w-[280px]  min-h-[100%] max-lg:min-w-[0%] relative transition-[width] duration-[200ms] ease-in max-[1024px]:w-[0px] max-[2064px]:min-w-[280px]":
           true,
         "min-[1024px]:w-[25px]": !sideOpen,
-      })}>
+      })}
+    >
       <button
         onClick={() => dispatch(setToggleSidebar(!sideOpen))}
         className={classNames({
@@ -231,7 +232,8 @@ const Sidebar = () => {
           "invisible opacity-0": sideOpen,
           "right-[-16px]": !sideOpen,
           "top-[12.42%]": !sideOpen,
-        })}>
+        })}
+      >
         <img
           src={arrow_blue}
           alt="arrow"
@@ -251,14 +253,16 @@ const Sidebar = () => {
           "max-lg:left-[0px!important]": !sideOpen,
           "min-[1024px]:w-[0px]": !sideOpen,
           "px-[0px]": sideOpen,
-        })}>
+        })}
+      >
         <Link
           to="/home"
           className={classNames({
             "py-[16px] w-[160px] max-w-[160px] transition-[opacity] duration-[150ms] ease-in table":
               true,
             "min-[1024px]:opacity-0 delay-150 hidden": !sideOpen,
-          })}>
+          })}
+        >
           <img src={playbookLogo} alt="playbookLogo" />
         </Link>
 
@@ -268,7 +272,8 @@ const Sidebar = () => {
             "bg-button-submit-footer flex items-center justify-center w-[100%] py-[4px] px-[16px] rounded-[5px] shadow-free-trial h-[38px] gap-[6px] mb-[10px] mt-[30px]":
               true,
             hidden: !sideOpen,
-          })}>
+          })}
+        >
           <span className="text-list-title text-[16px] font-medium">
             {t<string>("MAIN.DISCOVER")}
           </span>
@@ -280,7 +285,8 @@ const Sidebar = () => {
               true,
             "delay-[100ms] min-[1024px]:opacity-0 ": !sideOpen,
             hidden: !sideOpen,
-          })}>
+          })}
+        >
           <div
             onClick={() => dispatch(setSelectedTab(MainTabs.My))}
             className={classNames({
@@ -289,10 +295,12 @@ const Sidebar = () => {
               "border-transparent": selectedTab !== MainTabs.My,
               "flex flex-row items-center justify-between my-[4px] relative border-l-[2px] transition duration-200 ease":
                 true,
-            })}>
+            })}
+          >
             <span
               className="w-[24px] h-[24px] absolute left-[5px] top-[50%] mt-[-12px] p-[4px]"
-              onClick={() => TabOpener(MainTabs.My)}>
+              onClick={() => TabOpener(MainTabs.My)}
+            >
               <img
                 src={sidebarTabs.includes(MainTabs.My) ? arrow_blue : to_arrow}
                 alt="arrow"
@@ -309,7 +317,8 @@ const Sidebar = () => {
                 "flex flex-row items-center gap-[8px] w-[100%] font-manrope text-[16px] font-semibold leading-[21.86px] px-[8px] py-[11px] pl-[32px] ":
                   true,
                 "transition duration-200 ease": true,
-              })}>
+              })}
+            >
               {t<string>("COMMON.PLAYBOOKS")}
             </span>
             <button onClick={HandleNewPlaybook}>
@@ -326,17 +335,18 @@ const Sidebar = () => {
               {playbooks?.data?.playbooks.map(
                 (playbook: any, index: number) => (
                   <li key={playbook.id} className="w-[100%]">
-                    <div
+                    <button
                       onClick={() => OpenPlaybook(playbook, MainTabs.My)}
                       className={classNames({
-                        "cursor-pointer sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
+                        "cursor-pointer sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease hover:bg-chapter-color":
                           true,
                         "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px] outline-none":
                           playbook.id === selectedPlaybook?.id &&
                           selectedPlaybook?.tabType === MainTabs.My,
                         "focus:bg-active-playbook focus:border-l-[2px]  focus:border-top-engineering focus:rounded-[4px] focus:pl-[6px] focus:outline-none":
                           true,
-                      })}>
+                      })}
+                    >
                       <img
                         // onClick={(e) => openSubMenu(e, item)}
                         src={
@@ -364,12 +374,14 @@ const Sidebar = () => {
                             selectedPlaybook?.tabType !== MainTabs.My,
                           "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                             true,
-                        })}>
+                        })}
+                      >
                         {playbook.name}
                       </span>
                       <div
                         className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
-                      transition duration-200 ease invisible opacity-0">
+                      transition duration-200 ease invisible opacity-0"
+                      >
                         <span
                           onClick={(e) => setPriorityItem(e, playbook)}
                           className={classNames({
@@ -381,7 +393,8 @@ const Sidebar = () => {
                               selectedPlaybook?.tabType !== MainTabs.My,
                             "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer":
                               true,
-                          })}>
+                          })}
+                        >
                           <img
                             src={playbook.favorited ? star_active : star}
                             alt="add to favorite"
@@ -398,7 +411,8 @@ const Sidebar = () => {
                               selectedPlaybook?.tabType !== MainTabs.My,
                             "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px] cursor-pointer":
                               true,
-                          })}>
+                          })}
+                        >
                           <img
                             src={
                               playbook.id === selectedPlaybook?.id &&
@@ -410,7 +424,7 @@ const Sidebar = () => {
                           />
                         </span>
                       </div>
-                    </div>
+                    </button>
 
                     {playbook.id === selectedPlaybook?.id &&
                       selectedPlaybook?.tabType === MainTabs.My && (
@@ -435,7 +449,8 @@ const Sidebar = () => {
                                   playbook.id === data.id &&
                                   page?.id === data.page_id &&
                                   data.type === "my",
-                              })}>
+                              })}
+                            >
                               <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
                                 #{indexChapter + 1} {page?.title}
                               </p>
@@ -457,10 +472,12 @@ const Sidebar = () => {
               "border-transparent": selectedTab !== MainTabs.Favorite,
               "flex flex-row items-center justify-between my-[4px] relative border-l-[2px]  transition duration-200 ease":
                 true,
-            })}>
+            })}
+          >
             <span
               onClick={() => TabOpener(MainTabs.Favorite)}
-              className="w-[24px] h-[24px] absolute left-[5px] top-[50%] mt-[-12px] p-[4px]">
+              className="w-[24px] h-[24px] absolute left-[5px] top-[50%] mt-[-12px] p-[4px]"
+            >
               <img
                 src={
                   sidebarTabs.includes(MainTabs.Favorite)
@@ -481,7 +498,8 @@ const Sidebar = () => {
                 "transition duration-200 ease": true,
                 "flex flex-row items-center gap-[8px] w-[100%] font-manrope text-[16px] font-semibold leading-[21.86px] px-[8px] py-[11px] pl-[32px]":
                   true,
-              })}>
+              })}
+            >
               {t<string>("COMMON.FAVORITES")}
             </span>
           </button>
@@ -493,12 +511,13 @@ const Sidebar = () => {
                     <button
                       onClick={() => OpenPlaybook(playbook, MainTabs.Favorite)}
                       className={classNames({
-                        "sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease":
+                        "sidebar-item flex flex-row px-[8px] py-[6px] gap-[8px] items-center w-[100%] relative hover:pr-[54px] transition duration-200 ease hover:bg-chapter-color":
                           true,
                         "bg-active-playbook border-l-[2px]  border-top-engineering rounded-[4px] pl-[6px] outline-nine":
                           playbook.id === selectedPlaybook?.id &&
                           selectedPlaybook?.tabType === MainTabs.Favorite,
-                      })}>
+                      })}
+                    >
                       <img
                         src={
                           playbook.id === selectedPlaybook?.id &&
@@ -525,12 +544,14 @@ const Sidebar = () => {
                             selectedPlaybook?.tabType !== MainTabs.Favorite,
                           "font-poppins font-normal  text-[16px] leading-[26px] tracking-[-0.1px] truncate block":
                             true,
-                        })}>
+                        })}
+                      >
                         {playbook.name}
                       </span>
                       <div
                         className="options flex items-center gap-[2px] absolute right-[8px] top-[50%] mt-[-10px]
-                      transition duration-200 ease invisible opacity-0">
+                      transition duration-200 ease invisible opacity-0"
+                      >
                         <span
                           onClick={(e) => removeFromFavorite(e, playbook)}
                           className={classNames({
@@ -542,7 +563,8 @@ const Sidebar = () => {
                               selectedPlaybook?.tabType !== MainTabs.Favorite,
                             "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]":
                               true,
-                          })}>
+                          })}
+                        >
                           <img
                             src={playbook.favorited ? star_active : star}
                             alt="add to favorite"
@@ -559,7 +581,8 @@ const Sidebar = () => {
                               selectedPlaybook?.tabType !== MainTabs.Favorite,
                             "w-[20px] h-[20px] flex items-center p-[2px] rounded-[2px]":
                               true,
-                          })}>
+                          })}
+                        >
                           <img
                             src={
                               playbook.id === selectedPlaybook?.id &&
@@ -595,7 +618,8 @@ const Sidebar = () => {
                                   playbook.id === data.id &&
                                   page?.id === data.page_id &&
                                   data.type === "favorite",
-                              })}>
+                              })}
+                            >
                               <p className="truncate text-[16px] leading-[22px] tracking-[-0.1px]">
                                 {page?.title}
                               </p>
@@ -964,7 +988,8 @@ const Sidebar = () => {
           "side-overlay fixed left-[0px] top-[0px] w-[100%] h-[100vh] bg-side-overlay z-[99] min-[1024px]:hidden transition-all duration-[300ms] ease-in":
             true,
           "opacity-0 invisible z-0": sideOpen,
-        })}></div>
+        })}
+      ></div>
     </div>
   );
 };
