@@ -92,6 +92,7 @@ module.exports = {
         tags: "0px 1px 2px rgba(16, 24, 40, 0.04);",
         cookies:
           "0px -5px 47px rgba(0, 0, 0, 0.04), 7px 13px 60px rgba(51, 51, 65, 0.08);",
+        card: "0px 2px 4px -2px rgba(16, 24, 40, 0.05), 0px 4px 6px -1px rgba(16, 24, 40, 0.03);"
       },
       backgroundImage: {
         sign: "url('./assets/photos/sign/bg-sign.svg')",

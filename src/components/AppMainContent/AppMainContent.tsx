@@ -82,35 +82,32 @@ const AppMainContent = () => {
           <button
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
             shadow-free-trial h-[40px] gap-[6px]"
-            onClick={HandleNewPlaybook}
-          >
+            onClick={HandleNewPlaybook}>
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.ADD_BTN")}
             </span>
             <img src={icon_plus} alt="" />
           </button>
-          <button
+          {/* <button
             className="bg-list-title flex items-center px-[12px] py-[5px] h-[40px] shadow-free-trial border-[1px] border-header-bottom rounded-[5px]"
             onClick={() => navigate(`/${UIRoutes.DISCOVER}`)}
           >
             <span className="text-home-title text-[16px] font-medium">
               {t<string>("MAIN.DISCOVER")}
             </span>
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="content">
         <div>
           <div
             className="flex items-start flex-wrap justify-between font-poppins w-[100%] pb-[24px] max-lg:pb-[32px]
-                  max-[690px]:flex-col-reverse max-[690px]:pb-[16px]"
-          >
+                  max-[690px]:flex-col-reverse max-[690px]:pb-[16px]">
             {!searchData.search && (
               <div
                 className="flex items-end gap-[24px] border-b-[1px] border-solid border-header-bottom 
                     max-[690px]:overflow-x-auto max-[690px]:whitespace-nowrap max-[690px]:ml-[-16px] max-[690px]:mr-[-16px]
-                    max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px]"
-              >
+                    max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px]">
                 {TabsHeadings.map((item: string, index: number) => (
                   <div
                     onClick={() => dispatch(setMainTab(index))}
@@ -120,8 +117,7 @@ const AppMainContent = () => {
                       "text-nav-txt-private": mainTab !== index,
                       "tracking-[-0.1px] relative transition duration-150 ease-in text-[16px] leading-[24px] cursor-pointer pt-[7px] pb-[11px]":
                         true,
-                    })}
-                  >
+                    })}>
                     {t<string>(`${item}`)}
                     <div
                       className={classNames({
@@ -129,8 +125,7 @@ const AppMainContent = () => {
                         "w-[0%]": mainTab !== index,
                         "absolute bottom-[-1px] left-[-1px] h-[2px] transition duration-300 ease-in bg-buttons-bg":
                           true,
-                      })}
-                    ></div>
+                      })}></div>
                   </div>
                 ))}
               </div>
@@ -140,8 +135,7 @@ const AppMainContent = () => {
               <div className="flex items-center">
                 <span
                   className="mr-[13px] text-[16px] leading-[26px] tracking-[-0.1px] 
-                        text-simple-text max-md:hidden"
-                >
+                        text-simple-text max-md:hidden">
                   {t<string>("MAIN.SORT_TITLE")}
                 </span>
                 <div className="flex items-center">
@@ -161,8 +155,7 @@ const AppMainContent = () => {
                     "flex items-center justify-center w-[40px] h-[40px]": true,
                     "rounded-[5px] border-solid border-[1px] shadow-free-trial border-header-bottom":
                       true,
-                  })}
-                >
+                  })}>
                   <img
                     src={listType ? icon_grid : icon_grid_default}
                     alt="Type cards"
@@ -177,8 +170,7 @@ const AppMainContent = () => {
                     "flex items-center justify-center w-[40px] h-[40px] ": true,
                     "rounded-[5px] border-solid border-[1px] shadow-free-trial border-header-bottom":
                       true,
-                  })}
-                >
+                  })}>
                   <img
                     src={listType ? icon_row_default : icon_row}
                     alt="Type list"

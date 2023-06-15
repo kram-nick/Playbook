@@ -37,6 +37,8 @@ import {
   setSharedId,
 } from "../../core/store/reducers/helpers/helpersDataSlice";
 import { useState } from "react";
+import { APIRoutes } from "../../core/http";
+import { PrivateUIRoutes } from "../../core/router";
 
 type CardProps = {
   items: any;
@@ -47,6 +49,8 @@ type CardProps = {
 
 const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
   const [isSale, setIsSale] = useState(false);
+  const [showStar, setShowStar] = useState(false);
+
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const { t } = useTranslation();
@@ -103,19 +107,19 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
     dispatch(setSharedId(playbook.id));
   };
 
-  const HandlePublish = async () => {
-    if (playbook.status !== "published") {
-      try {
-        await PlaybookService.PublishPlaybook(playbook.id);
-        dispatch(setReloadChecker(!reloadChecker));
-        toast.success(t<string>("MAIN.PUBLISHED_SUCCESS"));
-      } catch (errors: any) {
-        for (let error in errors?.response?.data?.errors) {
-          toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
-        }
-      }
-    }
-  };
+  // const HandlePublish = async () => {
+  //   if (playbook.status !== "published") {
+  //     try {
+  //       await PlaybookService.PublishPlaybook(playbook.id);
+  //       dispatch(setReloadChecker(!reloadChecker));
+  //       toast.success(t<string>("MAIN.PUBLISHED_SUCCESS"));
+  //     } catch (errors: any) {
+  //       for (let error in errors?.response?.data?.errors) {
+  //         toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+  //       }
+  //     }
+  //   }
+  // };
 
   async function LoadPages(playbook_id: string) {
     if (playbook_id) {
@@ -166,12 +170,15 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
 
   return (
     <div
+      onMouseEnter={() => setShowStar(true)}
+      onMouseLeave={() => setShowStar(false)}
       className={classNames({
+        "flex flex-wrap bg-white rounded-[8px] border-[1px] border-solid border-card-border relative":
+          true,
+        "hover:shadow-card": true,
         "flex flex-col w-[calc(25%-15px)] max-xl:w-[calc(33.33%-16px)] max-[690px]:w-[100%]":
           listType,
         "pl-[56px] pr-[12px] py-[12px]": !listType,
-        "flex flex-wrap bg-white rounded-[8px] border-[1px] border-solid card-border relative":
-          true,
       })}
     >
       <p
@@ -248,20 +255,23 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
         </div>
         {/* • {playbook.edited} */}
 
-        <button
-          onClick={() => SetFavorite(playbook.id, playbook.favorited)}
-          className={classNames({
-            "top-[12px] right-[34px] w-[20px] h-[20px] max-lg:hidden": listType,
-            "top-[50%] left-[16px] mt-[-12px] w-[24px] h-[24px]": !listType,
-            absolute: true,
-          })}
-        >
-          <img
-            src={playbook.favorited ? star_active : star}
-            alt=""
-            className="w-[100%]"
-          />
-        </button>
+        {showStar && (
+          <button
+            onClick={() => SetFavorite(playbook.id, playbook.favorited)}
+            className={classNames({
+              "top-[12px] right-[34px] w-[20px] h-[20px] max-lg:hidden":
+                listType,
+              "top-[50%] left-[16px] mt-[-12px] w-[24px] h-[24px]": !listType,
+              absolute: true,
+            })}
+          >
+            <img
+              src={playbook.favorited ? star_active : star}
+              alt=""
+              className="w-[100%]"
+            />
+          </button>
+        )}
 
         <div
           className={classNames({
@@ -298,7 +308,15 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
 
               <ul>
                 <li
-                  onClick={HandlePublish}
+                  onClick={() => {
+                    navigate(`/${PrivateUIRoutes.CardDetail}`);
+                    dispatch(setSelectedPlaybook(playbook));
+                    dispatch(setSharedId(playbook?.id));
+                    localStorage.setItem(
+                      "playbook_id",
+                      JSON.stringify(playbook.id)
+                    );
+                  }}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer min-[1024px]:hover:bg-card-border max-[1024px]:px-[0px]"
                 >
                   <img
@@ -307,7 +325,7 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                     className="w-[24px] h-[24px]"
                   />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
-                    {t<string>("MAIN.PUBLISH")}
+                    {t<string>("MAIN.PREVIEW")}
                   </span>
                 </li>
                 {tabType !== MainTabs.Purchased &&
