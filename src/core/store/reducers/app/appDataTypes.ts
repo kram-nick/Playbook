@@ -28,4 +28,5 @@ export type AppDataTypes = {
   isModalOpen: boolean;
   modalType: string;
   mainTab: number;
+  activeTab: number;
 };

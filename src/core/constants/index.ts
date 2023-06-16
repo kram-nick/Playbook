@@ -110,6 +110,14 @@ export const TabsHeadings: string[] = [
   "MAIN.PURCHASED",
   "MAIN.LISTINGS",
 ];
+
+export const TabsActive: string[] = [
+  "MAIN.ALL",
+  "MAIN.OPEN",
+  "MAIN.SUCCESS",
+  "MAIN.FAILED",
+];
+
 export const SettingsTabs = [
   {
     id: 1,

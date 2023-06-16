@@ -12,6 +12,15 @@ export enum MainTabs {
   Favorite = 2,
   Purchased = 3,
   Listings = 4,
+  Home = 5,
+  Active = 6,
+}
+
+export enum ActiveTabs {
+  All = 0,
+  Open = 1,
+  Success = 2,
+  Failed = 3,
 }
 
 export enum Modal {
@@ -38,4 +47,9 @@ export enum SkeletonTypes {
   PUBLIC = "PUBLIC",
   DISCOVER = "DISCOVER",
   PROFILE = "PROFILE",
+}
+
+export enum PlaybookStatus {
+  ACTIVE = "ACTIVE",
+  UNACTIVE = "UNACTIVE",
 }
