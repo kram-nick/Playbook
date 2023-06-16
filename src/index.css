@@ -272,6 +272,10 @@ input:checked+.switch-check:after {
   height: 180px;
 }
 
-.editor-listitem {
+ul .editor-listitem {
   list-style: disc;
+}
+
+ol .editor-listitem {
+  list-style: decimal;
 }
