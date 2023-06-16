@@ -104,8 +104,11 @@ const Editor = () => {
       if (response) {
         formikForm.setFieldValue("title", response?.data?.title);
 
-        formikForm.setFieldValue("content", response?.data?.content);
-        setContent(response?.data?.content);
+        formikForm.setFieldValue(
+          "content",
+          response?.data?.editor_content?.editor_state
+        );
+        setContent(response?.data?.editor_content?.editor_state);
 
         setSavedData(response?.data);
       }
@@ -116,12 +119,12 @@ const Editor = () => {
 
   const valueFormValidationSchema = Yup.object().shape({
     title: Yup.string().required(t<string>("ERRORS.NAME_REQUIRED")),
-    content: Yup.string().required(t<string>("ERRORS.CONTENT_REQUIRED")),
+    editor_content: Yup.string().required(t<string>("ERRORS.CONTENT_REQUIRED")),
   });
 
   const formikForm = useFormik<{
     playbook_id: string;
-    content: string;
+    editor_content: string;
     privacy: boolean;
     tags: string;
     title: string;
@@ -129,7 +132,7 @@ const Editor = () => {
   }>({
     initialValues: {
       playbook_id: String(playbook_id),
-      content: "",
+      editor_content: "",
       privacy: true,
       tags: "",
       title: "",
@@ -146,7 +149,7 @@ const Editor = () => {
       values.privacy = values.privacy ? "private" : "public";
       const response = await PlaybookService.AddPage({
         ...values,
-        content: { editor_state: values.content, element },
+        editor_content: { editor_state: values.editor_content, element },
       });
       toast.success(t<string>("MAIN.UPDATE_SUCCESS"));
       dispatch(setReloadChecker(true));
@@ -160,7 +163,7 @@ const Editor = () => {
   const updatePage = async (values: any) => {
     if (
       savedData.title === formikForm.values.title &&
-      savedData.content === formikForm.values.content
+      savedData.content === formikForm.values.editor_content
     ) {
       toast.warn("Nothing wasn't changed!");
       return;
@@ -173,7 +176,7 @@ const Editor = () => {
 
       await PlaybookService.UpdatePage(String(page_id), {
         ...values,
-        content: { editor_state: values.content, element },
+        editor_content: { editor_state: values.editor_content, element },
       });
       setUpdate(!update);
 
@@ -186,7 +189,7 @@ const Editor = () => {
 
   function onChange(editorState: any) {
     const stringifiedEditorState = JSON.stringify(editorState.toJSON());
-    formikForm.setFieldValue("content", stringifiedEditorState);
+    formikForm.setFieldValue("editor_content", stringifiedEditorState);
   }
 
   return (
@@ -266,11 +269,11 @@ const Editor = () => {
             </div>
           </div>
         </LexicalComposer>
-        {formikForm.errors.content &&
-          formikForm.touched.content &&
+        {formikForm.errors.editor_content &&
+          formikForm.touched.editor_content &&
           !page_id && (
             <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[10px]">
-              {formikForm.errors.content}
+              {formikForm.errors.editor_content}
             </p>
           )}
       </div>
