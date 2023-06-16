@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AppDataTypes } from "./appDataTypes";
-import { MainTabs } from "../../../models/enums";
-import { number } from "yup";
+import { ActiveTabs, MainTabs } from "../../../models/enums";
 
 const initialState: AppDataTypes = {
   language: "en",
@@ -31,6 +30,7 @@ const initialState: AppDataTypes = {
   modalType: "",
   isModalOpen: false,
   mainTab: MainTabs.All,
+  activeTab: ActiveTabs.All,
 };
 
 const appSlice = createSlice({
@@ -79,6 +79,9 @@ const appSlice = createSlice({
     setMainTab(state, action: PayloadAction<number>) {
       state.mainTab = action.payload;
     },
+    setActiveTab(state, action: PayloadAction<number>) {
+      state.activeTab = action.payload;
+    },
   },
 });
 
@@ -97,4 +100,5 @@ export const {
   setSelectedPlaybook,
   setPages,
   setMainTab,
+  setActiveTab,
 } = appSlice.actions;

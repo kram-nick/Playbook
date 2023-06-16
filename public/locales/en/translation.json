@@ -35,7 +35,9 @@
     "DRAFT": "DRAFT",
     "PREVIEW": "Preview",
     "SHARE": "Share",
-    "CAPTCHA": "Captcha error"
+    "CAPTCHA": "Captcha error",
+    "PB_HOME": "Playbooks Home",
+    "PB_ACTIVE": "Active playbook"
   },
   "HOME": {
     "HOME": "Home",
@@ -128,7 +130,8 @@
     "APP_DESC_2": "Launch a product that people want",
     "APP_DESC_3": "Build a strong culture of engineering excellence and high quality standards",
     "JOB_TITLE": "Entrepreneurs have many jobs to be done.",
-    "JOB_TEXT": "Purchase and build a set of playbooks and plays to follow for each job on your list."
+    "JOB_TEXT": "Purchase and build a set of playbooks and plays to follow for each job on your list.",
+    "NEW_PLAY": "New play"
   },
   "TERM": {
     "DOCUMENTS": "Documents",
@@ -254,7 +257,13 @@
     "LISTINGS": "Listings",
     "SALE": "List for Sale",
     "PUBLISHED_ALREADY": "This playbook already published",
-    "BACK_EDIT": "Back to edit"
+    "BACK_EDIT": "Back to edit",
+    "OPEN": "Open",
+    "SUCCESS": "Success",
+    "FAILED": "Failed",
+    "NO_ACTIVE_PB": "You don't have any active playbooks yet",
+    "NO_ACTIVE_PB_HINT": "You can start now! Set a goal and track it!",
+    "NEW_ACTIVE_PB": "Add New Play"
   },
   "EDIT": {
     "SECTION_NAME": "Section Name",

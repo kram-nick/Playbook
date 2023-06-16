@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { HelpersDataTypes } from "./helpersDataTypes";
+import { PlaybookStatus } from "../../../models/enums";
 
 const initialState: HelpersDataTypes = {
   reloadChecker: false,
   sharedId: null,
   playbookType: "",
+  playbookStatus: PlaybookStatus.UNACTIVE,
 };
 
 const helpersSlice = createSlice({
@@ -20,10 +22,17 @@ const helpersSlice = createSlice({
     setPlaybookType(state, action: PayloadAction<string>) {
       state.playbookType = action.payload;
     },
+    setPlaybookStatus(state, action: PayloadAction<string>) {
+      state.playbookStatus = action.payload;
+    },
   },
 });
 
-export const { setReloadChecker, setSharedId, setPlaybookType } =
-  helpersSlice.actions;
+export const {
+  setReloadChecker,
+  setSharedId,
+  setPlaybookType,
+  setPlaybookStatus,
+} = helpersSlice.actions;
 
 export default helpersSlice.reducer;
