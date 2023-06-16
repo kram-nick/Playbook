@@ -271,3 +271,7 @@ input:checked+.switch-check:after {
 .ph-picture {
   height: 180px;
 }
+
+.editor-listitem {
+  list-style: disc;
+}
