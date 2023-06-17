@@ -131,11 +131,13 @@ const SignIn = () => {
     <div className="flex mx-auto  min-h-[calc(100vh-102px)] font-poppins max-lg:min-h-[calc(100vh-61px)]">
       <div
         className="flex bg-cover bg-no-repeat bg-left-bottom justify-center  w-[46%] max-lg:bg-sign max-lg:w-[100%] 
-        py-[50px] px-[100px] max-sm:px-[16px] max-sm:py-[24px]">
+        py-[50px] px-[100px] max-sm:px-[16px] max-sm:py-[24px]"
+      >
         <form
           onSubmit={formikForm.handleSubmit}
           className="self-center w-full max-w-[425px] max-lg:bg-white 
-          max-lg:px-[48px] max-lg:py-[60px] max-sm:px-[16px] max-sm:py-[24px] max-sm:rounded-[8px]">
+          max-lg:px-[48px] max-lg:py-[60px] max-sm:px-[16px] max-sm:py-[24px] max-sm:rounded-[8px]"
+        >
           <h1 className="text-[24px] text-home-title text-center leading-normal mb-[32px] font-semibold">
             {t<string>("SIGN.UP")}
           </h1>
@@ -146,7 +148,8 @@ const SignIn = () => {
             rounded-[5px] shadow-free-trial
             border-solid border-[1px]  border-r-header-bottom
           "
-            type="button">
+            type="button"
+          >
             <img src={icon_google} alt="" className="mr-[8px]" />
             <span className="text-[16px] text-home-title font-medium">
               {t<string>("SIGN.GOOGLE")}
@@ -164,7 +167,8 @@ const SignIn = () => {
           <div className="form-group mb-[24px]">
             <label
               htmlFor="first_name"
-              className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+              className="block text-[14px] text-home-title leading-[20px] mb-[6px]"
+            >
               {t<string>("SIGN.FIRST_NAME")}
             </label>
             <input
@@ -175,7 +179,7 @@ const SignIn = () => {
               name="first_name"
               type="text"
               className={classNames({
-                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]":
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder border-solid border-[1px] shadow-free-trial w-[100%]":
                   true,
                 "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
                   true,
@@ -193,7 +197,8 @@ const SignIn = () => {
           <div className="form-group mb-[24px]">
             <label
               htmlFor="last_name"
-              className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+              className="block text-[14px] text-home-title leading-[20px] mb-[6px]"
+            >
               {t<string>("SIGN.LAST_NAME")}
             </label>
             <input
@@ -204,7 +209,7 @@ const SignIn = () => {
               name="last_name"
               type="text"
               className={classNames({
-                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]":
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder border-solid border-[1px] shadow-free-trial w-[100%]":
                   true,
                 "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
                   true,
@@ -222,7 +227,8 @@ const SignIn = () => {
           <div className="form-group mb-[24px]">
             <label
               htmlFor="email"
-              className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+              className="block text-[14px] text-home-title leading-[20px] mb-[6px]"
+            >
               {t<string>("SIGN.EMAIL")}
             </label>
             <input
@@ -233,7 +239,7 @@ const SignIn = () => {
               name="email"
               type="email"
               className={classNames({
-                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]":
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder border-solid border-[1px] shadow-free-trial w-[100%]":
                   true,
                 "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
                   true,
@@ -251,7 +257,8 @@ const SignIn = () => {
           <div className="form-group mb-[24px] relative">
             <label
               htmlFor="password"
-              className="block text-[14px] text-home-title leading-[20px] mb-[6px]">
+              className="block text-[14px] text-home-title leading-[20px] mb-[6px]"
+            >
               {t<string>("SIGN.PASSWORD")}
             </label>
             <input
@@ -262,7 +269,7 @@ const SignIn = () => {
               type={hide ? "password" : "text"}
               name="password"
               className={classNames({
-                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%]":
+                "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder border-solid border-[1px] shadow-free-trial w-[100%]":
                   true,
                 "leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
                   true,
@@ -274,7 +281,8 @@ const SignIn = () => {
               type="button"
               onClick={() => setHide(!hide)}
               className="absolute right-[9px] top-[31px] w-[30px] h-[30px] rounded-[50%] p-[5px] hover:bg-search-input
-              transition-all duration-[300ms] ease-out hover:ease-in">
+              transition-all duration-[300ms] ease-out hover:ease-in"
+            >
               <img src={hide ? icon_hide : icon_show} alt="" />
             </button>
             {formikForm.errors.password && formikForm.touched.password && (
@@ -293,12 +301,14 @@ const SignIn = () => {
               />
               <div
                 className="bg-white border-[1px] border-input w-[20px] h-[20px] mr-[8px] rounded-[5px] cursor-pointer flex 
-                flex-shrink-0 justify-center items-center focus-within:border-blue-500">
+                flex-shrink-0 justify-center items-center focus-within:border-blue-500"
+              >
                 <svg
                   className="fill-current hidden w-[20px] h-[20px] p-[4px] rounded-[5px] pointer-events-none"
                   version="1.1"
                   viewBox="0 0 17 12"
-                  xmlns="http://www.w3.org/2000/svg">
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <g fill="none">
                     <g transform="translate(-9 -11)" fill="#fff">
                       <path d="m25.576 11.414c0.56558 0.55188 0.56558 1.4439 0 1.9961l-9.404 9.176c-0.28213 0.27529-0.65247 0.41385-1.0228 0.41385-0.37034 0-0.74068-0.13855-1.0228-0.41385l-4.7019-4.588c-0.56584-0.55188-0.56584-1.4442 0-1.9961 0.56558-0.55214 1.4798-0.55214 2.0456 0l3.679 3.5899 8.3812-8.1779c0.56558-0.55214 1.4798-0.55214 2.0456 0z" />
@@ -308,7 +318,8 @@ const SignIn = () => {
               </div>
               <label
                 htmlFor="remember-me"
-                className="text-[16px] leading-[20px] tracking-[-0.1px] cursor-pointer">
+                className="text-[16px] leading-[20px] tracking-[-0.1px] cursor-pointer"
+              >
                 {t<string>("SIGN.AGREE")}
               </label>
             </div>
@@ -331,7 +342,8 @@ const SignIn = () => {
               "bg-simple-text cursor-not-allowed": loading,
               "bg-button-submit-footer hover:bg-buttons-bg-hover active:bg-buttons-bg-active":
                 !loading,
-            })}>
+            })}
+          >
             <span className="text-list-title">{t<string>("SIGN.UP_BTN")}</span>
           </button>
 
@@ -341,7 +353,8 @@ const SignIn = () => {
             </span>
             <Link
               to="/sign-in"
-              className="text-[14px] leading-[18px] text-buttons-bg  hover:text-buttons-bg-hover active:text-buttons-bg-active font-medium">
+              className="text-[14px] leading-[18px] text-buttons-bg  hover:text-buttons-bg-hover active:text-buttons-bg-active font-medium"
+            >
               {t<string>("SIGN.LOGIN")}
             </Link>
           </p>

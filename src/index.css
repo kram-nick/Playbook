@@ -1,14 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
 }
 
 @layer base {
@@ -20,12 +19,12 @@
     font-size: 24px;
   }
 
-  input:checked+div {
+  input:checked + div {
     @apply border-blue-500;
     @apply bg-checkbox-bg;
   }
 
-  input:checked+div svg {
+  input:checked + div svg {
     @apply block;
   }
 
@@ -80,16 +79,17 @@ html:not(.touch-screen) *::-webkit-scrollbar-thumb {
   width: 16px;
   height: 16px;
   background: #ffffff;
-  box-shadow: 0px 1px 2px -1px rgba(16, 24, 40, 0.1), 0px 1px 3px rgba(16, 24, 40, 0.1);
+  box-shadow: 0px 1px 2px -1px rgba(16, 24, 40, 0.1),
+    0px 1px 3px rgba(16, 24, 40, 0.1);
   border-radius: 15px;
   transition: all 0.2s ease-in;
 }
 
-input:checked+.switch-check {
+input:checked + .switch-check {
   background: #2b71f7;
 }
 
-input:checked+.switch-check:after {
+input:checked + .switch-check:after {
   left: 15px;
 }
 
@@ -134,11 +134,11 @@ input:checked+.switch-check:after {
   padding: 0;
 }
 
-.select-custom>div>div:nth-child(2)>div {
+.select-custom > div > div:nth-child(2) > div {
   color: #242428;
 }
 
-.select-custom>div:nth-child(3)>div:nth-child(1) {
+.select-custom > div:nth-child(3) > div:nth-child(1) {
   padding-left: 16px !important;
 }
 
@@ -146,11 +146,11 @@ input:checked+.switch-check:after {
   color: #242428 !important;
 }
 
-.select-custom #react-select-3-listbox>div:nth-child(1)>* {
+.select-custom #react-select-3-listbox > div:nth-child(1) > * {
   padding-left: 16px !important;
 }
 
-.select-custom>div {
+.select-custom > div {
   min-height: 100%;
 }
 
@@ -205,7 +205,7 @@ input:checked+.switch-check:after {
   overflow: visible;
 }
 
-.testimonial-swiper .swiper-slide:nth-child(2n)>div {
+.testimonial-swiper .swiper-slide:nth-child(2n) > div {
   transform: rotate(3deg);
 }
 
@@ -242,7 +242,7 @@ input:checked+.switch-check:after {
     margin-top: 28px;
   }
 
-  .testimonial-swiper .swiper-slide:nth-child(2n)>div {
+  .testimonial-swiper .swiper-slide:nth-child(2n) > div {
     transform: rotate(1.5deg);
   }
 }
@@ -278,4 +278,20 @@ ul .editor-listitem {
 
 ol .editor-listitem {
   list-style: decimal;
+}
+
+.react-date-picker__calendar-button__icon,
+.react-date-picker__clear-button__icon {
+  display: none;
+}
+
+.react-date-picker__inputGroup__input {
+  outline: none;
+}
+
+.react-date-picker__wrapper {
+  height: 20px !important;
+}
+.react-date-picker {
+  height: max-content !important;
 }

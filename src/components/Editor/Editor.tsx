@@ -200,7 +200,7 @@ const Editor = () => {
       <div>
         <input
           className="outline-none pl-4 rounded-[8px] h-[40px] w-[100%] border-[1px] border-header-bottom text-[20px] font-medium font-poppins"
-          placeholder={t<string>("EDIT.SECTION_NAME")}
+          placeholder={t<string>("EDIT.PAGE_NAME")}
           {...formikForm.getFieldProps("title")}
         />
         {formikForm.errors.title && formikForm.touched.title && !page_id && (

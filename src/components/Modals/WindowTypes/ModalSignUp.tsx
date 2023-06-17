@@ -168,7 +168,7 @@ export default function ModalSignup(props: ModalType) {
             id="name"
             type="text"
             className={classNames({
-              "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%] leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
+              "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder border-solid border-[1px] shadow-free-trial w-[100%] leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
                 true,
               "border-error-color":
                 formikForm.errors.email && formikForm.errors.last_name,
@@ -204,7 +204,7 @@ export default function ModalSignup(props: ModalType) {
             id="email"
             type="text"
             className={classNames({
-              "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%] leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
+              "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder border-solid border-[1px] shadow-free-trial w-[100%] leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
                 true,
               "border-error-color":
                 formikForm.errors.email && formikForm.touched.email,
@@ -229,7 +229,7 @@ export default function ModalSignup(props: ModalType) {
             id="password"
             type="text"
             className={classNames({
-              "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder border-solid border-[1px] shadow-free-trial w-[100%] leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
+              "py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder border-solid border-[1px] shadow-free-trial w-[100%] leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border":
                 true,
               "border-error-color":
                 formikForm.errors.password && formikForm.touched.password,

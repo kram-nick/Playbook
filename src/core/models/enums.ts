@@ -36,6 +36,7 @@ export enum Modal {
   FREE_PURCHASE = "FREE_PURCHASE",
   WELCOME = "WELCOME",
   PRIVACY = "PRIVACY",
+  ACTIVE_PLAY = "ACTIVE_PLAY",
 }
 
 export enum Welcome {
@@ -52,4 +53,9 @@ export enum SkeletonTypes {
 export enum PlaybookStatus {
   ACTIVE = "ACTIVE",
   UNACTIVE = "UNACTIVE",
+}
+
+export enum ActivePlaybook {
+  EDIT = 0,
+  CREATE = 1,
 }

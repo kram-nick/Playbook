@@ -44,7 +44,7 @@ module.exports = {
         "active-playbook": "rgba(43, 113, 247, 0.12);",
         "border-input": "#D4D4D4",
         "border-btn": "#DAE0E6",
-        "input-paceholder": "#A3A3A3",
+        "input-placeholder": "#A3A3A3",
         "checkbox-bg": "#437EF7",
         "search-input": "#F5F5F5",
         "card-border": "#EDEDED",
@@ -66,7 +66,12 @@ module.exports = {
         "order-main": "#272D37",
         "selected-btn": "rgba(43, 113, 247, 0.16)",
         "secondary-hover": "#F7F7F8",
-        "secondary-active": "#EFEFF1"
+        "secondary-active": "#EFEFF1",
+        "inform-text": "#737373",
+        "active-open": "#2B71F71F",
+        "active-not-started": "#EDEDED",
+        "active-success": "#00B8B81F",
+        "active-failed": "FF3B301F",
       },
       backgroundPosition: {
         "top-bottom": "right 60px ",
@@ -96,7 +101,7 @@ module.exports = {
         tags: "0px 1px 2px rgba(16, 24, 40, 0.04);",
         cookies:
           "0px -5px 47px rgba(0, 0, 0, 0.04), 7px 13px 60px rgba(51, 51, 65, 0.08);",
-        card: "0px 2px 4px -2px rgba(16, 24, 40, 0.05), 0px 4px 6px -1px rgba(16, 24, 40, 0.03);"
+        card: "0px 2px 4px -2px rgba(16, 24, 40, 0.05), 0px 4px 6px -1px rgba(16, 24, 40, 0.03);",
       },
       backgroundImage: {
         sign: "url('./assets/photos/sign/bg-sign.svg')",

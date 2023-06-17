@@ -1,9 +1,15 @@
 import icon_plus from "../../../assets/photos/main/plus.svg";
 import pb_logo from "../../../assets/photos/main/active-empty.svg";
 import { useTranslation } from "react-i18next";
+import useModal from "../../../core/hooks/useModal";
+import { ActivePlaybook, Modal } from "../../../core/models/enums";
+import { setSharedId } from "../../../core/store/reducers/helpers/helpersDataSlice";
+import { useAppDispatch } from "../../../core/hooks/useRedux";
 
 const Empty = () => {
   const { t } = useTranslation();
+  const { openModal } = useModal();
+  const dispatch = useAppDispatch();
 
   return (
     <div className="w-full flex items-center">
@@ -20,10 +26,15 @@ const Empty = () => {
           </div>
 
           <button
+            onClick={() => {
+              dispatch(setSharedId(ActivePlaybook.CREATE));
+              openModal(Modal.ACTIVE_PLAY);
+            }}
             className="shadow-tags rounded-[5px] bg-buttons-bg px-[16px] py-[10px] flex flex-row gap-[6px]
           hover:bg-buttons-bg-hover
           active:bg-buttons-bg-active
-          ">
+          "
+          >
             <span className="font-poppins font-medium text-[16px] leading-[21px] normal text-buttons-color">
               {t<string>("MAIN.NEW_ACTIVE_PB")}
             </span>

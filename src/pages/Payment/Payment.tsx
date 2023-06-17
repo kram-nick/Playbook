@@ -84,7 +84,7 @@ const Payment = () => {
                     <p className="text-[13px] font-poppins font-medium leading-[17px]">
                       Product Playbook
                     </p>
-                    <span className="text-[9.8px] font-poppins leading-[15px] text-input-paceholder">
+                    <span className="text-[9.8px] font-poppins leading-[15px] text-input-placeholder">
                       Draft • Edited 2 days ago
                     </span>
                   </div>

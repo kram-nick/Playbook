@@ -146,7 +146,6 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
         JSON.stringify([...sidebarTabs, Number(tabType)])
       );
     }
-    console.log(tabType);
     if (tabType) {
       dispatch(
         setSelectedPlaybook({
@@ -179,7 +178,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
         "flex flex-col w-[calc(25%-15px)] max-xl:w-[calc(33.33%-16px)] max-[690px]:w-[100%]":
           listType,
         "pl-[56px] pr-[12px] py-[12px]": !listType,
-      })}>
+      })}
+    >
       <p
         onClick={OpenPlaybook}
         className={classNames({
@@ -187,7 +187,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
           "w-[40px] h-[40px] rounded-[4px]": !listType,
           "photo relative left-[-1px] top-[-1px] right-[-1px] overflow-hidden bg-card-border cursor-pointer":
             true,
-        })}>
+        })}
+      >
         {playbook.header_url && (
           <img
             src={playbook.header_url}
@@ -203,11 +204,13 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
             listType,
           "w-[calc(100%-40px)]": !listType,
           "item-content flex flex-wrap items-start font-poppins w-[100%]": true,
-        })}>
+        })}
+      >
         {listType && (
           <Link
             to={`/profile`}
-            className="icon w-[28px] h-[28px] overflow-hidden relative rounded-[50%]">
+            className="icon w-[28px] h-[28px] overflow-hidden relative rounded-[50%]"
+          >
             <img
               src={playbook.profile_image ? playbook.profile_image : red_saas}
               alt="saas"
@@ -221,13 +224,15 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
             "flex flex-col justify-between w-[calc(100%-34px)] h-full":
               listType,
             "text pl-[12px]": true,
-          })}>
+          })}
+        >
           <span
             onClick={OpenPlaybook}
-            className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title cursor-pointer">
+            className="text-[16px] font-medium mb-[4px] leading-[20px] text-home-title cursor-pointer"
+          >
             {playbook.name}
           </span>
-          <p className="text-[12px] leading-normal text-input-paceholder flex flex-row items-end">
+          <p className="text-[12px] leading-normal text-input-placeholder flex flex-row items-end">
             {/* {playbook.profile_first_name && (
               <span className="truncate max-w-[calc(100%-60px)] inline-block"> */}
 
@@ -257,7 +262,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                 listType,
               "top-[50%] left-[16px] mt-[-12px] w-[24px] h-[24px]": !listType,
               absolute: true,
-            })}>
+            })}
+          >
             <img
               src={playbook.favorited ? star_active : star}
               alt=""
@@ -271,13 +277,15 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
             "top-[12px] right-[8px]": listType,
             "top-[50%] right-[12px] mt-[-10px]": !listType,
             "absolute w-[20px] h-[20px] dropdown-menu": true,
-          })}>
+          })}
+        >
           <button
             onClick={HandleOpen}
             className={classNames({
               "min-[1024px]:bg-card-border": isShow,
               "w-[20px] h-[20px] rounded-[2px]": true,
-            })}>
+            })}
+          >
             <img src={dots} alt="" />
           </button>
 
@@ -288,10 +296,12 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
               font-poppins min-w-[162px] z-10 transition-all duration-[300ms] ease-in max-[1024px]:z-[999]
               max-[1024px]:fixed max-[1024px]:left-[0] max-[1024px]:right-[0px] max-[1024px]:bottom-[0px] max-[1024px]:p-[16px]
               max-[1024px]:pb-[32px]"
-              ref={ref}>
+              ref={ref}
+            >
               <div
                 className="title min-[1024px]:hidden border-b-[1px] border-solid border-header-bottom mb-[4px] pb-[12px]
-                text-[16px] font-medium leading-[20px] text-home-title">
+                text-[16px] font-medium leading-[20px] text-home-title"
+              >
                 {playbook.title}
               </div>
 
@@ -306,7 +316,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                       JSON.stringify(playbook.id)
                     );
                   }}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active ac max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active ac max-[1024px]:px-[0px]"
+                >
                   <img
                     src={icon_preview}
                     alt=""
@@ -323,7 +334,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                       onMouseLeave={() => setIsSale(false)}
                       onMouseOver={() => setIsSale(true)}
                       onClick={handleSale}
-                      className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active max-[1024px]:px-[0px]">
+                      className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active max-[1024px]:px-[0px]"
+                    >
                       <img
                         src={isSale ? icon_sale_unactive : icon_sale}
                         alt="icon_sale"
@@ -334,14 +346,16 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                           "text-[16px] text-buttons-bg font-medium  leading-[20px]":
                             true,
                           "text-simple-text": isSale,
-                        })}>
+                        })}
+                      >
                         {t<string>("MAIN.SALE")}
                       </span>
                     </li>
                   )}
                 <li
                   onClick={HandleShare}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active max-[1024px]:px-[0px]"
+                >
                   <img src={icon_share} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
                     {t<string>("MAIN.SHARE")}
@@ -350,7 +364,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                 <li
                   onClick={() => SetFavorite(playbook.id, playbook.favorited)}
                   className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active min-[1024px]:hidden 
-                  max-[1024px]:px-[0px]">
+                  max-[1024px]:px-[0px]"
+                >
                   <img
                     src={playbook.favorited ? star_active : star_mobile}
                     alt=""
@@ -362,7 +377,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                 </li>
                 <li
                   onClick={HandleDetails}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active max-[1024px]:px-[0px]"
+                >
                   <img
                     src={icon_settings}
                     alt=""
@@ -374,7 +390,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                 </li>
                 <li
                   onClick={() => HandleDelete()}
-                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active max-[1024px]:px-[0px]">
+                  className="menu-item flex items-center px-[16px] py-[8px] gap-[8px] cursor-pointer hover:bg-secondary-hover active:bg-secondary-active max-[1024px]:px-[0px]"
+                >
                   <img src={icon_delete} alt="" className="w-[24px] h-[24px]" />
                   <span className="text-[16px] font-medium text-simple-text leading-[20px]">
                     {t<string>("MAIN.DELETE")}
@@ -390,7 +407,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
                 "side-overlay fixed left-[0px] top-[0px] w-[100%] h-[100vh] bg-side-overlay z-[99] min-[1024px]:hidden transition-all duration-[300ms] ease-in":
                   true,
                 "opacity-0 invisible z-0": !isShow,
-              })}></div>
+              })}
+            ></div>
           )}
         </div>
       </div>

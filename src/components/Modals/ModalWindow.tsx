@@ -12,6 +12,7 @@ import ModalPrivacy from "./WindowTypes/ModalPrivacy";
 import useModal from "../../core/hooks/useModal";
 import { useAppSelector } from "../../core/hooks/useRedux";
 import { Modal } from "../../core/models/enums";
+import ModalAddActivePlay from "./WindowTypes/ModalActivePlaybook";
 
 const ModalWindow = () => {
   const { closeModal } = useModal();
@@ -23,7 +24,8 @@ const ModalWindow = () => {
       {isModalOpen && (
         <div
           className="modal-overlay bg-overlay"
-          onClick={() => modalType !== Modal.PRIVACY && closeModal()}>
+          onClick={() => modalType !== Modal.PRIVACY && closeModal()}
+        >
           {modalType === Modal.PLAYBOOK_DELETE && <ModalDeletePlaybook />}
           {modalType === Modal.PAGE_DELETE && <ModalDeletePage />}
           {modalType === Modal.SIGN_UP && <ModalSignup />}
@@ -36,6 +38,7 @@ const ModalWindow = () => {
           {modalType === Modal.PLAYBOOK_SALE && <ModalSale />}
           {modalType === Modal.FREE_PURCHASE && <ModalFreePurchase />}
           {modalType === Modal.PRIVACY && <ModalPrivacy />}
+          {modalType === Modal.ACTIVE_PLAY && <ModalAddActivePlay />}
           {/* <ModalShareSocial item={selectedItem}></ModalShareSocial> */}
         </div>
       )}

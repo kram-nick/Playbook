@@ -124,7 +124,8 @@ const Account = () => {
   return (
     <form
       className="form font-poppins relative max-[1024px]:pb-[60px]"
-      onSubmit={formikForm.handleSubmit}>
+      onSubmit={formikForm.handleSubmit}
+    >
       <div className="flex items-start justify-between pb-[20px] border-b-[1px] border-solid border-header-bottom gap-[20px] mb-[24px]">
         <div className="">
           <h3 className="text-[20px] leading-[28px] font-medium text-home-title mb-[4px]">
@@ -143,7 +144,8 @@ const Account = () => {
                 "
             onClick={() => {
               navigate("/");
-            }}>
+            }}
+          >
             {t<string>("BTNS.CANCEL")}
           </button>
           <button
@@ -152,7 +154,8 @@ const Account = () => {
                   text-[16px] font-medium leading-[20px] shadow-free-trial 
                   hover:bg-buttons-bg-hover
                 active:bg-buttons-bg-active
-                  ">
+                  "
+          >
             {t<string>("BTNS.SAVE")}
           </button>
         </div>
@@ -166,13 +169,14 @@ const Account = () => {
         <div className="grid grid-cols-2 gap-x-[24px] min-[691px]:max-w-[512px] w-[100%] max-[690px]:grid-cols-1">
           <label
             htmlFor=""
-            className="min-[691px]:hidden text-[14px] text-home-title leading-[20px] mb-[6px] tracking-[-0.1px]">
+            className="min-[691px]:hidden text-[14px] text-home-title leading-[20px] mb-[6px] tracking-[-0.1px]"
+          >
             {t<string>("SETTINGS.FIRST_NAME")}
           </label>
           <div>
             <input
               placeholder={t<string>("SETTINGS.FIRST_NAME")}
-              className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+              className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder
                 border-solid border-[1px] border-header-bottom shadow-free-trial max-[690px]:w-[100%] leading-[18px] font-normal 
                 font-poppins text-[16px] tracking-[-0.01px] outline-none box-border max-[690px]:mb-[20px]"
               {...formikForm.getFieldProps("first_name")}
@@ -186,13 +190,14 @@ const Account = () => {
 
           <label
             htmlFor=""
-            className="min-[691px]:hidden text-[14px] text-home-title leading-[20px] mb-[6px] tracking-[-0.1px]">
+            className="min-[691px]:hidden text-[14px] text-home-title leading-[20px] mb-[6px] tracking-[-0.1px]"
+          >
             {t<string>("SETTINGS.LAST_NAME")}
           </label>
           <div>
             <input
               placeholder={t<string>("SETTINGS.LAST_NAME")}
-              className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+              className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder
                 border-solid border-[1px] border-header-bottom shadow-free-trial max-[690px]:w-[100%]
                 leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
               {...formikForm.getFieldProps("last_name")}
@@ -211,14 +216,15 @@ const Account = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-            max-[690px]:mb-[6px] max-[690px]:font-normal">
+            max-[690px]:mb-[6px] max-[690px]:font-normal"
+        >
           {t<string>("SETTINGS.USERNAME")}
         </div>
 
         <div className="max-w-[512px] w-[100%] max-[690px]:max-w-[100%]">
           <input
             placeholder={t<string>("SETTINGS.USERNAME")}
-            className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+            className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder
                 border-solid border-[1px] border-header-bottom shadow-free-trial w-[100%]
                 leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
             {...formikForm.getFieldProps("username")}
@@ -236,7 +242,8 @@ const Account = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-            max-[690px]:mb-[6px] max-[690px]:font-normal">
+            max-[690px]:mb-[6px] max-[690px]:font-normal"
+        >
           {t<string>("SETTINGS.EMAIL")}
         </div>
 
@@ -244,7 +251,7 @@ const Account = () => {
           <input
             disabled
             placeholder={t<string>("SETTINGS.EMAIL")}
-            className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+            className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder
                 border-solid border-[1px] bg-banner-txt border-header-bottom shadow-free-trial w-[100%]
                 leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
             {...formikForm.getFieldProps("email")}
@@ -256,7 +263,8 @@ const Account = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[1024px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-            max-[1024px]:mb-[20px]">
+            max-[1024px]:mb-[20px]"
+        >
           {t<string>("SETTINGS.PHOTO")}
           <p className="leading-[20px] font-normal mt-[4px] text-simple-text">
             {t<string>("SETTINGS.PHOTO_TEXT")}
@@ -265,12 +273,14 @@ const Account = () => {
 
         <div
           className="flex items-start gap-[20px] max-w-[512px] w-[100%] max-[1024px]:max-w-[100%] max-[1024px]:items-center
-               max-[1024px]:justify-between max-[690px]:flex-wrap">
+               max-[1024px]:justify-between max-[690px]:flex-wrap"
+        >
           <div className="flex flex-col items-center">
             {formikForm.values.profile_image ? (
               <div
                 className="
-                w-[80px] h-[80px] rounded-[50%] overflow-hidden">
+                w-[80px] h-[80px] rounded-[50%] overflow-hidden"
+              >
                 <img
                   className="w-[100%] h-[100%] object-cover"
                   src={formikForm.values.profile_image}
@@ -280,19 +290,22 @@ const Account = () => {
             ) : (
               <div
                 className="photo relative bg-center bg-no-repeat bg-without-photo 
-              bg-top-entrepreneur w-[80px] h-[80px] rounded-[50%] "></div>
+              bg-top-entrepreneur w-[80px] h-[80px] rounded-[50%] "
+              ></div>
             )}
             <button
               onClick={() => formikForm.setFieldValue("profile_image", "")}
               type="button"
               className="flex items-center justify-center px-[15px] bg-white rounded-[5px] text-home-title
-                text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] mt-[4px]">
+                text-[16px] font-medium leading-[20px] shadow-free-trial border-solid border-[1px] mt-[4px]"
+            >
               {t<string>("SETTINGS.REMOVE")}
             </button>
           </div>
           <label
             className="px-[24px] py-[24px] border-[1px] border-solid border-header-bottom bg-white 
-                rounded-[18px] cursor-pointer w-[calc(100%-100px)] max-[1024px]:hidden">
+                rounded-[18px] cursor-pointer w-[calc(100%-100px)] max-[1024px]:hidden"
+          >
             <div className="w-[40px] h-[40px] ml-[auto] mr-[auto] mb-[16px]">
               <img src={icon_add} alt="" />
             </div>
@@ -315,7 +328,8 @@ const Account = () => {
           <label
             className="cursor-pointer hidden max-[1024px]:flex items-center justify-center bg-white rounded-[6px] px-[15px]
                 shadow-free-trial w-[calc(100%-100px)] max-w-[512px] h-[45px] border-[1px] border-solid border-header-bottom
-                gap-[6px] text-[16px] font-medium max-[690px]:w-[100%] max-[690px]:max-w-[100%]">
+                gap-[6px] text-[16px] font-medium max-[690px]:w-[100%] max-[690px]:max-w-[100%]"
+          >
             <input
               className="hidden"
               type="file"
@@ -332,14 +346,15 @@ const Account = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-            max-[690px]:mb-[6px] max-[690px]:font-normal">
+            max-[690px]:mb-[6px] max-[690px]:font-normal"
+        >
           {t<string>("SETTINGS.ROLE")}
         </div>
 
         <div className="max-w-[512px] w-[100%] max-[690px]:max-w-[100%]">
           <input
             placeholder={t<string>("SETTINGS.ROLE")}
-            className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+            className="h-[44px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder
                 border-solid border-[1px] border-header-bottom shadow-free-trial w-[100%]
                 leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
             {...formikForm.getFieldProps("title")}
@@ -351,13 +366,15 @@ const Account = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-            max-[690px]:mb-[6px] max-[690px]:font-normal">
+            max-[690px]:mb-[6px] max-[690px]:font-normal"
+        >
           {t<string>("SETTINGS.COUNTRY")}
         </div>
 
         <div className="max-w-[512px] w-[100%] max-[690px]:max-w-[100%] cursor-pointer">
           <Select
             className="select-custom h-[44px] cursor-pointer"
+            isSearchable={false}
             options={countryOptions}
             styles={selectStyles}
             value={countryOptions.find(
@@ -374,13 +391,15 @@ const Account = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-            max-[690px]:mb-[6px] max-[690px]:font-normal">
+            max-[690px]:mb-[6px] max-[690px]:font-normal"
+        >
           {t<string>("SETTINGS.TZONE")}
         </div>
 
         <div className="max-w-[512px] w-[100%] max-[690px]:max-w-[100%] cursor-pointer">
           <Select
             className="select-custom h-[44px] cursor-pointer"
+            isSearchable={false}
             options={timesOptions}
             styles={selectStyles}
             value={timesOptions.find(
@@ -397,7 +416,8 @@ const Account = () => {
       <div className="flex items-start gap-x-[32px] justify-between max-w-[824px] max-[690px]:flex-wrap">
         <div
           className="max-w-[280px] font-medium text-home-title text-[14px] leading-[18px] tracking-[-0.1px]
-            max-[690px]:mb-[20px] max-[690px]:font-normal">
+            max-[690px]:mb-[20px] max-[690px]:font-normal"
+        >
           {t<string>("SETTINGS.BIO")}
           <p className="leading-[20px] font-normal mt-[4px] text-simple-text">
             {t<string>("SETTINGS.BIO_TEXT")}
@@ -408,10 +428,11 @@ const Account = () => {
           <textarea
             placeholder={t<string>("SETTINGS.BIO")}
             className="h-[190px] px-[16px] py-[12px] rounded-[5px]  
-                placeholder:text-input-paceholder resize-none
+                placeholder:text-input-placeholder resize-none
                 border-solid border-[1px] border-header-bottom shadow-free-trial w-[100%]
                 leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
-            {...formikForm.getFieldProps("bio")}></textarea>
+            {...formikForm.getFieldProps("bio")}
+          ></textarea>
         </div>
       </div>
       <div className="line my-[20px] h-[1px] bg-header-bottom max-[1024px]:mb-[0px] max-[690px]:hidden"></div>

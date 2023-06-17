@@ -266,7 +266,7 @@
     "NEW_ACTIVE_PB": "Add New Play"
   },
   "EDIT": {
-    "SECTION_NAME": "Section Name",
+    "PAGE_NAME": "Page Name",
     "DESCRIPTION": "Description"
   },
   "ERRORS": {
@@ -459,6 +459,17 @@
     "COOKIE_CONTENT": "By continuing to use this site, you are agreeing to our use of cookies.",
     "SEE_PRIVACY_POLICY": "See Privacy Policy",
     "COOKIE_SETTINGS": "Cookie Settings",
-    "COOKIE_ACCEPT": "Accept Cookies"
+    "COOKIE_ACCEPT": "Accept Cookies",
+    "ADD_ACTIVE_PLAYBOOK": "Add active playbook",
+    "EDIT_ACTIVE_PLAYBOOK": "Edit active playbook",
+    "DUE_DATE": "Due date",
+    "WORDS_MAX": "Up to 100 words",
+    "STATUS": "Status",
+    "OPEN": "Open",
+    "SUCCESS": "Success",
+    "FAILED": "Failed",
+    "NOT_STARTED": "Not started",
+    "ADD_TAGS": "Add Tags",
+    "PLAYBOOK": "Playbook"
   }
 }

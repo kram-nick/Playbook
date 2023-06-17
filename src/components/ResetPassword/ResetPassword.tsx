@@ -76,7 +76,7 @@ const ResetPassword = () => {
                 placeholder={t<string>("SIGN.EMAIL_PLACEHOLDER")}
                 id="email"
                 type="email"
-                className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-paceholder
+                className="py-[10px] px-[16px] rounded-[5px]  placeholder:text-input-placeholder
                   border-solid border-[1px] shadow-free-trial w-[100%]
                   leading-[18px] font-normal font-poppins text-[16px] tracking-[-0.01px] outline-none box-border"
                 {...formikForm.getFieldProps("email")}

@@ -24,10 +24,12 @@ export default function ModalIcons(props: ModalType) {
       <div
         onClick={(e) => e.stopPropagation()}
         className="modal-box relative w-[100%] max-w-[480px] px-[24px] py-[24px] shadow-free-trial 
-              border-[1px] border-solid border-border-btn bg-white font-poppins">
+              border-[1px] border-solid border-border-btn bg-white font-poppins"
+      >
         <div
           className="flex items-center w-[100%] justify-between border-b-[1px] border-solid 
-                  pt-[7px] pb-[15px]">
+                  pt-[7px] pb-[15px]"
+        >
           <div className="flex items-end gap-[24px]">
             {tabsIcons.map((item: any, index: number) => (
               <div
@@ -38,7 +40,8 @@ export default function ModalIcons(props: ModalType) {
                   "font-medium text-home-title": activeTab.id !== index + 1,
                   "tracking-[-0.1px] relative transition duration-150 ease-in text-[15px] leading-[22px] cursor-pointer":
                     true,
-                })}>
+                })}
+              >
                 {item.title}
                 <div
                   className={classNames({
@@ -46,12 +49,13 @@ export default function ModalIcons(props: ModalType) {
                     "w-[0%]": activeTab.id !== index + 1,
                     "absolute bottom-[-15px] left-[-1px] h-[1px] transition duration-300 ease-in bg-buttons-bg":
                       true,
-                  })}></div>
+                  })}
+                ></div>
               </div>
             ))}
           </div>
 
-          <button className="text-[15px] tracking-[-0.1px] leading-[22px] font-normal text-input-paceholder">
+          <button className="text-[15px] tracking-[-0.1px] leading-[22px] font-normal text-input-placeholder">
             {t<string>("BTNS.REMOVE")}
           </button>
         </div>
@@ -79,7 +83,8 @@ export default function ModalIcons(props: ModalType) {
         {activeTab && activeTab.id === 3 && (
           <div
             className="mt-[24px] px-[24px] py-[24px] border-[1px] border-solid border-header-bottom bg-white 
-                    rounded-[18px] cursor-pointer">
+                    rounded-[18px] cursor-pointer"
+          >
             <div className="w-[40px] h-[40px] ml-[auto] mr-[auto] mb-[16px]">
               <img src={icon_add} alt="" />
             </div>
