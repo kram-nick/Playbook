@@ -271,3 +271,11 @@ input:checked+.switch-check:after {
 .ph-picture {
   height: 180px;
 }
+
+ul .editor-listitem {
+  list-style: disc;
+}
+
+ol .editor-listitem {
+  list-style: decimal;
+}
