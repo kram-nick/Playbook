@@ -15,6 +15,7 @@ import { Data } from "../../../core/models";
 
 import icon_empty from "../../../assets/photos/main/empty.svg";
 import icon_plus from "../../../assets/photos/main/plus.svg";
+import SkeletonPlaybookFlex from "../../Skeleton/SkeletonPlaybookFlex/SkeletonPlaybookFlex";
 
 const AllPlaybooks = () => {
   const [loading, setLoading] = useState(false);
@@ -72,6 +73,8 @@ const AllPlaybooks = () => {
     return type;
   };
 
+  console.log(listType);
+
   return (
     <div>
       {playbooks?.length !== 0 ? (
@@ -84,10 +87,14 @@ const AllPlaybooks = () => {
             })}>
             {playbooks?.map((playbook: any, index: number) =>
               loading ? (
-                <SkeletonPlaybook
-                  type={SkeletonTypes.PUBLIC}
-                  key={playbook.id}
-                />
+                listType ? (
+                  <SkeletonPlaybook
+                    type={SkeletonTypes.PUBLIC}
+                    key={playbook.id}
+                  />
+                ) : (
+                  <SkeletonPlaybookFlex />
+                )
               ) : (
                 <AppMainCard
                   key={playbook.id}

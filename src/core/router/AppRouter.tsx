@@ -36,6 +36,8 @@ import AuthGuard from "./AuthGuard";
 import NotAuthGuard from "./NotAuthGuard";
 import SuccessPayment from "../../components/SuccessPayment/SuccessPayment";
 import FailurePayment from "../../components/FailurePayment/FailurePayment";
+import ActivePlaybooks from "../../components/ActivePlaybooks/ActivePlaybooks";
+import ActiveContainer from "../../pages/ActiveContainer/ActiveContainer";
 
 export const privateRoutes: IRoute[] = [
   {
@@ -53,6 +55,10 @@ export const privateRoutes: IRoute[] = [
   {
     path: PrivateUIRoutes.Main,
     element: <MainContainer />,
+  },
+  {
+    path: PrivateUIRoutes.Plays,
+    element: <ActiveContainer />,
   },
   {
     path: `${PrivateUIRoutes.Preview}/:playbook_id`,

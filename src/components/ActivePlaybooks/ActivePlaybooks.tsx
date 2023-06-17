@@ -1,11 +1,22 @@
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 
-import AllPlaybooks from "../MainTabs/AllPlaybooks.tsx/AllPlaybooks";
-import MyPlaybooks from "../MainTabs/MyPlaybooks/MyPlaybooks";
-import FavoritePlaybooks from "../MainTabs/FavoritePlaybooks.tsx/FavoritePlaybooks";
-import PurchasedPlaybooks from "../MainTabs/PurchasedPlaybooks.tsx/PurchasedPlaybooks";
-import Listings from "../MainTabs/Listings/Listings";
+import AllActive from "../ActiveTabs/AllActive/AllActive";
+import Open from "../ActiveTabs/Open/Open";
+import Success from "../ActiveTabs/Success/Success";
+import Failed from "../ActiveTabs/Failed/Failed";
+
+import { ActiveTabs } from "../../core/models/enums";
+import { TabsActive } from "../../core/constants";
+import {
+  setActiveTab,
+  setListType,
+} from "../../core/store/reducers/app/appDataSlice";
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
+import useModal from "../../core/hooks/useModal";
+import useHttpGet from "../../core/hooks/useHttpGet";
+import { APIRoutes } from "../../core/http";
+import { UIRoutes } from "../../core/router";
 
 import icon_plus from "../../assets/photos/main/plus.svg";
 import icon_down_gray from "../../assets/photos/main/arrow-down-gray.svg";
@@ -13,24 +24,6 @@ import icon_grid from "../../assets/photos/main/icon-grid.svg";
 import icon_grid_default from "../../assets/photos/main/icon-grid-default.svg";
 import icon_row from "../../assets/photos/main/row-vertical.svg";
 import icon_row_default from "../../assets/photos/main/row-vertical-default.svg";
-
-import { ActiveTabs, MainTabs } from "../../core/models/enums";
-import { TabsActive } from "../../core/constants";
-import {
-  setActiveTab,
-  setListType,
-  setMainTab,
-} from "../../core/store/reducers/app/appDataSlice";
-import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
-import { setPlaybookType } from "../../core/store/reducers/helpers/helpersDataSlice";
-import useModal from "../../core/hooks/useModal";
-import useHttpGet from "../../core/hooks/useHttpGet";
-import { APIRoutes } from "../../core/http";
-import { UIRoutes } from "../../core/router";
-import AllActive from "../ActiveTabs/AllActive/AllActive";
-import Open from "../ActiveTabs/Open/Open";
-import Success from "../ActiveTabs/Success/Success";
-import Failed from "../ActiveTabs/Failed/Failed";
 
 const ActivePlaybooks = () => {
   const dispatch = useAppDispatch();
@@ -121,6 +114,38 @@ const ActivePlaybooks = () => {
                   </span>
                   <img src={icon_down_gray} alt="arrow filter" />
                 </div>
+              </div>
+              <div className="flex items-center gap-[12px] ml-[32px]">
+                <button
+                  onClick={() => {
+                    dispatch(setListType(true));
+                  }}
+                  className={classNames({
+                    "bg-white max-[690px]:hidden": listType,
+                    "flex items-center justify-center w-[40px] h-[40px]": true,
+                    "rounded-[5px] border-solid border-[1px] shadow-free-trial border-header-bottom":
+                      true,
+                  })}>
+                  <img
+                    src={listType ? icon_grid : icon_grid_default}
+                    alt="Type cards"
+                  />
+                </button>
+                <button
+                  onClick={() => {
+                    dispatch(setListType(false));
+                  }}
+                  className={classNames({
+                    "bg-white max-[690px]:hidden": !listType,
+                    "flex items-center justify-center w-[40px] h-[40px] ": true,
+                    "rounded-[5px] border-solid border-[1px] shadow-free-trial border-header-bottom":
+                      true,
+                  })}>
+                  <img
+                    src={listType ? icon_row_default : icon_row}
+                    alt="Type list"
+                  />
+                </button>
               </div>
             </div>
           </div>

@@ -48,8 +48,3 @@ export enum SkeletonTypes {
   DISCOVER = "DISCOVER",
   PROFILE = "PROFILE",
 }
-
-export enum PlaybookStatus {
-  ACTIVE = "ACTIVE",
-  UNACTIVE = "UNACTIVE",
-}
