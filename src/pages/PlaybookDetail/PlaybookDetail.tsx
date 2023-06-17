@@ -32,6 +32,8 @@ const PlaybookDetail = () => {
     localStorage.getItem("playbook_id") || "{}"
   );
 
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
   const handleViewDetail = (open: boolean | any) => {
     if (open) {
       handleView(!showDetail);
@@ -67,16 +69,22 @@ const PlaybookDetail = () => {
           <li className="flex items-center gap-[4px]  mb-[4px]">
             <Link
               to="/main"
-              className="text-[14px] leading-[20px] tracking-[-0.1px] text-nav-txt-private">
-              Main Page
+              className="text-[14px] leading-[20px] tracking-[-0.1px] text-nav-txt-private"
+            >
+              {t<string>("PROFILE.MAIN_PAGE")}
             </Link>
             <img src={arrow_bread} alt="" />
           </li>
           <li className="flex items-center text-[14px] leading-[20px] tracking-[-0.1px] mb-[4px] text-nav-txt-private">
             <Link
               to="/profile"
-              className="text-[14px] leading-[20px] tracking-[-0.1px] text-nav-txt-private">
-              Chris’ Playbooks
+              className="text-[14px] leading-[20px] tracking-[-0.1px] text-nav-txt-private"
+            >
+              {`${
+                user?.first_name[user?.first_name.length] === "s"
+                  ? user?.first_name
+                  : `${user?.first_name}s`
+              }’ ${t<string>("PROFILE.PLAYBOOKS")}`}
             </Link>
             <img src={arrow_bread} alt="" />
           </li>
@@ -89,7 +97,8 @@ const PlaybookDetail = () => {
           {!showDetail ? (
             <div
               className="rounded-[8px] bg-white max-[1024px]:rounded-t-[0] shadow-free-trial 
-            border-[1px] border-solid border-header-bottom mb-[16px]">
+            border-[1px] border-solid border-header-bottom mb-[16px]"
+            >
               <BookBanner data={playbook} preview={true} />
               <div className="grid p-[24px] gap-y-[16px] mt-[-50px] max-[1024px]:px-[32px] max-[690px]:px-[16px]">
                 <h1 className="text-[32px] font-poppins font-bold text-home-title max-[690px]:text-[26px] max-[690px]:leading-[32px]">
@@ -112,10 +121,12 @@ const PlaybookDetail = () => {
                         setPageId(chapter?.id);
                       }}
                       className="flex items-center justify-between  rounded-[8px] bg-chapter-color px-[16px] py-[12px] 
-                          border-[1px] border-solid border-card-border gap-[30px] max-[690px]:p-[12px]">
+                          border-[1px] border-solid border-card-border gap-[30px] max-[690px]:p-[12px]"
+                    >
                       <span
                         className="font-poppins text-[20px] text-home-title  font-medium leading-[28px] text-left 
-                          max-[690px]:text-[16px] max-[690px]:leading-[24px]">
+                          max-[690px]:text-[16px] max-[690px]:leading-[24px]"
+                      >
                         {chapter.title}
                       </span>
                       <img
@@ -144,21 +155,26 @@ const PlaybookDetail = () => {
                 <div
                   key={page.id}
                   className="grid p-[24px] gap-y-[16px] rounded-[8px] bg-white shadow-free-trial border-[1px] 
-              border-solid border-header-bottom font-poppins max-[690px]:px-[16px]">
+              border-solid border-header-bottom font-poppins max-[690px]:px-[16px]"
+                >
                   <button
                     onClick={handleViewDetail}
-                    className="flex items-center text-[16px] leading-[20px] font-medium text-buttons-bg hover:text-buttons-bg-hover active:text-buttons-bg-active gap-[4px]">
+                    className="flex items-center text-[16px] leading-[20px] font-medium text-buttons-bg hover:text-buttons-bg-hover active:text-buttons-bg-active gap-[4px]"
+                  >
                     <img src={back} alt="" /> {t<string>("BTNS.BACK")}
                   </button>
                   <h1
                     className={classNames({
                       "text-[24px] leading-normal font-semibold text-home-title max-[690px]:text-[20px]":
                         true,
-                    })}>
+                    })}
+                  >
                     {page?.title}
                   </h1>
                   <div
-                    dangerouslySetInnerHTML={{ __html: page?.content }}
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.parse(page?.editor_content?.element),
+                    }}
                     className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px] 
                   max-[690px]:text-[16px] max-[690px]:leading-[26px]"
                   />
@@ -171,7 +187,8 @@ const PlaybookDetail = () => {
             </button>
             <button
               className="w-[calc(100%-56px)] h-[46px] px-[12px] rounded-[6px] border-btn-free border-[1px] 
-                border-solid shadow-free-trial bg-buttons-bg hover:bg-buttons-bg-hover active:bg-buttons-bg-active text-white text-[16px] font-medium">
+                border-solid shadow-free-trial bg-buttons-bg hover:bg-buttons-bg-hover active:bg-buttons-bg-active text-white text-[16px] font-medium"
+            >
               {t<string>("PROFILE.GET_FREE")}
             </button>
           </div>

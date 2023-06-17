@@ -32,8 +32,9 @@ const Profile = () => {
           <li className="flex items-center gap-[4px]  mb-[4px]">
             <Link
               to="/main"
-              className="text-[14px] leading-[20px] tracking-[-0.1px] text-nav-txt-private">
-              Main Page
+              className="text-[14px] leading-[20px] tracking-[-0.1px] text-nav-txt-private"
+            >
+              {t<string>("PROFILE.MAIN_PAGE")}
             </Link>
             <img src={arrow_bread} alt="" />
           </li>
@@ -41,6 +42,13 @@ const Profile = () => {
             {`${profile?.data?.user?.first_name}’ ${t<string>(
               "PROFILE.PLAYBOOKS"
             )}`}
+            {`${
+              profile?.data?.user?.first_name[
+                profile?.data?.user?.first_name.length
+              ] === "s"
+                ? profile?.data?.user?.first_name
+                : `${profile?.data?.user?.first_name}s`
+            }’ ${t<string>("PROFILE.PLAYBOOKS")}`}
           </li>
         </ul>
         <div className="title text-[32px] mb-[32px] font-bold text-home-title leading-[1.3] max-[690px]:text-[26px]">

@@ -4,7 +4,10 @@ export declare namespace Data {
     playbook_id: string;
     title: string;
     url: string;
-    content: string;
+    editor_content: {
+      editor_state: string;
+      element: string;
+    };
     created_at: string;
     updated_at: string;
     privacy: string;
