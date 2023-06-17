@@ -29,15 +29,14 @@ import light_blue_saas from "../../assets/photos/create/blue-saas.svg";
 import plus_gray from "../../assets/photos/sidebar/plus-gray.svg";
 import star_active from "../../assets/photos/sidebar/star.svg";
 import star from "../../assets/photos/sidebar/favorite.svg";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
 import {
-  setPlaybookStatus,
   setPlaybookType,
   setReloadChecker,
 } from "../../core/store/reducers/helpers/helpersDataSlice";
-import { MainTabs, Modal, PlaybookStatus } from "../../core/models/enums";
+import { MainTabs, Modal } from "../../core/models/enums";
 import useModal from "../../core/hooks/useModal";
 import PlaybookService from "../../core/services/playbook.service";
 import { PrivateUIRoutes, UIRoutes } from "../../core/router";
@@ -287,10 +286,10 @@ const Sidebar = () => {
           </span>
         </Link>
         <ul className="flex flex-col gap-[4px]">
-          <li
+          <Link
+            to={`${PrivateUIRoutes.Main}`}
             onClick={() => {
               dispatch(setSelectedTab(MainTabs.Home));
-              dispatch(setPlaybookStatus(PlaybookStatus.UNACTIVE));
             }}
             className={classNames({
               "bg-active-playbook  border-top-engineering ":
@@ -315,12 +314,12 @@ const Sidebar = () => {
             >
               {t<string>("COMMON.PB_HOME")}
             </span>
-          </li>
+          </Link>
 
-          <li
+          <Link
+            to={`/${PrivateUIRoutes.Plays}`}
             onClick={() => {
               dispatch(setSelectedTab(MainTabs.Active));
-              dispatch(setPlaybookStatus(PlaybookStatus.ACTIVE));
             }}
             className={classNames({
               "bg-active-playbook  border-top-engineering  text-buttons-bg":
@@ -339,7 +338,7 @@ const Sidebar = () => {
             <span className="footer-main-list-title  font-poppins not-italic leading-[26px] tracking-[-0.1px] text-[16px] font-normal">
               {t<string>("COMMON.PB_ACTIVE")}
             </span>
-          </li>
+          </Link>
         </ul>
 
         <hr className="mb-[16px] mt-[12px]" />

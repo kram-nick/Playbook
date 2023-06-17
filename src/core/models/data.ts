@@ -79,4 +79,20 @@ export declare namespace Data {
     experienced: boolean;
     measured: boolean;
   }
+
+  interface TaskCard {
+    id: string;
+    title: string;
+    description: string;
+    status: string;
+    created: string;
+    tag: string;
+    playbook?: {
+      id: string;
+      title: string;
+      user: string;
+      page: string;
+      image: string;
+    };
+  }
 }
