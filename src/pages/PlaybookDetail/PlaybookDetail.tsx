@@ -104,6 +104,7 @@ const PlaybookDetail = () => {
                 <h1 className="text-[32px] font-poppins font-bold text-home-title max-[690px]:text-[26px] max-[690px]:leading-[32px]">
                   {playbook?.name}
                 </h1>
+                <div>{/* {<img /> : <div></div>} */}</div>
                 <p className="font-poppins normal font-normal text-[20px] leading-[32px] text-top-subtitle-playbook tracking-[-0.1px]">
                   {playbook?.content}
                 </p>

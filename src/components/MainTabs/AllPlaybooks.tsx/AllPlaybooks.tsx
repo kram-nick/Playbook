@@ -73,8 +73,6 @@ const AllPlaybooks = () => {
     return type;
   };
 
-  console.log(listType);
-
   return (
     <div>
       {playbooks?.length !== 0 ? (
@@ -84,7 +82,8 @@ const AllPlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}>
+            })}
+          >
             {playbooks?.map((playbook: any, index: number) =>
               loading ? (
                 listType ? (
@@ -123,7 +122,8 @@ const AllPlaybooks = () => {
             onClick={handleNewPlaybook}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                ">
+                "
+          >
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>

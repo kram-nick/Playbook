@@ -145,8 +145,6 @@ const Editor = () => {
     },
   });
 
-  console.log(formikForm.values);
-
   const addPage = async (values: any) => {
     try {
       values.privacy = values.privacy ? "private" : "public";

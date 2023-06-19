@@ -18,7 +18,7 @@ const AllActive = () => {
   useHttpGet<any>(`${APIRoutes.PLAYS}`, {
     dependencies: [],
     resolve: (response: any) => {
-      console.log(response?.data);
+      // console.log(response?.data);
     },
   });
 
@@ -28,7 +28,8 @@ const AllActive = () => {
         flex: true,
         "flex-row flex-wrap gap-x-[20px] gap-y-[20px]": listType,
         "flex-col gap-[12px]": !listType,
-      })}>
+      })}
+    >
       {taskcards.length ? (
         taskcards.map((task: Data.TaskCard) => (
           <TaskCard key={task.id} task={task} />

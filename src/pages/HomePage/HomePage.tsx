@@ -80,11 +80,11 @@ const HomePage = () => {
           max-sm:w-full
           max-md:w-full
           max-lg:mt-0
-        max-lg:w-[468px]
+        max-lg:w-[668px]
         "
         >
           <h1
-            className="max-w-[511px] font-poppins  text-[38px] leading-[60px] font-bold text-home-title tracking-[-0.01em]
+            className="max-w-[668px] font-poppins text-[30px] leading-[60px] font-bold text-home-title tracking-[-0.01em]
           max-lg:text-[38px]
           max-lg:leading-[53px]
           "
@@ -190,13 +190,13 @@ const HomePage = () => {
             </Link>
           </div>
         </div>
-        <div>
+        <div className="min-[768px]:absolute z-[-1] right-0">
           <img
             className="object-cover
             max-sm:h-[485px]
             max-lg:h-[465px]
-            max-lg:w-[380px]
-            max-xl:w-[700px]
+            max-lg:w-[360px]
+            max-xl:w-[600px]
           "
             src={groupOne}
             alt="group"
