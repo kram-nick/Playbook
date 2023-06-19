@@ -74,9 +74,9 @@ const ActivePlaybooks = () => {
         hover:bg-buttons-bg-hover
         active:bg-buttons-bg-active"
             onClick={() => {
-              dispatch(setSharedId(ActivePlaybook.CREATE));
-              openModal(Modal.ACTIVE_PLAY);
-            }}>
+              openModal(Modal.CREATE_ACTIVE_PLAY);
+            }}
+          >
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("HOME.NEW_PLAY")}
             </span>
@@ -88,12 +88,14 @@ const ActivePlaybooks = () => {
         <div>
           <div
             className="flex items-center flex-wrap justify-between font-poppins w-[100%] pb-[24px] max-lg:pb-[32px]
-              max-[690px]:flex-col-reverse max-[690px]:pb-[16px]">
+              max-[690px]:flex-col-reverse max-[690px]:pb-[16px]"
+          >
             {!searchData.search && (
               <div
                 className="flex items-end gap-[24px] border-b-[1px] border-solid border-header-bottom 
                 max-[690px]:overflow-x-auto max-[690px]:whitespace-nowrap max-[690px]:ml-[-16px] max-[690px]:mr-[-16px]
-                max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px]">
+                max-[690px]:w-[calc(100%+32px)] max-[690px]:pb-[1px] max-[690px]:px-[15px]"
+              >
                 {TabsActive.map((item: string, index: number) => (
                   <div
                     onClick={() => dispatch(setActiveTab(index))}
@@ -103,7 +105,8 @@ const ActivePlaybooks = () => {
                       "text-nav-txt-private": activeTab !== index,
                       "tracking-[-0.1px] relative transition duration-150 ease-in text-[16px] leading-[24px] cursor-pointer pt-[7px] pb-[11px]":
                         true,
-                    })}>
+                    })}
+                  >
                     {t<string>(`${item}`)}{" "}
                     <span
                       className={classNames({
@@ -112,7 +115,8 @@ const ActivePlaybooks = () => {
                         "bg-buttons-bg text-list-title": index === activeTab,
                         "bg-card-border text-nav-txt-private":
                           index !== activeTab,
-                      })}>
+                      })}
+                    >
                       {index === 0 && taskcards.length}
                       {index === 1 &&
                         taskcards.filter(
@@ -133,7 +137,8 @@ const ActivePlaybooks = () => {
                         "w-[0%]": activeTab !== index,
                         "absolute bottom-[-1px] left-[-1px] h-[2px] transition duration-300 ease-in bg-buttons-bg":
                           true,
-                      })}></div>
+                      })}
+                    ></div>
                   </div>
                 ))}
               </div>
@@ -143,7 +148,8 @@ const ActivePlaybooks = () => {
               <div className="flex items-center">
                 <span
                   className="mr-[13px] text-[16px] leading-[26px] tracking-[-0.1px] 
-                    text-simple-text max-md:hidden">
+                    text-simple-text max-md:hidden"
+                >
                   {t<string>("MAIN.SORT_TITLE")}:
                 </span>
                 <div className="flex items-center">
@@ -163,7 +169,8 @@ const ActivePlaybooks = () => {
                     "flex items-center justify-center w-[40px] h-[40px]": true,
                     "rounded-[5px] border-solid border-[1px] shadow-free-trial border-header-bottom":
                       true,
-                  })}>
+                  })}
+                >
                   <img
                     src={listType ? icon_grid : icon_grid_default}
                     alt="Type cards"
@@ -178,7 +185,8 @@ const ActivePlaybooks = () => {
                     "flex items-center justify-center w-[40px] h-[40px] ": true,
                     "rounded-[5px] border-solid border-[1px] shadow-free-trial border-header-bottom":
                       true,
-                  })}>
+                  })}
+                >
                   <img
                     src={listType ? icon_row_default : icon_row}
                     alt="Type list"

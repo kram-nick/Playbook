@@ -12,7 +12,8 @@ import ModalPrivacy from "./WindowTypes/ModalPrivacy";
 import useModal from "../../core/hooks/useModal";
 import { useAppSelector } from "../../core/hooks/useRedux";
 import { Modal } from "../../core/models/enums";
-import ModalAddActivePlay from "./WindowTypes/ModalActivePlaybook";
+import ModalCreateActivePlaybook from "./WindowTypes/ModalCreateActivePlaybook";
+import ModalEditActivePlaybook from "./WindowTypes/ModalEditActivePlaybook";
 
 const ModalWindow = () => {
   const { closeModal } = useModal();
@@ -38,7 +39,10 @@ const ModalWindow = () => {
           {modalType === Modal.PLAYBOOK_SALE && <ModalSale />}
           {modalType === Modal.FREE_PURCHASE && <ModalFreePurchase />}
           {modalType === Modal.PRIVACY && <ModalPrivacy />}
-          {modalType === Modal.ACTIVE_PLAY && <ModalAddActivePlay />}
+          {modalType === Modal.CREATE_ACTIVE_PLAY && (
+            <ModalCreateActivePlaybook />
+          )}
+          {modalType === Modal.EDIT_ACTIVE_PLAY && <ModalEditActivePlaybook />}
           {/* <ModalShareSocial item={selectedItem}></ModalShareSocial> */}
         </div>
       )}

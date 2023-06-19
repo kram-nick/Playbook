@@ -18,7 +18,7 @@ import playb from "../../../assets/photos/modals/playb-header.svg";
 import date from "../../../assets/photos/modals/date.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 
-const ModalActivePlaybook = () => {
+const ModalEditActivePlaybook = () => {
   const { t } = useTranslation();
   const { closeModal } = useModal();
   const [tags, setTags] = useState([]);
@@ -149,9 +149,7 @@ const ModalActivePlaybook = () => {
               max-md:mb-[15px]"
       >
         <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-medium font-poppins text-footer-main">
-          {sharedId === ActivePlaybook.CREATE
-            ? `${t<string>("MODALS.ADD_ACTIVE_PLAYBOOK")}`
-            : `${t<string>("MODALS.EDIT_ACTIVE_PLAYBOOK")}`}
+          {t<string>("MODALS.EDIT_ACTIVE_PLAYBOOK")}
         </span>
         <button
           type="button"
@@ -381,4 +379,4 @@ const ModalActivePlaybook = () => {
   );
 };
 
-export default ModalActivePlaybook;
+export default ModalEditActivePlaybook;

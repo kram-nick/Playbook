@@ -27,8 +27,7 @@ const Empty = () => {
 
           <button
             onClick={() => {
-              dispatch(setSharedId(ActivePlaybook.CREATE));
-              openModal(Modal.ACTIVE_PLAY);
+              openModal(Modal.CREATE_ACTIVE_PLAY);
             }}
             className="shadow-tags rounded-[5px] bg-buttons-bg px-[16px] py-[10px] flex flex-row gap-[6px]
           hover:bg-buttons-bg-hover

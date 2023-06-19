@@ -36,7 +36,8 @@ export enum Modal {
   FREE_PURCHASE = "FREE_PURCHASE",
   WELCOME = "WELCOME",
   PRIVACY = "PRIVACY",
-  ACTIVE_PLAY = "ACTIVE_PLAY",
+  CREATE_ACTIVE_PLAY = "CREATE_PLAY",
+  EDIT_ACTIVE_PLAY = "EDIT_PLAY",
 }
 
 export enum Welcome {
