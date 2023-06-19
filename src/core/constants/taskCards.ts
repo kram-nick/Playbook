@@ -11,7 +11,7 @@ export const taskcards: Data.TaskCard[] = [
     tag: "Launch Product",
     title: "Expand market presence through strategic partnerships",
     description:
-      "Expand market presence through strategic partnerships: Description: Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
+      "Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
     status: "Not started",
     created: "Due Jul 24",
     playbook: {
@@ -25,32 +25,32 @@ export const taskcards: Data.TaskCard[] = [
   {
     id: "2",
     tag: "Launch Product",
-    title: "Expand market presence through strategic partnerships",
+    title: "Foster a culture of innovation and employee empowerment",
     description:
-      "Expand market presence through strategic partnerships: Description: Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
+      "Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
     status: "Open",
     created: "Due Jul 24",
     playbook: {
       id: "20",
       title: "Engineering Playbook 2023",
       user: "Nick Kramarenko",
-      image: first_icon,
+      image: second_icon,
       page: "Page 4",
     },
   },
   {
     id: "3",
     tag: "Launch Product",
-    title: "Expand market presence through strategic partnerships",
+    title: "Foster a culture of innovation and employee empowerment",
     description:
-      "Expand market presence through strategic partnerships: Description: Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
+      "Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
     status: "Success",
     created: "Due Jul 24",
     playbook: {
       id: "30",
       title: "Early Stage Product Playbook early stage Product Product Play..",
       user: "Nick Kramarenko",
-      image: first_icon,
+      image: third_icon,
       page: "Page 4",
     },
   },
@@ -59,7 +59,7 @@ export const taskcards: Data.TaskCard[] = [
     tag: "Launch Product",
     title: "Expand market presence through strategic partnerships",
     description:
-      "Expand market presence through strategic partnerships: Description: Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
+      "Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
     status: "Failed",
     created: "Due Jul 24",
     //     playbook: {
@@ -73,16 +73,16 @@ export const taskcards: Data.TaskCard[] = [
   {
     id: "5",
     tag: "Launch Product",
-    title: "Expand market presence through strategic partnerships",
+    title: "Foster a culture of innovation and employee empowerment",
     description:
-      "Expand market presence through strategic partnerships: Description: Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
+      "Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
     status: "Success",
     created: "Due Jul 24",
     playbook: {
       id: "50",
       title: "Getting Started: Your First Playbook Playbook Playbook.....",
       user: "Nick Kramarenko",
-      image: first_icon,
+      image: fourth_icon,
       page: "Page 4",
     },
   },
@@ -91,7 +91,7 @@ export const taskcards: Data.TaskCard[] = [
     tag: "Launch Product",
     title: "Expand market presence through strategic partnerships",
     description:
-      "Expand market presence through strategic partnerships: Description: Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
+      "Identify and establish partnerships with complementary businesses or influential industry players to leverage their networks, resources, and expertise, thereby expanding market reach and gaining a competitive edge.",
     status: "Open",
     created: "Due Jul 24",
     //     playbook: {
