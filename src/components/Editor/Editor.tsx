@@ -105,10 +105,11 @@ const Editor = () => {
         formikForm.setFieldValue("title", response?.data?.title);
 
         formikForm.setFieldValue(
-          "content",
+          "editor_content",
           response?.data?.editor_content?.editor_state
         );
         setContent(response?.data?.editor_content?.editor_state);
+        setElement(response?.data?.editor_content?.element);
 
         setSavedData(response?.data);
       }
@@ -144,6 +145,8 @@ const Editor = () => {
     },
   });
 
+  console.log(formikForm.values);
+
   const addPage = async (values: any) => {
     try {
       values.privacy = values.privacy ? "private" : "public";
@@ -163,7 +166,7 @@ const Editor = () => {
   const updatePage = async (values: any) => {
     if (
       savedData.title === formikForm.values.title &&
-      savedData.content === formikForm.values.editor_content
+      savedData.editor_content.editor_state === formikForm.values.editor_content
     ) {
       toast.warn("Nothing wasn't changed!");
       return;

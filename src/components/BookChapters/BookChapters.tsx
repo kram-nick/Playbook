@@ -193,16 +193,17 @@ const BookChapters: React.FC<pagesProps> = ({
               </div>
             </div>
           </div>
-          {openedPages.includes(dataContent.id) && (
-            <div className="p-[16px] pb-[24px]" ref={innerRef}>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: JSON.parse(dataContent?.editor_content?.element),
-                }}
-                className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]"
-              />
-            </div>
-          )}
+          {openedPages.includes(dataContent.id) &&
+            dataContent?.editor_content?.element && (
+              <div className="p-[16px] pb-[24px]" ref={innerRef}>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.parse(dataContent?.editor_content?.element),
+                  }}
+                  className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]"
+                />
+              </div>
+            )}
         </div>
       </div>
     </Reorder.Item>
