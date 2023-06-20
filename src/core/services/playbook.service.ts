@@ -96,8 +96,19 @@ export default class PlaybookService {
     return RequestsService.putMethod<any>(`${APIRoutes.PAGES}/${id}`, formData);
   }
 
+  static async UpdatePlay(id: string, data: any): Promise<AxiosResponse<any>> {
+    const formData = {
+      page: data,
+    };
+    return RequestsService.putMethod<any>(`${APIRoutes.PLAYS}/${id}`, formData);
+  }
+
   static async DeletePage(id: any): Promise<AxiosResponse<any>> {
     return RequestsService.deleteMethod<any>(`${APIRoutes.PAGES}/${id}`);
+  }
+
+  static async DeletePlay(id: any): Promise<AxiosResponse<any>> {
+    return RequestsService.deleteMethod<any>(`${APIRoutes.PLAYS}/${id}`);
   }
 
   static async Search(search: string): Promise<AxiosResponse<any>> {

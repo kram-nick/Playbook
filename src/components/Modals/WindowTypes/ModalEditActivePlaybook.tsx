@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../../../core/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import useModal from "../../../core/hooks/useModal";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import classNames from "classnames";
 import DatePicker from "react-date-picker";
@@ -17,17 +17,57 @@ import delete_icon from "../../../assets/photos/main/close-cross.svg";
 import playb from "../../../assets/photos/modals/playb-header.svg";
 import date from "../../../assets/photos/modals/date.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
+import PlaybookService from "../../../core/services/playbook.service";
+import { toast } from "react-toastify";
+import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
 
 const ModalEditActivePlaybook = () => {
   const { t } = useTranslation();
   const { closeModal } = useModal();
   const [tags, setTags] = useState([]);
+  const [updateReloader, setUpdateReloader] = useState<boolean>(false);
   const [tagItem, setTagItem] = useState({
     text: "",
     active: false,
   });
 
-  const { sharedId } = useAppSelector((state) => state.helpers);
+  const { sharedId, reloadChecker } = useAppSelector((state) => state.helpers);
+  const dispatch = useAppDispatch();
+
+  const { fetchedData: play } = useHttpGet<any>(
+    `${APIRoutes.PLAYS}/${sharedId}`,
+    {
+      dependencies: [updateReloader],
+      resolve: (response) => {
+        for (let value in formikForm.values) {
+          if (response?.data[value]) {
+            formikForm.setFieldValue(value, response?.data[value]);
+          }
+        }
+      },
+    }
+  );
+
+  const { fetchedData: ConnectedPlaybook } = useHttpGet<any>(
+    `${APIRoutes.PLAYBOOKS}/${play?.data?.playbook_id}`,
+    {
+      dependencies: [tagItem],
+      condition: play?.data?.playbook_id,
+    }
+  );
+
+  useHttpGet<any>(`${APIRoutes.PLAYS_TAGS}`, {
+    dependencies: [tagItem],
+    resolve: (response) => {
+      setTags(
+        response?.data?.filter((tag: Data.Tag) =>
+          tag.name
+            .toLocaleLowerCase()
+            .includes(tagItem.text.toLocaleLowerCase())
+        )
+      );
+    },
+  });
 
   const [statusOptions, setStatusOptions] = useState<any[]>([
     {
@@ -93,19 +133,6 @@ const ModalEditActivePlaybook = () => {
     },
   };
 
-  useHttpGet<any>(`${APIRoutes.TAGS}`, {
-    dependencies: [tagItem],
-    resolve: (response) => {
-      setTags(
-        response?.data?.filter((tag: Data.Tag) =>
-          tag.name
-            .toLocaleLowerCase()
-            .includes(tagItem.text.toLocaleLowerCase())
-        )
-      );
-    },
-  });
-
   const formikForm = useFormik<{
     name: string;
     description: string;
@@ -122,11 +149,29 @@ const ModalEditActivePlaybook = () => {
     },
     // validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      HandleNewPlaybook(values);
+      for (let item in values) {
+        if (values[item] !== play?.data[item]) {
+          HandleUpdatePlay(values);
+          return;
+        }
+      }
+
+      toast.warn(t<string>("ERRORS.NOT_UPDATED"));
     },
   });
 
-  const HandleNewPlaybook = async (values: any) => {};
+  const HandleUpdatePlay = async (values: any) => {
+    try {
+      await PlaybookService.UpdatePlay(play?.data?.id, values);
+      toast.success(t<string>("ERRORS.ACCOUNT_UPDATED"));
+      setUpdateReloader(!updateReloader);
+      dispatch(setReloadChecker(!reloadChecker));
+    } catch (errors: any) {
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+      }
+    }
+  };
 
   const RemoveTag = (selectedTag: any) => {
     const tagsArr = formikForm.values.tags.filter(
@@ -172,6 +217,7 @@ const ModalEditActivePlaybook = () => {
           <input
             className="h-[38px] outline-none border-[1px] border-solid border-border-input rounded-[4px] mt-[6px] pl-[16px] placeholder:text-border-input placeholder:text-[16px] placeholder:font-poppins"
             placeholder={t<string>("MODALS.NAME")}
+            {...formikForm.getFieldProps("name")}
           />
         </label>
         <label className="flex flex-col">
@@ -215,6 +261,7 @@ const ModalEditActivePlaybook = () => {
             className="outline-none resize-none h-[75px] border-[1px] border-solid border-border-input rounded-[4px] mt-[6px] pl-[16px] 
             pt-[9px] placeholder:text-border-input placeholder:text-[16px] placeholder:font-poppins"
             placeholder={`${t<string>("MODALS.DESCRIPTION")}`}
+            {...formikForm.getFieldProps("description")}
           />
           <span className="mt-[8px] text-[14px] text-inform-text font-poppins leading-[20px]">
             {t<string>("MODALS.WORDS_MAX")}
@@ -335,20 +382,31 @@ const ModalEditActivePlaybook = () => {
             )}
           />
         </div>
-        <div>
-          <span className="text-[14px] text-home-title font-poppins leading-[20px]">
-            {t<string>("MODALS.PLAYBOOK")}
-          </span>
-          <div className="flex flex-row items-center gap-[12px] mt-[6px] p-[12px] rounded-[4px] border-[1px] border-solid border-header-bottom">
-            <img className="w-[40px] h-[40px]" src={playb} alt="" />
-            <div>
-              <h4 className="text-[14px] font-poppins font-medium leading-[18px] text-top-playbook-title">
-                Engineering Playbook 2023
-              </h4>
-              <p className="text-[12px] text-input-placeholder font-poppins mt-[4px]">{`Nick Kramarenko • Page 4`}</p>
+        {play?.data?.playbook_id && (
+          <div>
+            <span className="text-[14px] text-home-title font-poppins leading-[20px]">
+              {t<string>("MODALS.PLAYBOOK")}
+            </span>
+            <div className="flex flex-row items-center gap-[12px] mt-[6px] p-[12px] rounded-[4px] border-[1px] border-solid border-header-bottom">
+              <img
+                className="w-[40px] h-[40px]"
+                src={
+                  ConnectedPlaybook?.data?.thumbnail_url ||
+                  ConnectedPlaybook?.data?.header_url
+                }
+                alt=""
+              />
+              <div>
+                <h4 className="text-[14px] font-poppins font-medium leading-[18px] text-top-playbook-title">
+                  {ConnectedPlaybook?.data?.name}
+                </h4>
+                <p className="text-[12px] text-input-placeholder font-poppins mt-[4px]">
+                  {`${ConnectedPlaybook?.data?.profile_first_name} ${ConnectedPlaybook?.data?.profile_last_name} • Page 4`}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
         <div className="flex flex-row gap-[16px]">
           <button
             type="button"

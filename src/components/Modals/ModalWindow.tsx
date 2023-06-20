@@ -14,6 +14,7 @@ import { useAppSelector } from "../../core/hooks/useRedux";
 import { Modal } from "../../core/models/enums";
 import ModalCreateActivePlaybook from "./WindowTypes/ModalCreateActivePlaybook";
 import ModalEditActivePlaybook from "./WindowTypes/ModalEditActivePlaybook";
+import ModalDeletePlay from "./WindowTypes/ModalDeletePlay";
 
 const ModalWindow = () => {
   const { closeModal } = useModal();
@@ -43,6 +44,7 @@ const ModalWindow = () => {
             <ModalCreateActivePlaybook />
           )}
           {modalType === Modal.EDIT_ACTIVE_PLAY && <ModalEditActivePlaybook />}
+          {modalType === Modal.DELETE_PLAY && <ModalDeletePlay />}
           {/* <ModalShareSocial item={selectedItem}></ModalShareSocial> */}
         </div>
       )}

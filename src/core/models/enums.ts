@@ -38,6 +38,7 @@ export enum Modal {
   PRIVACY = "PRIVACY",
   CREATE_ACTIVE_PLAY = "CREATE_PLAY",
   EDIT_ACTIVE_PLAY = "EDIT_PLAY",
+  DELETE_PLAY = "DELETE_PLAY",
 }
 
 export enum Welcome {

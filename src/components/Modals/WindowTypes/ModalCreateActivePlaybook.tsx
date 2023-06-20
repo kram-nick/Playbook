@@ -8,7 +8,6 @@ import DatePicker from "react-date-picker";
 
 import { Data } from "../../../core/models";
 import { APIRoutes } from "../../../core/http";
-import { ActivePlaybook } from "../../../core/models/enums";
 import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
 import useHttpGet from "../../../core/hooks/useHttpGet";
 import useModal from "../../../core/hooks/useModal";
@@ -16,11 +15,9 @@ import PlaybookService from "../../../core/services/playbook.service";
 
 import check from "../../../assets/photos/main/check.svg";
 import delete_icon from "../../../assets/photos/main/close-cross.svg";
-import playb from "../../../assets/photos/modals/playb-header.svg";
 import date from "../../../assets/photos/modals/date.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
-import { setIsModalOpen } from "../../../core/store/reducers/app/appDataSlice";
 const ModalCreateActivePlaybook = () => {
   const [tags, setTags] = useState([]);
   const [tagItem, setTagItem] = useState({
@@ -102,7 +99,7 @@ const ModalCreateActivePlaybook = () => {
     },
   };
 
-  useHttpGet<any>(`${APIRoutes.PLAY_TAGS}`, {
+  useHttpGet<any>(`${APIRoutes.PLAYS_TAGS}`, {
     dependencies: [tagItem],
     resolve: (response) => {
       setTags(
@@ -163,16 +160,16 @@ const ModalCreateActivePlaybook = () => {
     }
   };
 
-  console.log(formikForm.values);
-
   return (
     <div
       onClick={(e) => e.stopPropagation()}
       className="modal-box relative w-[100%] max-w-[528px] p-[24px] shadow-free-trial rounded-[5px]
-    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]">
+    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]"
+    >
       <div
         className="w-full flex justify-between items-center mb-[20px]
-              max-md:mb-[15px]">
+              max-md:mb-[15px]"
+      >
         <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-medium font-poppins text-footer-main">
           {t<string>("MODALS.ADD_ACTIVE_PLAYBOOK")}
         </span>
@@ -181,13 +178,15 @@ const ModalCreateActivePlaybook = () => {
           onClick={(e) => {
             e.stopPropagation();
             closeModal();
-          }}>
+          }}
+        >
           <img src={icon_close} alt="close" />
         </button>
       </div>
       <form
         onSubmit={formikForm.handleSubmit}
-        className="flex flex-col gap-[16px] w-[100%]">
+        className="flex flex-col gap-[16px] w-[100%]"
+      >
         <label className="flex flex-col">
           <span className="text-[14px] text-home-title font-poppins leading-[20px]">
             {t<string>("MODALS.NAME")}
@@ -280,7 +279,8 @@ const ModalCreateActivePlaybook = () => {
               return (
                 <label
                   className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px] bg-selected-btn"
-                  key={tag.id}>
+                  key={tag.id}
+                >
                   <span className="font-poppins normal font-light text-[12px] leading-[16px]">
                     {tag.name}
                   </span>
@@ -317,7 +317,8 @@ const ModalCreateActivePlaybook = () => {
                     }
                   }}
                   className="flex justify-between px-[16px] py-[10px] hover:bg-chapter-color"
-                  key={tag.id}>
+                  key={tag.id}
+                >
                   <span className="font-light text-[14px] normal leading-[20px] font-poppins tracking-[-0.1px] text-home-title">
                     {tag.name}{" "}
                   </span>
@@ -369,7 +370,8 @@ const ModalCreateActivePlaybook = () => {
             className="  py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom
                 hover:bg-secondary-hover
                 active:bg-secondary-active
-                ">
+                "
+          >
             {t<string>("MODALS.CANCEL")}
           </button>
           <button
@@ -378,7 +380,8 @@ const ModalCreateActivePlaybook = () => {
                 py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] text-buttons-color bg-buttons-bg
                 hover:bg-buttons-bg-hover
                 active:bg-buttons-bg-active
-                ">
+                "
+          >
             {t<string>("MODALS.SAVE")}
           </button>
         </div>
