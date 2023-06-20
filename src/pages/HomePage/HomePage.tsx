@@ -80,11 +80,11 @@ const HomePage = () => {
           max-sm:w-full
           max-md:w-full
           max-lg:mt-0
-        max-lg:w-[668px]
+        max-lg:w-[568px]
         "
         >
           <h1
-            className="max-w-[668px] font-poppins text-[30px] leading-[60px] font-bold text-home-title tracking-[-0.01em]
+            className="max-w-[568px] font-poppins text-[40px] leading-[60px] font-bold text-home-title tracking-[-0.01em]
           max-lg:text-[38px]
           max-lg:leading-[53px]
           "
