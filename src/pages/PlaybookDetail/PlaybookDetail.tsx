@@ -61,6 +61,8 @@ const PlaybookDetail = () => {
     }
   }, [pages]);
 
+  console.log(playbook);
+
   return (
     <div className="bg-create-bg-main min-h-[100vh] w-full">
       <Header />
@@ -104,7 +106,24 @@ const PlaybookDetail = () => {
                 <h1 className="text-[32px] font-poppins font-bold text-home-title max-[690px]:text-[26px] max-[690px]:leading-[32px]">
                   {playbook?.name}
                 </h1>
-                <div>{/* {<img /> : <div></div>} */}</div>
+                <div className="flex flex-row gap-[12px] items-center">
+                  {playbook?.profile_image ? (
+                    <img
+                      className="w-[40px] h-[40px] rounded-[50px] object-cover"
+                      src={playbook?.profile_image}
+                      alt={`${playbook?.profile_first_name} ${playbook?.profile_last_name}`}
+                    />
+                  ) : (
+                    <div className="flex justify-center items-center h-[40px] w-[40px] rounded-[50px] bg-top-entrepreneur">
+                      <span className="text-banner-txt font-poppins text-[17px]">
+                        {playbook?.profile_first_name.slice(0, 1).toUpperCase()}
+                      </span>
+                    </div>
+                  )}
+                  <p className="text-[20px] font-poppins leading-[32px] text-top-playbook-title">
+                    {`${playbook?.profile_first_name} ${playbook?.profile_last_name}`}
+                  </p>
+                </div>
                 <p className="font-poppins normal font-normal text-[20px] leading-[32px] text-top-subtitle-playbook tracking-[-0.1px]">
                   {playbook?.content}
                 </p>

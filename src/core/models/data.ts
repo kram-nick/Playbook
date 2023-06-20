@@ -43,6 +43,9 @@ export declare namespace Data {
     name: string;
     order: null | string[];
     privacy: string;
+    profile_first_name: string;
+    profile_last_name: string;
+    profile_image: string;
     slug_url: string;
     status: string;
     thumbnail_url: null | string;
