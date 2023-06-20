@@ -70,6 +70,13 @@ const Sidebar = () => {
     LoadPages(playbook?.id);
   }, []);
 
+  useEffect(() => {
+    const playbook = JSON.parse(localStorage.getItem("saved_playbook") || "{}");
+    if (playbook?.id) {
+      LoadPages(playbook.id);
+    }
+  }, [reloadChecker]);
+
   const { fetchedData: playbooks } = useHttpGet<any>(
     `${APIRoutes.PLAYBOOKS}/mine`,
     {
