@@ -24,6 +24,7 @@ import preview from "../../../../assets/photos/create/preview.svg";
 import play_active from "../../../../assets/photos/main/play-active.svg";
 import add_user from "../../../../assets/photos/create/add-user.svg";
 import edit from "../../../../assets/photos/chapter/edit.svg";
+import { useEffect } from "react";
 
 type HeaderProps = {
   previewState?: boolean;
