@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "../../../core/hooks/useRedux";
-import useHttpGet from "../../../core/hooks/useHttpGet";
-import useModal from "../../../core/hooks/useModal";
+import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { useState } from "react";
 import Select from "react-select";
@@ -11,23 +9,30 @@ import DatePicker from "react-date-picker";
 import { Data } from "../../../core/models";
 import { APIRoutes } from "../../../core/http";
 import { ActivePlaybook } from "../../../core/models/enums";
+import { useAppDispatch, useAppSelector } from "../../../core/hooks/useRedux";
+import useHttpGet from "../../../core/hooks/useHttpGet";
+import useModal from "../../../core/hooks/useModal";
+import PlaybookService from "../../../core/services/playbook.service";
 
 import check from "../../../assets/photos/main/check.svg";
 import delete_icon from "../../../assets/photos/main/close-cross.svg";
 import playb from "../../../assets/photos/modals/playb-header.svg";
 import date from "../../../assets/photos/modals/date.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
-
+import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
+import { setIsModalOpen } from "../../../core/store/reducers/app/appDataSlice";
 const ModalCreateActivePlaybook = () => {
-  const { t } = useTranslation();
-  const { closeModal } = useModal();
   const [tags, setTags] = useState([]);
   const [tagItem, setTagItem] = useState({
     text: "",
     active: false,
   });
 
-  const { sharedId } = useAppSelector((state) => state.helpers);
+  const { t } = useTranslation();
+  const { closeModal } = useModal();
+
+  const { reloadChecker, sharedId } = useAppSelector((state) => state.helpers);
+  const dispatch = useAppDispatch();
 
   const [statusOptions, setStatusOptions] = useState<any[]>([
     {
@@ -97,7 +102,7 @@ const ModalCreateActivePlaybook = () => {
     },
   };
 
-  useHttpGet<any>(`${APIRoutes.TAGS}`, {
+  useHttpGet<any>(`${APIRoutes.PLAY_TAGS}`, {
     dependencies: [tagItem],
     resolve: (response) => {
       setTags(
@@ -120,17 +125,33 @@ const ModalCreateActivePlaybook = () => {
     initialValues: {
       name: "",
       description: "",
-      due_date: "",
+      due_date: "2023-06-12 20:33:02",
       status: "not_started",
       tags: [],
     },
     // validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
-      HandleNewPlaybook(values);
+      HandleNewPlay(values);
     },
   });
 
-  const HandleNewPlaybook = async (values: any) => {};
+  const HandleNewPlay = async (values: any) => {
+    const tags_ids = values.tags.map((tag: any) => tag.id);
+
+    try {
+      const response = await PlaybookService.CreatePlay({
+        ...values,
+        tags: tags_ids,
+      });
+      dispatch(setReloadChecker(!reloadChecker));
+      closeModal();
+      toast.success(t<string>("MAIN.PLAY_CREATED"));
+    } catch (errors: any) {
+      for (let error in errors?.response?.data?.errors) {
+        toast.error(`${error} ${errors?.response?.data?.errors[error]}`);
+      }
+    }
+  };
 
   const RemoveTag = (selectedTag: any) => {
     const tagsArr = formikForm.values.tags.filter(
@@ -142,16 +163,16 @@ const ModalCreateActivePlaybook = () => {
     }
   };
 
+  console.log(formikForm.values);
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
       className="modal-box relative w-[100%] max-w-[528px] p-[24px] shadow-free-trial rounded-[5px]
-    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]"
-    >
+    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]">
       <div
         className="w-full flex justify-between items-center mb-[20px]
-              max-md:mb-[15px]"
-      >
+              max-md:mb-[15px]">
         <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-medium font-poppins text-footer-main">
           {t<string>("MODALS.ADD_ACTIVE_PLAYBOOK")}
         </span>
@@ -160,15 +181,13 @@ const ModalCreateActivePlaybook = () => {
           onClick={(e) => {
             e.stopPropagation();
             closeModal();
-          }}
-        >
+          }}>
           <img src={icon_close} alt="close" />
         </button>
       </div>
       <form
         onSubmit={formikForm.handleSubmit}
-        className="flex flex-col gap-[16px] w-[100%]"
-      >
+        className="flex flex-col gap-[16px] w-[100%]">
         <label className="flex flex-col">
           <span className="text-[14px] text-home-title font-poppins leading-[20px]">
             {t<string>("MODALS.NAME")}
@@ -176,6 +195,7 @@ const ModalCreateActivePlaybook = () => {
           <input
             className="h-[38px] outline-none border-[1px] border-solid border-border-input rounded-[4px] mt-[6px] pl-[16px] placeholder:text-border-input placeholder:text-[16px] placeholder:font-poppins"
             placeholder={t<string>("MODALS.NAME")}
+            {...formikForm.getFieldProps("name")}
           />
         </label>
         <label className="flex flex-col">
@@ -219,6 +239,7 @@ const ModalCreateActivePlaybook = () => {
             className="outline-none resize-none h-[75px] border-[1px] border-solid border-border-input rounded-[4px] mt-[6px] pl-[16px] 
             pt-[9px] placeholder:text-border-input placeholder:text-[16px] placeholder:font-poppins"
             placeholder={`${t<string>("MODALS.DESCRIPTION")}`}
+            {...formikForm.getFieldProps("description")}
           />
           <span className="mt-[8px] text-[14px] text-inform-text font-poppins leading-[20px]">
             {t<string>("MODALS.WORDS_MAX")}
@@ -244,6 +265,7 @@ const ModalCreateActivePlaybook = () => {
             value={tagItem.text}
             onChange={(event) => {
               setTagItem({ ...tagItem, text: event.target.value });
+              // formikForm.setFieldValue('tags')
             }}
             onClick={(event) => {
               event.stopPropagation();
@@ -258,8 +280,7 @@ const ModalCreateActivePlaybook = () => {
               return (
                 <label
                   className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px] bg-selected-btn"
-                  key={tag.id}
-                >
+                  key={tag.id}>
                   <span className="font-poppins normal font-light text-[12px] leading-[16px]">
                     {tag.name}
                   </span>
@@ -296,8 +317,7 @@ const ModalCreateActivePlaybook = () => {
                     }
                   }}
                   className="flex justify-between px-[16px] py-[10px] hover:bg-chapter-color"
-                  key={tag.id}
-                >
+                  key={tag.id}>
                   <span className="font-light text-[14px] normal leading-[20px] font-poppins tracking-[-0.1px] text-home-title">
                     {tag.name}{" "}
                   </span>
@@ -349,8 +369,7 @@ const ModalCreateActivePlaybook = () => {
             className="  py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom
                 hover:bg-secondary-hover
                 active:bg-secondary-active
-                "
-          >
+                ">
             {t<string>("MODALS.CANCEL")}
           </button>
           <button
@@ -359,8 +378,7 @@ const ModalCreateActivePlaybook = () => {
                 py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] text-buttons-color bg-buttons-bg
                 hover:bg-buttons-bg-hover
                 active:bg-buttons-bg-active
-                "
-          >
+                ">
             {t<string>("MODALS.SAVE")}
           </button>
         </div>

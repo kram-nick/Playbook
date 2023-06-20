@@ -24,18 +24,17 @@ import icon_grid_default from "../../assets/photos/main/icon-grid-default.svg";
 import icon_row from "../../assets/photos/main/row-vertical.svg";
 import icon_row_default from "../../assets/photos/main/row-vertical-default.svg";
 
-import {
-  ActivePlaybook,
-  ActiveTabs,
-  MainTabs,
-  Modal,
-} from "../../core/models/enums";
+import { ActiveTabs, Modal } from "../../core/models/enums";
 
-import { taskcards } from "../../core/constants/taskCards";
 import { Data } from "../../core/models";
+import { useState } from "react";
 
 const ActivePlaybooks = () => {
+  const [plays, setPlays] = useState<Data.TaskCard[]>([]);
+
   const dispatch = useAppDispatch();
+
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
 
   const { t } = useTranslation();
   const { openModal } = useModal();
@@ -43,6 +42,13 @@ const ActivePlaybooks = () => {
   const { searchData, listType, activeTab } = useAppSelector(
     (state) => state.app
   );
+
+  useHttpGet<any>(`${APIRoutes.PLAYS}`, {
+    dependencies: [reloadChecker],
+    resolve: (response: any) => {
+      setPlays(response?.data);
+    },
+  });
 
   return (
     <div className="px-[24px] py-[24px] max-lg:px-[32px] max-[690px]:px-[16px] max-[690px]:py-[12px]">
@@ -108,18 +114,18 @@ const ActivePlaybooks = () => {
                         "bg-card-border text-nav-txt-private":
                           index !== activeTab,
                       })}>
-                      {index === 0 && taskcards.length}
+                      {index === 0 && plays.length}
                       {index === 1 &&
-                        taskcards.filter(
-                          (task: Data.TaskCard) => task.status === "Open"
+                        plays.filter(
+                          (task: Data.TaskCard) => task.status === "open"
                         ).length}
                       {index === 2 &&
-                        taskcards.filter(
-                          (task: Data.TaskCard) => task.status === "Success"
+                        plays.filter(
+                          (task: Data.TaskCard) => task.status === "success"
                         ).length}
                       {index === 3 &&
-                        taskcards.filter(
-                          (task: Data.TaskCard) => task.status === "Failed"
+                        plays.filter(
+                          (task: Data.TaskCard) => task.status === "failed"
                         ).length}
                     </span>
                     <div

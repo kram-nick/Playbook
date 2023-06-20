@@ -11,14 +11,15 @@ import { taskcards } from "../../../core/constants/taskCards";
 import { Data } from "../../../core/models";
 
 const AllActive = () => {
-  const [allPlays, setAllPlays] = useState<any>();
+  const [allPlays, setAllPlays] = useState<Data.TaskCard[]>();
 
   const { listType } = useAppSelector((state) => state.app);
+  const { reloadChecker } = useAppSelector((state) => state.helpers);
 
   useHttpGet<any>(`${APIRoutes.PLAYS}`, {
-    dependencies: [],
+    dependencies: [reloadChecker],
     resolve: (response: any) => {
-      // console.log(response?.data);
+      setAllPlays(response?.data);
     },
   });
 
@@ -28,10 +29,9 @@ const AllActive = () => {
         flex: true,
         "flex-row flex-wrap gap-x-[20px] gap-y-[20px]": listType,
         "flex-col gap-[12px]": !listType,
-      })}
-    >
-      {taskcards.length ? (
-        taskcards.map((task: Data.TaskCard) => (
+      })}>
+      {allPlays?.length ? (
+        allPlays?.map((task: Data.TaskCard) => (
           <TaskCard key={task.id} task={task} />
         ))
       ) : (

@@ -85,11 +85,12 @@ export declare namespace Data {
 
   interface TaskCard {
     id: string;
-    title: string;
+    name: string;
     description: string;
     status: string;
-    created: string;
+    due_date: string;
     tag: string;
+    tags?: string[];
     playbook?: {
       id: string;
       title: string;

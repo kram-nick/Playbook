@@ -15,6 +15,7 @@ export const APIRoutes = {
   PLAYBOOKS_FAVORITE: "/api/playbooks/favorite",
   PLAYBOOKS_ONBOARD: "/api/playbooks/count",
   PLAYS: "/api/plays",
+  PLAY_TAGS: "/api/plays/tags",
   PAGES: "/api/pages",
   SEARCH: "/api/search",
   TAGS: "/api/tags",

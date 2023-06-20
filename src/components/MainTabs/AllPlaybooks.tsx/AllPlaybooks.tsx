@@ -56,9 +56,7 @@ const AllPlaybooks = () => {
     openModal(Modal.PLAYBOOK_DETAILS);
   };
 
-  useEffect(() => {
-    console.log(searchData);
-  }, [searchData]);
+  useEffect(() => {}, [searchData]);
 
   const SelectTabType = (playbook: any) => {
     let type = null;
