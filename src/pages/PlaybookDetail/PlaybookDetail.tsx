@@ -61,8 +61,6 @@ const PlaybookDetail = () => {
     }
   }, [pages]);
 
-  console.log(playbook);
-
   return (
     <div className="bg-create-bg-main min-h-[100vh] w-full">
       <Header />

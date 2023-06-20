@@ -32,8 +32,6 @@ const TaskCard = ({ task }: TaskCardProps) => {
     setIsShowMore(false);
   });
 
-  console.log(task);
-
   return (
     <div
       className={classNames({

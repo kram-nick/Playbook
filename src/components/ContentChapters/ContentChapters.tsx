@@ -8,17 +8,22 @@ import Header from "../AppLayout/PrivateLayout/Header";
 import BookBanner from "../BookBanner";
 import BookChapters from "../BookChapters";
 
-import { useAppSelector } from "../../core/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../core/hooks/useRedux";
 import useHttpGet from "../../core/hooks/useHttpGet";
 import { APIRoutes } from "../../core/http";
 import { PrivateUIRoutes } from "../../core/router";
 
 import plus from "../../assets/photos/chapter/icon-plus.svg";
+import {
+  setOpenedPages,
+  setSelectedData,
+} from "../../core/store/reducers/app/appDataSlice";
 
 const ContentChapters = () => {
   const [data, setData] = useState<any>();
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
 
@@ -47,6 +52,25 @@ const ContentChapters = () => {
     },
     dependencies: [playbook_id, reloadChecker],
   });
+
+  const AddPage = () => {
+    localStorage.removeItem("selected_page");
+    dispatch(setOpenedPages([]));
+    dispatch(
+      setSelectedData({
+        selected: false,
+        open: false,
+        id: null,
+        type: "",
+        title: "",
+        page_title: "",
+        page_id: 0,
+        chapters: [],
+        status: "",
+      })
+    );
+    navigate(`/${PrivateUIRoutes.Create}/${playbook_id}`);
+  };
 
   return (
     <div className="w-full flex-1">
@@ -84,9 +108,7 @@ const ContentChapters = () => {
         </div>
         <button
           className="flex items-center gap-[4px] text-[16px] font-poppins font-medium text-buttons-bg hover:text-buttons-bg-hover active:text-buttons-bg-active"
-          onClick={() => {
-            navigate(`/${PrivateUIRoutes.Create}/${playbook_id}`);
-          }}
+          onClick={AddPage}
         >
           <img src={plus} alt="" />
           {t<string>("BTNS.ADD_PAGE")}

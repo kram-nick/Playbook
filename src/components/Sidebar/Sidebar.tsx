@@ -47,8 +47,15 @@ const Sidebar = () => {
 
   const { openModal } = useModal();
 
-  const { data, sideOpen, sidebarTabs, selectedTab, selectedPlaybook, pages } =
-    useAppSelector((state) => state.app);
+  const {
+    data,
+    sideOpen,
+    sidebarTabs,
+    selectedTab,
+    selectedPlaybook,
+    pages,
+    openedPages,
+  } = useAppSelector((state) => state.app);
 
   const { reloadChecker } = useAppSelector((state) => state.helpers);
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -75,7 +82,7 @@ const Sidebar = () => {
     if (playbook?.id) {
       LoadPages(playbook.id);
     }
-  }, [reloadChecker]);
+  }, [reloadChecker, openedPages]);
 
   const { fetchedData: playbooks } = useHttpGet<any>(
     `${APIRoutes.PLAYBOOKS}/mine`,
