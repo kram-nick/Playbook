@@ -23,7 +23,7 @@ const AllPlaybooks = () => {
 
   const { t } = useTranslation();
 
-  const { listType } = useAppSelector((state) => state.app);
+  const { listType, searchData } = useAppSelector((state) => state.app);
   const { reloadChecker } = useAppSelector((state) => state.helpers);
   const { user } = useAppSelector((state) => state.account);
 
@@ -39,10 +39,14 @@ const AllPlaybooks = () => {
 
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/mine`, {
     query: {},
-    dependencies: [reloadChecker],
+    dependencies: [reloadChecker, searchData],
     resolve: (response: any) => {
       if (response) {
-        setPlaybooks(response?.data?.playbooks);
+        if (searchData.search) {
+          setPlaybooks(searchData?.data?.playbooks);
+        } else {
+          setPlaybooks(response?.data?.playbooks);
+        }
       }
     },
   });
@@ -51,6 +55,10 @@ const AllPlaybooks = () => {
     dispatch(setPlaybookType("create"));
     openModal(Modal.PLAYBOOK_DETAILS);
   };
+
+  useEffect(() => {
+    console.log(searchData);
+  }, [searchData]);
 
   const SelectTabType = (playbook: any) => {
     let type = null;
@@ -82,8 +90,7 @@ const AllPlaybooks = () => {
               "flex gap-[20px] flex-wrap max-xl:gap-[24px] max-[690px]:gap-y-[12px]":
                 listType,
               "grid gap-y-[12px]": !listType,
-            })}
-          >
+            })}>
             {playbooks?.map((playbook: any, index: number) =>
               loading ? (
                 listType ? (
@@ -122,8 +129,7 @@ const AllPlaybooks = () => {
             onClick={handleNewPlaybook}
             className="bg-button-submit-footer flex items-center py-[5px] px-[16px] rounded-[5px]
                   shadow-free-trial h-[40px] gap-[6px]
-                "
-          >
+                ">
             <span className="text-list-title text-[16px] font-medium">
               {t<string>("MAIN.CREATE_BTN")}
             </span>
