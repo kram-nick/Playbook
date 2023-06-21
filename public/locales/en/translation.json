@@ -274,6 +274,7 @@
   "ERRORS": {
     "NAME_REQUIRED": "Name is required",
     "CONTENT_REQUIRED": "Content is required",
+    "DESCRIPTION_REQUIRED": "Description required",
     "EMAIL_REQUIRED": "Email is required",
     "INVALID_EMAIL": "Invalid Email",
     "PASSWORD_REQUIRED": "Password is required",
