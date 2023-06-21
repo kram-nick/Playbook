@@ -157,7 +157,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
         {playbook && (
           <div
             className={classNames({
-              "flex flex-row gap-[12px] items-center p-[12px] rounded-[8px] border-[1px] border-solid border-card-border h-[82px]":
+              "flex flex-row gap-[12px] items-center p-[12px] rounded-[8px] border-[1px] border-solid border-card-border h-[64px]":
                 true,
             })}>
             <img
