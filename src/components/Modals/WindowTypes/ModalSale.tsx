@@ -40,26 +40,27 @@ const ModalSale = () => {
   const { t } = useTranslation();
 
   const { sharedId, reloadChecker } = useAppSelector((state) => state.helpers);
+  const { isModalOpen } = useAppSelector((state) => state.app);
 
   const user: Data.UserAccount = JSON.parse(
     localStorage.getItem("user") || "{}"
   );
 
   useEffect(() => {
-    formikForm.setFieldValue("playbook_id", playbook?.id);
-    formikForm.setFieldValue("name", playbook?.name);
-    formikForm.setFieldValue("content", playbook?.content);
-
     return () => {
       formikForm.resetForm();
     };
-  }, [sharedId]);
+  }, []);
 
   useHttpGet<any>(`${APIRoutes.PLAYBOOKS}/${sharedId}`, {
-    dependencies: [],
     resolve: (response) => {
       setPlaybook(response?.data);
+      formikForm.setFieldValue("playbook_id", response?.data.id);
+      formikForm.setFieldValue("name", response?.data.name);
+      formikForm.setFieldValue("content", response?.data.content);
+      formikForm.validateForm();
     },
+    dependencies: [sharedId, isModalOpen],
   });
 
   useHttpGet<any>(`${APIRoutes.TAGS}`, {
@@ -200,6 +201,9 @@ const ModalSale = () => {
     }
   };
 
+  console.log(formikForm.errors);
+  console.log(formikForm.values);
+
   return (
     <div
       onClick={(e) => {
@@ -310,15 +314,7 @@ const ModalSale = () => {
                   <input
                     disabled
                     type="text"
-                    value={playbook?.name}
-                    onChange={(event) => {
-                      setPlaybook((prev: any) => {
-                        return {
-                          ...prev,
-                          name: event.target.value,
-                        };
-                      });
-                    }}
+                    {...formikForm.getFieldProps("name")}
                     className="outline-none border-[1px] border-solid border-border-input rounded-[4px] px-[16px] py-[7px]
                 text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] bg-tools-block
                 "
@@ -348,15 +344,7 @@ const ModalSale = () => {
                 text-[16px] font-poppins font-normal tracking-[-0.1px] leading-[26px] h-[132px] bg-tools-block
                 "
                     disabled
-                    onChange={(event) => {
-                      setPlaybook((prev: any) => {
-                        return {
-                          ...prev,
-                          content: event.target.value,
-                        };
-                      });
-                    }}
-                    value={playbook?.content}
+                    {...formikForm.getFieldProps("content")}
                   />
                   {formikForm.errors.content && formikForm.touched.content && (
                     <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[4px]">
@@ -524,6 +512,7 @@ const ModalSale = () => {
                           if (event.target.checked) {
                             formikForm.setFieldValue("chargeable", false);
                             FreeOfCharge();
+                            formikForm.validateForm();
                           } else {
                             formikForm.setFieldValue("chargeable", true);
                           }

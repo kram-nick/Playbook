@@ -289,13 +289,13 @@ export default function ModalSignup(props: ModalType) {
             )}
           </div>
         </div>
-        <ReCAPTCHA
+        {/* <ReCAPTCHA
           style={{
             zIndex: 20,
           }}
           sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY}
           onChange={onChange}
-        />
+        /> */}
         <button
           type="submit"
           className="bg-button-submit-footer py-[10px] px-[26px] rounded-[6px] 

@@ -247,8 +247,8 @@ const AppMainCard: React.FC<CardProps> = ({ playbook, tabType }) => {
             </Link>
             <span className="min-w-[68px]">
               {playbook.profile_last_name && playbook.status
-                ? ` • ${playbook.status}`
-                : playbook.status}
+                ? ` • ${playbook?.status.toUpperCase()}`
+                : playbook?.status.toUpperCase()}
             </span>
           </p>
         </div>

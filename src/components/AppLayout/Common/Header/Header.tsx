@@ -26,7 +26,8 @@ const Header = () => {
               <div>
                 <Link
                   to="/main"
-                  className="font-poppins font-medium text-header-links text-[15px]">
+                  className="font-poppins font-medium text-header-links text-[15px]"
+                >
                   {t<string>("HOME.HOME")}
                 </Link>
               </div>
@@ -43,10 +44,11 @@ const Header = () => {
                 <Link
                   to="/discover"
                   className="font-poppins font-medium text-header-links text-[15px]
-                  ">
+                  "
+                >
                   {t<string>("MAIN.DISCOVER")}
                 </Link>
-                <div>
+                {/* <div>
                   <button
                     className="font-poppins flex items-center gap-3 text-header-links
                   ">
@@ -59,7 +61,7 @@ const Header = () => {
                       alt="arrow down"
                     />
                   </button>
-                </div>
+                </div> */}
               </>
             )}
           </div>
@@ -84,7 +86,8 @@ const Header = () => {
             className="flex text-buttons-bg
             hover:text-buttons-bg-hover
                 active:text-buttons-bg-active
-            ">
+            "
+          >
             <span className="self-center font-semibold font-poppins leading-[22px]">
               {t<string>("COMMON.SIGN_IN")}
             </span>
@@ -98,7 +101,8 @@ const Header = () => {
             className="py-[14px] px-[24px] bg-buttons-bg rounded-[6px] text-buttons-color
             hover:bg-buttons-bg-hover
                 active:bg-buttons-bg-active
-            ">
+            "
+          >
             <span className="font-semibold font-poppins leading-[22px]">
               {t<string>("COMMON.GET_STARTED")}
             </span>

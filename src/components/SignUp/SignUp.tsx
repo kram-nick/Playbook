@@ -325,13 +325,14 @@ const SignIn = () => {
             </div>
           </div>
 
+          {/* 
           <ReCAPTCHA
             style={{
               zIndex: 20,
             }}
             sitekey={process.env.REACT_APP_CAPTCHA_SITE_SECRET}
             onChange={onChange}
-          />
+          /> */}
 
           <button
             type="submit"
