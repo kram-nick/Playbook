@@ -296,3 +296,7 @@ ol .editor-listitem {
 .react-date-picker {
   height: max-content !important;
 }
+
+.tags-scroll::-webkit-scrollbar {
+  display: none;
+}

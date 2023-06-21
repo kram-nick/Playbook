@@ -91,12 +91,6 @@ export declare namespace Data {
     due_date: string;
     tag: string;
     tags?: string[];
-    playbook?: {
-      id: string;
-      title: string;
-      user: string;
-      page: string;
-      image: string;
-    };
+    playbook_id: string;
   }
 }

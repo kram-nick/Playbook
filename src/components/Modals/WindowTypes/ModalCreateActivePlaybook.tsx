@@ -33,8 +33,6 @@ const ModalCreateActivePlaybook = () => {
   const { reloadChecker, sharedId } = useAppSelector((state) => state.helpers);
   const dispatch = useAppDispatch();
 
-  console.log(selectedPlaybook);
-
   const [statusOptions, setStatusOptions] = useState<any[]>([
     {
       value: "open",
@@ -125,7 +123,7 @@ const ModalCreateActivePlaybook = () => {
   const { fetchedData: playbook } = useHttpGet<any>(
     `${APIRoutes.PLAYBOOKS}/${selectedPlaybook?.id}`,
     {
-      dependencies: [tagItem],
+      dependencies: [selectedPlaybook],
     }
   );
 
@@ -156,6 +154,7 @@ const ModalCreateActivePlaybook = () => {
       const response = await PlaybookService.CreatePlay({
         ...values,
         tags: tags_ids,
+        playbook_id: selectedPlaybook?.id,
       });
       dispatch(setReloadChecker(!reloadChecker));
       closeModal();

@@ -5,7 +5,7 @@ import second_icon from "../../assets/photos/active/pb-icon-second.svg";
 import third_icon from "../../assets/photos/active/pb-icon-third.svg";
 import fourth_icon from "../../assets/photos/active/pb-icon-fourth.svg";
 
-export const taskcards: Data.TaskCard[] = [
+export const taskcards: any[] = [
   {
     id: "1",
     tag: "Launch Product",
