@@ -24,7 +24,7 @@ import preview from "../../../../assets/photos/create/preview.svg";
 import play_active from "../../../../assets/photos/main/play-active.svg";
 import add_user from "../../../../assets/photos/create/add-user.svg";
 import edit from "../../../../assets/photos/chapter/edit.svg";
-import { useEffect } from "react";
+import pb_bold from "../../../../assets/photos/main/pb-bold.svg";
 
 type HeaderProps = {
   previewState?: boolean;
@@ -158,6 +158,30 @@ const Header = ({ previewState }: HeaderProps) => {
           </span> */}
         </div>
         <div className="flex flex-row gap-[28px] rounded-[5px] items-center max-lg:gap-[12px] max-[690px]:min-w-[60px]">
+          {location.pathname.includes("/creating") && (
+            <button
+              onClick={() => {
+                openModal(Modal.CREATE_ACTIVE_PLAY);
+                dispatch(setSelectedPlaybook(saved_playbook));
+              }}
+              className="flex flex-row gap-[4px] items-center cursor-pointer">
+              <span
+                className={classNames({
+                  "font-poppins text-[16px]   font-medium leading-[20.8px] max-lg:hidden":
+                    true,
+                  "text-buttons-bg": previewState,
+                  "text-nav-txt-private": !previewState,
+                })}>
+                {t<string>("MAIN.ADD_PLAY")}
+              </span>
+              <img
+                src={pb_bold}
+                alt="pb_bold"
+                className="max-lg:w-[24px] max-lg:h-[24px]"
+              />
+            </button>
+          )}
+
           {location.pathname === "/playbook" && (
             <button
               onClick={() => {
