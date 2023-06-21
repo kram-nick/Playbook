@@ -19,12 +19,12 @@
     font-size: 24px;
   }
 
-  input:checked + div {
+  input:checked+div {
     @apply border-blue-500;
     @apply bg-checkbox-bg;
   }
 
-  input:checked + div svg {
+  input:checked+div svg {
     @apply block;
   }
 
@@ -85,11 +85,11 @@ html:not(.touch-screen) *::-webkit-scrollbar-thumb {
   transition: all 0.2s ease-in;
 }
 
-input:checked + .switch-check {
+input:checked+.switch-check {
   background: #2b71f7;
 }
 
-input:checked + .switch-check:after {
+input:checked+.switch-check:after {
   left: 15px;
 }
 
@@ -134,11 +134,11 @@ input:checked + .switch-check:after {
   padding: 0;
 }
 
-.select-custom > div > div:nth-child(2) > div {
+.select-custom>div>div:nth-child(2)>div {
   color: #242428;
 }
 
-.select-custom > div:nth-child(3) > div:nth-child(1) {
+.select-custom>div:nth-child(3)>div:nth-child(1) {
   padding-left: 16px !important;
 }
 
@@ -146,11 +146,11 @@ input:checked + .switch-check:after {
   color: #242428 !important;
 }
 
-.select-custom #react-select-3-listbox > div:nth-child(1) > * {
+.select-custom #react-select-3-listbox>div:nth-child(1)>* {
   padding-left: 16px !important;
 }
 
-.select-custom > div {
+.select-custom>div {
   min-height: 100%;
 }
 
@@ -205,7 +205,7 @@ input:checked + .switch-check:after {
   overflow: visible;
 }
 
-.testimonial-swiper .swiper-slide:nth-child(2n) > div {
+.testimonial-swiper .swiper-slide:nth-child(2n)>div {
   transform: rotate(3deg);
 }
 
@@ -242,7 +242,7 @@ input:checked + .switch-check:after {
     margin-top: 28px;
   }
 
-  .testimonial-swiper .swiper-slide:nth-child(2n) > div {
+  .testimonial-swiper .swiper-slide:nth-child(2n)>div {
     transform: rotate(1.5deg);
   }
 }
@@ -292,6 +292,7 @@ ol .editor-listitem {
 .react-date-picker__wrapper {
   height: 20px !important;
 }
+
 .react-date-picker {
   height: max-content !important;
 }

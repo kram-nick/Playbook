@@ -99,6 +99,7 @@ const ModalCreateActivePlaybook = () => {
         margin: "8px 16px",
         borderRadius: "100px",
         cursor: "pointer",
+        width: "max-content",
       };
     },
   };
@@ -362,7 +363,7 @@ const ModalCreateActivePlaybook = () => {
           </span>
           <Select
             className={classNames({
-              "select-custom h-[44px] cursor-pointer mt-[6px] font-poppins text-[12px]":
+              "select-custom h-[44px] cursor-pointer mt-[6px] font-poppins text-[12px] outline-none":
                 true,
               "bg-active-open": formikForm.values.status === "open",
               "bg-active-failed": formikForm.values.status === "failed",
