@@ -28,8 +28,11 @@ const ModalCreateActivePlaybook = () => {
   const { t } = useTranslation();
   const { closeModal } = useModal();
 
+  const { selectedPlaybook } = useAppSelector((state) => state.app);
   const { reloadChecker, sharedId } = useAppSelector((state) => state.helpers);
   const dispatch = useAppDispatch();
+
+  console.log(selectedPlaybook);
 
   const [statusOptions, setStatusOptions] = useState<any[]>([
     {
@@ -112,6 +115,13 @@ const ModalCreateActivePlaybook = () => {
     },
   });
 
+  const { fetchedData: playbook } = useHttpGet<any>(
+    `${APIRoutes.PLAYBOOKS}/${selectedPlaybook?.id}`,
+    {
+      dependencies: [tagItem],
+    }
+  );
+
   const formikForm = useFormik<{
     name: string;
     description: string;
@@ -164,12 +174,10 @@ const ModalCreateActivePlaybook = () => {
     <div
       onClick={(e) => e.stopPropagation()}
       className="modal-box relative w-[100%] max-w-[528px] p-[24px] shadow-free-trial rounded-[5px]
-    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]"
-    >
+    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]">
       <div
         className="w-full flex justify-between items-center mb-[20px]
-              max-md:mb-[15px]"
-      >
+              max-md:mb-[15px]">
         <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-medium font-poppins text-footer-main">
           {t<string>("MODALS.ADD_ACTIVE_PLAYBOOK")}
         </span>
@@ -178,15 +186,13 @@ const ModalCreateActivePlaybook = () => {
           onClick={(e) => {
             e.stopPropagation();
             closeModal();
-          }}
-        >
+          }}>
           <img src={icon_close} alt="close" />
         </button>
       </div>
       <form
         onSubmit={formikForm.handleSubmit}
-        className="flex flex-col gap-[16px] w-[100%]"
-      >
+        className="flex flex-col gap-[16px] w-[100%]">
         <label className="flex flex-col">
           <span className="text-[14px] text-home-title font-poppins leading-[20px]">
             {t<string>("MODALS.NAME")}
@@ -279,8 +285,7 @@ const ModalCreateActivePlaybook = () => {
               return (
                 <label
                   className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px] bg-selected-btn"
-                  key={tag.id}
-                >
+                  key={tag.id}>
                   <span className="font-poppins normal font-light text-[12px] leading-[16px]">
                     {tag.name}
                   </span>
@@ -317,8 +322,7 @@ const ModalCreateActivePlaybook = () => {
                     }
                   }}
                   className="flex justify-between px-[16px] py-[10px] hover:bg-chapter-color"
-                  key={tag.id}
-                >
+                  key={tag.id}>
                   <span className="font-light text-[14px] normal leading-[20px] font-poppins tracking-[-0.1px] text-home-title">
                     {tag.name}{" "}
                   </span>
@@ -360,6 +364,35 @@ const ModalCreateActivePlaybook = () => {
             )}
           />
         </div>
+
+        {playbook?.data && (
+          <div>
+            <span className="text-[14px] text-home-title font-poppins leading-[20px]">
+              {t<string>("MODALS.PLAYBOOK")}
+            </span>
+
+            <div
+              className={classNames({
+                "flex flex-row gap-[12px] items-center p-[12px] rounded-[8px] border-[1px] border-solid border-card-border h-[82px]":
+                  true,
+              })}>
+              <img
+                className="w-[40px] h-[40px] object-cover rounded-[4px]"
+                src={playbook?.data?.header_url}
+                alt={playbook?.data?.name}
+              />
+              <div className="flex flex-col gap-[4px] items-start">
+                <span className="font-poppins font-medium text-[14px] leading-[18px] tracking-[-0.1px] normal text-footer-main">
+                  {playbook?.data?.name}
+                </span>
+                <span className="leading-[18px] text-[12px] font-poppins font-normal text-input-placeholder normal">
+                  {playbook?.data?.profile_first_name}{" "}
+                  {playbook?.data?.profile_last_name} &#x2022; Page 4
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="flex flex-row gap-[16px]">
           <button
             type="button"
@@ -370,8 +403,7 @@ const ModalCreateActivePlaybook = () => {
             className="  py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom
                 hover:bg-secondary-hover
                 active:bg-secondary-active
-                "
-          >
+                ">
             {t<string>("MODALS.CANCEL")}
           </button>
           <button
@@ -380,8 +412,7 @@ const ModalCreateActivePlaybook = () => {
                 py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] text-buttons-color bg-buttons-bg
                 hover:bg-buttons-bg-hover
                 active:bg-buttons-bg-active
-                "
-          >
+                ">
             {t<string>("MODALS.SAVE")}
           </button>
         </div>
