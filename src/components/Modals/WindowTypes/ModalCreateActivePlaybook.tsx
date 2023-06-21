@@ -1,3 +1,4 @@
+import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
@@ -115,6 +116,11 @@ const ModalCreateActivePlaybook = () => {
     },
   });
 
+  const valueFormValidationSchema = Yup.object().shape({
+    name: Yup.string().required(t<string>("ERRORS.NOT_EMPTY")),
+    description: Yup.string().required(t<string>("ERRORS.NOT_EMPTY")),
+  });
+
   const { fetchedData: playbook } = useHttpGet<any>(
     `${APIRoutes.PLAYBOOKS}/${selectedPlaybook?.id}`,
     {
@@ -136,7 +142,7 @@ const ModalCreateActivePlaybook = () => {
       status: "not_started",
       tags: [],
     },
-    // validationSchema: valueFormValidationSchema,
+    validationSchema: valueFormValidationSchema,
     onSubmit: async (values: any) => {
       HandleNewPlay(values);
     },
@@ -202,6 +208,11 @@ const ModalCreateActivePlaybook = () => {
             placeholder={t<string>("MODALS.NAME")}
             {...formikForm.getFieldProps("name")}
           />
+          {formikForm.errors.name && formikForm.touched.name && (
+            <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">
+              {formikForm.errors.name}
+            </p>
+          )}
         </label>
         <label className="flex flex-col">
           <span className="text-[14px] text-home-title font-poppins leading-[20px]">
@@ -211,6 +222,7 @@ const ModalCreateActivePlaybook = () => {
             <img src={date} alt="datepicker" />
             <DatePicker
               format="dd.MM.y"
+              minDate={new Date(new Date().getTime() + 24 * 60 * 60 * 1000)}
               disableCalendar={true}
               onChange={(e: any) => {
                 if (e) {
@@ -249,6 +261,11 @@ const ModalCreateActivePlaybook = () => {
           <span className="mt-[8px] text-[14px] text-inform-text font-poppins leading-[20px]">
             {t<string>("MODALS.WORDS_MAX")}
           </span>
+          {formikForm.errors.description && formikForm.touched.description && (
+            <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color">
+              {formikForm.errors.description}
+            </p>
+          )}
         </label>
         <label className="relative flex flex-col gap-[6px]">
           <p>
