@@ -65,7 +65,6 @@ import { DialogActions } from "../editor/ui/Dialog";
 import DropDown, { DropDownItem } from "../editor/ui/DropDown";
 import "./../editor/ui/default.css";
 import { $generateNodesFromDOM } from "@lexical/html";
-import e from "express";
 
 export type InsertImagePayload = Readonly<ImagePayload>;
 const LowPriority = 1;
@@ -593,6 +592,17 @@ const ToolbarPlugin: React.FC<{
     });
   }, [content]);
 
+  useEffect(() => {
+    handleClick(editor);
+  });
+
+  function handleClick(editor: LexicalEditor) {
+    editor.update(() => {
+      const htmlString = $generateHtmlFromNodes(editor, null);
+      setElement(htmlString);
+    });
+  }
+
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
 
@@ -606,7 +616,6 @@ const ToolbarPlugin: React.FC<{
       const elementDOM = editor.getElementByKey(elementKey);
 
       if (elementDOM !== null) {
-        setElement(JSON.stringify(elementDOM?.outerHTML));
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType(anchorNode, ListNode);
           const type = parentList ? parentList.getTag() : element.getTag();

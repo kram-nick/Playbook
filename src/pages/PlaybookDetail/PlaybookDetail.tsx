@@ -191,7 +191,7 @@ const PlaybookDetail = () => {
                   </h1>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: JSON.parse(page?.editor_content?.element),
+                      __html: page?.editor_content?.element,
                     }}
                     className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px] 
                   max-[690px]:text-[16px] max-[690px]:leading-[26px]"

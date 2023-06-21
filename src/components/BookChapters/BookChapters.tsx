@@ -198,7 +198,7 @@ const BookChapters: React.FC<pagesProps> = ({
               <div className="p-[16px] pb-[24px]" ref={innerRef}>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: JSON.parse(dataContent?.editor_content?.element),
+                    __html: dataContent?.editor_content?.element,
                   }}
                   className="text-[20px] text-simple-text leading-[32px] tracking-[-0.1px] max-w-[800px]"
                 />

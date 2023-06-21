@@ -194,10 +194,13 @@ const Editor = () => {
     formikForm.setFieldValue("editor_content", stringifiedEditorState);
   }
 
+  console.log(element);
+
   return (
     <form
       className="flex flex-col gap-[30px]"
-      onSubmit={formikForm.handleSubmit}>
+      onSubmit={formikForm.handleSubmit}
+    >
       <div>
         <input
           className="outline-none pl-4 rounded-[8px] h-[40px] w-[100%] border-[1px] border-header-bottom text-[20px] font-medium font-poppins"
@@ -254,7 +257,8 @@ const Editor = () => {
                     JSON.stringify(setData)
                   );
                   navigate(`/${PrivateUIRoutes.Chapters}/${playbook_id}`);
-                }}>
+                }}
+              >
                 {t<string>("BTNS.CANCEL")}
               </button>
               <button
@@ -262,7 +266,8 @@ const Editor = () => {
           text-[16px] font-medium leading-[20px] shadow-free-trial "
                 title={t<string>("BTNS.SAVE")}
                 aria-label={t<string>("BTNS.SAVE")}
-                type="submit">
+                type="submit"
+              >
                 {t<string>("BTNS.SAVE")}
               </button>
             </div>
