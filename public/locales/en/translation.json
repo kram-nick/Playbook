@@ -265,7 +265,8 @@
     "NO_ACTIVE_PB": "You don't have any active playbooks yet",
     "NO_ACTIVE_PB_HINT": "You can start now! Set a goal and track it!",
     "NEW_ACTIVE_PB": "Add New Play",
-    "PLAY_CREATED": "Your play was successfully created"
+    "PLAY_CREATED": "Your play was successfully created",
+    "ADD_PLAY": "Add play"
   },
   "EDIT": {
     "PAGE_NAME": "Page Name",
