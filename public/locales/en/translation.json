@@ -37,7 +37,9 @@
     "SHARE": "Share",
     "CAPTCHA": "Captcha error",
     "PB_HOME": "Playbooks Home",
-    "PB_ACTIVE": "Active playbook"
+    "PB_ACTIVE": "Active playbook",
+    "PREV": "Previous",
+    "NEXT": "Next"
   },
   "HOME": {
     "HOME": "Home",

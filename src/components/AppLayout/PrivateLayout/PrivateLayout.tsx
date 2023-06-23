@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 
 import Sidebar from "../../Sidebar";
 import ModalWindow from "../../Modals/ModalWindow";
+import Navigation from "../../Navigation/Navigation";
 
 const PrivateLayout = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const PrivateLayout = () => {
         )}
         <ModalWindow />
         <Outlet />
+        <Navigation />
       </div>
       <ToastContainer />
     </>
