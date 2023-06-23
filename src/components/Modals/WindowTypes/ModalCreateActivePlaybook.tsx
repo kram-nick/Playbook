@@ -104,6 +104,7 @@ const ModalCreateActivePlaybook = () => {
 
   useHttpGet<any>(`${APIRoutes.PLAYS_TAGS}`, {
     dependencies: [tagItem],
+    condition: tagItem.active,
     resolve: (response) => {
       setTags(
         response?.data?.filter((tag: Data.Tag) =>
@@ -118,6 +119,7 @@ const ModalCreateActivePlaybook = () => {
   const valueFormValidationSchema = Yup.object().shape({
     name: Yup.string().required(t<string>("ERRORS.NOT_EMPTY")),
     description: Yup.string().required(t<string>("ERRORS.NOT_EMPTY")),
+    tags: Yup.array().min(1, t<string>("ERRORS.PLAYS_TAG")),
   });
 
   const { fetchedData: playbook } = useHttpGet<any>(
@@ -178,12 +180,20 @@ const ModalCreateActivePlaybook = () => {
 
   return (
     <div
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        e.stopPropagation();
+        setTagItem({
+          text: "",
+          active: false,
+        });
+      }}
       className="modal-box relative w-[100%] max-w-[528px] p-[24px] shadow-free-trial rounded-[5px]
-    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]">
+    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]"
+    >
       <div
         className="w-full flex justify-between items-center mb-[20px]
-              max-md:mb-[15px]">
+              max-md:mb-[15px]"
+      >
         <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-medium font-poppins text-footer-main">
           {t<string>("MODALS.ADD_ACTIVE_PLAYBOOK")}
         </span>
@@ -192,13 +202,15 @@ const ModalCreateActivePlaybook = () => {
           onClick={(e) => {
             e.stopPropagation();
             closeModal();
-          }}>
+          }}
+        >
           <img src={icon_close} alt="close" />
         </button>
       </div>
       <form
         onSubmit={formikForm.handleSubmit}
-        className="flex flex-col gap-[16px] w-[100%]">
+        className="flex flex-col gap-[16px] w-[100%]"
+      >
         <label className="flex flex-col">
           <span className="text-[14px] text-home-title font-poppins leading-[20px]">
             {t<string>("MODALS.NAME")}
@@ -236,7 +248,7 @@ const ModalCreateActivePlaybook = () => {
                       Number(e.getDate()) < 10
                         ? "0" + `${e.getDate()}`
                         : e.getDate()
-                    }`
+                    } 00:00:00`
                   );
                 }
               }}
@@ -297,12 +309,13 @@ const ModalCreateActivePlaybook = () => {
               });
             }}
           />
-          <div className="scroll-visible max-w-[95%] overflow-x-scroll absolute left-[18px] right-[12px] flex-nowrap top-[40px] flex flex-row items-center gap-[8px]">
+          <div className="scroll-visible max-w-[95%] overflow-x-scroll absolute left-[18px] right-[12px] flex-nowrap top-[45px] flex flex-row items-center gap-[8px]">
             {formikForm.values.tags.map((tag: Data.Tag, index: number) => {
               return (
                 <label
                   className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px] bg-selected-btn"
-                  key={tag.id}>
+                  key={tag.id}
+                >
                   <span className="font-poppins normal font-light text-[12px] leading-[16px]">
                     {tag.name}
                   </span>
@@ -321,25 +334,11 @@ const ModalCreateActivePlaybook = () => {
               {tags.map((tag: Data.Tag) => (
                 <li
                   onClick={() => {
-                    const sameTag = formikForm.values.tags.find(
-                      (currTag) => currTag.id === tag.id
-                    );
-
-                    const tagsArr = [
-                      ...formikForm.values.tags.filter(
-                        (tagCurr) => tag.id !== tagCurr.id
-                      ),
-                    ];
-                    if (tagsArr) {
-                      tagsArr.unshift(tag);
-                      formikForm.setFieldValue("tags", [...tagsArr]);
-                    }
-                    if (sameTag) {
-                      RemoveTag(sameTag);
-                    }
+                    formikForm.setFieldValue("tags", [tag]);
                   }}
                   className="flex justify-between px-[16px] py-[10px] hover:bg-chapter-color"
-                  key={tag.id}>
+                  key={tag.id}
+                >
                   <span className="font-light text-[14px] normal leading-[20px] font-poppins tracking-[-0.1px] text-home-title">
                     {tag.name}{" "}
                   </span>
@@ -352,7 +351,7 @@ const ModalCreateActivePlaybook = () => {
           )}
           {formikForm.errors.tags && formikForm.touched.tags && (
             <p className="block text-[14px] leading-[20px] mt-[6px] text-error-color pl-[4px]">
-              {t<string>("ERRORS.TAGS")}
+              {t<string>("ERRORS.PLAYS_TAG")}
             </p>
           )}
         </label>
@@ -392,7 +391,8 @@ const ModalCreateActivePlaybook = () => {
               className={classNames({
                 "flex flex-row gap-[12px] items-center p-[12px] rounded-[8px] border-[1px] border-solid border-card-border h-[82px]":
                   true,
-              })}>
+              })}
+            >
               <img
                 className="w-[40px] h-[40px] object-cover rounded-[4px]"
                 src={playbook?.data?.header_url}
@@ -420,7 +420,8 @@ const ModalCreateActivePlaybook = () => {
             className="  py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom
                 hover:bg-secondary-hover
                 active:bg-secondary-active
-                ">
+                "
+          >
             {t<string>("MODALS.CANCEL")}
           </button>
           <button
@@ -429,7 +430,8 @@ const ModalCreateActivePlaybook = () => {
                 py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] text-buttons-color bg-buttons-bg
                 hover:bg-buttons-bg-hover
                 active:bg-buttons-bg-active
-                ">
+                "
+          >
             {t<string>("MODALS.SAVE")}
           </button>
         </div>

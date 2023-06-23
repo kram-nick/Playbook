@@ -296,7 +296,8 @@
     "PASSWORD_RESET_FAILED": "No password reset request exists",
     "RETAIL_PRICE": "Please, enter retail price",
     "SALE_PRICE": "Please, enter sale price",
-    "TAGS": "Array must have at least 1 element"
+    "TAGS": "Array must have at least 1 element",
+    "PLAYS_TAG": "Select 1 tag"
   },
   "FIELDS": {
     "NAME": "Name",
