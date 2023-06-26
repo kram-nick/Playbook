@@ -480,6 +480,7 @@
     "FAILED": "Failed",
     "NOT_STARTED": "Not started",
     "ADD_TAGS": "Add Tags",
-    "PLAYBOOK": "Playbook"
+    "PLAYBOOK": "Playbook",
+    "PLAY_SUCCESS": "Play was successfully updated"
   }
 }

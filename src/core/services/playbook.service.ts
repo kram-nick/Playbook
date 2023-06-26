@@ -98,7 +98,7 @@ export default class PlaybookService {
 
   static async UpdatePlay(id: string, data: any): Promise<AxiosResponse<any>> {
     const formData = {
-      page: data,
+      play: data,
     };
     return RequestsService.putMethod<any>(`${APIRoutes.PLAYS}/${id}`, formData);
   }
