@@ -75,7 +75,7 @@ module.exports = {
         "tag-bg": "rgba(71, 181, 255, 0.1)",
         "failed-status": "rgba(255, 59, 48, 0.12)",
         "success-status": "rgba(0, 184, 184, 0.12)",
-        "not-open-status": "#EDEDED"
+        "not-open-status": "#EDEDED",
       },
       backgroundPosition: {
         "top-bottom": "right 60px ",
@@ -106,7 +106,6 @@ module.exports = {
         cookies:
           "0px -5px 47px rgba(0, 0, 0, 0.04), 7px 13px 60px rgba(51, 51, 65, 0.08);",
         card: "0px 2px 4px -2px rgba(16, 24, 40, 0.05), 0px 4px 6px -1px rgba(16, 24, 40, 0.03);",
-
       },
       backgroundImage: {
         sign: "url('./assets/photos/sign/bg-sign.svg')",
@@ -123,9 +122,6 @@ module.exports = {
         "entrepreneur-bckg":
           "url('./assets/photos/squeeze/entrepreneur-bckg.svg')",
         "without-photo": "url('./assets/photos/main/user.svg')",
-        "what-is-1": "url('./assets/photos/home/what-is-1.svg')",
-        "what-is-2": "url('./assets/photos/home/what-is-2.svg')",
-        "what-is-3": "url('./assets/photos/home/what-is-3.svg')",
       },
       screens: {
         mobile: "480px",

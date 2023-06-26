@@ -11,7 +11,7 @@ import why_arrow_top from "../../assets/photos/home/why-arrow-top.svg";
 import why_arrow_bottom from "../../assets/photos/home/why-arrow-bottom.svg";
 import Banner from "../../components/Banner/Banner";
 import Review from "../../components/Review/Review";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import classNames from "classnames";
 
@@ -25,12 +25,18 @@ import playbook_sm from "../../assets/photos/collection/pb-xs.svg";
 import icon_left from "../../assets/photos/collection/icon_left.svg";
 import icon_right from "../../assets/photos/collection/icon_right.svg";
 import highlight from "../../assets/photos/collection/highlight.svg";
+import what_is_img from "../../assets/photos/home/what-is-img.svg";
+import stepper from "../../assets/photos/home/stepper.svg";
+import arrows_right from "../../assets/photos/home/arrows-right.svg";
 import chart0 from "../../assets/photos/home/many_job.svg";
 import Testimonials from "../../components/Testimonials";
 import Pricing from "../../components/Pricing";
 import { UIRoutes } from "../../core/router";
 import { LogEvent } from "../../core/constants/functions";
 import { hotjar } from "react-hotjar";
+import useAuth from "../../core/hooks/useAuth";
+import useModal from "../../core/hooks/useModal";
+import { Modal } from "../../core/models/enums";
 
 const read_lg = require("../../assets/photos/home-tabs/read-lg.png");
 const read_md = require("../../assets/photos/home-tabs/read-md.png");
@@ -51,12 +57,21 @@ const HomePage = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(1);
 
+  const navigate = useNavigate();
+  const { isAuth } = useAuth();
+
   const handleClickScroll = () => {
     const element = document.getElementById("section-why");
     if (element) {
       // 👇 Will scroll smoothly to the top of the next section
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const NavigateToDiscover = () => {
+    isAuth
+      ? navigate(`/${UIRoutes.DISCOVER}`)
+      : navigate(`/${UIRoutes.SIGN_IN}`);
   };
 
   return (
@@ -300,138 +315,84 @@ const HomePage = () => {
           </Link>
         </div>
       </div>
-      {/* <div className="bg-tools-bg  mt-[104px]">
-        <div
-          className="flex flex-col mx-auto max-w-[1880px] items-center px-[7vw] pt-[140px] pb-[270px]
-        max-sm:pt-[60px]
-        max-sm:px-[18px]
-        max-lg:px-[42px]
-        max-lg:pb-[154px]
-        ">
-          <h1
-            className="text-center max-w-[885px] font-bold text-[40px] leading-[52px] text-home-title font-poppins tracking-[-0.1px]
-          max-lg:text-[28px]
-          max-lg:leading-[36.4px]
-          ">
-            {t<string>("HOME.DESIGN")}
-          </h1>
-          <p className="font-poppins text-center mt-[24px] max-w-[620px] text-[16px] leading-[26px] text-simple-text">
-            {t<string>("HOME.DESIGN_SUB")}
-          </p>
-          <div
-            className="flex w-full justify-between mt-[108px]
-          max-sm:gap-x-[2px]
-          max-sm:gap-y-[32px]
-          max-sm:mt-[40px]
-          max-lg:flex-wrap
-          max-lg:justify-around
-          max-lg:gap-x-[87px]
-          max-lg:gap-y-[50px]
-          max-lg:mt-[81px]
-          ">
-            <div
-              className="flex flex-col justify-between items-center h-[150px]
-            max-sm:min-w-[168px]
-            ">
-              <img src={sales} alt="sales" />
-              <span className="text-[24px] font-poppins leading-[36px] font-semibold">
-                {t<string>("HOME.SALES_BLOCK")}
-              </span>
-            </div>
-            <div
-              className="flex flex-col justify-between items-center h-[150px]
-            max-sm:min-w-[168px]
-            ">
-              <img src={product} alt="product" />
-              <span className="text-[24px] font-poppins leading-[36px] font-semibold">
-                {t<string>("HOME.PRODUCT_BLOCK")}
-              </span>
-            </div>
-            <div
-              className="flex flex-col justify-between items-center h-[150px]
-            max-sm:min-w-[168px]
-            ">
-              <img src={engineering} alt="engineering" />
-              <span className="text-[24px] font-poppins leading-[36px] font-semibold">
-                {t<string>("HOME.ENGINEERING_BLOCK")}
-              </span>
-            </div>
-            <div
-              className="flex flex-col justify-between items-center h-[150px]
-            max-sm:min-w-[168px]
-            ">
-              <img src={culture} alt="culture" />
-              <span className="text-[24px] font-poppins leading-[36px] font-semibold">
-                {t<string>("HOME.CULTURE_BLOCK")}
-              </span>
-            </div>
-            <div
-              className="flex flex-col justify-between items-center h-[150px]
-            max-sm:min-w-[168px]
-            ">
-              <img src={marketing} alt="marketing" />
-              <span className="font-poppins text-[24px] leading-[36px] font-semibold">
-                {t<string>("HOME.MARKETING_BLOCK")}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div> */}
+
       <div
         id="what-is-playbook"
-        className="flex flex-col items-center max-w-[1204px] mx-[auto] pb-[140px] text-home-title px-[32px]"
+        className="flex flex-col items-center max-w-[1264px] mx-[auto] pb-[140px] text-home-title px-[32px]"
       >
-        <h2 className="mt-[24px] font-poppins font-bold text-[40px] ">
+        <h2 className="mt-[32px] font-poppins font-bold lg:text-[40px] text-[28px]">
           {t<string>("HOME.WHAT_IS_PLAYBOOK")}
         </h2>
         <p className="text-center text-simple-text leading-[26px] max-w-[620px] mt-[24px] text-[16px] font-poppins">
           {t<string>("HOME.WHAT_IS_DESC")}
         </p>
-        <div
-          className="flex gap-[26px] mt-[60px]
-        max-md:flex-col
-        
-        "
-        >
-          <div
-            className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-1 bg-contain bg-no-repeat
-          max-md:bg-center
-            max-lg:bg-top-bottom
-          "
-          >
-            <h2 className="text-center max-w-[185px] mx-[auto] font-semibold font-poppins text-review-name">
-              {t<string>("HOME.WHAT_IS_TITLE_1")}
-            </h2>
-            <span className="font-poppins text-[16px] text-simple-text max-w-[304px] h-[calc(100%-70%)] flex flex-col justify-end">
-              {t<string>("HOME.WHAT_IS_TEXT_1")}
-            </span>
+        <div className="flex flex-col md:flex-row items-center justify-between w-[100%] gap-[3vw] mt-[60px]">
+          <div className="max-w-[536px]">
+            <img className="w-[100%] object-cover" src={what_is_img} alt="" />
           </div>
-          <div
-            className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-2 bg-contain bg-no-repeat
-          max-md:bg-center
-            max-lg:bg-top-bottom
-          "
-          >
-            <h2 className="text-center max-w-[220px] mx-[auto] font-semibold font-poppins text-review-name">
-              {t<string>("HOME.WHAT_IS_TITLE_2")}
-            </h2>
-            <span className="font-poppins text-[16px] text-simple-text max-w-[304px] h-[calc(100%-70%)] flex flex-col justify-end">
-              {t<string>("HOME.WHAT_IS_TEXT_2")}
-            </span>
+          <div className="flex flex-row items-start gap-[24px] mt-[30px]">
+            <div className="w-[40px] h-[300px]">
+              <img className="w-[100%]" src={stepper} alt="" />
+            </div>
+            <div className="flex flex-col">
+              <div className="flex flex-col gap-[32px] max-w-[458px]">
+                <div>
+                  <h2 className="text-home-title text-[20px] font-poppins font-semibold">
+                    {t<string>("HOME.WHAT_IS_TITLE_1")}
+                  </h2>
+                  <p className="text-simple-text text-[16px] font-poppins leading-[26px]">
+                    {t<string>("HOME.WHAT_IS_TEXT_1")}
+                  </p>
+                </div>
+                <div>
+                  <h2 className="text-home-title text-[20px] font-poppins font-semibold">
+                    {t<string>("HOME.WHAT_IS_TITLE_2")}
+                  </h2>
+                  <p className="text-simple-text text-[16px] font-poppins leading-[26px]">
+                    {t<string>("HOME.WHAT_IS_TEXT_2")}
+                  </p>
+                </div>
+                <div>
+                  <h2 className="text-home-title text-[20px] font-poppins font-semibold">
+                    {t<string>("HOME.WHAT_IS_TITLE_3")}
+                  </h2>
+                  <p className="text-simple-text text-[16px] font-poppins leading-[26px]">
+                    {t<string>("HOME.WHAT_IS_TEXT_3")}
+                  </p>
+                </div>
+              </div>
+              <div className="lg:flex flex-row hidden gap-[32px] mt-[97px]">
+                <button
+                  onClick={NavigateToDiscover}
+                  className="px-[12px] py-[20px] bg-buttons-bg rounded-[8px] text-buttons-color text-[16px] font-poppins font-semibold"
+                >
+                  {t<string>("HOME.WHAT_IS_BUTTON_FREE")}
+                </button>
+                <button
+                  onClick={NavigateToDiscover}
+                  className="flex flex-row gap-[5px] items-center px-[12px] py-[20px] text-buttons-bg text-[16px] font-poppins font-semibold"
+                >
+                  {t<string>("HOME.WHAT_IS_BUTTON_DISCOVER")}
+                  <img src={arrows_right} alt="" />
+                </button>
+              </div>
+            </div>
           </div>
-          <div
-            className="flex flex-col justify-between min-h-[513px] p-[30px] bg-tools-bg rounded-[20px] bg-what-is-3 bg-contain bg-no-repeat
-          max-md:bg-center
-            max-lg:bg-top-bottom
-          "
+        </div>
+        <div className="flex flex-col md:flex-row items-center lg:hidden gap-[32px] mt-[97px]">
+          <button
+            onClick={NavigateToDiscover}
+            className="px-[12px] py-[20px] bg-buttons-bg rounded-[8px] text-buttons-color text-[16px] font-poppins font-semibold"
           >
-            <h2 className="text-center max-w-[304px] font-semibold font-poppins text-review-name">
-              {t<string>("HOME.WHAT_IS_TITLE_3")}
-            </h2>
-            <span className="font-poppins text-[16px] text-simple-text max-w-[304px] h-[calc(100%-70%)] flex flex-col justify-end">
-              {t<string>("HOME.WHAT_IS_TEXT_3")}
-            </span>
-          </div>
+            {t<string>("HOME.WHAT_IS_BUTTON_FREE")}
+          </button>
+          <button
+            onClick={NavigateToDiscover}
+            className="flex flex-row gap-[5px] items-center px-[12px] py-[20px] text-buttons-bg text-[16px] font-poppins font-semibold"
+          >
+            {t<string>("HOME.WHAT_IS_BUTTON_DISCOVER")}
+            <img src={arrows_right} alt="" />
+          </button>
         </div>
       </div>
 

@@ -34,7 +34,8 @@ const ModalPrivacy = () => {
             border-[1px] border-solid border-border-btn bg-white font-poppins 
           flex flex-col items-center gap-[32px]
             max-md:m-[12px]            
-            ">
+            "
+    >
       <div className="w-full flex justify-between items-center">
         <button className="shadow-tags border-solid border-[1px] rounded-[6px] border-header-bottom p-[12px]">
           <img src={left_icon} alt="left_icon" />
@@ -85,7 +86,8 @@ const ModalPrivacy = () => {
               />
               <span
                 className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
-                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>
+                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
+              ></span>
             </span>
           </label>
         </div>
@@ -112,7 +114,8 @@ const ModalPrivacy = () => {
               />
               <span
                 className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
-                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>
+                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
+              ></span>
             </span>
           </label>
         </div>
@@ -139,7 +142,8 @@ const ModalPrivacy = () => {
               />
               <span
                 className="switch-check flex w-[34px] h-[20px] rounded-[20px] 
-                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"></span>
+                      bg-header-bottom cursor-pointer relative transition duration-300 ease-out"
+              ></span>
             </span>
           </label>
         </div>
@@ -147,18 +151,21 @@ const ModalPrivacy = () => {
       <div
         className="w-full flex items-center justify-end gap-[16px]
           max-sm:justify-between
-          ">
+          "
+      >
         <button
           onClick={closeModal}
           className="text-[16px] text-top-playbook-title font-poppins font-medium leading-[21px] normal
-          px-[18px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom">
+          px-[18px] py-[12px] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom"
+        >
           {t<string>("MODALS.PRIVACY_PREFERENCES")}
         </button>
         <button
           type="submit"
           className=" bg-buttons-bg flex flex-row items-center gap-[6px] px-[18px] py-[12px] rounded-[6px] shadow-purchase_btn
                 max-sm:px-[36.5px]
-                ">
+                "
+        >
           <img src={check_icon} alt="check_icon" />
           <span className="text-[16px] font-poppins font-medium leading-[21px] text-buttons-color">
             {t<string>("MODALS.PRIVACY_ACCEPT")}
