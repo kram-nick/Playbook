@@ -22,7 +22,7 @@ const Footer = () => {
   const { openModal } = useModal();
 
   return (
-    <footer className="bg-footer-main min-h-[638px] flex flex-col items-center gap-[75px] pt-[56px] pb-[11px] ">
+    <footer className="bg-footer-main flex flex-col items-center gap-[75px] pt-[56px] pb-[11px] ">
       <div className="flex gap-[96px] items-center w-full flex-col  px-[7vw]">
         <img src={logo} alt="logo" />
 
@@ -127,7 +127,7 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-          <div className="flex gap-[40px] flex-col max-w-[375px]">
+          {/* <div className="flex gap-[40px] flex-col max-w-[375px]">
             <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
               {t<string>("COMMON.SUBSCRIBE")}
             </span>
@@ -160,34 +160,6 @@ const Footer = () => {
                 </button>
               </div>
               <ul className="flex flex-row gap-[24px] lg:items-center">
-                {/* <li>
-                  <button>
-                    <img
-                      src={facebook}
-                      alt="facebook"
-                      className="lg:block hidden"
-                    />
-                    <img
-                      src={youtube_tab}
-                      alt="yotube"
-                      className="max-lg:block hidden"
-                    />
-                  </button>
-                </li>
-                <li>
-                  <button>
-                    <img
-                      src={youtube}
-                      alt="youtube"
-                      className="lg:block hidden"
-                    />
-                    <img
-                      src={facebook_tab}
-                      alt="facebook"
-                      className="max-lg:block hidden"
-                    />
-                  </button>
-                </li> */}
                 <li>
                   <Link
                     onClick={() => {
@@ -210,7 +182,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="w-full border-t-[1px] border-border-copyrights">
