@@ -31,16 +31,18 @@ const Footer = () => {
           max-sm:flex-col
           max-sm:gap-[80px]
           max-lg:flex-wrap
-        ">
+        "
+        >
           <div className="flex flex-row gap-[79px]">
-            <div className="flex gap-[40px] flex-col flex-1 w-[max-content] ">
+            <div className="flex gap-[40px] flex-col min-md:flex-1 w-[max-content] ">
               <span className="font-poppins text-list-title font-semibold leading-[27px] text-[18px] capitalize">
                 {t<string>("COMMON.SOLUTIONS")}
               </span>
               <ul
                 className="flex flex-col gap-[12px]
             max-sm:gap-[8px]
-            ">
+            "
+              >
                 <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                   <Link to={`/${UIRoutes.DISCOVER}`}>
                     {t<string>("COMMON.DISCOVER")}
@@ -51,7 +53,8 @@ const Footer = () => {
                     className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] cursor-pointer"
                     onClick={() => {
                       openModal(Modal.PLAYBOOK_DETAILS);
-                    }}>
+                    }}
+                  >
                     {t<string>("COMMON.CREATE")}
                   </li>
                 )}
@@ -79,7 +82,8 @@ const Footer = () => {
                         hotjar.event("SplashPage-SignInLink");
                         LogEvent("splash-page", "sign-in-link");
                       }}
-                      to={`/${UIRoutes.SIGN_IN}`}>
+                      to={`/${UIRoutes.SIGN_IN}`}
+                    >
                       {t<string>("COMMON.LOGIN")}
                     </Link>
                   </li>
@@ -89,7 +93,8 @@ const Footer = () => {
                         hotjar.event("SplashPage-SignUpLink");
                         LogEvent("splash-page", "sign-up-link");
                       }}
-                      to={`/${UIRoutes.SIGN_UP}`}>
+                      to={`/${UIRoutes.SIGN_UP}`}
+                    >
                       {t<string>("COMMON.SIGN_UP")}
                     </Link>
                   </li>
@@ -115,13 +120,15 @@ const Footer = () => {
               <ul
                 className="flex flex-col gap-[12px]
             max-sm:gap-[8px]
-            ">
+            "
+              >
                 <li className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
                   {t<string>("COMMON.PRIVACY_POLICY")}
                 </li>
                 <Link
                   to="/term-of-use"
-                  className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] ">
+                  className="text-copyrights-main leading-[26px] font-normal font-poppins text-[16px] tracking-[-0.01px] "
+                >
                   {t<string>("COMMON.TERMS_OF_USE")}
                 </Link>
               </ul>
