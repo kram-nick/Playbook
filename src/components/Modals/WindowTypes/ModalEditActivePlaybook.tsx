@@ -15,11 +15,11 @@ import { APIRoutes } from "../../../core/http";
 import check from "../../../assets/photos/main/check.svg";
 import delete_icon from "../../../assets/photos/main/close-cross.svg";
 import playb from "../../../assets/photos/modals/playb-header.svg";
-import date from "../../../assets/photos/modals/date.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 import PlaybookService from "../../../core/services/playbook.service";
 import { toast } from "react-toastify";
 import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
+import CalendarIcon from "../../CalendarIcon";
 
 const ModalEditActivePlaybook = () => {
   const { t } = useTranslation();
@@ -218,11 +218,13 @@ const ModalEditActivePlaybook = () => {
           active: false,
         });
       }}
-      className="modal-box relative w-[100%] max-w-[528px] p-[24px] shadow-free-trial rounded-[5px]
-    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]">
+      className="modal-box absolute w-[100%] max-w-[528px] p-[24px] shadow-free-trial rounded-[5px]
+    border-[1px] border-solid border-border-btn bg-white font-poppins flex flex-col items-center max-md:m-[12px]"
+    >
       <div
         className="w-full flex justify-between items-center mb-[20px]
-              max-md:mb-[15px]">
+              max-md:mb-[15px]"
+      >
         <span className="leading-[28px] tracking-[-0.1px] text-[20px] font-medium font-poppins text-footer-main">
           {t<string>("MODALS.EDIT_ACTIVE_PLAYBOOK")}
         </span>
@@ -231,13 +233,15 @@ const ModalEditActivePlaybook = () => {
           onClick={(e) => {
             e.stopPropagation();
             closeModal();
-          }}>
+          }}
+        >
           <img src={icon_close} alt="close" />
         </button>
       </div>
       <form
         onSubmit={formikForm.handleSubmit}
-        className="flex flex-col gap-[16px] w-[100%]">
+        className="flex flex-col gap-[16px] w-[100%]"
+      >
         <label className="flex flex-col">
           <span className="text-[14px] text-home-title font-poppins leading-[20px]">
             {t<string>("MODALS.NAME")}
@@ -258,11 +262,12 @@ const ModalEditActivePlaybook = () => {
             {t<string>("MODALS.DUE_DATE")}
           </span>
           <div className="flex flex-row items-center gap-[11px] h-[38px] outline-none border-[1px] border-solid border-border-input rounded-[4px] mt-[6px] pl-[16px]">
-            <img src={date} alt="datepicker" />
             <DatePicker
               format="dd.MM.y"
+              locale="en-UK"
+              calendarIcon={<CalendarIcon />}
               minDate={new Date(new Date().getTime() + 24 * 60 * 60 * 1000)}
-              disableCalendar={true}
+              maxDate={new Date(`${new Date().getFullYear() + 100}-01-01`)}
               onChange={(e: any) => {
                 if (e) {
                   formikForm.setFieldValue(
@@ -281,7 +286,11 @@ const ModalEditActivePlaybook = () => {
               }}
               value={
                 formikForm.values.due_date
-                  ? new Date(new Date(formikForm.values.due_date).getTime())
+                  ? new Date(
+                      new Date(
+                        formikForm.values.due_date.split(" ")[0]
+                      ).getTime()
+                    )
                   : undefined
               }
             />
@@ -340,7 +349,8 @@ const ModalEditActivePlaybook = () => {
               return (
                 <label
                   className="flex items-center flex-row gap-[6px] min-w-max px-[12px] py-[4px] border-solid rounded-[100px] bg-selected-btn"
-                  key={tag.id}>
+                  key={tag.id}
+                >
                   <span className="font-poppins normal font-light text-[12px] leading-[16px]">
                     {tag.name}
                   </span>
@@ -362,7 +372,8 @@ const ModalEditActivePlaybook = () => {
                     formikForm.setFieldValue("tags", [tag]);
                   }}
                   className="flex justify-between px-[16px] py-[10px] hover:bg-chapter-color"
-                  key={tag.id}>
+                  key={tag.id}
+                >
                   <span className="font-light text-[14px] normal leading-[20px] font-poppins tracking-[-0.1px] text-home-title">
                     {tag.name}{" "}
                   </span>
@@ -433,13 +444,13 @@ const ModalEditActivePlaybook = () => {
           <button
             type="button"
             onClick={(e) => {
-              e.stopPropagation();
               closeModal();
             }}
             className="  py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] border-header-bottom
                 hover:bg-secondary-hover
                 active:bg-secondary-active
-                ">
+                "
+          >
             {t<string>("MODALS.CANCEL")}
           </button>
           <button
@@ -448,7 +459,8 @@ const ModalEditActivePlaybook = () => {
                 py-[12px] w-[100%] rounded-[6px] shadow-purchase_btn border-[1px] text-buttons-color bg-buttons-bg
                 hover:bg-buttons-bg-hover
                 active:bg-buttons-bg-active
-                ">
+                "
+          >
             {t<string>("MODALS.SAVE")}
           </button>
         </div>

@@ -19,12 +19,12 @@
     font-size: 24px;
   }
 
-  input:checked+div {
+  input:checked + div {
     @apply border-blue-500;
     @apply bg-checkbox-bg;
   }
 
-  input:checked+div svg {
+  input:checked + div svg {
     @apply block;
   }
 
@@ -54,7 +54,7 @@ html:not(.touch-screen) *::-webkit-scrollbar-thumb {
 }
 
 .modal-overlay {
-  z-index: 9999;
+  z-index: 100;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -85,11 +85,11 @@ html:not(.touch-screen) *::-webkit-scrollbar-thumb {
   transition: all 0.2s ease-in;
 }
 
-input:checked+.switch-check {
+input:checked + .switch-check {
   background: #2b71f7;
 }
 
-input:checked+.switch-check:after {
+input:checked + .switch-check:after {
   left: 15px;
 }
 
@@ -134,11 +134,11 @@ input:checked+.switch-check:after {
   padding: 0;
 }
 
-.select-custom>div>div:nth-child(2)>div {
+.select-custom > div > div:nth-child(2) > div {
   color: #242428;
 }
 
-.select-custom>div:nth-child(3)>div:nth-child(1) {
+.select-custom > div:nth-child(3) > div:nth-child(1) {
   padding-left: 16px !important;
 }
 
@@ -146,11 +146,11 @@ input:checked+.switch-check:after {
   color: #242428 !important;
 }
 
-.select-custom #react-select-3-listbox>div:nth-child(1)>* {
+.select-custom #react-select-3-listbox > div:nth-child(1) > * {
   padding-left: 16px !important;
 }
 
-.select-custom>div {
+.select-custom > div {
   min-height: 100%;
 }
 
@@ -205,7 +205,7 @@ input:checked+.switch-check:after {
   overflow: visible;
 }
 
-.testimonial-swiper .swiper-slide:nth-child(2n)>div {
+.testimonial-swiper .swiper-slide:nth-child(2n) > div {
   transform: rotate(3deg);
 }
 
@@ -242,7 +242,7 @@ input:checked+.switch-check:after {
     margin-top: 28px;
   }
 
-  .testimonial-swiper .swiper-slide:nth-child(2n)>div {
+  .testimonial-swiper .swiper-slide:nth-child(2n) > div {
     transform: rotate(1.5deg);
   }
 }
@@ -280,9 +280,185 @@ ol .editor-listitem {
   list-style: decimal;
 }
 
-.react-date-picker__calendar-button__icon,
-.react-date-picker__clear-button__icon {
+.react-date-picker__calendar {
+  z-index: 10;
+  position: absolute !important;
+  top: 35px !important;
+  width: max-content !important;
+  background-color: #fff;
+}
+
+.react-calendar__navigation__next2-button,
+.react-calendar__navigation__prev2-button {
+  display: none !important;
+}
+
+.react-calendar__navigation__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  width: 30px !important;
+  height: 30px !important;
+  min-width: none !important;
+  border: 1px solid #ededed !important;
+  border-radius: 5px;
+  background-color: #fff !important;
+}
+
+.react-calendar__navigation__label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: max-content;
+}
+
+.react-calendar__navigation button {
+  max-width: max-content !important;
+  min-width: 36px !important;
+  height: 36px !important;
+}
+
+.react-calendar__navigation button:disabled,
+.react-calendar__navigation button:hover,
+.react-calendar__navigation button:focus {
+  background-color: #fff !important;
+}
+
+.react-calendar {
+  height: max-content;
+  border: 1px solid #ededed !important;
+  border-radius: 8px !important;
+  padding: 12px;
+  width: max-content !important;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0 !important;
+  width: 278px;
+}
+
+.react-calendar__month-view__weekdays {
+  display: flex;
+  gap: 4px;
+  box-sizing: border-box;
+  margin-top: 8px;
+  width: 278px !important;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none !important;
+}
+
+.react-calendar__month-view__weekdays__weekday > abbr {
+  font-size: 14px !important;
+  text-decoration: none !important;
+  color: #a3a3a3 !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+
+.react-calendar__month-view__days {
+  width: 278px !important;
+  gap: 4px;
+}
+
+.react-calendar__century-view__decades {
+  display: flex;
+  gap: 4px;
+  max-width: 280px !important;
+}
+
+.react-calendar__viewContainer {
+  margin-top: 8px !important;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth > abbr {
+  font-size: 14px !important;
+  color: #e5e5e5 !important;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth:hover > abbr {
+  color: #fff !important;
+}
+
+.react-calendar__navigation__label__labelText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content !important;
+}
+
+.react-calendar__navigation__label:hover {
+  background-color: none !important;
+}
+
+.react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none !important;
+  cursor: pointer;
+  background-color: #fff !important;
+  color: #606266 !important;
+  font-size: 14px !important;
+}
+
+.react-calendar__tile:hover {
+  background-color: #2b71f7 !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+}
+
+.react-calendar__tile--active > abbr {
+  border-bottom: 1px solid #2b71f7;
+}
+
+.react-calendar__tile--active:hover {
+  background-color: #fff !important;
+  color: #606266 !important;
+}
+
+.react-calendar__navigation__label__labelText {
+  font-weight: 500;
+  color: #242428;
+  background-color: transparent !important;
+}
+
+.react-calendar__decade-view__years,
+.react-calendar__year-view__months {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 280px !important;
+  margin-top: 8px;
+}
+
+.react-calendar__decade-view__years__year,
+.react-calendar__year-view__months__month {
+  cursor: pointer;
+  width: max-content !important;
+  padding: 0 5px !important;
+}
+
+.react-date-picker__clear-button {
   display: none;
+}
+
+.react-date-picker__calendar-button {
+  margin-right: 8px;
 }
 
 .react-date-picker__inputGroup__input {
@@ -290,7 +466,15 @@ ol .editor-listitem {
 }
 
 .react-date-picker__wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
   height: 20px !important;
+  border: none !important;
+}
+
+.react-date-picker__calendar-button {
+  padding: 0 !important;
 }
 
 .react-date-picker {
