@@ -19,7 +19,7 @@ import icon_close from "../../../assets/photos/main/modal-close.svg";
 import PlaybookService from "../../../core/services/playbook.service";
 import { toast } from "react-toastify";
 import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
-import CalendarIcon from "../../CalendarIcon";
+import CalendarIcon from "../../CalendarIcon/CalendarIcon";
 
 const ModalEditActivePlaybook = () => {
   const { t } = useTranslation();
@@ -30,6 +30,7 @@ const ModalEditActivePlaybook = () => {
     text: "",
     active: false,
   });
+  const [iconType, setIconType] = useState<boolean>(false);
 
   const { sharedId, reloadChecker } = useAppSelector((state) => state.helpers);
   const dispatch = useAppDispatch();
@@ -265,7 +266,9 @@ const ModalEditActivePlaybook = () => {
             <DatePicker
               format="dd.MM.y"
               locale="en-UK"
-              calendarIcon={<CalendarIcon />}
+              calendarIcon={<CalendarIcon IconType={iconType} />}
+              onCalendarOpen={() => setIconType(true)}
+              onCalendarClose={() => setIconType(false)}
               minDate={new Date(new Date().getTime() + 24 * 60 * 60 * 1000)}
               maxDate={new Date(`${new Date().getFullYear() + 100}-01-01`)}
               onChange={(e: any) => {

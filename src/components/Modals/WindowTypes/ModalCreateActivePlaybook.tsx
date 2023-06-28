@@ -18,7 +18,7 @@ import check from "../../../assets/photos/main/check.svg";
 import delete_icon from "../../../assets/photos/main/close-cross.svg";
 import icon_close from "../../../assets/photos/main/modal-close.svg";
 import { setReloadChecker } from "../../../core/store/reducers/helpers/helpersDataSlice";
-import CalendarIcon from "../../CalendarIcon";
+import CalendarIcon from "../../CalendarIcon/CalendarIcon";
 
 const ModalCreateActivePlaybook = () => {
   const [tags, setTags] = useState([]);
@@ -26,7 +26,8 @@ const ModalCreateActivePlaybook = () => {
     text: "",
     active: false,
   });
-  const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+
+  const [iconType, setIconType] = useState<boolean>(false);
 
   const { t } = useTranslation();
   const { closeModal } = useModal();
@@ -236,7 +237,9 @@ const ModalCreateActivePlaybook = () => {
             <DatePicker
               format="dd.MM.y"
               locale="en-UK"
-              calendarIcon={<CalendarIcon />}
+              calendarIcon={<CalendarIcon IconType={iconType} />}
+              onCalendarOpen={() => setIconType(true)}
+              onCalendarClose={() => setIconType(false)}
               minDate={new Date(new Date().getTime() + 24 * 60 * 60 * 1000)}
               maxDate={new Date(`${new Date().getFullYear() + 100}-01-01`)}
               onChange={(e: any) => {
